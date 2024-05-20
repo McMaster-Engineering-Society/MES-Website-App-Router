@@ -15,7 +15,7 @@ type LayoutProps = {
   transparentNav?: boolean;
 };
 
-const Layout = ({
+const PageLayout = ({
   noFooter,
   className,
   children,
@@ -40,4 +40,4 @@ const Layout = ({
   );
 };
 
-export default Layout;
+export default PageLayout;
