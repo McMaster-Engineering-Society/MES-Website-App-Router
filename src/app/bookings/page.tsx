@@ -1,3 +1,4 @@
+import BookingInstructions from '@/components/bookings/BookingInstructions';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
@@ -68,46 +69,7 @@ const Bookings = () => {
           for more details.
         </PageSection>
         <PageSection heading='Instructions' variant='white'>
-          <p>Instructions here</p>
-          {/* <Accordion>
-            <AccordionItem title='For Students'>
-              Hatch Room Bookings can be made any time between 7:00AM - 11:00
-              PM, seven days a week. A user may make multiple bookings for any
-              room up to 3 hours per day. Bookings are officially made once you
-              submit the form and have received email confirmation.
-              <br />
-              <br />
-              To <b>modify</b> or <b>cancel</b> a booking, use the link in your
-              confirmation email.
-            </AccordionItem>
-            <AccordionItem title='For Clubs & Teams'>
-              If your club or team would like to reserve a meeting room to hold
-              recurring meetings, please contact{' '}
-              <a href='mailto:ghc@mcmaster.ca' className='underline'>
-                ghc@mcmaster.ca
-              </a>
-              .
-            </AccordionItem>
-            <AccordionItem title='H204A/B Room Divider'>
-              If you need the combined rooms of H204A/B, contact{' '}
-              <a href='mailto:ghc@mcmaster.ca' className='underline'>
-                ghc@mcmaster.ca
-              </a>
-              , to ensure the room divider will be opened during your booking.
-            </AccordionItem>
-            <AccordionItem title='Holding Events in Hatch Centre'>
-              Bookings for student groups within the Hatch Centre are limited to
-              MES clubs, groups, teams & affiliates <b>only</b>.
-              <br />
-              These rooms are only authorized for use by the McMaster
-              Engineering Society and the Faculty of Engineering. <br />
-              <br />
-              MSU clubs wishing to hold events may not do so in the Hatch Centre
-              without explicit permission from the Hatch Centre Coordinator.
-              Approval may be granted on a case-by-case basis and is not
-              guaranteed to any group external to the MES.
-            </AccordionItem>
-          </Accordion> */}
+          <BookingInstructions />
         </PageSection>
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
