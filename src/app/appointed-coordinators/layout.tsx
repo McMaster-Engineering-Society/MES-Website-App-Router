@@ -4,11 +4,12 @@ import * as React from 'react';
 import '@/styles/colors.css';
 
 export const metadata: Metadata = {
-  title: 'Council Resources',
-  description: 'Office hours, forms, and links for MES-related enquiries.',
+  title: 'Appointed Coordinators',
+  description:
+    'A list of the current appointed coordinators for the MES council.',
 };
 
-export default function CouncilResourcesLayout({
+export default function AppointedCoordinatorsLayout({
   children,
 }: {
   children: React.ReactNode;

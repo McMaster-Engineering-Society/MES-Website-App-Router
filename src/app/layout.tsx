@@ -5,7 +5,6 @@ import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
-import PageLayout from '@/components/layout/PageLayout';
 import Providers from '@/components/Providers';
 
 import { siteConfig } from '@/constant/config';
@@ -60,16 +59,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <Providers>
-          <PageLayout
-            noBackground
-            transparentNav
-            className='bg-gradient-to-b from-[#420a1b] to-[#121212]'
-            darkMode
-          >
-            {children}
-          </PageLayout>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
