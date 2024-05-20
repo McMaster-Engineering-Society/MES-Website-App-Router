@@ -7,7 +7,7 @@ import PageLayout from '@/components/layout/PageLayout';
 
 export const metadata: Metadata = {
   title: 'Council Resources',
-  description: '',
+  description: 'Office hours, forms, and links for MES-related enquiries.',
 };
 
 export default function CouncilResourcesLayout({
