@@ -4,7 +4,7 @@ import PageHeading from '@/components/PageHeading';
 
 import avps from '@/constant/council/associateVicePresidents';
 
-export default function AVPs() {
+export default function AVPsPage() {
   return (
     <PageLayout>
       <main className='layout'>
