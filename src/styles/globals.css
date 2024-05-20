@@ -4,27 +4,29 @@
 
 :root {
   /* #region  /**=========== Primary Color =========== */
-  /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
-  --tw-color-primary-50: 240 249 255;
-  --tw-color-primary-100: 224 242 254;
-  --tw-color-primary-200: 186 230 253;
-  --tw-color-primary-300: 125 211 252;
-  --tw-color-primary-400: 56 189 248;
-  --tw-color-primary-500: 14 165 233;
-  --tw-color-primary-600: 2 132 199;
-  --tw-color-primary-700: 3 105 161;
-  --tw-color-primary-800: 7 89 133;
-  --tw-color-primary-900: 12 74 110;
-  --color-primary-50: rgb(var(--tw-color-primary-50)); /* #f0f9ff */
-  --color-primary-100: rgb(var(--tw-color-primary-100)); /* #e0f2fe */
-  --color-primary-200: rgb(var(--tw-color-primary-200)); /* #bae6fd */
-  --color-primary-300: rgb(var(--tw-color-primary-300)); /* #7dd3fc */
-  --color-primary-400: rgb(var(--tw-color-primary-400)); /* #38bdf8 */
-  --color-primary-500: rgb(var(--tw-color-primary-500)); /* #0ea5e9 */
-  --color-primary-600: rgb(var(--tw-color-primary-600)); /* #0284c7 */
-  --color-primary-700: rgb(var(--tw-color-primary-700)); /* #0369a1 */
-  --color-primary-800: rgb(var(--tw-color-primary-800)); /* #075985 */
-  --color-primary-900: rgb(var(--tw-color-primary-900)); /* #0c4a6e */
+  /* Customize these variable, copy and paste from /styles/colors.css for list of colors */
+  --tw-color-primary-50: 254 244 242;
+  --tw-color-primary-100: 254 230 229;
+  --tw-color-primary-200: 252 208 207;
+  --tw-color-primary-300: 250 168 167;
+  --tw-color-primary-400: 246 118 121;
+  --tw-color-primary-500: 237 70 77;
+  --tw-color-primary-600: 218 36 53;
+  --tw-color-primary-700: 184 24 43;
+  --tw-color-primary-800: 166 25 46;
+  --tw-color-primary-900: 132 23 43;
+  --tw-color-primary-950: 73 8 18;
+  --color-primary-50: rgb(var(--tw-color-primary-50)); /* #fef4f2 */
+  --color-primary-100: rgb(var(--tw-color-primary-100)); /* #fee6e5 */
+  --color-primary-200: rgb(var(--tw-color-primary-200)); /* #fcd0cf */
+  --color-primary-300: rgb(var(--tw-color-primary-300)); /* #faa8a7 */
+  --color-primary-400: rgb(var(--tw-color-primary-400)); /* #f67679 */
+  --color-primary-500: rgb(var(--tw-color-primary-500)); /* #ed464d */
+  --color-primary-600: rgb(var(--tw-color-primary-600)); /* #da2435 */
+  --color-primary-700: rgb(var(--tw-color-primary-700)); /* #b8182b */
+  --color-primary-800: rgb(var(--tw-color-primary-800)); /* #a6192e */
+  --color-primary-900: rgb(var(--tw-color-primary-900)); /* #84172b */
+  --color-primary-950: rgb(var(--tw-color-primary-950)); /* #490812 */
   /* #endregion  /**======== Primary Color =========== */
 }
 
@@ -34,7 +36,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 100 900;
-    font-display: block;
+    font-display: optional;
     src: url('/fonts/inter-var-latin.woff2') format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
       U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
@@ -80,6 +82,11 @@
     /* 1100px */
     max-width: 68.75rem;
     @apply mx-auto w-11/12;
+    display: flex;
+    flex-direction: column;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    min-height: 100vh;
   }
 
   .bg-dark a.custom-link {
