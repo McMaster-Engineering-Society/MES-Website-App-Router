@@ -2,14 +2,14 @@ import { CalendarEvent, GoogleCalendarEvent } from '../types/calendar';
 
 export const listGoogleEvents = async (
   calendarId: string,
-  apiKey: string
+  apiKey: string,
 ): Promise<GoogleCalendarEvent[]> => {
   return (
     fetch(
       'https://www.googleapis.com/calendar/v3/calendars/' +
         calendarId +
         '/events?key=' +
-        apiKey
+        apiKey,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -27,7 +27,7 @@ export const listGoogleEvents = async (
 export const instancesGoogleEvents = async (
   calendarId: string,
   apiKey: string,
-  eventId: string
+  eventId: string,
 ): Promise<GoogleCalendarEvent[]> => {
   return (
     fetch(
@@ -36,7 +36,7 @@ export const instancesGoogleEvents = async (
         '/events/' +
         eventId +
         '/instances?key=' +
-        apiKey
+        apiKey,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -56,7 +56,7 @@ export const formatEvents = async (
   calendarId: string,
   apiKey: string,
   accentColours: string,
-  calendarName: string
+  calendarName: string,
 ): Promise<CalendarEvent[]> => {
   const resultCalendarEvents: CalendarEvent[] = [];
 
@@ -77,7 +77,7 @@ export const formatEvents = async (
       end = new Date(event.end.dateTime);
 
       numDays = Math.ceil(
-        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
+        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24),
       );
     } else if (event.start.date) {
       start = new Date(`${event.start.date}`);
@@ -89,7 +89,7 @@ export const formatEvents = async (
       allDay = true;
 
       numDays = Math.ceil(
-        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1
+        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1,
       );
     }
 
@@ -105,11 +105,11 @@ export const formatEvents = async (
             calendarId,
             apiKey,
             accentColours,
-            calendarName
+            calendarName,
           );
 
           resultCalendarEvents.push(...formattedInstances);
-        }
+        },
       );
     } else {
       resultCalendarEvents.push({

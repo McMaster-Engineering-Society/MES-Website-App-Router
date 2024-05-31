@@ -74,7 +74,7 @@ export type GoogleCalendarEvent = {
       responseStatus: string;
       comment: string;
       additionalGuests: number;
-    }
+    },
   ];
   attendeesOmitted: boolean;
   extendedProperties: {
@@ -108,7 +108,7 @@ export type GoogleCalendarEvent = {
         meetingCode: string;
         passcode: string;
         password: string;
-      }
+      },
     ];
     conferenceSolution: {
       key: {
@@ -146,7 +146,7 @@ export type GoogleCalendarEvent = {
       {
         method: string;
         minutes: number;
-      }
+      },
     ];
   };
   source: {
@@ -174,7 +174,7 @@ export type GoogleCalendarEvent = {
       mimeType: string;
       iconLink: string;
       fileId: string;
-    }
+    },
   ];
   eventType: string;
 };

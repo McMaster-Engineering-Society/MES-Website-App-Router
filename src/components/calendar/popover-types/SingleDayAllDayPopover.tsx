@@ -17,7 +17,7 @@ const SingleDayAllDayPopover = ({ event }: SingleDayAllDayPopoverProps) => {
             weekday: 'long',
             month: 'long',
             day: 'numeric',
-          }
+          },
         )}
       </span>
     </div>
