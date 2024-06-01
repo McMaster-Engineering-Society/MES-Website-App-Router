@@ -24,7 +24,7 @@ const SmallHeading = ({ title, variant = 'default' }: SmallHeadingProps) => {
             variant === 'purple' && ['bg-[#8C4799] text-white'],
             variant === 'pink' && ['bg-[#F57EB6] text-black'],
             variant === 'grey' && ['bg-[#E5E7EB] text-black'],
-          ]
+          ],
         )}
       >
         {title}

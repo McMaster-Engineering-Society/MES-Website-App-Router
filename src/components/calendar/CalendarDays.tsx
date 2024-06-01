@@ -38,7 +38,7 @@ export const eventHoverEffects = 'hover:translate-y-[-1px] hover:shadow-md';
 const isDayNumStartOfWeek = (
   dayNum: number,
   month: number,
-  year: number
+  year: number,
 ): boolean => {
   const date = new Date(year, month - 1, dayNum);
   return date.getDay() === 0;
@@ -150,7 +150,7 @@ const CalendarDays = ({
         const events = await listGoogleEvents(calendarId.id, apiKey).then(
           (res) => {
             return res;
-          }
+          },
         );
 
         allEvents.push(
@@ -159,8 +159,8 @@ const CalendarDays = ({
             calendarId.id,
             apiKey,
             accentColours[i % accentColours.length],
-            calendarId.name
-          ))
+            calendarId.name,
+          )),
         );
       }
 
@@ -179,7 +179,7 @@ const CalendarDays = ({
   const lastOfTheMonthDate: Date = new Date(
     year,
     month - 1,
-    numDaysInCurrentMonth
+    numDaysInCurrentMonth,
   );
 
   // Number of days left in the week after the last day of the month
@@ -205,7 +205,7 @@ const CalendarDays = ({
   // @param height: height to check
   const isHeightAvailable = (height: number): boolean => {
     return !multiDaySpacers.some(
-      (spacer) => spacer.remainingDays > 0 && spacer.spacingHeight === height
+      (spacer) => spacer.remainingDays > 0 && spacer.spacingHeight === height,
     );
   };
 
@@ -331,7 +331,7 @@ const CalendarDays = ({
               Math.ceil(
                 (event.end.getTime() -
                   getDateOfStartOfNextWeek(event.start).getTime()) /
-                  (1000 * 60 * 60 * 24)
+                  (1000 * 60 * 60 * 24),
               ) + (event.allDay ? 1 : 0),
             start: getDateOfStartOfNextWeek(event.start),
           });
@@ -374,7 +374,7 @@ const CalendarDays = ({
       className={cn(
         'mt-8 grid grid-cols-7 overflow-clip rounded-lg',
         borderColor,
-        borderWidthAll
+        borderWidthAll,
       )}
     >
       {/* Render header for the days of the week */}
@@ -387,12 +387,12 @@ const CalendarDays = ({
               index > 0 && borderWidthLeft,
               borderColor,
               borderWidthBottom,
-              darkMode && 'bg-slate-700 text-slate-100'
+              darkMode && 'bg-slate-700 text-slate-100',
             )}
           >
             {dayOfWeek}
           </div>
-        )
+        ),
       )}
 
       {/* Render each day cell */}
@@ -468,7 +468,7 @@ const CalendarDays = ({
                     eventIndex={eventIndex}
                     event={event}
                   />
-                )
+                ),
               )}
             </div>
           }

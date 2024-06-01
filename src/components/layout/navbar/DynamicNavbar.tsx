@@ -144,7 +144,7 @@ const DynamicNavbar = ({
                 <span className='text-sm font-medium'>{item.title}</span>
               </Link>
             </NavbarItem>
-          )
+          ),
         )}
       </NavbarContent>
 

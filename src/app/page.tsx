@@ -130,7 +130,7 @@ export default function HomePage() {
   }, [today]);
 
   const [buttonSize, setButtonSize] = useState<'sm' | 'md' | 'lg' | undefined>(
-    'lg'
+    'lg',
   );
 
   const updateSize = () => {
