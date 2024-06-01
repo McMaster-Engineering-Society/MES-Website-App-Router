@@ -3,6 +3,7 @@ import CandidateProfile from '@/components/elections/CandidateProfile';
 import PageLayout from '@/components/layout/PageLayout';
 import DropdownLink from '@/components/links/DropdownLink';
 import InfoCard from '@/components/tutoring-service/InfoCard';
+import LearningSvg from '@/components/tutoring-service/LearningSvg';
 
 export default function TestPage() {
   return (
@@ -45,6 +46,8 @@ export default function TestPage() {
           description='We will tutor you'
           icon='link'
         />
+        <LearningSvg width={600} className='hidden md:block' />
+        <LearningSvg width={300} className='block md:hidden' />
       </main>
     </PageLayout>
   );
