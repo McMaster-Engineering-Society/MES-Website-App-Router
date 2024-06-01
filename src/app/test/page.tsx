@@ -2,6 +2,7 @@ import { ConferencePageSection } from '@/components/conferences/ConferencePageSe
 import CandidateProfile from '@/components/elections/CandidateProfile';
 import PageLayout from '@/components/layout/PageLayout';
 import DropdownLink from '@/components/links/DropdownLink';
+import InfoCard from '@/components/tutoring-service/InfoCard';
 
 export default function TestPage() {
   return (
@@ -38,6 +39,11 @@ export default function TestPage() {
             { text: 'Link1', url: 'https://google.com' },
             { text: 'Link2', url: 'www.bing.com' },
           ]}
+        />
+        <InfoCard
+          title='Tutoring rules'
+          description='We will tutor you'
+          icon='link'
         />
       </main>
     </PageLayout>
