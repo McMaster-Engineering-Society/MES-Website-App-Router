@@ -1,6 +1,7 @@
 import { ConferencePageSection } from '@/components/conferences/ConferencePageSection';
 import CandidateProfile from '@/components/elections/CandidateProfile';
 import PageLayout from '@/components/layout/PageLayout';
+import DropdownLink from '@/components/links/DropdownLink';
 
 export default function TestPage() {
   return (
@@ -30,6 +31,13 @@ export default function TestPage() {
               facebook: 'facebook.com',
             },
           }}
+        />
+        <DropdownLink
+          title='Subscribe on Google Calendar'
+          dropdownItems={[
+            { text: 'Link1', url: 'https://google.com' },
+            { text: 'Link2', url: 'www.bing.com' },
+          ]}
         />
       </main>
     </PageLayout>
