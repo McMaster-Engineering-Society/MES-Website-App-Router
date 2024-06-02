@@ -1,4 +1,5 @@
 import { ConferencePageSection } from '@/components/conferences/ConferencePageSection';
+import DiscountLocation from '@/components/DiscountLocation';
 import CandidateProfile from '@/components/elections/CandidateProfile';
 import PageLayout from '@/components/layout/PageLayout';
 import DropdownLink from '@/components/links/DropdownLink';
@@ -48,6 +49,13 @@ export default function TestPage() {
         />
         <LearningSvg width={600} className='hidden md:block' />
         <LearningSvg width={300} className='block md:hidden' />
+        <DiscountLocation
+          name='Discount 1'
+          address='mcmaster'
+          description='discounts for one, discounts for all'
+          link='https://google.com'
+          imagePath='images/gerald-hatch-centre-winter.jpg'
+        />
       </main>
     </PageLayout>
   );
