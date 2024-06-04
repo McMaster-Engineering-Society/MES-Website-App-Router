@@ -4,7 +4,7 @@ import PageHeading from '@/components/PageHeading';
 
 import executives from '@/constant/council/executives';
 
-export default function XPage() {
+export default function ExecutivesPage() {
   return (
     <PageLayout>
       <main className='layout'>
