@@ -16,7 +16,7 @@ const CALENDAR_IDS: CalendarId[] = [
   },
 ];
 
-export default function XPage() {
+export default function EventsPage() {
   return (
     <PageLayout>
       <main className='layout'>
