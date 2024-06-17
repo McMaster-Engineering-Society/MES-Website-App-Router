@@ -6,7 +6,6 @@ export function SignIn() {
   return (
     <form action={SignInComponent}>
       <Button type='submit'>Sign In</Button>
-      {/* <button type='submit'>Sign In</button> */}
     </form>
   );
 }
