@@ -1,3 +1,5 @@
+'use client';
+
 import CastForEducationIcon from '@mui/icons-material/CastForEducation';
 import DiscountIcon from '@mui/icons-material/Discount';
 import SchoolIcon from '@mui/icons-material/School';
