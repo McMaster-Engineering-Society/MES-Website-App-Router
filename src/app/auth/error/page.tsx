@@ -1,19 +1,35 @@
-import { redirect } from 'next/navigation';
-import React from 'react';
+'use client';
 
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
+import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import { ErrorPage } from '@/app/auth/error/ErrorPage';
+import TextButton from '@/components/buttons/TextButton';
 
-const Error = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
+export default function AuthError() {
+  const router = useRouter();
 
-  // Redirects to home page if for some reason someone tries to access the error page but they're signed in.
-  if (isAuthenticated) {
-    redirect('/');
-  } else {
-    return <ErrorPage />;
-  }
-};
+  const handleClick = () => {
+    router.push('/auth');
+  };
 
-export default Error;
+  return (
+    <main>
+      <section className='bg-white'>
+        <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-black'>
+          <RiAlarmWarningFill
+            size={60}
+            className='drop-shadow-glow animate-flicker text-red-500'
+          />
+          <h1 className='mt-8 text-4xl md:text-6xl'>
+            There was an error with signing in. You must use a McMaster email
+            address in order to sign in.
+          </h1>
+          <TextButton variant='basic' onClick={handleClick} className='mt-4'>
+            Try again
+          </TextButton>
+        </div>
+      </section>
+    </main>
+  );
+}
