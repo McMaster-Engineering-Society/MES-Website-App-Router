@@ -4,7 +4,7 @@ import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
 
-const HatchLockersPage = () => {
+export default function HatchLockersPage() {
   return (
     <PageLayout>
       <main className='layout'>
@@ -55,6 +55,4 @@ const HatchLockersPage = () => {
       </main>
     </PageLayout>
   );
-};
-
-export default HatchLockersPage;
+}
