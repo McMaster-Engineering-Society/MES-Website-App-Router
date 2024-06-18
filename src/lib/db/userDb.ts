@@ -1,4 +1,4 @@
-import { ObjectId, WithId } from 'mongodb';
+import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
 
@@ -46,4 +46,46 @@ const getUserByIdDb = async (userId: string): Promise<TUser | null> => {
   }
 };
 
-export { getAllUsersDb, getUserByIdDb };
+const deleteUserByIdDb = async (userId: string): Promise<TUser | null> => {
+  try {
+    const usersCollection = await getUsersCollection();
+    const userObjectId = new ObjectId(userId);
+    const user: WithId<TUser> | null = await usersCollection.findOneAndDelete({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: ObjectId type mismatch
+      _id: userObjectId,
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error fetching user by id from database:', error);
+    throw new Error('Database error');
+  }
+};
+
+const createUserDb = async (newUser: TUser): Promise<TUser | null> => {
+  try {
+    const usersCollection = await getUsersCollection();
+    const result: InsertOneResult = await usersCollection.insertOne(newUser);
+
+    if (!result.acknowledged) {
+      throw new Error('Failed to insert user');
+    }
+
+    const createdUser: TUser = {
+      ...newUser,
+      _id: result.insertedId.toString(),
+    };
+
+    return createdUser;
+  } catch (error) {
+    console.error('Error fetching user by id from database:', error);
+    throw new Error('Database error');
+  }
+};
+
+export { createUserDb, deleteUserByIdDb, getAllUsersDb, getUserByIdDb };
