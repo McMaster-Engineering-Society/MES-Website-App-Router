@@ -1,6 +1,5 @@
+import SignInComponent from '@/components/auth/sign-in-func';
 import Button from '@/components/buttons/Button';
-
-import SignInComponent from './sign-in-func';
 
 // Maybe add more props later if we want to let them style it differently.
 interface SignInProps {
