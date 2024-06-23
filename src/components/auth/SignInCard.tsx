@@ -1,26 +1,23 @@
-<<<<<<< HEAD
-'use client';
-
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 
 import { handleEmailSignIn } from '@/lib/auth/emailSignInHelper';
 
 import Button from '@/components/buttons/Button';
 
-// TODO: reformat component, make prettier
 const SignInCard = () => {
-  const [isPending, startTransition] = useTransition();
   const [formData, setFormData] = useState({ email: '' as string });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ email: event.target.value });
+  };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    startTransition(async () => {
-      await handleEmailSignIn(formData.email);
-    });
+    await handleEmailSignIn(formData.email);
   };
 
   return (
-    <div className='flex-row w-80 p-8 rounded-lg shadow-md bg-white text-center hover:bg-gray-100'>
+    <div className='w-80 p-8 rounded-lg shadow-md bg-white text-center hover:bg-gray-100'>
+      Enter your Email
       <form onSubmit={handleSubmit}>
         <input
           type='email'
@@ -28,22 +25,10 @@ const SignInCard = () => {
           maxLength={320}
           placeholder='Email Address'
           value={formData.email}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setFormData({ email: event.target.value });
-          }}
-          disabled={isPending}
-          required
+          onChange={handleChange}
         />
-        <Button type='submit' className='mt-2'>
-          Sign In
-        </Button>
+        <Button type='submit'>Sign In</Button>
       </form>
-=======
-const SignInCard = () => {
-  return (
-    <div className='w-80 p-8 rounded-lg shadow-md bg-white text-center hover:bg-gray-100'>
-      Enter your Email
->>>>>>> 95e513d (feat: moved booking page and signin page to new file, started sign in components)
     </div>
   );
 };
