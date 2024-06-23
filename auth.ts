@@ -65,6 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   adapter: MongoDBAdapter(clientPromise),
   pages: {
+    signIn: '/auth/sign-in',
     error: '/auth/error',
   },
 });
