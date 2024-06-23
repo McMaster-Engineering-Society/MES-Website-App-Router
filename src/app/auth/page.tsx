@@ -1,5 +1,6 @@
 'use client';
 import { SignIn } from '@/components/auth/sign-in';
+import { SignOut } from '@/components/auth/sign-out';
 import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
@@ -31,6 +32,7 @@ export default function AuthPage() {
           />
           <Button onClick={sendEmail}>Send mail</Button>
           <SignIn />
+          <SignOut />
         </section>
       </main>
     </PageLayout>
