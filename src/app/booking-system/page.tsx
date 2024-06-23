@@ -15,7 +15,7 @@ const BookingSystemPage = async () => {
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-import BookingSystem from './BookingSystemPage';
+import BookingSystem from '@/app/booking-system/BookingSystemPage';
 
 export default function BookingSystemPage() {
   const isAuthenticated = true;
