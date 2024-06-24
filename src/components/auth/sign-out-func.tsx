@@ -2,5 +2,5 @@
 import { signOut } from 'auth';
 
 export default async function signOutComponent() {
-  await signOut();
+  await signOut({ redirectTo: '/auth/sign-in' });
 }

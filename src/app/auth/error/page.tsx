@@ -1,19 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import TextButton from '@/components/buttons/TextButton';
 import PageLayout from '@/components/layout/PageLayout';
+import ButtonLink from '@/components/links/ButtonLink';
 
+// TODO: reformat page, make prettier
 export default function AuthError() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push('/auth');
-  };
-
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  // Exits the page if we didn't get an error to lead us here from NextAuth.
+  if (!error) {
+    redirect('/auth/sign-in');
+  }
   return (
     <PageLayout>
       <main className='layout'>
@@ -27,9 +29,13 @@ export default function AuthError() {
               There was an error with signing in. You must use a McMaster email
               address in order to sign in.
             </h1>
-            <TextButton variant='basic' onClick={handleClick} className='mt-4'>
-              Try again
-            </TextButton>
+            <ButtonLink
+              href='/auth/sign-in'
+              variant='outline'
+              className='mt-8 w-1/4'
+            >
+              Try Again
+            </ButtonLink>
           </div>
         </section>
       </main>
