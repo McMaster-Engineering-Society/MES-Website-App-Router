@@ -5,6 +5,7 @@ import clientPromise from '@/lib/db';
 import { html, text } from '@/lib/emailHelper';
 
 // Checks if the domain name is mcmaster
+// eslint-disable-next-line unused-imports/no-unused-vars
 function isMacEmail(email: string) {
   /**
    * Checks if the given email is from a mcmaster domain
@@ -26,11 +27,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       from: process.env.EMAIL_FROM,
       normalizeIdentifier(identifier: string): string {
-        // Throw an error if not Mac email
-        if (!isMacEmail(identifier)) {
-          // throws error which will redirect the user to the sign-in page with error=EmailSignin in the URL
-          throw new Error('Must use a McMaster email address to sign in.');
-        }
+        // TODO: temporarily disabled because Mac emails have outlook error where they can't verify the link (I'm guessing because it's local host?)
+        // // Throw an error if not Mac email
+        // if (!isMacEmail(identifier)) {
+        //   // throws error which will redirect the user to the sign-in page with error=EmailSignin in the URL
+        //   throw new Error('Must use a McMaster email address to sign in.');
+        // }
 
         // Default behaviour for this function
         // eslint-disable-next-line prefer-const
@@ -66,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   pages: {
     signIn: '/auth/sign-in',
+    verifyRequest: '/auth/success',
     error: '/auth/error',
   },
 });

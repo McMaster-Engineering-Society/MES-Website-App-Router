@@ -13,6 +13,7 @@ export function html(params: { url: string; host: string }) {
     buttonText: '#fff',
   };
 
+  // TODO: reformat page, make prettier
   return `
 <body style="background: ${color.background};">
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
