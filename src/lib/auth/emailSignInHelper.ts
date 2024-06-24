@@ -4,6 +4,8 @@ import { auth, signIn } from 'auth';
 
 export const checkIsAuthenticated = async () => {
   const session = await auth();
+  // eslint-disable-next-line no-console
+  console.log(session);
   if (session) {
     return true;
   } else {
