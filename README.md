@@ -7,11 +7,10 @@ The following are required to be installed on your system:
 - [Node.js](https://nodejs.org/en/download/)
 - [Git](https://git-scm.com/downloads)
 - [Chocolatey](https://chocolatey.org/install) (_This can be installed through the Node.js Installer_)
-- [Yarn](https://yarnpkg.com/getting-started/install)
 - [VSCode](https://code.visualstudio.com/download)
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
-_Note: Ensure that you select "Add to PATH" when installing Git, Node.js, and Yarn, if prompted_
+_Note: Ensure that you select "Add to PATH" when installing Git, Node.js, if prompted_
 
 ### VSCode Extensions
 
@@ -36,15 +35,15 @@ Install the following extensions for a better development experience:
 2. Install dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
-3. Create a .env.local from the .env.example, and enter neccessary variables
+3. Create a .env.local from the .env.example, and fill neccessary variables
 
 4. Run the development server
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
