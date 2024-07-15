@@ -1,133 +1,467 @@
-# Next.js + Tailwind CSS + TypeScript Starter and Boilerplate
+## Getting Started
 
-<div align="center">
-  <h2>🔋 ts-nextjs-tailwind-starter</h2>
-  <p>Next.js + Tailwind CSS + TypeScript starter packed with useful development features.</p>
-  <p>Made by <a href="https://theodorusclarence.com">Theodorus Clarence</a></p>
+### Pre-requisites
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/theodorusclarence/ts-nextjs-tailwind-starter)](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/stargazers)
-[![Depfu](https://badges.depfu.com/badges/fc6e730632ab9dacaf7df478a08684a7/overview.svg)](https://depfu.com/github/theodorusclarence/ts-nextjs-tailwind-starter?project_id=30160)
-[![Last Update](https://img.shields.io/badge/deps%20update-every%20sunday-blue.svg)](https://shields.io/)
+The following are required to be installed on your system:
 
-</div>
+- [Node.js](https://nodejs.org/en/download/)
+- [Git](https://git-scm.com/downloads)
+- [Chocolatey](https://chocolatey.org/install) (_This can be installed through the Node.js Installer_)
+- [Yarn](https://yarnpkg.com/getting-started/install)
+- [VSCode](https://code.visualstudio.com/download)
+- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
-## Features
+_Note: Ensure that you select "Add to PATH" when installing Git, Node.js, and Yarn, if prompted_
 
-This repository is 🔋 battery packed with:
+### VSCode Extensions
 
-- ⚡️ Next.js 14 with App Router
-- ⚛️ React 18
-- ✨ TypeScript
-- 💨 Tailwind CSS 3 — Configured with CSS Variables to extend the **primary** color
-- 💎 Pre-built Components — Components that will **automatically adapt** with your brand color, [check here for the demo](https://tsnext-tw.thcl.dev/components)
-- 🃏 Jest — Configured for unit testing
-- 📈 Absolute Import and Path Alias — Import components using `@/` prefix
-- 📏 ESLint — Find and fix problems in your code, also will **auto sort** your imports
-- 💖 Prettier — Format your code consistently
-- 🐶 Husky & Lint Staged — Run scripts on your staged files before they are committed
-- 🤖 Conventional Commit Lint — Make sure you & your teammates follow conventional commit
-- ⏰ Release Please — Generate your changelog by activating the `release-please` workflow
-- 👷 Github Actions — Lint your code on PR
-- 🚘 Automatic Branch and Issue Autolink — Branch will be automatically created on issue **assign**, and auto linked on PR
-- 🔥 Snippets — A collection of useful snippets
-- 👀 Open Graph Helper Function — Awesome open graph generated using [og](https://github.com/theodorusclarence/og), fork it and deploy!
-- 🗺 Site Map — Automatically generate sitemap.xml
-- 📦 Expansion Pack — Easily install common libraries, additional components, and configs.
+The following extensions are required for the linting commit check:
 
-See the 👉 [feature details and changelog](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/blob/main/CHANGELOG.md) 👈 for more.
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-You can also check all of the **details and demos** on my blog post:
+Install the following extensions for a better development experience:
 
-- [One-stop Starter to Maximize Efficiency on Next.js & Tailwind CSS Projects](https://theodorusclarence.com/blog/one-stop-starter)
+- [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [Babel JavaScript](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel)
+- [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
+
+### Installation
+
+1. Clone the repository
+
+2. Install dependencies
+
+```bash
+yarn install
+```
+
+3. Create a .env.local from the .env.example, and enter neccessary variables
+
+4. Run the development server
+
+```bash
+yarn dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Branch and Commit Message Convention
+
+**Branch**
+
+Ensure that all your branches are named according to the following convention:
+
+- `feature/<feature-name>` for new features
+- `bugfix/<bug-name>` for bug fixes
+- `improvement/<improvement-name>` for improvements
+- `chore/<chore-name>` for chores
+
+Ensure that the name of your branch is descriptive of the feature/bug/improvement/chore that you are working on, and is written in `kebab-case`.
+
+Examples:
+
+- `feature/add-login-page`
+- `bugfix/fix-login-page`
+- `improvement/update-login-page`
+- `chore/update-readme`
+
+**Commit Message**
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages. Ensure that all your commit messages are written according to the following convention:
+
+```
+<type>: <description>
+```
+
+Where `type` is one of the following:
+
+- `feat` for new features
+- `fix` for bug fixes
+
+Examples:
+
+- `feat: add confirm password field`
+- `fix: submit button not working`
+
+### Development
+
+#### Folder Structure
+
+The following is the folder structure of the project:
+
+```bash
+.
+├── .github
+├── .husky
+├── .vscode
+├── node_modules
+├── public
+├── src
+│   ├── __tests__
+│   ├── components
+│   ├── constants
+│   ├── lib
+│   ├── pages
+│   ├── styles
+```
+
+The most important folders are:
+
+- `node_modules` contains all the dependencies of the project. This folder is automatically generated when you run `yarn install`, and should not be manually edited.
+- `public` contains all the static assets of the project. This includes images, fonts, etc.
+- `src` contains all the source code of the project
+  - `components` contains all the components of the project. These include any component that is used more than once in the project.
+  - `constants` contains all the constants of the project
+  - `lib` contains all the utility functions of the project
+  - `pages` contains all the pages of the project. This is where you will be developing most of the website. Each file in this folder represents a sub-directory page in the website. For example, `bookings.tsx` would link to [https://www.macengsociety.ca/bookings](https://www.macengsociety.ca/bookings)
+  - `styles` contains all the styles of the project
+
+## Developer Notes
+
+- `override.css` is to override library css classes
+- NextUI is a great start for components
+
+### Updating Council Member Information
+
+Council member information is stored in the `src/constant/council/` directory, with each group of council members stored in each respectively named file.
+
+Council members are formatted as follows:
+
+````js
+{
+  firstName: 'John',
+  lastName: 'Doe',
+  position: 'AVP Academic Resources',
+  program: 'Software & iBiomed Eng',## Getting Started
+
+### Pre-requisites
+
+The following are required to be installed on your system:
+
+- [Node.js](https://nodejs.org/en/download/)
+- [Git](https://git-scm.com/downloads)
+- [Chocolatey](https://chocolatey.org/install) (_This can be installed through the Node.js Installer_)
+- [Yarn](https://yarnpkg.com/getting-started/install)
+- [VScode](https://code.visualstudio.com/download)
+
+_Note: Ensure that you select "Add to PATH" when installing Git, Node.js, and Yarn, if prompted_
+
+### VScode Extensions
+
+The following extensions are required for the linting commit check:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+Install the following extensions for a better development experience:
+
+- [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [Babel JavaScript](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel)
+- [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
+
+### Installation
+
+1. Clone the repository
+
+2. Install dependencies
+
+```bash
+yarn install
+````
+
+3. Run the development server
+
+```bash
+yarn dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Branch and Commit Message Convention
+
+**Branch**
+
+Ensure that all your branches are named according to the following convention:
+
+- `feature/<feature-name>` for new features
+- `bugfix/<bug-name>` for bug fixes
+- `improvement/<improvement-name>` for improvements
+- `chore/<chore-name>` for chores
+
+Ensure that the name of your branch is descriptive of the feature/bug/improvement/chore that you are working on, and is written in `kebab-case`.
+
+Examples:
+
+- `feature/add-login-page`
+- `bugfix/fix-login-page`
+- `improvement/update-login-page`
+- `chore/update-readme`
+
+**Commit Message**
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages. Ensure that all your commit messages are written according to the following convention:
+
+```
+<type>: <description>
+```
+
+Where `type` is one of the following:
+
+- `feat` for new features
+- `fix` for bug fixes
+
+Examples:
+
+- `feat: add confirm password field`
+- `fix: submit button not working`
+
+### Development
+
+#### Folder Structure
+
+The following is the folder structure of the project:
+
+```bash
+.
+├── .github
+├── .husky
+├── .vscode
+├── node_modules
+├── public
+├── src
+│   ├── __tests__
+│   ├── components
+│   ├── constants
+│   ├── lib
+│   ├── pages
+│   ├── styles
+```
+
+The most important folders are:
+
+- `node_modules` contains all the dependencies of the project. This folder is automatically generated when you run `yarn install`, and should not be manually edited.
+- `public` contains all the static assets of the project. This includes images, fonts, etc.
+- `src` contains all the source code of the project
+  - `components` contains all the components of the project. These include any component that is used more than once in the project.
+  - `constants` contains all the constants of the project
+  - `lib` contains all the utility functions of the project
+  - `pages` contains all the pages of the project. This is where you will be developing most of the website. Each file in this folder represents a sub-directory page in the website. For example, `bookings.tsx` would link to [https://www.macengsociety.ca/bookings](https://www.macengsociety.ca/bookings)
+  - `styles` contains all the styles of the project
+
+## Developer Notes
+
+- `override.css` is to override library css classes
+- NextUI is a great start for components
+
+### Updating Council Member Information
+
+Council member information is stored in the `src/constant/council/` directory, with each group of council members stored in each respectively named file.
+
+Council members are formatted as follows:
+
+```js
+{
+  firstName: 'John',
+  lastName: 'Doe',
+  position: 'AVP Academic Resources',
+  program: 'Software & iBiomed Eng',
+  level: 2,
+  email: 'avp.ar@macengsociety.ca',
+  image: '/images/council/john-doe.jpeg',
+  description: "Bio goes here",
+},
+```
+
+However, appointed coordinators are formatted as follows:
+
+```js
+{
+  name: 'John Doe',
+  role: 'Mentorship Coordinator',
+  image: '/images/council/john-doe.jpeg',
+},
+```
+
+All images of council members are stored in the `public/images/council/` directory.
 
 ## Getting Started
 
-### 1. Clone this template using one of the three ways
+### Pre-requisites
 
-1. Use this repository as template
+The following are required to be installed on your system:
 
-   **Disclosure:** by using this repository as a template, there will be an attribution on your repository.
+- [Node.js](https://nodejs.org/en/download/)
+- [Git](https://git-scm.com/downloads)
+- [Chocolatey](https://chocolatey.org/install) (_This can be installed through the Node.js Installer_)
+- [Yarn](https://yarnpkg.com/getting-started/install)
+- [VScode](https://code.visualstudio.com/download)
 
-   I'll appreciate if you do, so this template can be known by others too 😄
+_Note: Ensure that you select "Add to PATH" when installing Git, Node.js, and Yarn, if prompted_
 
-   ![Use as template](https://user-images.githubusercontent.com/55318172/129183039-1a61e68d-dd90-4548-9489-7b3ccbb35810.png)
+### VScode Extensions
 
-2. Using `create-next-app`
+The following extensions are required for the linting commit check:
 
-   ```bash
-   pnpm create next-app  -e https://github.com/theodorusclarence/ts-nextjs-tailwind-starter ts-pnpm
-   ```
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-   If you still want to use **pages directory** (_is not actively maintained_) you can use this command
+Install the following extensions for a better development experience:
 
-   ```bash
-   npx create-next-app -e https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/tree/pages-directory project-name
-   ```
+- [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [Babel JavaScript](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel)
+- [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
 
-3. Using `degit`
+### Installation
 
-   ```bash
-   npx degit theodorusclarence/ts-nextjs-tailwind-starter YOUR_APP_NAME
-   ```
+1. Clone the repository
 
-4. Deploy to Vercel
-
-   [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter)
-
-### 2. Install dependencies
-
-It is encouraged to use **pnpm** so the husky hooks can work properly.
+2. Install dependencies
 
 ```bash
-pnpm install
+yarn install
 ```
 
-### 3. Run the development server
-
-You can start the server using this command:
+3. Run the development server
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can start editing the page by modifying `src/pages/index.tsx`.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### 4. Change defaults
+### Branch and Commit Message Convention
 
-There are some things you need to change including title, urls, favicons, etc.
+**Branch**
 
-Find all comments with !STARTERCONF, then follow the guide.
+Ensure that all your branches are named according to the following convention:
 
-Don't forget to change the package name in package.json
+- `feature/<feature-name>` for new features
+- `bugfix/<bug-name>` for bug fixes
+- `improvement/<improvement-name>` for improvements
+- `chore/<chore-name>` for chores
 
-### 5. Commit Message Convention
+Ensure that the name of your branch is descriptive of the feature/bug/improvement/chore that you are working on, and is written in `kebab-case`.
 
-This starter is using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), it is mandatory to use it to commit changes.
+Examples:
 
-## Projects using ts-nextjs-tailwind-starter
+- `feature/add-login-page`
+- `bugfix/fix-login-page`
+- `improvement/update-login-page`
+- `chore/update-readme`
 
-<!--
-TEMPLATE
-- [sitename](https://sitelink.com) ([Source](https://github.com/githublink))
-- [sitename](https://sitelink.com)
--->
+**Commit Message**
 
-- [theodorusclarence.com](https://theodorusclarence.com) ([Source](https://github.com/theodorusclarence/theodorusclarence.com))
-- [Notiolink](https://notiolink.thcl.dev/) ([Source](https://github.com/theodorusclarence/notiolink))
-- [NextJs + Materia UI + Typescript](https://github.com/AlexStack/nextjs-materia-mui-typescript-hook-form-scaffold-boilerplate-starter)
+This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages. Ensure that all your commit messages are written according to the following convention:
 
-Are you using this starter? Please add your page (and repo) to the end of the list via a [Pull Request](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/edit/main/README.md). 😃
+```
+<type>: <description>
+```
 
-## Expansion Pack 📦
+Where `type` is one of the following:
 
-This starter is now equipped with an [expansion pack](https://github.com/theodorusclarence/expansion-pack).
+- `feat` for new features
+- `fix` for bug fixes
 
-You can easily add expansion such as React Hook Form + Components, Storybook, and more just using a single command line.
+Examples:
 
-<https://user-images.githubusercontent.com/55318172/146631994-e1cac137-1664-4cfe-950b-a96decc1eaa6.mp4>
+- `feat: add confirm password field`
+- `fix: submit button not working`
 
-Check out the [expansion pack repository](https://github.com/theodorusclarence/expansion-pack) for the commands
+### Development
 
-### App Router Update
+#### Folder Structure
 
-Due to App Router update, the expansion pack is currently **outdated**. It will be updated in the future. You can still use them by copy and pasting the files.
+The following is the folder structure of the project:
+
+```bash
+.
+├── .github
+├── .husky
+├── .vscode
+├── node_modules
+├── public
+├── src
+│   ├── __tests__
+│   ├── components
+│   ├── constants
+│   ├── lib
+│   ├── pages
+│   ├── styles
+```
+
+The most important folders are:
+
+- `node_modules` contains all the dependencies of the project. This folder is automatically generated when you run `yarn install`, and should not be manually edited.
+- `public` contains all the static assets of the project. This includes images, fonts, etc.
+- `src` contains all the source code of the project
+  - `components` contains all the components of the project. These include any component that is used more than once in the project.
+  - `constants` contains all the constants of the project
+  - `lib` contains all the utility functions of the project
+  - `pages` contains all the pages of the project. This is where you will be developing most of the website. Each file in this folder represents a sub-directory page in the website. For example, `bookings.tsx` would link to [https://www.macengsociety.ca/bookings](https://www.macengsociety.ca/bookings)
+  - `styles` contains all the styles of the project
+
+## Developer Notes
+
+- `override.css` is to override library css classes
+- NextUI is a great start for components
+
+### Updating Council Member Information
+
+Council member information is stored in the `src/constant/council/` directory, with each group of council members stored in each respectively named file.
+
+Council members are formatted as follows:
+
+```js
+{
+  firstName: 'John',
+  lastName: 'Doe',
+  position: 'AVP Academic Resources',
+  program: 'Software & iBiomed Eng',
+  level: 2,
+  email: 'avp.ar@macengsociety.ca',
+  image: '/images/council/john-doe.jpeg',
+  description: "Bio goes here",
+},
+```
+
+However, appointed coordinators are formatted as follows:
+
+```js
+{
+  name: 'John Doe',
+  role: 'Mentorship Coordinator',
+  image: '/images/council/john-doe.jpeg',
+},
+```
+
+All images of council members are stored in the `public/images/council/` directory.
+
+level: 2,
+email: 'avp.ar@macengsociety.ca',
+image: '/images/council/john-doe.jpeg',
+description: "Bio goes here",
+},
+
+````
+
+However, appointed coordinators are formatted as follows:
+
+```js
+{
+  name: 'John Doe',
+  role: 'Mentorship Coordinator',
+  image: '/images/council/john-doe.jpeg',
+},
+````
+
+All images of council members are stored in the `public/images/council/` directory.
