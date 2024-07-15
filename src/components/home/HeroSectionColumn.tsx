@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
-import { itemMotionVariants } from '@/app/page';
+import { itemMotionVariants } from '@/constant/home/animations';
 
 type HerosectionColumnProps = {
   img?: string;
