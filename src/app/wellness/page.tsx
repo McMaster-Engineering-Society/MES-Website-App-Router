@@ -1,3 +1,4 @@
+'use client';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 
 import PageLayout from '@/components/layout/PageLayout';
