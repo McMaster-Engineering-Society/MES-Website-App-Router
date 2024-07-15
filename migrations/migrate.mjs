@@ -42,8 +42,8 @@ async function createCollections(uri, database, collections) {
 
 // Main function to compare and create collections
 async function main() {
-  const productionURI = process.env.MONGODB_URI;
-  const testURI = process.env.MONGODB_URI;
+  const productionURI = process.env.REMOTE_MONGODB_URI;
+  const testURI = process.env.REMOTE_MONGODB_URI;
   const localhostURI = 'mongodb://localhost:27017';
 
   const databases = {
