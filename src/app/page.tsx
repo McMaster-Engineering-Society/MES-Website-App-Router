@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@nextui-org/react';
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
@@ -20,6 +20,10 @@ import ArrowLink from '@/components/links/ArrowLink';
 
 import { councilForms } from '@/constant/council-resources/councilForms';
 import { electionInfo } from '@/constant/elections/electionInfo';
+import {
+  containerMotionVariants,
+  itemMotionVariants,
+} from '@/constant/home/animations';
 
 import { CalendarId } from '@/types/calendar';
 
@@ -57,26 +61,6 @@ const quickLinks: { icon: IconType; label: string; href: string }[] = [
     href: councilForms[0].forms[1].link,
   },
 ];
-
-const containerMotionVariants: Variants = {
-  hidden: { opacity: 1, scale: 1 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-export const itemMotionVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-  },
-};
 
 export default function HomePage() {
   const [today, setToday] = useState<Date>(new Date());
