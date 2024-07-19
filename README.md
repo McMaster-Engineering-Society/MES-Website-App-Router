@@ -30,8 +30,8 @@ Install the following extensions for a better development experience:
 ### Installation
 
 1. Clone the repository
-   
-3. Install pnpm
+2. Install pnpm
+
 ```bash
 npm install -g pnpm
 ```
