@@ -4,6 +4,8 @@ import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
+import {ScrollShadow} from "@nextui-org/react";
+import Content from "./Content";
 
 const Bookings = () => {
   return (
@@ -74,6 +76,12 @@ const Bookings = () => {
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
         </ButtonLink>
+
+        <ScrollShadow hideScrollBar className=" w-[200px] h-[400px]">
+          <Content />
+        
+        </ScrollShadow>
+    
       </main>
     </PageLayout>
   );
