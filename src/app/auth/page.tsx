@@ -14,7 +14,7 @@ async function sendEmail() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      to: 'macinfra4@gmail.com',
+      to: process.env.SMTP_USER,
       subject: 'Test Email',
       text: 'This is a test email sent from Next.js using Nodemailer.',
     }),
