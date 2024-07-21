@@ -32,6 +32,7 @@ const CalendarEventWidget = ({
       color='primary'
       isOpen={isOpen}
       onOpenChange={(open) => setIsOpen(open)}
+      shouldCloseOnInteractOutside={() => false}
     >
       <PopoverTrigger>
         <div>
