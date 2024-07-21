@@ -2,6 +2,8 @@
 'use client'
 import {Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
 import React from "react";
+import Image from 'next/image';
+
 
 import { HatchRoomType } from "@/constant/hatch-bookings/available-rooms";
 
@@ -31,7 +33,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
                 <p>
                   Resources: TV, Whiteboard
                 </p>
-           
+                <Image src={roomInfo.img} width={200} height={200} alt="room pic"/>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
