@@ -15,6 +15,7 @@ type AddToCalendarDropdownProps = {
 };
 
 const AddEventToCalendarDropdown = ({ event }: AddToCalendarDropdownProps) => {
+  // returns a link to create a Google Calendar event
   const getGoogleAddEventUrl = (event: CalendarEvent) => {
     const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
       event.title || '',
@@ -30,6 +31,7 @@ const AddEventToCalendarDropdown = ({ event }: AddToCalendarDropdownProps) => {
     return googleCalendarUrl;
   };
 
+  // returns a link to create an Outlook Calendar event
   const getOutlookAddEventUrl = (event: CalendarEvent) => {
     const outlookCalendarUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(
       event.title || '',
