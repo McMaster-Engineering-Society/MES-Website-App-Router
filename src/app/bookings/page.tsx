@@ -77,10 +77,11 @@ const Bookings = () => {
           Click Here to Start Booking
         </ButtonLink>
 
-        <ScrollShadow hideScrollBar className=" w-[200px] h-[400px]">
+        <div className="w-full flex justify-end">
+        <ScrollShadow hideScrollBar className="flex justify-end w-[200px] h-[400px]">
           <Content />
-        
         </ScrollShadow>
+        </div>
     
       </main>
     </PageLayout>

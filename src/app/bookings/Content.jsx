@@ -6,13 +6,8 @@ import {AvailableRooms} from "@/constant/hatch-bookings/available-rooms";
 export default function Content() {
 
   return(
-    <>
-    {AvailableRooms.map((roomInfo) => (<AvailableRoom key={roomInfo.roomNum} {...roomInfo}/> ))}
-    {/* <AvailableRoom/>
-    <AvailableRoom/>
-    <AvailableRoom/>
-    <AvailableRoom/> */}
-  
-    </>
+    <div className="">
+    {AvailableRooms.map((roomInfo) => (<AvailableRoom key={roomInfo.roomNum} {...roomInfo}/> ))}  
+    </div>
   );
 }
