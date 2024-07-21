@@ -1,24 +1,18 @@
-'use client';
-
-import Alert from '@mui/material/Alert';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
-import PageLayout from '@/components/layout/PageLayout';
+import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
 
-export default function BookingSystemPage() {
-  return (
-    <PageLayout noFooter>
-      <>
-        <Alert className='h-[70px] sm:h-[50px]' severity='info'>
-          This is a temporary booking system. Our new, custom booking system is
-          coming soon!
-        </Alert>
+import BookingSystem from '@/app/booking-system/BookingSystemPage';
 
-        <iframe
-          className='h-[calc(100vh-81px-70px)] w-full sm:h-[calc(100vh-81px-50px)]'
-          src='https://squareup.com/appointments/buyer/widget/45dhrrihp46ip7/L2R6EFJ85Y7Z6'
-        />
-      </>
-    </PageLayout>
-  );
-}
+const BookingSystemPage = async () => {
+  const isAuthenticated = await checkIsAuthenticated();
+
+  if (!isAuthenticated) {
+    redirect('/auth/sign-in');
+  } else {
+    return <BookingSystem />;
+  }
+};
+
+export default BookingSystemPage;
