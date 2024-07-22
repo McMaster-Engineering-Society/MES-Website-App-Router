@@ -6,7 +6,7 @@ import { TApiResponse, TBooking } from '@/lib/types';
 import { TMessageResponse } from '@/app/api/types';
 
 export async function POST(req: Request) {
-  const booking = await req.json();
+  const booking: TBooking = await req.json();
 
   if (!booking) {
     return NextResponse.json<TMessageResponse>(
