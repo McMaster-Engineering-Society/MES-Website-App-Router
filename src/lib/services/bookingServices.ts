@@ -1,4 +1,8 @@
-import { createBookingDb, deleteBookingByIdDb } from '@/lib/db/bookingDb';
+import {
+  createBookingDb,
+  deleteBookingByIdDb,
+  updateBookingByIdDb,
+} from '@/lib/db/bookingDb';
 import { TBooking } from '@/lib/types';
 
 const createBookingService = async (
@@ -27,4 +31,22 @@ const deleteBookingByIdService = async (
   }
 };
 
-export { createBookingService, deleteBookingByIdService };
+const updateBookingByIdService = async (
+  bookingId: string,
+  bookingInfo: TBooking,
+): Promise<TBooking | null> => {
+  try {
+    const booking = await updateBookingByIdDb(bookingId, bookingInfo);
+    return booking;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error in booking services:', error);
+    return null;
+  }
+};
+
+export {
+  createBookingService,
+  deleteBookingByIdService,
+  updateBookingByIdService,
+};

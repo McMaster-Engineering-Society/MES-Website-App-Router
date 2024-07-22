@@ -17,6 +17,8 @@ const createBookingDb = async (
 ): Promise<TBooking | null> => {
   try {
     const bookingsCollection = await getBookingsCollection();
+
+    newBooking.createdDate = new Date();
     const result: InsertOneResult =
       await bookingsCollection.insertOne(newBooking);
 
@@ -61,4 +63,32 @@ const deleteBookingByIdDb = async (
   }
 };
 
-export { createBookingDb, deleteBookingByIdDb };
+const updateBookingByIdDb = async (
+  bookingId: string,
+  bookingInfo: TBooking,
+): Promise<TBooking | null> => {
+  try {
+    const bookingsCollection = await getBookingsCollection();
+    const bookingObjectId = new ObjectId(bookingId);
+    const result = await bookingsCollection.findOneAndUpdate(
+      {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: ObjectId type mismatch
+        _id: bookingObjectId,
+      },
+      { $set: bookingInfo },
+      { returnDocument: 'after' },
+    );
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error updating booking by id', error);
+    throw new Error('Database error');
+  }
+};
+
+export { createBookingDb, deleteBookingByIdDb, updateBookingByIdDb };
