@@ -9,7 +9,7 @@ type dashboardLayoutProps = {
 
 const ClubUserDashboardLayout = ({ children }: dashboardLayoutProps) => {
   return (
-    <div className='flex'>
+    <div className='flex h-screen w-screen'>
       <Sidebar />
       <div className='w-full'>
         <TaskBanner />

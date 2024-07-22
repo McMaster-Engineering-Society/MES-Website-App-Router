@@ -1,5 +1,6 @@
 'use client';
 
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
@@ -25,17 +26,23 @@ const Sidebar = () => {
     <>
       <div
         className={cn([
-          'bg-gray-200 h-screen flex flex-col justify-center items-center relative',
+          'bg-gray-200 h-screen flex flex-col justify-center items-center relative transition-all duration-300',
           open ? 'w-3/12' : 'w-1/12',
         ])}
       >
-        <button onClick={() => setOpen(!open)}>
-          <MenuIcon />
+        <button
+          className={cn(['absolute top-2', open && 'right-3'])}
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <ArrowBackIosNewIcon /> : <MenuIcon />}
         </button>
         {open && <ClubProfile />}
-        <div className='flex flex-col'>
+        <div id='dashboard-nav-items' className='flex flex-col'>
           {sidebarItems.map((item) => (
-            <div key={item.name} className='flex flex-row items-center'>
+            <div
+              key={item.name}
+              className='flex flex-row items-center text-nowrap'
+            >
               <item.icon fontSize={iconSize} />
               {open && (
                 <a href={item.link} className='ml-2'>
