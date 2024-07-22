@@ -4,8 +4,8 @@ import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
-import {ScrollShadow} from "@nextui-org/react";
-import Content from "./Content";
+
+import Content from './Content';
 
 const Bookings = () => {
   return (
@@ -77,12 +77,9 @@ const Bookings = () => {
           Click Here to Start Booking
         </ButtonLink>
 
-        <div className="w-full flex justify-end">
-        <ScrollShadow hideScrollBar className="flex justify-end w-[200px] h-[400px]">
-          <Content />
-        </ScrollShadow>
+        <div className='w-full flex justify-end'>
+          <Content availableRoomIds={['201', '203A']} />
         </div>
-    
       </main>
     </PageLayout>
   );
