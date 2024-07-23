@@ -5,10 +5,11 @@ import { TApiResponse, TBooking } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
 
-export async function PUT(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const bookingId = searchParams.get('bookingId');
-
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
+  const bookingId: string = params.id;
   const booking: TBooking = await req.json();
 
   if (!bookingId) {

@@ -5,9 +5,8 @@ import { TApiResponse, TBooking } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
 
-export async function DELETE(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const bookingId = searchParams.get('bookingId');
+export async function DELETE({ params }: { params: { id: string } }) {
+  const bookingId: string = params.id;
 
   if (!bookingId) {
     return NextResponse.json<TMessageResponse>(
