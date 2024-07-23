@@ -40,8 +40,7 @@ const CouncilResources = () => {
               tuned until then!
               <br />
               <br />
-              For more information contact the MES Administrator, at
-              administrator@macengsociety.ca.
+              For more information contact the MES Administrator, at{' '}
               <a
                 href='mailto:administrator@macengsociety.ca'
                 className='underline'
