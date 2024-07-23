@@ -25,18 +25,14 @@ export default function EventsPage() {
           preTitle='Check out the'
           variant='blue'
         />
-        <PageSection variant='white'>
-          <div className='flex flex-col items-center justify-around gap-y-4 text-center sm:flex-row'>
-            <DropdownLink
-              title='Subscribe on Google Calendar'
-              dropdownItems={googleLinks}
-            />
-            <DropdownLink
-              title='Subscribe on Outlook'
-              dropdownItems={outlookLinks}
-            />
-          </div>
-        </PageSection>
+
+        <div className='flex flex-col items-center justify-end gap-y-4 text-center sm:flex-row p-5'>
+          <DropdownLink
+            title='Subscribe to Calendar'
+            dropdownItems={[...googleLinks, ...outlookLinks]}
+          />
+        </div>
+
         <PageSection variant='white' heading='Click an event for more info'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} />
         </PageSection>
