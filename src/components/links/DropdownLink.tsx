@@ -32,7 +32,10 @@ const DropdownLink = ({
         <DropdownMenu variant='solid' aria-label='Dynamic Actions'>
           <DropdownSection title={title}>
             {dropdownItems.map((item, index) => (
-              <DropdownItem key={item.text + '_' + index}>
+              <DropdownItem
+                key={item.text + '_' + index}
+                startContent={item.icon}
+              >
                 <a
                   className={className}
                   style={{ display: 'block' }}
