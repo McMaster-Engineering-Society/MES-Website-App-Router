@@ -22,6 +22,7 @@ import { useMultistepForm } from '@/components/uhs-form/useMultistepForm';
 
 export default function UHSFormPage() {
   const [data, setData] = useState(INITIAL_DATA)
+  //updates the values in the state from outside this file
   function updateFields(fields: Partial<FormData>) {
     setData(prev => {
       return { ...prev, ...fields }
@@ -29,6 +30,7 @@ export default function UHSFormPage() {
   }
 
   const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2 } = useMultistepForm([
+    //list of pages for the form as components
     <Intro {...data} updateFields={updateFields} />, 
     <Understanding {...data} updateFields={updateFields} />,
     <Event {...data} updateFields={updateFields} />,
@@ -45,7 +47,7 @@ export default function UHSFormPage() {
 
 
   title = titles[currentStepIndex];
-  
+  //this is the next or submit button, sometimes skipping pages if an option is picked
   function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (isLastStep) {
@@ -57,6 +59,7 @@ export default function UHSFormPage() {
     }
   }
 
+  //this goes back a page and sometimes goes back twice if an option is picked
   function back(){
     if ((currentStepIndex === 5 && data.dangerNo) || (currentStepIndex === 7 && data.involveHazardNo) || (currentStepIndex === 9 && data.alcoholNo) || (currentStepIndex === 11 && data.travelNo)){
       return back2();
@@ -139,6 +142,7 @@ const titles = [
 
 let title: string;
 
+//the types for all the data
 type FormData = {
   email: string,
   firstAgreement: boolean,
@@ -207,6 +211,7 @@ type FormData = {
   finalAgreement: boolean
 }
 
+//the intialization for all the data
 const INITIAL_DATA: FormData = {
   email: "",
   firstAgreement: false,

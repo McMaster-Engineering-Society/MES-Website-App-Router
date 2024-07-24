@@ -4,6 +4,7 @@ import { ReactElement, useState } from "react";
 export function useMultistepForm(steps: ReactElement[]) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
+  //moves page forward once
   function next1() {
     setCurrentStepIndex(i => {
       if (i >= steps.length - 1) return i
@@ -11,6 +12,7 @@ export function useMultistepForm(steps: ReactElement[]) {
     })
   }
 
+  //moves page forward twice
   function next2() {
     setCurrentStepIndex(i => {
       if (i >= steps.length - 1) return i
@@ -18,6 +20,7 @@ export function useMultistepForm(steps: ReactElement[]) {
     })
   }
 
+  //moves page backwards once
   function back1() {
     setCurrentStepIndex(i => {
       if (i <= 0) return i
@@ -25,6 +28,7 @@ export function useMultistepForm(steps: ReactElement[]) {
     })
   }
 
+  //moves page backwards twice
   function back2(){
     setCurrentStepIndex(i => {
       if (i <= 0) return i
@@ -32,6 +36,7 @@ export function useMultistepForm(steps: ReactElement[]) {
     })
   }
 
+  //goes to a specific page
   function goTo(index: number) {
     setCurrentStepIndex(index)
   }
