@@ -1,19 +1,17 @@
-import { NextResponse } from 'next/server';
+import { Router, Request, Response } from 'express';
+import UHSForm from './UHSForm';
 
-import { getAllFormsService } from '@/lib/services/formServices';
+const router = Router();
 
-import { TApiResponse, TMessageResponse } from '@/app/api/types';
-
-import { UHSForm } from '@/types/uhsForm';
-
-export async function GET() {
-  const allFormsList = await getAllFormsService();
-
-  if (!allFormsList) {
-    return NextResponse.json<TMessageResponse>({
-      message: 'List of all forms not found',
-    });
+router.get('/forms/club/:clubId', async (req: Request, res: Response) => {
+  try {
+    const clubId = req.params.clubId;
+    const forms = await UHSForm.find({ clubId });
+    res.status(200).json(forms);
+  } catch (error) {
+    res.status(500).json({ message: "error!" });
   }
+});
 
-  return NextResponse.json<TApiResponse<UHSForm[]>>({ data: allFormsList });
-}
+
+export default router;
