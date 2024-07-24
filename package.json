@@ -27,6 +27,7 @@
     "@mui/material": "^5.15.18",
     "@nextui-org/react": "^2.4.1",
     "@react-stately/data": "^3.11.4",
+    "@tiptap-pro/extension-export": "^2.10.3",
     "@tiptap-pro/extension-table-of-contents": "^2.10.3",
     "@tiptap/pm": "^2.5.5",
     "@tiptap/react": "^2.5.5",

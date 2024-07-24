@@ -6,6 +6,8 @@ import {
 } from '@tiptap-pro/extension-table-of-contents';
 import React from 'react';
 
+import { cn } from '@/lib/utils';
+
 export const ToCItem = ({
   item,
   onItemClick,
@@ -16,13 +18,14 @@ export const ToCItem = ({
     id: string,
   ) => void;
 }) => {
+  const levelClasses = cn({
+    'pl-4 text-base': item.level === 1,
+    'pl-8 text-sm': item.level === 2,
+    'pl-12 text-xs': item.level === 3,
+  });
+
   return (
-    <div
-      className={`${item.isActive && !item.isScrolledOver ? 'is-active' : ''} ${item.isScrolledOver ? 'is-scrolled-over' : ''}`}
-      // style={{
-      //   '--level': item.level,
-      // }}
-    >
+    <div className={levelClasses}>
       <a
         href={`#${item.id}`}
         onClick={(e) => onItemClick(e, item.id)}
@@ -47,7 +50,7 @@ type ToCProps = {
   editor: Editor | null;
 };
 
-export const ToC = ({ items = [], editor }: ToCProps) => {
+export const DocumentTableOfContents = ({ items = [], editor }: ToCProps) => {
   if (items.length === 0) {
     return <ToCEmptyState />;
   }
