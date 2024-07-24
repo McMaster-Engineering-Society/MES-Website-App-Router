@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     // Send email
     const info = await transporter.sendMail({
       from: `${process.env.EMAIL_FROM}`,
-      to,
+      to: to || `${process.env.EMAIL_FROM}`,
       subject,
       text,
       // html: "<b>Hello world?</b>", // html body if we want it in the future
