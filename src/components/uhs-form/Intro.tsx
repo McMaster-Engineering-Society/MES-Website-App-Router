@@ -10,6 +10,7 @@ function Intro({ email, updateFields }: IntroProps) {
   return (
     <div className="flex flex-col">
       <div id='text-body' className='flex flex-col gap-x-4 gap-y-4'>
+        {/* This is an example of an email based question */}
         <label className="flex flex-col">
           Email *
           <br/>

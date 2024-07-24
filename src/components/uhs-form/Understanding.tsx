@@ -10,11 +10,12 @@ type UnderstandingData = {
 type UnderstandingProps = UnderstandingData & {
   updateFields: (fields: Partial<UnderstandingData>) => void
 }
-
+//page for understanding section
 function Understanding({ firstAgreement, secondAgreement, groupMES, groupDepartment, groupCommittee, groupName, updateFields }: UnderstandingProps) {
   return (
     <div className="flex flex-col">
         <div id='text-body' className='flex flex-col gap-x-4 gap-y-4'>
+            {/* This is an example of a single checkbox question */}
             <div>
               I understand that this form does not equate to a room booking. I understand that this form, when approved, will lead to a code used for room booking. I cannot book a room without an event code. If I am unsure how to book a room after getting a code, 
               I can email {' '}
@@ -38,6 +39,7 @@ function Understanding({ firstAgreement, secondAgreement, groupMES, groupDepartm
               </label>
             </div>
 
+            {/* This is an example of a multiple choice question */}
             <div >
             Which category best describes your group? The MES only provides UHS form submissions for these groups. *
               <br/>
@@ -55,6 +57,7 @@ function Understanding({ firstAgreement, secondAgreement, groupMES, groupDepartm
               </label>
             </div>
 
+            {/* This is an example of a text input question */}
             <label className="flex flex-col">
               Group/Team/Affiliate/Club/Committee Name or Council position for MES *
               <br/>
