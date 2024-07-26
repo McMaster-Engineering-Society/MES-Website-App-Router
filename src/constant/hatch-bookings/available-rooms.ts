@@ -6,34 +6,33 @@ export type HatchRoomType = {
   img: string;
 };
 
-
 export const AvailableRooms: HatchRoomType[] = [
   {
-    roomNum: "201",
+    roomNum: '201',
     capacity: 16,
     outlets: 10,
-    resources: ["TV", "Whiteboard"],
-    img: '/images/bookings/the-junction.jpg'
+    resources: ['TV'],
+    img: '/images/bookings/the-junction.jpg',
   },
   {
-    roomNum: "203A",
+    roomNum: '203A',
     capacity: 6,
     outlets: 4,
-    resources: ["TV", "Whiteboard"],
-    img: '/images/bookings/the-junction.jpg'
+    resources: ['TV', 'Whiteboard'],
+    img: '/images/bookings/the-junction.jpg',
   },
   {
-    roomNum: "204",
+    roomNum: '204',
     capacity: 10,
     outlets: 6,
-    resources: ["TV", "Whiteboard"],
-    img: '/images/bookings/the-junction.jpg'
+    resources: ['TV', 'Whiteboard'],
+    img: '/images/bookings/the-junction.jpg',
   },
   {
-    roomNum: "205",
+    roomNum: '205',
     capacity: 4,
     outlets: 4,
-    resources: ["Whiteboard"],
-    img: '/images/bookings/the-junction.jpg'
-  }
+    resources: ['Whiteboard'],
+    img: '/images/bookings/the-junction.jpg',
+  },
 ];
