@@ -186,9 +186,9 @@ export default function MacLABPage() {
                 <br />
                 <br />
                 To opt-out please follow the instructions on the form and note
-                that the opt-out period closes <b>December 15th at 12:00 pm</b>.
-                If you have any questions or concerns, please contact the macLAB
-                Chair, Shar Cai, at{' '}
+                that the opt-out period closes <b>TBD</b>. If you have any
+                questions or concerns, please contact the macLAB Chair, Shar
+                Cai, at{' '}
                 <a className='underline' href='mailto:macLAB@macengsociety.ca'>
                   macLAB@macengsociety.ca
                 </a>
@@ -199,7 +199,7 @@ export default function MacLABPage() {
                   Opt-Out of macLAB
                 </ButtonLink>
               ) : (
-                <Button disabled>macLAB Opt-Out No Longer Available</Button>
+                <Button disabled>macLAB opt-out coming soon</Button>
               )}
             </div>
           </PageSection>
