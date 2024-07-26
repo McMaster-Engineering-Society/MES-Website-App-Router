@@ -27,7 +27,8 @@ export const navItems: NavItem[] = [
     title: 'Services',
     dropdownItems: [
       { title: 'Tutoring', link: '/tutoring' },
-      { title: 'Special Projects', link: '/special-projects' },
+      // Temporary removal of Special Projects page
+      // { title: 'Special Projects', link: '/special-projects' },
       { title: 'Wellness', link: '/wellness' },
       // Temporary removal of MES Card page
       // { title: 'MES Card', link: '/mes-card' },
