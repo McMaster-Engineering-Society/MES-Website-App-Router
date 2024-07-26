@@ -6,7 +6,6 @@ The following are required to be installed on your system:
 
 - [Node.js](https://nodejs.org/en/download/)
 - [Git](https://git-scm.com/downloads)
-- [Chocolatey](https://chocolatey.org/install) (_This can be installed through the Node.js Installer_)
 - [VSCode](https://code.visualstudio.com/download)
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
@@ -31,22 +30,27 @@ Install the following extensions for a better development experience:
 ### Installation
 
 1. Clone the repository
+2. Install pnpm
 
-2. Install dependencies
+```bash
+npm install -g pnpm
+```
+
+3. Install dependencies
 
 ```bash
 pnpm install
 ```
 
-3. Create a .env.local from the .env.example, and fill neccessary variables
+4. Create a .env.local from the .env.example, and fill neccessary variables
 
-4. Run the development server
+5. Run the development server
 
 ```bash
 pnpm dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Branch and Commit Message Convention
 
