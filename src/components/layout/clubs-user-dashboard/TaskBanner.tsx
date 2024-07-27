@@ -16,7 +16,7 @@ const TaskNav = () => {
 
 const TaskBanner = () => {
   return (
-    <div className='flex items-center justify-evenly h-1/3 bg-rose-800 w-auto text-3xl text-white font-bold'>
+    <div className='flex items-center justify-evenly h-1/3 bg-primary-800 w-auto text-3xl text-white font-bold'>
       <TaskNav />
     </div>
   );

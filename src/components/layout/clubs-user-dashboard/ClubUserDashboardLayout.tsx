@@ -13,7 +13,7 @@ const ClubUserDashboardLayout = ({ children }: dashboardLayoutProps) => {
       <Sidebar />
       <div className='w-full'>
         <TaskBanner />
-        {children}
+        <div className='w-full h-2/3 p-5 overflow-y-hidden'>{children}</div>
       </div>
     </div>
   );
