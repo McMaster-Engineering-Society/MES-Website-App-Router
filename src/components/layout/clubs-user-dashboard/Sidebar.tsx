@@ -1,11 +1,13 @@
 'use client';
 
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoIosArrowBack } from 'react-icons/io';
 
 import { cn } from '@/lib/utils';
+
+import IconButton from '@/components/buttons/IconButton';
 
 import { sidebarItems } from './sidebarItems';
 
@@ -29,12 +31,12 @@ const Sidebar = () => {
         open ? 'w-3/12' : 'w-1/12',
       ])}
     >
-      <button
-        className={cn(['absolute top-2', open && 'right-3'])}
+      <IconButton
+        variant='ghost'
+        className={cn(['absolute top-2 text-gray-700', open && 'right-3'])}
         onClick={() => setOpen(!open)}
-      >
-        {open ? <ArrowBackIosNewIcon /> : <MenuIcon />}
-      </button>
+        icon={open ? IoIosArrowBack : GiHamburgerMenu}
+      />
       {open && <ClubProfile />}
       <div id='dashboard-nav-items' className='flex flex-col'>
         {sidebarItems.map((item) => (
