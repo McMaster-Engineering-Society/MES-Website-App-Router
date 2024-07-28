@@ -12,7 +12,7 @@ const getBookingsCollection = async () => {
   return bookingsCollection;
 };
 
-const createBookingDb = async (
+export const createBookingDb = async (
   newBooking: TBooking,
 ): Promise<TBooking | null> => {
   try {
@@ -39,7 +39,7 @@ const createBookingDb = async (
   }
 };
 
-const deleteBookingByIdDb = async (
+export const deleteBookingByIdDb = async (
   bookingId: string,
 ): Promise<TBooking | null> => {
   try {
@@ -62,8 +62,91 @@ const deleteBookingByIdDb = async (
     throw new Error('Database error');
   }
 };
+export const getBookingsInDateRangeDb = async (
+  startDate: Date,
+  endDate: Date,
+) => {
+  const bookingsCollection = await getBookingsCollection();
+  const targetStart = startDate;
+  const targetEnd = endDate;
+  const cursor = await bookingsCollection.find({
+    $or: [
+      {
+        startTime: {
+          $lt: targetEnd,
+        },
+        endTime: {
+          $gte: targetEnd,
+        },
+      },
+      {
+        startTime: {
+          $lte: targetStart,
+        },
+        endTime: {
+          $gt: targetStart,
+        },
+      },
+      {
+        endTime: {
+          $gt: targetStart,
+          $lte: targetEnd,
+        },
+        startTime: {
+          $gte: targetStart,
+          $lt: targetEnd,
+        },
+      },
+    ],
+  });
+  const bookings = cursor.toArray();
+  return bookings;
+};
 
-const updateBookingByIdDb = async (
+export const getBookingsInDateRangeForOneRoomDb = async (
+  startDate: Date,
+  endDate: Date,
+  room: string,
+) => {
+  const bookingsCollection = await getBookingsCollection();
+  const targetStart = startDate;
+  const targetEnd = endDate;
+  const cursor = await bookingsCollection.find({
+    room: room,
+    $or: [
+      {
+        startTime: {
+          $lt: targetEnd,
+        },
+        endTime: {
+          $gte: targetEnd,
+        },
+      },
+      {
+        startTime: {
+          $lte: targetStart,
+        },
+        endTime: {
+          $gt: targetStart,
+        },
+      },
+      {
+        endTime: {
+          $gt: targetStart,
+          $lte: targetEnd,
+        },
+        startTime: {
+          $gte: targetStart,
+          $lt: targetEnd,
+        },
+      },
+    ],
+  });
+  const bookings = cursor.toArray();
+  return bookings;
+};
+
+export const updateBookingByIdDb = async (
   bookingId: string,
   bookingInfo: TBooking,
 ): Promise<TBooking | null> => {
@@ -90,5 +173,3 @@ const updateBookingByIdDb = async (
     throw new Error('Database error');
   }
 };
-
-export { createBookingDb, deleteBookingByIdDb, updateBookingByIdDb };

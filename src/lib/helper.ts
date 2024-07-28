@@ -12,6 +12,24 @@ export function getFromSessionStorage(key: string): string | null {
   return null;
 }
 
+export function parseISOString(s: string) {
+  const numbersAsStringList = s.split(/\D+/);
+  const numbers = numbersAsStringList.map((numberString: string) =>
+    parseInt(numberString),
+  );
+  return new Date(
+    Date.UTC(
+      numbers[0],
+      --numbers[1],
+      numbers[2],
+      numbers[3],
+      numbers[4],
+      numbers[5],
+      numbers[6],
+    ),
+  );
+}
+
 // colour pool for ButtonLinks used in Get Money section
 export const getRandomColour = () => {
   // normal background colour, on hover colour, border colour (border matches normal bg)

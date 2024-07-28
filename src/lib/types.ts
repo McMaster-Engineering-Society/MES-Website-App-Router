@@ -24,3 +24,7 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
+
+export type TAvailabilityResponse = {
+  [room: string]: Date[];
+};
