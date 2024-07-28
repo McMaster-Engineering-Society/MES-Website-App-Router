@@ -134,7 +134,10 @@ export default function Footer({ darkMode = false }: FooterProps) {
             and the Anishinaabe Nations, which is recognized by the "Dish With
             One Spoon" wampum agreement.
           </span>
-          <div id='contact-us' className='flex flex-col pt-4'>
+          <div
+            id='contact-us'
+            className='flex flex-col pt-4 items-center lg:items-start'
+          >
             <span className='font-bold'>Questions/Feedback?</span>
             <UnderlineLink href='/executives' className='w-fit'>
               Contact our Executive team
