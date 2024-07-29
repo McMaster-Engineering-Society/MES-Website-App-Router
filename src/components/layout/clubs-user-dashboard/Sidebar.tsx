@@ -27,7 +27,7 @@ const Sidebar = () => {
 
   return (
     <aside className='h-screen'>
-      <nav className='h-full flex flex-col bg-white border-r shadow-sm font-bold'>
+      <nav className='h-full flex flex-col bg-gray-200 border-r shadow-sm font-bold'>
         <IconButton
           variant='ghost'
           className={cn(['mx-auto mt-2 text-gray-700', open && 'mr-2'])}

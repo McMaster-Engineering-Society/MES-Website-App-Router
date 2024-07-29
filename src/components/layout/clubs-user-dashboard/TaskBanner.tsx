@@ -1,23 +1,10 @@
 import React from 'react';
 
-import Button from '@/components/buttons/Button';
-
-const TaskNav = () => {
-  return (
-    <div className='flex flex-col h-1/2 justify-evenly'>
-      Complete your tasks
-      <div className='flex justify-between items-center'>
-        <Button variant='light'>View all Tasks</Button>
-        <a className='text-sm m-auto'>View Deadlines</a>
-      </div>
-    </div>
-  );
-};
-
 const TaskBanner = () => {
   return (
-    <div className='flex items-center justify-evenly h-1/3 bg-primary-800 w-auto text-3xl text-white font-bold'>
-      <TaskNav />
+    <div className='flex relative items-center px-7 py-auto h-14 bg-white border-3 rounded-2xl border-primary-800 w-auto text-lg text-black'>
+      Notice of tasks to do
+      <div className='absolute top-2 right-2 w-3 h-3 bg-primary-800 rounded-full'></div>
     </div>
   );
 };
