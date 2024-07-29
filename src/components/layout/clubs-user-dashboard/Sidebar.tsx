@@ -16,7 +16,7 @@ const ClubProfile = () => {
   return (
     <div className='flex flex-col items-center text-nowrap overflow-x-hidden'>
       <Avatar sx={{ height: 100, width: 100 }}>MES</Avatar>
-      Team name
+      <span className='mt-5'>Team name</span>
     </div>
   );
 };
@@ -37,7 +37,7 @@ const Sidebar = () => {
         <div className={cn(['py-2', open ? 'w-full' : 'w-0'])}>
           <ClubProfile />
         </div>
-        <div id='dashboard-nav-items' className='my-auto flex-col'>
+        <div id='dashboard-nav-items' className='mt-12 flex-col'>
           {sidebarItems.map((item) => (
             <div
               key={item.name}
@@ -48,7 +48,7 @@ const Sidebar = () => {
               <a
                 href={item.link}
                 className={cn([
-                  'overflow-hidden',
+                  'overflow-hidden transition-all',
                   open ? 'w-full ml-2' : 'w-0',
                 ])}
               >
@@ -57,7 +57,7 @@ const Sidebar = () => {
             </div>
           ))}
         </div>
-        <div className='flex flex-row m-4 items-center'>
+        <div className='flex flex-row m-4 mt-auto items-center'>
           <Image
             src='/favicon/android-chrome-192x192.png'
             width={50}
