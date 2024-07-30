@@ -23,11 +23,11 @@ const ClubProfile = () => {
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
-  const iconSize = 'large';
+  const iconSize = 30;
 
   return (
     <aside className='h-screen'>
-      <nav className='h-full flex flex-col bg-gray-200 border-r shadow-sm font-bold'>
+      <nav className='h-full flex flex-col bg-gray-200 border-r shadow-sm '>
         <IconButton
           variant='ghost'
           className={cn(['mx-auto mt-2 text-gray-700', open && 'mr-2'])}
@@ -37,19 +37,19 @@ const Sidebar = () => {
         <div className={cn(['py-2', open ? 'w-full' : 'w-0'])}>
           <ClubProfile />
         </div>
-        <div id='dashboard-nav-items' className='mt-12 flex-col'>
+        <div id='dashboard-nav-items' className='mt-8 flex-col'>
           {sidebarItems.map((item) => (
             <div
               key={item.name}
-              className='flex flex-row items-center text-nowrap px-6 py-1'
+              className='flex flex-row items-center text-nowrap mx-7 my-3'
             >
-              <item.icon fontSize={iconSize} />
+              <item.icon size={iconSize} />
 
               <a
                 href={item.link}
                 className={cn([
                   'overflow-hidden transition-all',
-                  open ? 'w-full ml-2' : 'w-0',
+                  open ? 'pl-2 w-44' : 'w-0',
                 ])}
               >
                 {item.name}

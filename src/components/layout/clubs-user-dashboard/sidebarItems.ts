@@ -1,47 +1,52 @@
-import { SvgIconComponent } from '@mui/icons-material';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import ConstructionIcon from '@mui/icons-material/Construction';
-import HelpIcon from '@mui/icons-material/Help';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import PersonIcon from '@mui/icons-material/Person';
-
+import { AiOutlineDollarCircle } from 'react-icons/ai';
+import { HiOutlineSquares2X2 } from 'react-icons/hi2';
+import { IoIosHelpCircleOutline } from 'react-icons/io';
+import { IoPersonOutline } from 'react-icons/io5';
+import { LiaToolsSolid } from 'react-icons/lia';
+import { IconType } from 'react-icons/lib';
+import { MdOutlineDoorBack } from 'react-icons/md';
+import { PiCheckSquare } from 'react-icons/pi';
 const url = '/clubs-portal';
 export const sidebarItems: SidebarItem[] = [
   {
+    name: 'Dashboard',
+    icon: HiOutlineSquares2X2,
+    link: `${url}/dashboard`,
+  },
+  {
     name: 'Expenses',
-    icon: LocalAtmIcon,
+    icon: AiOutlineDollarCircle,
     link: `${url}/expenses`,
   },
   {
     name: 'Events Approval',
-    icon: CheckBoxIcon,
+    icon: PiCheckSquare,
     link: `${url}/events-approval`,
   },
   {
     name: 'Room Booking',
-    icon: MeetingRoomIcon,
+    icon: MdOutlineDoorBack,
     link: `${url}/room-booking`,
   },
   {
     name: 'Rentals and Services',
-    icon: ConstructionIcon,
+    icon: LiaToolsSolid,
     link: `${url}/rentals-and-services`,
   },
   {
     name: 'Resources',
-    icon: HelpIcon,
+    icon: IoIosHelpCircleOutline,
     link: `${url}/help`,
   },
   {
     name: 'Club Administration',
-    icon: PersonIcon,
+    icon: IoPersonOutline,
     link: `${url}/club-administration`,
   },
 ];
 
 type SidebarItem = {
   name: string;
-  icon: SvgIconComponent;
+  icon: IconType;
   link: string;
 };
