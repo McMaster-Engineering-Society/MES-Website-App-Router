@@ -3,7 +3,7 @@ import ClubUserDashboardLayout from '@/components/layout/clubs-user-dashboard/Cl
 const UpcomingBookings = () => {
   return (
     <div>
-      <h1>Upcoming Bookings</h1>
+      <h3>Upcoming Bookings</h3>
     </div>
   );
 };
