@@ -1,6 +1,3 @@
-import { ObjectId } from 'mongodb';
-
-// unused original example for endpoints, databases and services
 export type TUser = {
   _id: string;
   firstName: string;
@@ -17,17 +14,12 @@ export type TApiResponse<T> = {
   message?: string;
 };
 
-export type TRole = 'admin' | 'hatch-user' | 'club' | 'super-admin';
-
-export type TProfile = {
-  _id: string | ObjectId;
-  // primary key email
-  email: string;
-  roles: TRole[];
-  firstName?: string;
-  lastName?: string;
-  program?: string;
-  year?: string;
-  hatchNumber?: string;
-  phoneNumber?: string;
+export type UHSForm = {
+  _id: string;
+  formId: string;
+  clubId: string;
+  formInfo: string;
+  formStatus: 'pending' | 'approved' | 'rejected';
+  createdAt: Date;
+  updatedAt: Date;
 };
