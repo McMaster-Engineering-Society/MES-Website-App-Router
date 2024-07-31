@@ -21,7 +21,30 @@ const getAllFormsDb = async (): Promise<UHSForm[]> => {
   }
 };
 
-const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
+const getFormByIdDb = async (formId: string): Promise<UHSForm> => {
+  try {
+    const formsCollection = await getFormsCollection();
+    const formObjectId = new ObjectId(formId);
+
+    const form: WithId<UHSForm> | null = await formsCollection.findOne({
+      id: formObjectId,
+    });
+
+    if (!form) {
+      throw new Error();
+    }
+
+    return form;
+
+  }
+  catch (error) {
+    console.error('Error fetching forms from database:', error);
+    throw new Error('Database error');
+  }
+
+};
+
+const deleteFormByIdDb = async (formId: string): Promise<UHSForm> => {
   try {
     const formsCollection = await getFormsCollection();
     const formObjectId = new ObjectId(formId);
@@ -30,7 +53,7 @@ const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
     });
 
     if (!form) {
-      return null;
+      throw new Error();
     }
 
     return form;
@@ -40,4 +63,24 @@ const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
   }
 };
 
-export { deleteFormByIdDb, getAllFormsDb }
+const updateFormByIdDb = async (formID: string, updateData: Partial<UHSForm>): Promise<UHSForm> => {
+  try {
+    const formsCollection = await getFormsCollection();
+    const formObjectId = new ObjectId(formID);
+
+    const updatedForm: WithId<UHSForm> | null = await formsCollection.findOneAndUpdate(
+      { id: formObjectId },
+      { $set: updateData },
+      { returnDocument: 'after' }
+    );
+    if (!updatedForm) {
+      throw new Error();
+    }
+    return updatedForm;
+  } catch (error) {
+    console.error('Error updating form by id in database:', error);
+    throw new Error('Database error');
+  }
+}
+
+export { getFormByIdDb, deleteFormByIdDb, getAllFormsDb, updateFormByIdDb }

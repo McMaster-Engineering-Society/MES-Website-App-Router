@@ -1,6 +1,8 @@
 import {
+  getFormByIdDb,
   deleteFormByIdDb,
-  getAllFormsDb
+  getAllFormsDb,
+  updateFormByIdDb
 } from '@/lib/db/formsDB';
 import { UHSForm } from '@/lib/types';
 
@@ -14,6 +16,15 @@ const getAllFormsService = async (): Promise<UHSForm[]> => {
   }
 };
 
+const getFormByIdService = async (formId: string): Promise<UHSForm | null> => {
+  try {
+    const form = await getFormByIdDb(formId);
+    return form;
+  } catch (error) {
+    console.error('Error in form services:', error);
+    return null;
+  }
+};
 
 const deleteFormByIdService = async (formId: string): Promise<UHSForm | null> => {
   try {
@@ -25,9 +36,19 @@ const deleteFormByIdService = async (formId: string): Promise<UHSForm | null> =>
   }
 };
 
-
+const updateFormByIdService = async (formId: string, updateData: Partial<UHSForm>): Promise<UHSForm | null> => {
+  try {
+    const form = await updateFormByIdDb(formId, updateData);
+    return form;
+  } catch (error) {
+    console.error('Error in form services:', error);
+    return null;
+  }
+};
 
 export {
+  getFormByIdService,
   deleteFormByIdService,
-  getAllFormsService
+  getAllFormsService,
+  updateFormByIdService
 };
