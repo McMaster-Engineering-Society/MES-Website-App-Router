@@ -81,7 +81,7 @@ export default function UHSFormPage() {
           <PageSection variant='white'>
             <div className='flex flex-col items-center gap-x-4 gap-y-4 md:flex-row'>
               <div id='text-body' className='flex flex-col'>
-                <div>
+                <div className="text-[#4b4b4b] text-lg font-medium font-['Inter'] ">
                   Hello dear planner, welcome to the UHS (FORMERLY EOHSS) form for in-person events. 
                   Once you fill this out, I will put it into the portal and 
                   let you know both if there is anything else we need and when it gets approved via email!
@@ -100,7 +100,7 @@ export default function UHSFormPage() {
             </div>
           </PageSection>
             
-          <PageSection variant='white' heading={ title }>
+          <PageSection variant='rounded' heading={ title }>
             <form onSubmit={onSubmit}>
               {step}
 

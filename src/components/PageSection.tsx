@@ -45,6 +45,7 @@ const PageSection = ({
           variant === 'yellow' && ['bg-[#EDE04B] text-black'],
           variant === 'purple' && ['bg-[#8C4799] text-white'],
           variant === 'pink' && ['bg-[#F57EB6] text-black'],
+          variant === 'rounded' && ['bg-[#ececec] text-black rounded-lg'],
           solid && ['bg-opacity-100'],
         ])}
       >

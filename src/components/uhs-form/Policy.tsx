@@ -1,3 +1,5 @@
+import Question from "@/components/form/Question"
+
 type PolicyData = {
   informationSecurityPolicy: boolean,
   studentRightsPolicy: boolean,
@@ -15,63 +17,56 @@ function Policy({ informationSecurityPolicy, studentRightsPolicy, discrimination
   return (
     <div className="flex flex-col">
       <div id='text-body' className='flex flex-col gap-x-4 gap-y-4'>
-        <div>
-          I have read the Information Security Policy below *
-          <div className='max-h-[20rem] overflow-scroll border-4 rounded overflow-x-hidden'>
+        <Question title="I have read the Information Security Policy below" required={true}>
+          <div className="max-h-[20rem] overflow-scroll overflow-x-hidden opacity-50 whitespace-normal border-spacing-1 bg-[#ececec] rounded border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0 text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">
             {informationPolicy}
           </div>
           <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-            <input required className="mr-2 h-6 w-6" type="checkbox" checked={informationSecurityPolicy} onChange={e => updateFields({ informationSecurityPolicy: e.target.checked })} />
-            <div>I have read and agree</div>
+            <input required className="mr-2 w-6 h-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="checkbox" checked={informationSecurityPolicy} onChange={e => updateFields({ informationSecurityPolicy: e.target.checked })} />
+            <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">I have read and agree</div>
           </label>
-        </div>
-        
-        <div>
-          I have read the Code of Student Rights and Responsibilities below *
-          <div className='max-h-[20rem] overflow-scroll border-4 rounded overflow-x-hidden'>
+        </Question>
+
+        <Question title="I have read the Code of Student Rights and Responsibilities below" required={true}>
+          <div className="max-h-[20rem] overflow-scroll overflow-x-hidden opacity-50 whitespace-normal border-spacing-1 bg-[#ececec] rounded border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0 text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">
             {studentPolicy}
           </div>
           <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-            <input required className="mr-2 h-6 w-6" type="checkbox" checked={studentRightsPolicy} onChange={e => updateFields({ studentRightsPolicy: e.target.checked })} />
-            <div>I have read and agree</div>
+            <input required className="mr-2 w-6 h-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="checkbox" checked={studentRightsPolicy} onChange={e => updateFields({ studentRightsPolicy: e.target.checked })} />
+            <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">I have read and agree</div>
           </label>
-        </div>
+        </Question>
 
-        <div>
-          I have read the Discrimination & Harassment Policy below*
-          <div className='max-h-[20rem] overflow-scroll border-4 rounded overflow-x-hidden'>
+        <Question title="I have read the Discrimination & Harassment Policy below" required={true}>
+          <div className="max-h-[20rem] overflow-scroll overflow-x-hidden opacity-50 whitespace-normal border-spacing-1 bg-[#ececec] rounded border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0 text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">
             {discriminationPolicy}
           </div>
           <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-            <input required className="mr-2 h-6 w-6" type="checkbox" checked={discriminationHarassmentPolicy} onChange={e => updateFields({ discriminationHarassmentPolicy: e.target.checked })} />
-            <div>I have read and agree</div>
+            <input required className="mr-2 w-6 h-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="checkbox" checked={discriminationHarassmentPolicy} onChange={e => updateFields({ discriminationHarassmentPolicy: e.target.checked })} />
+            <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">I have read and agree</div>
           </label>
-        </div>
+        </Question>
 
-        <div>
-          I have read the Sexual Violence Policy below *
-          <div className='max-h-[20rem] overflow-scroll border-4 rounded overflow-x-hidden'>
+        <Question title="I have read the Sexual Violence Policy below" required={true}>
+          <div className="max-h-[20rem] overflow-scroll overflow-x-hidden opacity-50 whitespace-normal border-spacing-1 bg-[#ececec] rounded border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0 text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">
             {sexualPolicy}
           </div>
           <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-            <input required className="mr-2 h-6 w-6" type="checkbox" checked={sexualViolencePolicy} onChange={e => updateFields({ sexualViolencePolicy: e.target.checked })} />
-            <div>I have read and agree</div>
+            <input required className="mr-2 w-6 h-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="checkbox" checked={sexualViolencePolicy} onChange={e => updateFields({ sexualViolencePolicy: e.target.checked })} />
+            <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">I have read and agree</div>
           </label>
-        </div>
-        
-        <label className="flex flex-col">
-          Comments
-          <br/>
-          <input className="mt-2  w-[40%] w-min-4" name="comments" value={comments} onChange={e => updateFields({ comments: e.target.value })}/>
-        </label>
+        </Question>
 
-        <div>
-          I confirm that I have answered all of the questions truthfully. I acknowledge that I will be held responsible under the Code of Student Rights & Responsibilities should this event not take place as submitted. *
+        <Question title="Comments" required={false}>
+          <input className="mt-2 w-full w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter any comments!" name="comments" value={comments} onChange={e => updateFields({ comments: e.target.value })}/>
+        </Question>
+
+        <Question title="I confirm that I have answered all of the questions truthfully. I acknowledge that I will be held responsible under the Code of Student Rights & Responsibilities should this event not take place as submitted." required={true}>
           <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-            <input required className="mr-2 h-6 w-6" type="checkbox" checked={finalAgreement} onChange={e => updateFields({ finalAgreement: e.target.checked })} />
-            <div>I have read and agree</div>
+            <input required className="mr-2 w-6 h-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="checkbox" checked={finalAgreement} onChange={e => updateFields({ finalAgreement: e.target.checked })} />
+            <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">I have read and agree</div>
           </label>
-        </div>
+        </Question>
               
       </div>
     </div>
@@ -80,12 +75,7 @@ function Policy({ informationSecurityPolicy, studentRightsPolicy, discrimination
 
 export default Policy;
 
-let informationPolicy: string;
-let studentPolicy: string;
-let discriminationPolicy: string;
-let sexualPolicy: string;
-
-informationPolicy = `
+const informationPolicy = `
 Information Security Policy
 INTRODUCTION
 1. In order to maintain business continuity and the University’s reputation, it is critical to protect the confidentiality, integrity, and availability of:
@@ -200,7 +190,7 @@ Payment Card Industry - Data Security Standard (PCI-DSS) Ontario Human Rights Co
 Criminal Code of Canada
 `;
 
-studentPolicy = `
+const studentPolicy = `
 Code of Student Rights and Responsibilities
 PREAMBLE
 1. The University values integrity, inclusiveness and teamwork, and strives to support the personal and collective growth of the McMaster student community. The University is committed to providing educational initiatives and learning opportunities to help students conduct themselves in accordance with the Code.
@@ -851,7 +841,7 @@ This Code is to be read in conjunction with the following policies, statements, 
 • Violence in the Workplace, Policy on
 `
 
-discriminationPolicy = `
+const discriminationPolicy = `
 Discrimination & Harassment Policy
 PREAMBLE
 1. All members of the University Community (“Community Members” see clause 5 below) have a right to study, work, and live in an environment that is free of Discrimination and Harassment.
@@ -1418,7 +1408,7 @@ This Policy is to be read in conjunction with the following policies, statements
 • Workplace & Environmental Health and Safety Policy
 `
 
-sexualPolicy = `
+const sexualPolicy = `
 Sexual Violence Policy
 SECTION I: INTRODUCTION
 1. All members of the University Community (“Community Members” see clause 5 below) have a right to study, work, and live in an environment that is free of Sexual Violence.
