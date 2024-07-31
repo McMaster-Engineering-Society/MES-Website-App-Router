@@ -46,7 +46,7 @@ export const councilForms: FormSection[] = [
     forms: [
       {
         title: 'In-Person Event UHS/EOHSS Form',
-        link: 'https://forms.gle/34xbLbiXVQtLA2eL9',
+        link: 'https://forms.gle/Dpzpuy2nW6yiQr7Y7',
       },
     ],
     description:
