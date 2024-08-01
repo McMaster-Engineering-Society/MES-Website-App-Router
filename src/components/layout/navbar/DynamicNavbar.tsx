@@ -148,7 +148,7 @@ const DynamicNavbar = ({
         )}
       </NavbarContent>
 
-      <NavbarMenu className='py-12'>
+      <NavbarMenu className='pt-12 pb-40'>
         {navItems.map((item, index) => (
           <div key={`dropdown-navbar-${index}`}>
             {item.dropdownItems ? (
