@@ -16,10 +16,7 @@ export type TApiResponse<T> = {
 
 export type UHSForm = {
   _id: string;
-  formId: string;
   clubId: string;
   formInfo: string;
   formStatus: 'pending' | 'approved' | 'rejected';
-  createdAt: Date;
-  updatedAt: Date;
 };
