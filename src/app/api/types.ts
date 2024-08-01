@@ -13,3 +13,12 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
+
+export type UHSForm = {
+  _id: string;
+  clubId: string;
+  formInfo: string;
+  formStatus: 'pending' | 'approved' | 'rejected';
+}
+
+
