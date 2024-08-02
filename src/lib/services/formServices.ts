@@ -40,11 +40,14 @@ const deleteFormByIdService = async (formId: string): Promise<UHSForm | null> =>
   }
 };
 
-const updateFormByIdService = async (formId: string, updateData: Partial<UHSForm>): Promise<UHSForm | null> => {
+
+
+const updateFormByIdService = async (formId: string, newStatus: 'pending' | 'approved' | 'rejected'): Promise<UHSForm | null> => {
   try {
-    const form = await updateFormByIdDb(formId, updateData);
+    const form = await updateFormByIdDb(formId, newStatus);
     return form;
   } catch (error) {
+    /* eslint-disable no-console */
     console.error('Error in form services:', error);
     return null;
   }
