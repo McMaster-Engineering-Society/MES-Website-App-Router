@@ -18,6 +18,7 @@ const ExternalConferencesList = () => {
           location={conference.location}
           dates={conference.dates}
           delegates={conference.delegates}
+          CFESESSCO={conference.CFESESSCO}
           body={conference.body}
         />
       ))}
@@ -35,6 +36,7 @@ const InternalConferencesList = () => {
           location={conference.location}
           dates={conference.dates}
           delegates={conference.delegates}
+          links={conference.links}
           body={conference.body}
         />
       ))}
