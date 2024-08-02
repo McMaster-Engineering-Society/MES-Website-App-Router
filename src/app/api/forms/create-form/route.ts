@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const newForm = await createFormService(form);
     if (!newForm) {
       return NextResponse.json<TMessageResponse>(
-        { message: 'Form not created' },
+        { message: 'Form not created. Check Form status.' },
         { status: 404 },
       );
     }

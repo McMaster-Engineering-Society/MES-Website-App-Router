@@ -10,8 +10,15 @@ const getFormsCollection = async () => {
   return formsCollection;
 };
 
+const validStatuses = new Set(['pending', 'approved', 'rejected']);
+
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
   try {
+    // Validate formStatus
+    if (!validStatuses.has(newForm.formStatus)) {
+      throw new Error('Invalid form status');
+    }
+
     const formsCollection = await getFormsCollection();
     const result: InsertOneResult = await formsCollection.insertOne(newForm);
 
