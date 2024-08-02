@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb'
+
 export type TUser = {
   _id: string;
   firstName: string;

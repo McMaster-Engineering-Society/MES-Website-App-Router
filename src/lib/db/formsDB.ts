@@ -51,7 +51,7 @@ const getFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
     const form: WithId<UHSForm> | null = await formsCollection.findOne({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: ObjectId type mismatch
-      id: formObjectId,
+      _id: formObjectId,
     });
 
     if (!form) {
@@ -75,7 +75,7 @@ const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
     const form: WithId<UHSForm> | null = await formsCollection.findOneAndDelete({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: ObjectId type mismatch
-      id: formObjectId,
+      _id: formObjectId,
     });
 
     if (!form) {
@@ -89,24 +89,28 @@ const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
   }
 };
 
-const updateFormByIdDb = async (formID: string, updateData: Partial<UHSForm>): Promise<UHSForm> => {
+const updateFormByIdDb = async (formId: string, newStatus: 'pending' | 'approved' | 'rejected'): Promise<UHSForm | null> => {
   try {
     const formsCollection = await getFormsCollection();
-    const formObjectId = new ObjectId(formID);
-
-    const updatedForm: WithId<UHSForm> | null = await formsCollection.findOneAndUpdate(
-      { id: formObjectId },
-      { $set: updateData },
+    const formObjectId = new ObjectId(formId);
+    const result = await formsCollection.findOneAndUpdate(
+      { _id: formObjectId.toString() },
+      { $set: { formStatus: newStatus } },
       { returnDocument: 'after' }
     );
-    if (!updatedForm) {
-      throw new Error();
+
+    if (!result) {
+      return null;
     }
-    return updatedForm;
+
+    return result;
   } catch (error) {
-    console.error('Error updating form by id in database:', error);
+    console.error('Error updating form status in database:', error);
     throw new Error('Database error');
   }
-}
+};
+
+
+
 
 export { createFormDb, getFormByIdDb, deleteFormByIdDb, getAllFormsDb, updateFormByIdDb }
