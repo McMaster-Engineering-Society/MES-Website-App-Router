@@ -265,7 +265,7 @@ export default function HomePage() {
                   <p className='text-xs font-medium md:text-sm'>
                     {electionStatus}
                   </p>
-                  <h1 className='text-2xl md:text-5xl'>Rep & VP</h1>
+                  <h1 className='text-2xl md:text-5xl'>MES</h1>
                   <h1 className='text-2xl md:text-5xl'>Elections</h1>
                 </div>
                 <Button

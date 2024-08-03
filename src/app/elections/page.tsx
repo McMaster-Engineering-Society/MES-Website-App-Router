@@ -215,7 +215,7 @@ export default function ElectionsPage() {
             </div>
           )}
           {/* Engineering & Management Rep and Chemical Engineering Rep Announcement */}
-          <div
+          {/* <div
             id='election-info-session'
             className='border-mesRed mt-8 flex flex-row rounded-xl border-2 bg-white p-2 text-center'
           >
@@ -232,7 +232,7 @@ export default function ElectionsPage() {
               <span className='bg-mesRed absolute inline-flex h-full w-full animate-ping rounded-full opacity-75'></span>
               <span className='bg-mesRed relative inline-flex h-3 w-3 rounded-full'></span>
             </span>
-          </div>
+          </div> */}
           {/* ============ */}
           {(today <= electionInfo.campaignsOpen || debug) && (
             <PageSection
