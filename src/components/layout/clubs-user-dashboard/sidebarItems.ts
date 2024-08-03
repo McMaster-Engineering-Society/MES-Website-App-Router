@@ -1,46 +1,46 @@
-import { AiOutlineDollarCircle } from 'react-icons/ai';
-import { HiOutlineSquares2X2 } from 'react-icons/hi2';
-import { IoIosHelpCircleOutline } from 'react-icons/io';
-import { IoPersonOutline } from 'react-icons/io5';
-import { LiaToolsSolid } from 'react-icons/lia';
+import { FaHouse } from 'react-icons/fa6';
+import { FaMoneyBill } from 'react-icons/fa6';
+import { FaSquareCheck } from 'react-icons/fa6';
+import { FaDoorOpen } from 'react-icons/fa6';
+import { FaScrewdriverWrench } from 'react-icons/fa6';
+import { FaCircleQuestion } from 'react-icons/fa6';
+import { FaUserLarge } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
-import { MdOutlineDoorBack } from 'react-icons/md';
-import { PiCheckSquare } from 'react-icons/pi';
 const url = '/clubs-portal';
 export const sidebarItems: SidebarItem[] = [
   {
-    name: 'Dashboard',
-    icon: HiOutlineSquares2X2,
-    link: `${url}/dashboard`,
+    name: 'Main Dashboard',
+    icon: FaHouse,
+    link: `${url}`,
   },
   {
     name: 'Expenses',
-    icon: AiOutlineDollarCircle,
+    icon: FaMoneyBill,
     link: `${url}/expenses`,
   },
   {
     name: 'Events Approval',
-    icon: PiCheckSquare,
+    icon: FaSquareCheck,
     link: `${url}/events-approval`,
   },
   {
     name: 'Room Booking',
-    icon: MdOutlineDoorBack,
+    icon: FaDoorOpen,
     link: `${url}/room-booking`,
   },
   {
     name: 'Rentals and Services',
-    icon: LiaToolsSolid,
+    icon: FaScrewdriverWrench,
     link: `${url}/rentals-and-services`,
   },
   {
     name: 'Resources',
-    icon: IoIosHelpCircleOutline,
+    icon: FaCircleQuestion,
     link: `${url}/help`,
   },
   {
     name: 'Club Administration',
-    icon: IoPersonOutline,
+    icon: FaUserLarge,
     link: `${url}/club-administration`,
   },
 ];

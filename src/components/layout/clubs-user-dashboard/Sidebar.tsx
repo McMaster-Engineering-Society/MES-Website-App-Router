@@ -2,6 +2,7 @@
 
 import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
+import { FaRightFromBracket } from 'react-icons/fa6';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoIosArrowBack } from 'react-icons/io';
 
@@ -45,6 +46,13 @@ const ClubProfile = ({ open }: ClubProfileProps) => {
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
   const iconSize = 30;
+  const iconColor = 'gray';
+
+  const openIfNotOpen = () => {
+    if (!open) {
+      setOpen(true);
+    }
+  };
 
   return (
     <aside className='h-screen'>
@@ -53,6 +61,7 @@ const Sidebar = () => {
           'h-full flex flex-col bg-gray-200 transition-all',
           open ? 'w-72' : 'w-24',
         ])}
+        onClick={openIfNotOpen}
       >
         <IconButton
           variant='ghost'
@@ -67,7 +76,7 @@ const Sidebar = () => {
               key={item.name}
               className='flex flex-row items-center text-nowrap mx-8 my-3'
             >
-              <item.icon size={iconSize} />
+              <item.icon size={iconSize} color={iconColor} />
 
               <a
                 href={item.link}
@@ -92,11 +101,13 @@ const Sidebar = () => {
           </div>
           <div
             className={cn([
-              'flex items-center pr-5 ml-auto overflow-hidden transition-all',
+              'flex items-center ml-auto overflow-hidden transition-all',
               open ? 'w-20' : 'w-0',
             ])}
           >
-            <button className={cn([!open && 'hidden'])}>Logout</button>
+            <button className={cn(['mx-auto', !open && 'hidden'])}>
+              <FaRightFromBracket size={iconSize} color={iconColor} />
+            </button>
           </div>
         </div>
       </nav>
