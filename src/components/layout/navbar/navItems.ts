@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
   {
     title: 'Publications',
     dropdownItems: [
-      { title: 'The Plumbline', link: '/plumbline' },
+      // { title: 'The Plumbline', link: '/plumbline' },
       { title: 'The Frequency', link: '/frequency' },
     ],
   },
