@@ -35,15 +35,10 @@ const DropdownLink = ({
               <DropdownItem
                 key={item.text + '_' + index}
                 startContent={item.icon}
+                href={item.url}
+                target='_blank'
               >
-                <a
-                  className={className}
-                  style={{ display: 'block' }}
-                  href={item.url}
-                  target='_blank'
-                >
-                  {item.text}
-                </a>
+                {item.text}
               </DropdownItem>
             ))}
           </DropdownSection>
