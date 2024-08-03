@@ -1,9 +1,12 @@
+import { SiGooglecalendar, SiMicrosoftoutlook } from 'react-icons/si';
+
 import DropdownLinkItem from '@/types/dropdownLinkItem';
 
 export const googleLinks: DropdownLinkItem[] = [
   {
-    text: 'Events',
+    text: 'Google Calendar',
     url: 'https://calendar.google.com/calendar/u/0?cid=bWFjZW5nc29jaWV0eS5jYV8xMjg3YmV2aWhndnBwbTBib3VtcmE3ZWI2Y0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t',
+    icon: <SiGooglecalendar />,
   },
   // {
   //   text: 'Elections',
@@ -17,8 +20,9 @@ export const googleLinks: DropdownLinkItem[] = [
 
 export const outlookLinks: DropdownLinkItem[] = [
   {
-    text: 'Events',
+    text: 'Outlook Calendar',
     url: 'https://calendar.google.com/calendar/ical/macengsociety.ca_1287bevihgvppm0boumra7eb6c%40group.calendar.google.com/public/basic.ics',
+    icon: <SiMicrosoftoutlook />,
   },
   // {
   //   text: 'Elections',
