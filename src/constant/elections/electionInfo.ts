@@ -1,4 +1,4 @@
-import { CandidateInfo, vpStudentLife } from '@/constant/elections/candidates';
+import { CandidateInfo } from '@/constant/elections/candidates';
 
 export type InfoSession = {
   dateTimeStart: Date;
@@ -52,28 +52,12 @@ export const electionInfo: ElectionInfo = {
     // ...
   ],
   positions: [
-    {
-      title: 'Vice President - Student Life',
-      nominationForm: '/pdfs/elections/VP_AVP_Nomination_Form.pdf',
-      nomineePackageSubmission: 'https://forms.gle/veee64Ft7myRd76e7',
-      candidates: vpStudentLife,
-      eligibilityRequirements: 'Candidates must be Level 2 or above',
-    },
     // {
-    //   title: 'Chemical Engineering Representative',
-    //   nominationForm: '/pdfs/elections/Program_Rep_Nomination_Form.pdf',
+    //   title: 'Vice President - Student Life',
+    //   nominationForm: '/pdfs/elections/VP_AVP_Nomination_Form.pdf',
     //   nomineePackageSubmission: 'https://forms.gle/veee64Ft7myRd76e7',
-    //   candidates: chemRepCandidates,
-    //   eligibilityRequirements:
-    //     'Candidates must be enrolled in Software Engineering at the time of election',
-    // },
-    // {
-    //   title: 'Engineering & Management Representative',
-    //   nominationForm: '/pdfs/elections/Program_Rep_Nomination_Form.pdf',
-    //   nomineePackageSubmission: 'https://forms.gle/veee64Ft7myRd76e7',
-    //   candidates: managementRepCandidates,
-    //   eligibilityRequirements:
-    //     'Candidates must be enrolled in Engineering & Management at the time of election',
+    //   candidates: vpStudentLife,
+    //   eligibilityRequirements: 'Candidates must be Level 2 or above',
     // },
   ],
   previousWinners: [
