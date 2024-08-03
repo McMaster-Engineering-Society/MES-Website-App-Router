@@ -1,7 +1,6 @@
 'use client';
 
 import Avatar from '@mui/material/Avatar';
-import Image from 'next/image';
 import * as React from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -9,14 +8,36 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { cn } from '@/lib/utils';
 
 import IconButton from '@/components/buttons/IconButton';
+import { MESLogo } from '@/components/layout/navbar/MESLogo';
 
 import { sidebarItems } from './sidebarItems';
 
-const ClubProfile = () => {
+type ClubProfileProps = {
+  open: boolean;
+};
+
+const ClubProfile = ({ open }: ClubProfileProps) => {
+  const height = open ? 100 : 50;
+  const width = open ? 100 : 50;
   return (
-    <div className='flex flex-col items-center text-nowrap overflow-x-hidden'>
-      <Avatar sx={{ height: 100, width: 100 }}>MES</Avatar>
-      <span className='mt-5'>Team name</span>
+    <div className='flex flex-col items-center justify-center text-nowrap min-h-40'>
+      <div className='flex min-h-28'>
+        <Avatar
+          sx={{ height: height, width: width }}
+          className='transition-all m-auto'
+        >
+          MES
+        </Avatar>
+      </div>
+
+      <span
+        className={cn([
+          'flex justify-center mt-3 overflow-hidden transition-all',
+          open ? 'w-full h-6' : 'w-0 h-0',
+        ])}
+      >
+        Team name
+      </span>
     </div>
   );
 };
@@ -27,21 +48,24 @@ const Sidebar = () => {
 
   return (
     <aside className='h-screen'>
-      <nav className='h-full flex flex-col bg-gray-200 border-r shadow-sm '>
+      <nav
+        className={cn([
+          'h-full flex flex-col bg-gray-200 transition-all',
+          open ? 'w-72' : 'w-24',
+        ])}
+      >
         <IconButton
           variant='ghost'
           className={cn(['mx-auto mt-2 text-gray-700', open && 'mr-2'])}
           onClick={() => setOpen(!open)}
           icon={open ? IoIosArrowBack : GiHamburgerMenu}
         />
-        <div className={cn(['py-2', open ? 'w-full' : 'w-0'])}>
-          <ClubProfile />
-        </div>
-        <div id='dashboard-nav-items' className='mt-8 flex-col'>
+        <ClubProfile open={open} />
+        <div className='flex-col mt-4'>
           {sidebarItems.map((item) => (
             <div
               key={item.name}
-              className='flex flex-row items-center text-nowrap mx-7 my-3'
+              className='flex flex-row items-center text-nowrap mx-8 my-3'
             >
               <item.icon size={iconSize} />
 
@@ -49,7 +73,7 @@ const Sidebar = () => {
                 href={item.link}
                 className={cn([
                   'overflow-hidden transition-all',
-                  open ? 'pl-2 w-44' : 'w-0',
+                  open ? 'pl-3 w-44' : 'w-0',
                 ])}
               >
                 {item.name}
@@ -57,14 +81,23 @@ const Sidebar = () => {
             </div>
           ))}
         </div>
-        <div className='flex flex-row m-4 mt-auto items-center'>
-          <Image
-            src='/favicon/android-chrome-192x192.png'
-            width={50}
-            height={50}
-            alt='MES logo'
-          />
-          {open && <button className='pr-5 ml-auto'>Logout</button>}
+        <div className='flex flex-row mt-auto ml-6 mb-3'>
+          <div
+            className={cn([
+              'transition-all overflow-hidden',
+              open ? 'w-36' : 'w-9',
+            ])}
+          >
+            <MESLogo />
+          </div>
+          <div
+            className={cn([
+              'flex items-center pr-5 ml-auto overflow-hidden transition-all',
+              open ? 'w-20' : 'w-0',
+            ])}
+          >
+            <button className={cn([!open && 'hidden'])}>Logout</button>
+          </div>
         </div>
       </nav>
     </aside>
