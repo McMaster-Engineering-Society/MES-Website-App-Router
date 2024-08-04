@@ -46,10 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         identifier,
         url,
         provider: { server, from },
-      }: {
-        identifier: string;
-        url: string;
-        provider: { server: string; from: string };
       }) {
         const { host } = new URL(url);
         const transport = createTransport(server);
