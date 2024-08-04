@@ -1,5 +1,7 @@
 'use client';
+// TODO: delete page. just for testing auth.
 import { SignIn } from '@/components/auth/sign-in';
+import { SignOut } from '@/components/auth/sign-out';
 import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
@@ -12,7 +14,7 @@ async function sendEmail() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      to: 'macinfra4@gmail.com',
+      to: process.env.SMTP_USER,
       subject: 'Test Email',
       text: 'This is a test email sent from Next.js using Nodemailer.',
     }),
@@ -31,6 +33,7 @@ export default function AuthPage() {
           />
           <Button onClick={sendEmail}>Send mail</Button>
           <SignIn />
+          <SignOut />
         </section>
       </main>
     </PageLayout>
