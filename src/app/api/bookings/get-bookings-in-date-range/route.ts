@@ -7,7 +7,7 @@ import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
 /**
  * Guide to querying this route:
  * All dates should be formatted as date time string format (ISO string) as per
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+ * https:export {}//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
  *
  * Include the query params 'startdate' and 'enddate'
  *
