@@ -5,7 +5,10 @@ import { TApiResponse, TBooking } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
   const bookingId: string = params.id;
 
   if (!bookingId) {
