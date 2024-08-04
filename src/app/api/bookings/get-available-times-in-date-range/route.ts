@@ -14,9 +14,9 @@ import { TApiResponse, TMessageResponse } from '@/lib/types';
  * Example of a date: 2014-10-13T00:00:00.000+00:00
  *
  * GET /api/bookings/get-available-times-in-date-range
- * Format we'll use for query date input is UTC (append Z at the end)
- * 2011-04-11T10:20:30Z
- * see: https://stackoverflow.com/questions/5619202/parsing-a-string-to-a-date-in-javascript
+
+ * Example of a query:
+ * http://localhost:3000/api/bookings/get-available-times-in-date-range?startdate=2014-10-13t00%3a00%3a00.000%2b00%3a00&enddate=2014-10-13t15%3a00%3a00.000%2b00%3a00
  */
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

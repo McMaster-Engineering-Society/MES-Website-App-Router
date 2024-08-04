@@ -9,7 +9,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     NodeMailer({
       server: {
         host: process.env.SMTP_SERVER,
-        port: process.env.SMTP_PORT,
+        port: parseInt(process.env.SMTP_PORT as string),
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
