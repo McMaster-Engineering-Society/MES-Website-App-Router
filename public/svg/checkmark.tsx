@@ -2,7 +2,6 @@ import React, { SVGProps } from 'react';
 
 export const CheckmarkIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    className='m-1'
     aria-hidden='true'
     fill='none'
     focusable='false'
@@ -23,7 +22,7 @@ export const CheckmarkIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => (
     />
     <g id='SVGRepo_iconCarrier'>
       <polygon
-        fill='#FFDEA7'
+        fill='#FFFFFF'
         points='40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9'
       />
     </g>

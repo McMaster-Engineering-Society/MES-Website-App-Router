@@ -13,7 +13,7 @@ export default function Content({ availableRoomIds }: ContentProps) {
   return (
     <ScrollShadow
       hideScrollBar
-      className='flex justify-end w-[200px] h-[400px]'
+      className='flex justify-center w-[200px] h-[400px] mt-8 rounded-lg bg-[#CACDD1]'
     >
       <div>
         {AvailableRooms.filter((room) => {

@@ -1,4 +1,4 @@
-export type HatchRoomType = {
+export type HatchRoomTypeDb = {
   roomNum: string;
   capacity: number;
   outlets: number;
@@ -6,7 +6,19 @@ export type HatchRoomType = {
   img: string;
 };
 
-export const AvailableRooms: HatchRoomType[] = [
+export type HatchRoomType = {
+  roomNum: string;
+  capacity: number;
+  outlets: number;
+  resources: string[]; //tv, whiteboard
+  img: string;
+  missingResources: string[];
+};
+
+const allResources = ['TV', 'Whiteboard'];
+
+//assuming this is format of info fromo db
+const AvailableRoomsDb: HatchRoomTypeDb[] = [
   {
     roomNum: '201',
     capacity: 16,
@@ -36,3 +48,21 @@ export const AvailableRooms: HatchRoomType[] = [
     img: '/images/bookings/the-junction.jpg',
   },
 ];
+
+const updateRoomsWithMissingResources = (
+  allResources: string[],
+  availableRooms: HatchRoomTypeDb[],
+): HatchRoomType[] => {
+  return availableRooms.map((room) => ({
+    ...room,
+    missingResources: allResources.filter(
+      (resource) => !room.resources.includes(resource),
+    ),
+  }));
+};
+
+//update the AvailableRooms array with missing resources
+export const AvailableRooms: HatchRoomType[] = updateRoomsWithMissingResources(
+  allResources,
+  AvailableRoomsDb,
+);
