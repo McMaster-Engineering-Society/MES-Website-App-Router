@@ -17,9 +17,11 @@ const ClubEvent = ({ booking }: ClubEventProps) => {
       className='flex flex-row items-center justify-between pr-4 p-1 border-3 border-gray-200 rounded-lg mb-3 gap-7 text-center'
     >
       <StatusBadge status={booking.status} />
-      <span className='w-32'>{booking.name}</span>
-      <span className='w-44'>{booking.building + ' #' + booking.room}</span>
-      <span className='w-72'>
+      <span className='basis-full'>{booking.name}</span>
+      <span className='basis-1/4'>
+        {booking.building + ' #' + booking.room}
+      </span>
+      <span className='basis-full'>
         {date.toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
@@ -28,7 +30,7 @@ const ClubEvent = ({ booking }: ClubEventProps) => {
           ' @ ' +
           time}
       </span>
-      <span className='w-72'>{booking.id}</span>
+      <span className='basis-1/4'>{booking.id}</span>
     </div>
   );
 };
