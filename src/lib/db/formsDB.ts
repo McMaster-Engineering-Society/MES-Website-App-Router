@@ -101,7 +101,7 @@ const updateFormByIdDb = async (formId: string, newStatus: 'pending' | 'approved
     const formsCollection = await getFormsCollection();
     const formObjectId = new ObjectId(formId);
     const result = await formsCollection.findOneAndUpdate(
-      { _id: formObjectId.toString() },
+      { _id: formObjectId },
       { $set: { formStatus: newStatus } },
       { returnDocument: 'after' }
     );
