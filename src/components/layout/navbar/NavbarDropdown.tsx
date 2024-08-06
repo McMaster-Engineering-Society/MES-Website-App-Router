@@ -25,7 +25,14 @@ export const NavbarDropdown = ({ ...props }) => {
       }}
       className='relative'
     >
-      <div className='absolute w-full h-8 top-8 border-solid'></div>
+      <div className='absolute w-full h-8 top-8 border-solid'>
+        {/**
+         * dropdowns that open on hover -> they close when the mouse moves outside of the component
+         * gap between dropdown button and menu -> dropdown closes when cursor moves between button and menu
+         *
+         * * This empty div bridges the gap between the dropdown button and menu to allow for hover dropdowns to function properly.
+         */}
+      </div>
       <Dropdown isOpen={isOnDropdown}>
         <NavbarItem>
           <DropdownTrigger>
