@@ -3,6 +3,7 @@
 import { FormEvent, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
+import { useMultistepForm } from '@/components/form/useMultistepForm';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
@@ -18,7 +19,6 @@ import SafetyHazards from '@/components/uhs-form/SafetyHazards';
 import Travel from '@/components/uhs-form/Travel';
 import TravelEvents from '@/components/uhs-form/TravelEvents';
 import Understanding from '@/components/uhs-form/Understanding';
-import { useMultistepForm } from '@/components/uhs-form/useMultistepForm';
 
 export default function UHSFormPage() {
   const [data, setData] = useState(INITIAL_DATA)

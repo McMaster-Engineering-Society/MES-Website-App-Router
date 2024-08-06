@@ -1,4 +1,15 @@
-import Question from "@/components/form/Question"
+import { TextFieldProps } from '@mui/material';
+import { SxProps } from '@mui/material/styles';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+import React from 'react';
+
+import Question from "@/components/form/Question";
+
+
 
 type EventData = {
   eventName: string,
@@ -33,6 +44,10 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
   return (
     <div className="flex flex-col">
         <div id='text-body' className='flex flex-col gap-x-4 gap-y-4'>
+          
+
+
+
           <Question title="Event Name" required={true}>
             <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter your event name..." name="eventName" value={eventName} onChange={e => updateFields({ eventName: e.target.value })} />
           </Question>
@@ -65,20 +80,84 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
             <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter emergency contact..." name="emergencyName" value={emergencyName} onChange={e => updateFields({ emergencyName: e.target.value })} />
           </Question>
 
-          <Question title="Start date" required={true}>
-            <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" type='date' name="startDate" value={startDate} onChange={e => updateFields({ startDate: e.target.value })} />
+          <Question title="Start Date" required={true}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                className="mt-2 w-[40%] w-min-4 opacity-50"
+                name="startDate"
+                value={dayjs(startDate)}
+                onChange={(date) => updateFields({ startDate: date?.toString() })}
+                slotProps={{
+                  textField: { sx: textFieldProps } as TextFieldProps,
+                  layout: {
+                    sx: {
+                      backgroundColor: '#ececec', // Background color of the calendar itself
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           </Question>
 
-          <Question title="Start time (military time)" required={true}>
-            <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" type='time' name="startTime" value={startTime} onChange={e => updateFields({ startTime: e.target.value })} />
+          <Question title="Start Time" required={true}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                className="mt-2 w-[40%] w-min-4 opacity-50"
+                name="startTime"
+                views={['hours', 'minutes']}
+                format="hh:mm a"
+                value={dayjs(startTime)}
+                onChange={(time) => updateFields({ startDate: time?.toString() })}
+                slotProps={{
+                  textField: { sx: textFieldProps } as TextFieldProps,
+                  layout: {
+                    sx: {
+                      backgroundColor: '#ececec', // Background color of the calendar itself
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           </Question>
 
-          <Question title="End date" description="If it's a repeating event, please put the end date of the first repeat (Eg for 1h weekly meetings starting on Feb 1 and ending Mar 1, the end date would be Feb 1 not Mar 1)" required={true}>
-            <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" type='date' name="endDate" value={endDate} onChange={e => updateFields({ endDate: e.target.value })} />
+          <Question title="End Date" description="If it's a repeating event, please put the end date of the first repeat (Eg for 1h weekly meetings starting on Feb 1 and ending Mar 1, the end date would be Feb 1 not Mar 1)" required={true}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                className="mt-2 w-[40%] w-min-4 opacity-50"
+                name="endDate"
+                value={dayjs(endDate)}
+                onChange={(date) => updateFields({ endDate: date?.toString() })}
+                slotProps={{
+                  textField: { sx: textFieldProps } as TextFieldProps,
+                  layout: {
+                    sx: {
+                      backgroundColor: '#ececec', // Background color of the calendar itself
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           </Question>
 
-          <Question title="End time (military time)" required={true}>
-            <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" type='time' name="endTime" value={endTime} onChange={e => updateFields({ endTime: e.target.value })}/>
+          <Question title="End Time" required={true}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                className="mt-2 w-[40%] w-min-4 opacity-50"
+                name="endTime"
+                views={['hours', 'minutes']}
+                format="hh:mm a"
+                value={dayjs(endTime)}
+                onChange={(time) => updateFields({ endDate: time?.toString() })}
+                slotProps={{
+                  textField: { sx: textFieldProps } as TextFieldProps,
+                  layout: {
+                    sx: {
+                      backgroundColor: '#ececec', // Background color of the calendar itself
+                    },
+                  },
+                }}
+              />
+            </LocalizationProvider>
           </Question>
 
           <Question title="Does this event repeat?" required={true}>
@@ -140,4 +219,40 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
     </div>
   );
 };
+
+const textFieldProps: SxProps = {
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '10px', // Set border radius
+    borderWidth: '2px', // Set border width
+    height: '3rem',
+    '& fieldset': {
+      borderColor: 'rgba(0, 0, 0, 0.4)',
+      borderWidth: '2px', // Set border width for fieldset
+    },
+    '&:hover fieldset': {
+      borderColor: '#a8b3c9',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#a8b3c9',
+    },
+    '&.Mui-error fieldset': {
+      borderColor: 'rgba(0, 0, 0, 0.4)', // Same as normal state
+    },
+    '& input': {
+      backgroundColor: '#ececec', // Background color of the input field
+      outline: 'none', // Remove the default outline
+      boxShadow: 'none', // Remove the default box-shadow (ring)
+      borderRadius: '10px', // Set border radius for input
+      color: '#4b4b4b',
+    },
+  },
+  '& .MuiInputBase-input': {
+    backgroundColor: '#ececec', // Background color of the input field
+    outline: 'none', // Remove the default outline
+    boxShadow: 'none', // Remove the default box-shadow (ring)
+    borderRadius: '10px', // Set border radius for input
+    color: '#4b4b4b',
+  },
+}
+
 export default Event;
