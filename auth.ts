@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     NodeMailer({
       server: {
         host: process.env.SMTP_SERVER,
-        port: process.env.SMTP_PORT,
+        port: parseInt(process.env.SMTP_PORT as string),
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
@@ -46,10 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         identifier,
         url,
         provider: { server, from },
-      }: {
-        identifier: string;
-        url: string;
-        provider: { server: string; from: string };
       }) {
         const { host } = new URL(url);
         const transport = createTransport(server);
