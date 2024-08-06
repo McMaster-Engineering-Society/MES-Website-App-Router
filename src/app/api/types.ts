@@ -5,6 +5,17 @@ export type TUser = {
   email: string;
 };
 
+export type TBooking = {
+  _id: string;
+  userId: string;
+  room: string;
+  email: string;
+  startTime: Date;
+  endTime: Date;
+  hasConfirmed: boolean;
+  createdDate: Date;
+};
+
 export type TMessageResponse = {
   message: string;
 };
