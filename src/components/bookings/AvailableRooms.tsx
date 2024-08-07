@@ -3,20 +3,20 @@ import React from 'react';
 
 import AvailableRoom from '@/components/bookings/AvailableRoom';
 
-import { AvailableRooms } from '@/constant/hatch-bookings/available-rooms';
+import { AvailableRoomsData } from '@/constant/hatch-bookings/available-rooms';
 
 type ContentProps = {
   availableRoomIds: string[];
 };
 
-export default function Content({ availableRoomIds }: ContentProps) {
+export default function AvailableRooms({ availableRoomIds }: ContentProps) {
   return (
     <ScrollShadow
       hideScrollBar
       className='flex justify-center w-[200px] h-[400px] mt-8 rounded-lg bg-[#CACDD1]'
     >
       <div>
-        {AvailableRooms.filter((room) => {
+        {AvailableRoomsData.filter((room) => {
           return availableRoomIds.includes(room.roomNum);
         }).map((roomInfo) => (
           <AvailableRoom key={roomInfo.roomNum} {...roomInfo} />

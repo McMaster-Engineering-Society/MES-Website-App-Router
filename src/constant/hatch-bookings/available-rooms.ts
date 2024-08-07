@@ -62,7 +62,5 @@ const updateRoomsWithMissingResources = (
 };
 
 //update the AvailableRooms array with missing resources
-export const AvailableRooms: HatchRoomType[] = updateRoomsWithMissingResources(
-  allResources,
-  AvailableRoomsDb,
-);
+export const AvailableRoomsData: HatchRoomType[] =
+  updateRoomsWithMissingResources(allResources, AvailableRoomsDb);
