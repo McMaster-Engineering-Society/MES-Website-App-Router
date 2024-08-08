@@ -13,3 +13,7 @@ Please include a summary of the technical solution and how it solves the problem
 # Screenshots
 
 Provide screenshots or videos of the changes made if any.
+
+# Issue number
+
+Add issue number to link to the issue in the Kanban Board
