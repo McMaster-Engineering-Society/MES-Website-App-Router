@@ -1,5 +1,9 @@
 'use client';
 
+import { Block, BlockNoteEditor, PartialBlock } from "@blocknote/core";
+// import { useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteView } from "@blocknote/mantine";
+import Image from '@tiptap/extension-image';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Export } from '@tiptap-pro/extension-export';
@@ -8,15 +12,10 @@ import {
   TableOfContentData,
   TableOfContents,
 } from '@tiptap-pro/extension-table-of-contents';
-import Image from '@tiptap/extension-image';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useEffect,useMemo, useState } from 'react';
 
 import "@blocknote/core/fonts/inter.css";
-// import { useCreateBlockNote } from "@blocknote/react";
-import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-import { Block, BlockNoteEditor, PartialBlock } from "@blocknote/core";
-
 import './document-styles/index.css';
 import './document-styles/styles.css';
 
