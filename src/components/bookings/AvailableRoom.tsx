@@ -22,7 +22,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
 
   return (
     <>
-      <div className='bg-[#373A36] text-white box-border rounded-xl w-40 h-auto p-4 my-4 border-4 text-center flex flex-col justify-between items-center'>
+      <div className='bg-[#373A36] text-white box-border rounded-xl w-40 h-auto p-4 mt-4 border-4 text-center flex flex-col justify-between items-center'>
         <div className='relative inline-block w-full text-center justify-center items-center pb-1'>
           <div className='inline-block font-bold'>{roomInfo.roomNum}</div>
           <button
