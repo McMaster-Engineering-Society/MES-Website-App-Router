@@ -1,5 +1,7 @@
+import { Divider } from '@nextui-org/react';
 import React from 'react';
 
+import Button from '@/components/buttons/Button';
 import ClubEvent from '@/components/clubs-portal/ClubEvent';
 
 import { Booking } from '@/types/booking';
@@ -34,7 +36,7 @@ const UpcomingEvents = () => {
     },
     {
       id: 3,
-      name: 'Annual Apple Eating Competition',
+      name: 'Social Event',
       clubId: 1,
       day: 7,
       month: 1,
@@ -99,7 +101,7 @@ const UpcomingEvents = () => {
     },
     {
       id: 8,
-      name: 'Annual Apple Eating Competition',
+      name: 'Social Event',
       clubId: 1,
       day: 7,
       month: 5,
@@ -141,19 +143,23 @@ const UpcomingEvents = () => {
   const groups = monthGroups(bookings);
 
   return (
-    <div className='w-full h-full'>
-      <h3>Upcoming Bookings and Events</h3>
-      <div className='w-full h-full overflow-y-scroll'>
+    <div className='flex flex-col w-full h-full '>
+      <h3 className='mb-4'>Upcoming Bookings and Events</h3>
+      <div className='w-full h-full overflow-y-scroll pr-2'>
         {Object.entries(groups).map(([key, bookings]) => {
           const date = new Date(parseInt(key));
           return (
-            <div key={key} className='w-full'>
-              <h4>
-                {date.toLocaleDateString('en-US', {
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </h4>
+            <div key={key}>
+              <div className='flex flex-row w-full items-center gap-3 mb-3'>
+                <h3 className='font-normal shrink-0'>
+                  {date.toLocaleDateString('en-US', {
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </h3>
+                <Divider className='shrink bg-black' />
+              </div>
+
               {bookings.map((booking) => (
                 <ClubEvent key={booking.id} booking={booking} />
               ))}
@@ -161,6 +167,11 @@ const UpcomingEvents = () => {
           );
         }, [])}
       </div>
+      <Button size='base' className='ml-auto mt-5'>
+        <span className='font-normal not-italic'>
+          Add Event to MES Calendar
+        </span>
+      </Button>
     </div>
   );
 };
