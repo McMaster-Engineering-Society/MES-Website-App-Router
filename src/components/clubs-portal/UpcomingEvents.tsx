@@ -143,14 +143,14 @@ const UpcomingEvents = () => {
   const groups = monthGroups(bookings);
 
   return (
-    <div className='flex flex-col w-full h-full '>
+    <div className='flex flex-col w-full h-full'>
       <h3 className='mb-4'>Upcoming Bookings and Events</h3>
-      <div className='w-full h-full overflow-y-scroll pr-2'>
+      <div className='w-full h-full overflow-y-scroll pr-2 relative'>
         {Object.entries(groups).map(([key, bookings]) => {
           const date = new Date(parseInt(key));
           return (
-            <div key={key}>
-              <div className='flex flex-row w-full items-center gap-3 mb-3'>
+            <>
+              <div className='flex flex-row w-full items-center gap-3 mb-3 sticky top-0 bg-white z-10'>
                 <h3 className='font-normal shrink-0'>
                   {date.toLocaleDateString('en-US', {
                     month: 'long',
@@ -159,13 +159,14 @@ const UpcomingEvents = () => {
                 </h3>
                 <Divider className='shrink bg-black' />
               </div>
-
-              {bookings.map((booking) => (
-                <ClubEvent key={booking.id} booking={booking} />
-              ))}
-            </div>
+              <div key={key}>
+                {bookings.map((booking) => (
+                  <ClubEvent key={booking.id} booking={booking} />
+                ))}
+              </div>
+            </>
           );
-        }, [])}
+        })}
       </div>
       <Button size='base' className='ml-auto mt-5'>
         <span className='font-normal not-italic'>
