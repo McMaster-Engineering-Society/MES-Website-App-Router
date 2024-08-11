@@ -80,6 +80,9 @@ importers:
       tailwind-merge:
         specifier: ^2.1.0
         version: 2.3.0
+      ts-nextjs-tailwind-starter:
+        specifier: 'file:'
+        version: file:(@babel/core@7.24.6)(@emotion/is-prop-valid@1.2.2)(@types/react@18.3.3)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.13.0)(typescript@4.9.5)))
       use-resize-observer:
         specifier: ^9.1.0
         version: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5710,6 +5713,9 @@ packages:
 
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
+
+  'ts-nextjs-tailwind-starter@file:':
+    resolution: {directory: '', type: directory}
 
   ts-node@10.9.2:
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
@@ -13365,6 +13371,54 @@ snapshots:
   trim-newlines@3.0.1: {}
 
   ts-interface-checker@0.1.13: {}
+
+  ts-nextjs-tailwind-starter@file:(@babel/core@7.24.6)(@emotion/is-prop-valid@1.2.2)(@types/react@18.3.3)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.13.0)(typescript@4.9.5))):
+    dependencies:
+      '@auth/mongodb-adapter': 3.2.0(mongodb@6.7.0)(nodemailer@6.9.14)
+      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
+      '@emotion/styled': 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
+      '@mui/icons-material': 5.15.19(@mui/material@5.15.19(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
+      '@mui/lab': 5.0.0-alpha.170(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@mui/material@5.15.19(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mui/material': 5.15.19(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@nextui-org/react': 2.4.1(@types/react@18.3.3)(framer-motion@11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.13.0)(typescript@4.9.5)))
+      '@react-stately/data': 3.11.4(react@18.3.1)
+      '@types/papaparse': 5.3.14
+      clsx: 2.1.1
+      express: 4.19.2
+      framer-motion: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide-react: 0.376.0(react@18.3.1)
+      mongodb: 6.7.0
+      mongoose: 8.5.2
+      next: 14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-auth: 5.0.0-beta.19(next@14.2.3(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.14)(react@18.3.1)
+      nodemailer: 6.9.14
+      papaparse: 5.4.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-icons: 4.12.0(react@18.3.1)
+      react-stately: 3.31.1(react@18.3.1)
+      tailwind-merge: 2.3.0
+      use-resize-observer: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@babel/core'
+      - '@emotion/is-prop-valid'
+      - '@mongodb-js/zstd'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
+      - '@types/react'
+      - babel-plugin-macros
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - sass
+      - snappy
+      - socks
+      - supports-color
+      - tailwindcss
 
   ts-node@10.9.2(@types/node@20.13.0)(typescript@4.9.5):
     dependencies:
