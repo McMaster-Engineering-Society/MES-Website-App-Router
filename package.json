@@ -44,6 +44,7 @@
     "react-stately": "^3.31.1",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.1.0",
+    "ts-nextjs-tailwind-starter": "file:",
     "use-resize-observer": "^9.1.0",
     "zod": "^3.22.4"
   },

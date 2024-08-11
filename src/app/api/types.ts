@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type TUser = {
   _id: string;
   firstName: string;
@@ -12,4 +14,11 @@ export type TMessageResponse = {
 export type TApiResponse<T> = {
   data: T | null;
   message?: string;
+};
+
+export type UHSForm = {
+  _id: string | ObjectId;
+  clubId: string;
+  formInfo: string;
+  formStatus: 'pending' | 'approved' | 'rejected';
 };
