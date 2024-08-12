@@ -1,4 +1,4 @@
-import Content from '@/components/bookings/AvailableRooms';
+import AvailableRooms from '@/components/bookings/AvailableRooms';
 import BookingInstructions from '@/components/bookings/BookingInstructions';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
@@ -77,7 +77,7 @@ const Bookings = () => {
         </ButtonLink>
 
         <div className='w-full flex justify-end'>
-          <Content availableRoomIds={['201', '203A']} />
+          <AvailableRooms availableRoomIds={['201', '203A']} />
         </div>
       </main>
     </PageLayout>
