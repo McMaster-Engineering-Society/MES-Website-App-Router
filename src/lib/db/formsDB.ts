@@ -10,8 +10,24 @@ const getFormsCollection = async () => {
   return formsCollection;
 };
 
+// const getFormsCollection = async () => {
+//   const client = await clientPromise;
+//   console.log('Connected to MongoDB URL:', client);
+//   const db = client.db("testDB");
+//   console.log('Using database:', db.databaseName);
+//   const formsCollection = db.collection<UHSForm>('forms');
+//   return formsCollection;
+// };
+
+const validStatuses = new Set(['pending', 'approved', 'rejected']);
+
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
   try {
+    // Validate formStatus
+    if (!validStatuses.has(newForm.formStatus)) {
+      throw new Error('Invalid form status');
+    }
+
     const formsCollection = await getFormsCollection();
     const result: InsertOneResult = await formsCollection.insertOne(newForm);
 
@@ -97,7 +113,7 @@ const updateFormByIdDb = async (
     const formsCollection = await getFormsCollection();
     const formObjectId = new ObjectId(formId);
     const result = await formsCollection.findOneAndUpdate(
-      { _id: formObjectId.toString() },
+      { _id: formObjectId },
       { $set: { formStatus: newStatus } },
       { returnDocument: 'after' },
     );
