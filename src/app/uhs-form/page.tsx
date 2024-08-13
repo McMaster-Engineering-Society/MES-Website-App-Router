@@ -31,7 +31,7 @@ export default function UHSFormPage() {
 
   const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2 } = useMultistepForm([
     //list of pages for the form as components
-    <Intro {...data} updateFields={updateFields} />, 
+    <Intro {...data} updateFields={updateFields} />,
     <Understanding {...data} updateFields={updateFields} />,
     <Event {...data} updateFields={updateFields} />,
     <BestPractices {...data} updateFields={updateFields} />,
@@ -48,10 +48,26 @@ export default function UHSFormPage() {
 
   title = titles[currentStepIndex];
   //this is the next or submit button, sometimes skipping pages if an option is picked
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (isLastStep) {
-      alert("Successful Submission");
+      "insert here"
+      try {
+        const response = await fetch('/api/forms/create-form', {
+          method: 'POST',
+          headers: {
+
+          },
+          body: JSON.stringify(data),
+
+
+        });
+      }
+      catch (error) {
+        throw new Error("Failed to submit form");
+      }
+
+      //alert("Successful Submission");
     } else if ((currentStepIndex === 3 && data.dangerNo) || (currentStepIndex === 5 && data.involveHazardNo) || (currentStepIndex === 7 && data.alcoholNo) || (currentStepIndex === 9 && data.travelNo)) {
       return next2();
     } else {
@@ -60,8 +76,8 @@ export default function UHSFormPage() {
   }
 
   //this goes back a page and sometimes goes back twice if an option is picked
-  function back(){
-    if ((currentStepIndex === 5 && data.dangerNo) || (currentStepIndex === 7 && data.involveHazardNo) || (currentStepIndex === 9 && data.alcoholNo) || (currentStepIndex === 11 && data.travelNo)){
+  function back() {
+    if ((currentStepIndex === 5 && data.dangerNo) || (currentStepIndex === 7 && data.involveHazardNo) || (currentStepIndex === 9 && data.alcoholNo) || (currentStepIndex === 11 && data.travelNo)) {
       return back2();
     } else {
       return back1();
@@ -82,16 +98,16 @@ export default function UHSFormPage() {
             <div className='flex flex-col items-center gap-x-4 gap-y-4 md:flex-row'>
               <div id='text-body' className='flex flex-col'>
                 <div className="text-[#4b4b4b] text-lg font-medium font-['Inter'] ">
-                  Hello dear planner, welcome to the UHS (FORMERLY EOHSS) form for in-person events. 
-                  Once you fill this out, I will put it into the portal and 
+                  Hello dear planner, welcome to the UHS (FORMERLY EOHSS) form for in-person events.
+                  Once you fill this out, I will put it into the portal and
                   let you know both if there is anything else we need and when it gets approved via email!
                   <br />
                   <br />
                   If you have any other documents to be submitted with the forms or any contracts, budget, or itinerary please email them to {' '}
                   <a href='mailto:vp.studentlife@macengsociety.ca' className='underline'>
-                  vp.studentlife@macengsociety.ca
+                    vp.studentlife@macengsociety.ca
                   </a>
-                  . 
+                  .
                   <br />
                   <br />
                   A '*' beside a question means that question needs to be answered.
@@ -99,8 +115,8 @@ export default function UHSFormPage() {
               </div>
             </div>
           </PageSection>
-            
-          <PageSection variant='rounded' heading={ title }>
+
+          <PageSection variant='rounded' heading={title}>
             <form onSubmit={onSubmit}>
               {step}
 
@@ -110,7 +126,7 @@ export default function UHSFormPage() {
                     Back
                   </Button>
                 }
-                
+
                 <Button type="submit" className='flex place-self-end'>
                   {isLastStep ? "Submit" : "Next"}
                 </Button>
