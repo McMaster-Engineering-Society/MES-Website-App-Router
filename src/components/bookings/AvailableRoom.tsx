@@ -55,6 +55,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
             <p>{roomInfo.outlets}</p>
           </div>
 
+          {/*Iterates through all available resources and displays its icon + checkmark next to it*/}
           {roomInfo.resources.map((resource, index) => (
             <div className='flex justify-left' key={index}>
               <Image
@@ -68,6 +69,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
             </div>
           ))}
 
+          {/*Iterates through all unavailable resources and displays its icon + cross next to it*/}
           {roomInfo.missingResources.map((resource, index) => (
             <div className='flex justify-left' key={index}>
               <Image
@@ -91,6 +93,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
         </Button>
       </div>
 
+      {/*More room information pop up*/}
       <Modal
         size='xs'
         isOpen={isOpen}

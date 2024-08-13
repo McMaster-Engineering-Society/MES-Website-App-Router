@@ -16,6 +16,7 @@ export default function AvailableRooms({ availableRoomIds }: ContentProps) {
       className='flex justify-center w-[200px] h-[450px] mt-8 rounded-lg bg-[#CACDD1]'
     >
       <div>
+        {/* Displays only the available rooms for the selected timeslot */}
         {AvailableRoomsData.filter((room) => {
           return availableRoomIds.includes(room.roomNum);
         }).map((roomInfo) => (

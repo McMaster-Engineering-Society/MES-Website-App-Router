@@ -15,9 +15,10 @@ export type HatchRoomType = {
   missingResources: string[];
 };
 
+//update with all of the available resources in hatch rooms
 const allResources = ['TV', 'Whiteboard'];
 
-//assuming this is format of info fromo db
+//assuming this is format of info from db
 const AvailableRoomsDb: HatchRoomTypeDb[] = [
   {
     roomNum: '201',
