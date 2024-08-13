@@ -10,17 +10,17 @@ type CouncilProfileProps = {
 const romanNumeral = (num: number) => {
   switch (num) {
     case 1:
-      return 'I';
+      return ', Level I';
     case 2:
-      return 'II';
+      return ', Level II';
     case 3:
-      return 'III';
+      return ', Level III';
     case 4:
-      return 'IV';
+      return ', Level IV';
     case 5:
-      return 'V';
+      return ', Level V';
     case 6:
-      return 'VI';
+      return ', Level VI';
     default:
       return '';
   }
@@ -63,7 +63,7 @@ const Title = (profile: CouncilDetails) => {
                       {profile.program}
                     </span>
                     <span className='min-w-max text-sm'>
-                      , Level {romanNumeral(profile.level)}
+                      {romanNumeral(profile.level)}
                     </span>
                   </div>
                 ) : (
@@ -73,7 +73,7 @@ const Title = (profile: CouncilDetails) => {
                     </span>
                     <div />
                     <span className='min-w-max text-sm'>
-                      Level {romanNumeral(profile.level)}
+                      {romanNumeral(profile.level)}
                     </span>
                   </div>
                 )}
@@ -86,7 +86,7 @@ const Title = (profile: CouncilDetails) => {
                       {profile.program}
                     </span>
                     <span className='min-w-max pb-1 pt-0 text-sm'>
-                      , Level {romanNumeral(profile.level)}
+                      {romanNumeral(profile.level)}
                     </span>
                   </div>
                 ) : (
@@ -95,7 +95,7 @@ const Title = (profile: CouncilDetails) => {
                       {profile.program}
                     </span>
                     <span className='min-w-max '>
-                      , Level {romanNumeral(profile.level)}
+                      {romanNumeral(profile.level)}
                     </span>
                   </div>
                 )}
