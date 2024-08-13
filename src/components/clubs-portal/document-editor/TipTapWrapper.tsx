@@ -2,7 +2,6 @@
 
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { Export } from '@tiptap-pro/extension-export';
 import {
   getHierarchicalIndexes,
   TableOfContentData,
@@ -13,8 +12,11 @@ import React, { useState } from 'react';
 import './document-styles/index.css';
 import './document-styles/styles.css';
 
-import Button from '@/components/buttons/Button';
+import { TDocument } from '@/lib/types';
+
 import { DocumentPanel } from '@/components/clubs-portal/document-editor/DocumentPanel';
+
+import { useSaveDocument } from '@/app/clubs-portal/hooks/useSaveDocument';
 
 import { DocumentTableOfContents } from './DocumentTableOfContents';
 const MemorizedDocumentTableOfContents = React.memo(DocumentTableOfContents);
@@ -22,6 +24,8 @@ const MemorizedDocumentTableOfContents = React.memo(DocumentTableOfContents);
 export const TipTapWrapper = () => {
   const [items, setItems] = useState<TableOfContentData>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const saveDocument = useSaveDocument();
 
   const editor = useEditor({
     extensions: [
@@ -32,7 +36,6 @@ export const TipTapWrapper = () => {
           setItems(content);
         },
       }),
-      Export,
     ],
     editable: true,
     content: '<p>Hello World! 🌎️</p>',
@@ -42,18 +45,31 @@ export const TipTapWrapper = () => {
     return null;
   }
 
+  const handleSave = async () => {
+    if (!editor) {
+      return;
+    }
+
+    const document: TDocument = {
+      title: 'temp',
+      content: editor.getJSON(),
+      // content: "test"
+    };
+
+    await saveDocument.mutateAsync(document);
+  };
+
   return (
     <div className='flex flex-col'>
-      <Button
-        onClick={() => {
-          alert(JSON.stringify(editor.getJSON()));
-        }}
-      >
-        Export to Markdown
-      </Button>
-      <DocumentPanel setIsSidebarOpen={setIsSidebarOpen} />
+      <DocumentPanel
+        setIsSidebarOpen={setIsSidebarOpen}
+        handleSave={handleSave}
+        handleDownload={handleSave}
+        handleProceed={handleSave}
+        handleUpload={handleSave}
+      />
 
-      <div className='flex  h-screen bg-black'>
+      <div className='flex  h-screen'>
         {isSidebarOpen && (
           <div className='border-r border-gray-300 w-1/5 sticky top-0 h-full px-8 pt-8'>
             <div className='flex flex-col items-start h-full gap-4 sticky top-4'>

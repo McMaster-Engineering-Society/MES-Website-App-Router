@@ -13,3 +13,10 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
+
+export type TDocument = {
+  _id?: string;
+  title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: Record<string, any>;
+}
