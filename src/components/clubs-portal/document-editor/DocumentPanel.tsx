@@ -7,9 +7,6 @@ import {
 } from 'lucide-react';
 import React from 'react';
 
-import './document-styles/index.css';
-import './document-styles/styles.css';
-
 import Button from '@/components/buttons/Button';
 
 type DocumentPanelProps = {
@@ -17,7 +14,7 @@ type DocumentPanelProps = {
   handleSave?: () => Promise<void>;
   handleUpload?: () => Promise<void>;
   handleDownload?: () => Promise<void>;
-  handleProceed?: () => Promise<void>;
+  handleProceed?: () => void;
 };
 
 export const DocumentPanel = ({

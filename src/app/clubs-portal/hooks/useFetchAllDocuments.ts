@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
-import { fetchAllDocuments } from "@/app/clubs-portal/api/fetchAllDocuments";
-
+import { fetchAllDocuments } from '@/app/clubs-portal/api/fetchAllDocuments';
 
 export const useFetchAllDocuments = () => {
   return useQuery({
-    queryKey: ["allEmailTemplates"],
+    queryKey: ['allClubsDocuments'],
     queryFn: async () => {
       return await fetchAllDocuments();
     },

@@ -1,7 +1,7 @@
-import { UpdateResult, WithId,  } from "mongodb";
+import { UpdateResult, WithId } from 'mongodb';
 
-import clientPromise from "@/lib/db";
-import { TDocument } from "@/lib/types";
+import clientPromise from '@/lib/db';
+import { TDocument } from '@/lib/types';
 
 const getDocumentsCollection = async () => {
   const client = await clientPromise;
@@ -14,8 +14,9 @@ const getDocumentsCollection = async () => {
 export const getAllDocumentsDb = async (): Promise<TDocument[]> => {
   try {
     const documentsCollection = await getDocumentsCollection();
-    const documentList: WithId<TDocument>[] = await documentsCollection.find({}).toArray();
-
+    const documentList: WithId<TDocument>[] = await documentsCollection
+      .find({})
+      .toArray();
     return documentList;
   } catch (error) {
     /* eslint-disable no-console */
@@ -24,16 +25,17 @@ export const getAllDocumentsDb = async (): Promise<TDocument[]> => {
   }
 };
 
-export const createDocumentDb = async (newDocument: TDocument): Promise<TDocument | null> => {
-
-  console.log(newDocument)
+export const createDocumentDb = async (
+  newDocument: TDocument,
+): Promise<TDocument | null> => {
+  console.log(newDocument);
 
   try {
     const documentsCollection = await getDocumentsCollection();
     const result: UpdateResult = await documentsCollection.updateOne(
       { title: newDocument.title },
       { $set: newDocument }, // Use $set to update only specified fields
-      { upsert: true }
+      { upsert: true },
     );
 
     if (!result.acknowledged) {
@@ -49,7 +51,9 @@ export const createDocumentDb = async (newDocument: TDocument): Promise<TDocumen
       };
     } else {
       // If no upsertedId, fetch the updated document
-      const updatedDocument = await documentsCollection.findOne({ title: newDocument.title });
+      const updatedDocument = await documentsCollection.findOne({
+        title: newDocument.title,
+      });
       if (!updatedDocument) {
         throw new Error('Failed to retrieve updated user');
       }
@@ -58,7 +62,6 @@ export const createDocumentDb = async (newDocument: TDocument): Promise<TDocumen
         _id: updatedDocument._id.toString(), // Ensure _id is a string
       } as TDocument;
     }
-
 
     return createdDocument;
   } catch (error) {

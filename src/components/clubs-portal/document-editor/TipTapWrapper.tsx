@@ -8,47 +8,52 @@ import {
   TableOfContentData,
   TableOfContents,
 } from '@tiptap-pro/extension-table-of-contents';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
-import './document-styles/index.css';
-import './document-styles/styles.css';
 
 import { TDocument } from '@/lib/types';
 
 import { DocumentPanel } from '@/components/clubs-portal/document-editor/DocumentPanel';
 
+import { useFetchAllDocuments } from '@/app/clubs-portal/hooks/useFetchAllDocuments';
 import { useSaveDocument } from '@/app/clubs-portal/hooks/useSaveDocument';
 
-async function saveToStorage(jsonBlocks: Block[]) {
-  // Save contents to local storage. You might want to debounce this or replace
-  // with a call to your API / database.
+async function saveToLocalStorage(jsonBlocks: Block[]) {
   localStorage.setItem('editorContent', JSON.stringify(jsonBlocks));
 }
 
 async function loadFromStorage() {
-  // Gets the previously stored editor contents.
   const storageString = localStorage.getItem('editorContent');
   return storageString
     ? (JSON.parse(storageString) as PartialBlock[])
     : undefined;
 }
 
-export const TipTapWrapper = () => {
+export const TipTapWrapper = ({ docId }: { docId: string }) => {
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [items, setItems] = useState<TableOfContentData>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | 'loading'
   >('loading');
+  const { data: documents } = useFetchAllDocuments();
+  const router = useRouter();
 
-  // Loads the previously stored editor contents.
   useEffect(() => {
-    loadFromStorage().then((content) => {
-      setInitialContent(content);
-    });
-  }, []);
+    if (documents && documents.length > 0) {
+      const firstDocument = documents.find((doc) => doc._id === docId);
+      if (firstDocument && firstDocument.content) {
+        setInitialContent(firstDocument.content as PartialBlock[]);
+      }
+    } else {
+      loadFromStorage().then((content) => {
+        setInitialContent(content);
+      });
+    }
+  }, [documents, docId]);
 
   const saveDocument = useSaveDocument();
 
@@ -96,13 +101,27 @@ export const TipTapWrapper = () => {
     await saveDocument.mutateAsync(document);
   };
 
+  const handleProceed = () => {
+    if (!editor) {
+      return;
+    }
+
+    const documentContent = editor.document;
+
+    // Save the document content to localStorage or pass it via query params
+    localStorage.setItem('documentContent', JSON.stringify(documentContent));
+
+    // Navigate to the new page
+    router.push('/clubs-portal/document-sharer');
+  };
+
   return (
     <div className='flex flex-col'>
       <DocumentPanel
         setIsSidebarOpen={setIsSidebarOpen}
         handleSave={handleSave}
         handleDownload={handleSave}
-        handleProceed={handleSave}
+        handleProceed={handleProceed}
         handleUpload={handleSave}
       />
 
@@ -126,7 +145,7 @@ export const TipTapWrapper = () => {
             editor={editor}
             editable={true}
             onChange={() => {
-              saveToStorage(editor.document);
+              saveToLocalStorage(editor.document);
             }}
           />
         </div>

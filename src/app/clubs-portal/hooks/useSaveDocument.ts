@@ -1,11 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { TDocument } from "@/lib/types";
+import { TDocument } from '@/lib/types';
 
-import { fetchSaveDocument } from "@/app/clubs-portal/api/fetchSaveDocument";
+import { fetchSaveDocument } from '@/app/clubs-portal/api/fetchSaveDocument';
 
-export const useSaveDocument
- = () => {
+export const useSaveDocument = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -13,13 +12,11 @@ export const useSaveDocument
       return fetchSaveDocument(document);
     },
     onSuccess: () => {
-      // eslint-disable-next-line no-console
-      console.error("Something went right.");
-      queryClient.invalidateQueries({ queryKey: ["allEmailTemplates"] });
+      queryClient.invalidateQueries({ queryKey: ['allClubsDocuments'] });
     },
     onError: () => {
       // eslint-disable-next-line no-console
-      console.error("Something went wrong.");
+      console.error('Something went wrong with the savings hook.');
     },
   });
 };
