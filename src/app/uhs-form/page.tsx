@@ -2,6 +2,7 @@
 "use client"
 import { FormEvent, useState } from 'react';
 
+//import { useAsyncList } from '@react-stately/data';
 import Button from '@/components/buttons/Button';
 import { useMultistepForm } from '@/components/form/useMultistepForm';
 import PageLayout from '@/components/layout/PageLayout';
@@ -30,6 +31,24 @@ export default function UHSFormPage() {
     })
   }
 
+
+  // //use it to fetch form data
+  // const fetchFormData = async () => {
+  //   const response = await fetch('/api/forms');
+  //   if (!response.ok) {
+  //     throw new Error('Failed to fetch form data');
+  //   }
+  //   const data = await response.json();
+  //   return data;
+  // };
+
+  // const list = useAsyncList({
+  //   async load() {
+  //     const data = await fetchFormData();
+  //     return { items: data };
+  //   },
+  // });
+
   const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2, goTo } = useMultistepForm([
     //list of pages for the form as components
     <Intro {...data} updateFields={updateFields} />,
@@ -48,30 +67,42 @@ export default function UHSFormPage() {
 
 
   title = titles[currentStepIndex];
+
   //this is the next or submit button, sometimes skipping pages if an option is picked
+  console.log('Before fetch request...');
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     //This handles what happens after the form is submitted
+    console.log('Submitting form...');
     if (isLastStep) {
+      console.log('Is last step:', isLastStep);
+      console.log('Last step reached, submitting data...');
       try {
         const response = await fetch('/api/forms/create-form', {
           method: 'POST',
           headers: {
-
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
-
-
         });
+
+        if (response.ok) {
+          setSubmit(true);
+        } else {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.message || 'Form submission failed');
+        }
+      } catch (error) {
+        console.error('An error occurred while submitting the form');
       }
-      catch (error) {
-        throw new Error("Failed to submit form");
-      }
-      setSubmit(true);
-    } else if ((currentStepIndex === 3 && data.dangerNo) || (currentStepIndex === 5 && data.involveHazardNo) || (currentStepIndex === 7 && data.alcoholNo) || (currentStepIndex === 9 && data.travelNo)) {
-      return next2();
+
     } else {
-      return next1();
+      console.log('Not the last step, navigating to next step...');
+      if ((currentStepIndex === 3 && data.dangerNo) || (currentStepIndex === 5 && data.involveHazardNo) || (currentStepIndex === 7 && data.alcoholNo) || (currentStepIndex === 9 && data.travelNo)) {
+        return next2();
+      } else {
+        return next1();
+      }
     }
   }
 
@@ -123,7 +154,7 @@ export default function UHSFormPage() {
           </PageSection>
 
           {/* {once form is submitted, it will change to submitted change by checking isSubmitted state} */}
-          {isSubmitted ? 
+          {isSubmitted ?
             <PageSection variant='rounded'>
               <form className="flex flex-col place-content-center" onSubmit={restart}>
                 <div className="flex place-self-center w-[80%] h-fit py-5 place-content-center text-center">
@@ -136,7 +167,7 @@ export default function UHSFormPage() {
                 </div>
               </form>
             </PageSection>
-          : 
+            :
             <PageSection variant='rounded' heading={title}>
               <form onSubmit={onSubmit}>
                 {step}
