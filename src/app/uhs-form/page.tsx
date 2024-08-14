@@ -21,7 +21,8 @@ import TravelEvents from '@/components/uhs-form/TravelEvents';
 import Understanding from '@/components/uhs-form/Understanding';
 
 export default function UHSFormPage() {
-  const [data, setData] = useState(INITIAL_DATA)
+  const [isSubmitted, setSubmit] = useState(false);
+  const [data, setData] = useState(INITIAL_DATA);
   //updates the values in the state from outside this file
   function updateFields(fields: Partial<FormData>) {
     setData(prev => {
@@ -29,7 +30,7 @@ export default function UHSFormPage() {
     })
   }
 
-  const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2 } = useMultistepForm([
+  const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2, goTo } = useMultistepForm([
     //list of pages for the form as components
     <Intro {...data} updateFields={updateFields} />,
     <Understanding {...data} updateFields={updateFields} />,
@@ -50,8 +51,8 @@ export default function UHSFormPage() {
   //this is the next or submit button, sometimes skipping pages if an option is picked
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
+    //This handles what happens after the form is submitted
     if (isLastStep) {
-      "insert here"
       try {
         const response = await fetch('/api/forms/create-form', {
           method: 'POST',
@@ -66,8 +67,7 @@ export default function UHSFormPage() {
       catch (error) {
         throw new Error("Failed to submit form");
       }
-
-      //alert("Successful Submission");
+      setSubmit(true);
     } else if ((currentStepIndex === 3 && data.dangerNo) || (currentStepIndex === 5 && data.involveHazardNo) || (currentStepIndex === 7 && data.alcoholNo) || (currentStepIndex === 9 && data.travelNo)) {
       return next2();
     } else {
@@ -82,6 +82,12 @@ export default function UHSFormPage() {
     } else {
       return back1();
     }
+  }
+
+  //this function restarts the form after submitting
+  function restart() {
+    setSubmit(false);
+    return goTo(0);
   }
 
   return (
@@ -116,23 +122,39 @@ export default function UHSFormPage() {
             </div>
           </PageSection>
 
-          <PageSection variant='rounded' heading={title}>
-            <form onSubmit={onSubmit}>
-              {step}
-
-              <div className="flex flex-row place-content-end gap-x-4">
-                {!isFirstStep &&
-                  <Button type="button" onClick={back} className='flex place-self-end'>
-                    Back
+          {/* {once form is submitted, it will change to submitted change by checking isSubmitted state} */}
+          {isSubmitted ? 
+            <PageSection variant='rounded'>
+              <form className="flex flex-col place-content-center" onSubmit={restart}>
+                <div className="flex place-self-center w-[80%] h-fit py-5 place-content-center text-center">
+                  Your form has been successfully submitted. You will be notified once a decision has been made. Please click continue if you would like to submit another form.
+                </div>
+                <div className="flex flex-row justify-center content-end gap-x-4">
+                  <Button type="submit" className='flex mb-5 place-self-center'>
+                    Continue
                   </Button>
-                }
+                </div>
+              </form>
+            </PageSection>
+          : 
+            <PageSection variant='rounded' heading={title}>
+              <form onSubmit={onSubmit}>
+                {step}
 
-                <Button type="submit" className='flex place-self-end'>
-                  {isLastStep ? "Submit" : "Next"}
-                </Button>
-              </div>
-            </form>
-          </PageSection>
+                <div className="flex flex-row place-content-end gap-x-4">
+                  {!isFirstStep &&
+                    <Button type="button" onClick={back} className='flex place-self-end'>
+                      Back
+                    </Button>
+                  }
+
+                  <Button type="submit" className='flex place-self-end'>
+                    {isLastStep ? "Submit" : "Next"}
+                  </Button>
+                </div>
+              </form>
+            </PageSection>
+          }
 
         </section>
       </main>
