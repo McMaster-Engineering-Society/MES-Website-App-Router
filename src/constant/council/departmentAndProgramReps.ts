@@ -85,7 +85,7 @@ const deptAndProgramReps: CouncilDetails[] = [
     firstName: 'Arnav',
     lastName: 'Gupta',
     position: 'Bachelor of Technology (B.Tech) Rep',
-    program: 'Automotive Engineering',
+    program: 'Automotive Technology',
     level: 3,
     email: 'btech@macengsociety.ca',
     image: '/images/council-24-25/arnav-gupta.jpg',
