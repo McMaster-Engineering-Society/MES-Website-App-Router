@@ -9,13 +9,16 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { InfoIcon } from 'lucide-react';
+import { X } from 'lucide-react';
+import { Check } from 'lucide-react';
+import { User } from 'lucide-react';
+import { Plug } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/available-rooms';
+import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 
-import { CheckmarkIcon } from '../../../public/svg/checkmark';
-import { CrossIcon } from '../../../public/svg/cross';
+import { HatchRoomType } from '@/constant/hatch-bookings/available-rooms';
 
 export default function AvailableRoom(roomInfo: HatchRoomType) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -35,51 +38,27 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
 
         <div className='w-full text-left grid grid-cols-2 gap-x-6 gap-y-4 my-2 mb-4'>
           <div className='flex justify-left'>
-            <Image
-              src='/images/bookings/person.png'
-              width={20}
-              height={20}
-              alt='room pic'
-              className='mr-1'
-            />
+            <User className='mr-1' />
             <p>{roomInfo.capacity}</p>
           </div>
           <div className='flex justify-left'>
-            <Image
-              src='/images/bookings/outlet.png'
-              width={20}
-              height={20}
-              alt='room pic'
-              className='mr-1'
-            />
+            <Plug className='mr-1' />
             <p>{roomInfo.outlets}</p>
           </div>
 
           {/*Iterates through all available resources and displays its icon + checkmark next to it*/}
           {roomInfo.resources.map((resource, index) => (
             <div className='flex justify-left' key={index}>
-              <Image
-                src={`/images/bookings/${resource}.png`}
-                width={20}
-                height={20}
-                alt='room pic'
-                className='mr-1'
-              />
-              <CheckmarkIcon />
+              <ResourcesIcon resource={resource} />
+              <Check />
             </div>
           ))}
 
           {/*Iterates through all unavailable resources and displays its icon + cross next to it*/}
           {roomInfo.missingResources.map((resource, index) => (
             <div className='flex justify-left' key={index}>
-              <Image
-                src={`/images/bookings/${resource}.png`}
-                width={20}
-                height={20}
-                alt='room pic'
-                className='mr-1'
-              />
-              <CrossIcon className='flex flex-col justify-end mt-auto mb-1' />
+              <ResourcesIcon resource={resource} />
+              <X />
             </div>
           ))}
         </div>
