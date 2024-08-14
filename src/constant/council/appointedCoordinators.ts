@@ -188,7 +188,7 @@ export const ExternalPortfolioCoordinators: CoordinatorDetails[] = [
   {
     name: 'Simone Ocvirk',
     role: 'PM 2024 Co-Chair',
-    image: '/images/council-24-25/simone-ocvirk.jpg',
+    image: '/images/default-picture.jpeg',
   },
 ];
 export const FinancePortfolioCoordinators: CoordinatorDetails[] = [
