@@ -1,22 +1,14 @@
 'use client';
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import { InfoIcon } from 'lucide-react';
 import { X } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { User } from 'lucide-react';
 import { Plug } from 'lucide-react';
-import Image from 'next/image';
 import React from 'react';
 
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
+import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
 import { HatchRoomType } from '@/constant/hatch-bookings/available-rooms';
 
@@ -73,50 +65,11 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
       </div>
 
       {/*More room information pop up*/}
-      <Modal
-        size='xs'
+      <RoomInfoModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className='flex flex-col gap-1'>
-                Room: {roomInfo.roomNum}
-              </ModalHeader>
-              <ModalBody>
-                <p>Room capacity: {roomInfo.capacity}</p>
-                <p>Outlet: {roomInfo.outlets}</p>
-                <p>
-                  Resources:{' '}
-                  {roomInfo.resources.map((resource, index) => {
-                    return (
-                      resource +
-                      (index < roomInfo.resources.length - 1 ? ', ' : '')
-                    );
-                  })}
-                </p>
-                <Image
-                  src={roomInfo.img}
-                  width={200}
-                  height={200}
-                  alt='room pic'
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color='danger' variant='light' onPress={onClose}>
-                  Close
-                </Button>
-                <Button color='success' onPress={onClose}>
-                  Book Now
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+        roomInfo={roomInfo}
+      />
     </>
   );
 }
