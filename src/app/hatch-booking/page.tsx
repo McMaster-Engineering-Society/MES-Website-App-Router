@@ -8,7 +8,6 @@ import {
 } from '@nextui-org/react';
 import React from 'react';
 
-import AvailableRooms from '@/components/bookings/AvailableRooms';
 import PageLayout from '@/components/layout/PageLayout';
 
 export default function NewBookingSystemPage() {
@@ -62,8 +61,8 @@ export default function NewBookingSystemPage() {
             </Popover>
           </div>
           <div className='flex mt-4 w-full max-w-screen-lg justify-end'>
-            <div className='w-full flex justify-end'>
-              <AvailableRooms availableRoomIds={['201', '203A', '204']} />
+            <div className='bg-slate-500 w-48 h-96 flex justify-center rounded-lg'>
+              <RoomInfo />
             </div>
           </div>
         </div>
@@ -71,6 +70,26 @@ export default function NewBookingSystemPage() {
     </PageLayout>
   );
 }
+
+const RoomInfo = () => (
+  <div className='bg-slate-400 p-4 rounded-3xl w-32 h-52 flex flex-col justify-between items-center mt-4'>
+    <h2>H201</h2>
+    <ul>
+      <li>Capacity: 6 </li>
+      <li>Outlets: 4</li>
+      <li>Whiteboard</li>
+      <li></li>
+    </ul>
+    <a
+      href='https://example.com'
+      target='_blank'
+      rel='noopener noreferrer'
+      className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 w-20 rounded'
+    >
+      Book{' '}
+    </a>
+  </div>
+);
 
 const handleButtonClick = () => {
   window.location.href = 'https://example.com';
