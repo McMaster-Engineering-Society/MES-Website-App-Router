@@ -1,10 +1,6 @@
 'use client';
 import { Button, useDisclosure } from '@nextui-org/react';
-import { InfoIcon } from 'lucide-react';
-import { X } from 'lucide-react';
-import { Check } from 'lucide-react';
-import { User } from 'lucide-react';
-import { Plug } from 'lucide-react';
+import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
 
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';

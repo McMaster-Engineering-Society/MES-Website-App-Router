@@ -1,6 +1,4 @@
-import { Presentation as Whiteboard } from 'lucide-react';
-import { FileQuestion } from 'lucide-react';
-import { Tv } from 'lucide-react';
+import { FileQuestion, Presentation as Whiteboard, Tv } from 'lucide-react';
 import React from 'react';
 
 type Props = {
