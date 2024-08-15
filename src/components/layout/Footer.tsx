@@ -59,14 +59,6 @@ const links = [
         label: 'Hatch Lockers',
       },
       {
-        href: '/mes-card',
-        label: 'MES Card',
-      },
-      {
-        href: '/special-projects',
-        label: 'Special Projects',
-      },
-      {
         href: '/wellness',
         label: 'Wellness',
       },
