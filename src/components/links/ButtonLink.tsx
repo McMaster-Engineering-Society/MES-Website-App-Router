@@ -1,5 +1,6 @@
 'use client';
 
+import { LucideIcon } from 'lucide-react';
 import * as React from 'react';
 import { IconType } from 'react-icons';
 
@@ -22,8 +23,8 @@ type ButtonLinkProps = {
   isDarkBg?: boolean;
   variant?: (typeof ButtonLinkVariant)[number];
   size?: (typeof ButtonLinkSize)[number];
-  leftIcon?: IconType;
-  rightIcon?: IconType;
+  leftIcon?: IconType | LucideIcon;
+  rightIcon?: IconType | LucideIcon;
   leftIconClassName?: string;
   rightIconClassName?: string;
   disabled?: boolean;
