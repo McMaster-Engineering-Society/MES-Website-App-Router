@@ -29,7 +29,7 @@ const getMoneyArray: GetMoney[] = [
   },
   {
     title: 'Special Projects Funding Application',
-    link: 'https://airtable.com/appeTdwccCOeO23yY/shrmdllXw1LJo1BYg',
+    link: '',
     colour: getRandomColour(),
   },
   {
