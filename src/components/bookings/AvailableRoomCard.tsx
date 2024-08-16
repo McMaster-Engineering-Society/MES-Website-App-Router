@@ -6,10 +6,11 @@ import React from 'react';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/available-rooms';
+import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
 
 export default function AvailableRoom(roomInfo: HatchRoomType) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const resourceKeys = Object.keys(roomInfo.resources);
 
   return (
     <>
@@ -34,19 +35,11 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
             <p>{roomInfo.outlets}</p>
           </div>
 
-          {/*Iterates through all available resources and displays its icon + checkmark next to it*/}
-          {roomInfo.resources.map((resource, index) => (
+          {resourceKeys.map((resource, index) => (
             <div className='flex justify-left' key={index}>
               <ResourcesIcon resource={resource} />
-              <Check />
-            </div>
-          ))}
-
-          {/*Iterates through all unavailable resources and displays its icon + cross next to it*/}
-          {roomInfo.missingResources.map((resource, index) => (
-            <div className='flex justify-left' key={index}>
-              <ResourcesIcon resource={resource} />
-              <X />
+              {/* outputs checkmark or X depending on if the resource is available for the room or not */}
+              {roomInfo.resources[resource] ? <Check /> : <X />}
             </div>
           ))}
         </div>

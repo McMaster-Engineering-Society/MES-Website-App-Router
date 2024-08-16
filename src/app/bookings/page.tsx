@@ -1,4 +1,3 @@
-import AvailableRooms from '@/components/bookings/AvailableRooms';
 import BookingInstructions from '@/components/bookings/BookingInstructions';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
@@ -75,10 +74,6 @@ const Bookings = () => {
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
         </ButtonLink>
-
-        <div className='w-full flex justify-end'>
-          <AvailableRooms availableRoomIds={['201', '203A']} />
-        </div>
       </main>
     </PageLayout>
   );

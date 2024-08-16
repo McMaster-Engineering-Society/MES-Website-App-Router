@@ -17,12 +17,14 @@ type Props = {
     roomNum: string;
     capacity: number;
     outlets: number;
-    resources: string[];
+    resources: { [resource: string]: boolean };
     img: string;
   };
 };
 
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
+  const resourceKeys = Object.keys(roomInfo.resources);
+
   return (
     <Modal
       size='xs'
@@ -42,10 +44,9 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               <p>Outlet: {roomInfo.outlets}</p>
               <p>
                 Resources:{' '}
-                {roomInfo.resources.map((resource, index) => {
+                {resourceKeys.map((resource, index) => {
                   return (
-                    resource +
-                    (index < roomInfo.resources.length - 1 ? ', ' : '')
+                    resource + (index < resourceKeys.length - 1 ? ', ' : '')
                   );
                 })}
               </p>
