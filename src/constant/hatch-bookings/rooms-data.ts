@@ -6,7 +6,7 @@ export type HatchRoomType = {
   img: string;
 };
 
-export const AvailableRoomsData: HatchRoomType[] = [
+export const HatchRoomsData: HatchRoomType[] = [
   {
     roomNum: '201',
     capacity: 16,

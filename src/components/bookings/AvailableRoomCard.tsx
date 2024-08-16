@@ -6,7 +6,7 @@ import React from 'react';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/available-rooms';
+import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
 
 export default function AvailableRoom(roomInfo: HatchRoomType) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
