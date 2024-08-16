@@ -64,7 +64,7 @@ export const getProfileByEmailDb = async (
 
     return user;
   } catch (error) {
-    console.error('Error fetching user by id from database:', error);
+    console.error('Error fetching user by email from database:', error);
     throw new Error('Database error');
   }
 };
@@ -88,7 +88,7 @@ export const deleteProfileByIdDb = async (
 
     return user;
   } catch (error) {
-    console.error('Error fetching user by id from database:', error);
+    console.error('Error deleting user by id from database:', error);
     throw new Error('Database error');
   }
 };
@@ -111,7 +111,7 @@ export const createProfileDb = async (
 
     return createdUser;
   } catch (error) {
-    console.error('Error fetching user by id from database:', error);
+    console.error('Error creating user:', error);
     throw new Error('Database error');
   }
 };
