@@ -35,19 +35,12 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
             <p>{roomInfo.outlets}</p>
           </div>
 
-          {resourceKeys.map((resource, index) =>
-            roomInfo.resources[resource] ? (
-              <div className='flex justify-left' key={index}>
-                <ResourcesIcon resource={resource} />
-                <Check />
-              </div>
-            ) : (
-              <div className='flex justify-left' key={index}>
-                <ResourcesIcon resource={resource} />
-                <X />
-              </div>
-            ),
-          )}
+          {resourceKeys.map((resource, index) => (
+            <div className='flex justify-left' key={index}>
+              <ResourcesIcon resource={resource} />
+              {roomInfo.resources[resource] ? <Check /> : <X />}
+            </div>
+          ))}
         </div>
 
         <Button
