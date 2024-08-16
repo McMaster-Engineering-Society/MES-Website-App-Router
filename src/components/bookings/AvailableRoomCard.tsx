@@ -38,6 +38,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
           {resourceKeys.map((resource, index) => (
             <div className='flex justify-left' key={index}>
               <ResourcesIcon resource={resource} />
+              {/* outputs checkmark or X depending on if the resource is available for the room or not */}
               {roomInfo.resources[resource] ? <Check /> : <X />}
             </div>
           ))}

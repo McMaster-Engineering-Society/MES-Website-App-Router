@@ -2,7 +2,7 @@ export type HatchRoomType = {
   roomNum: string;
   capacity: number;
   outlets: number;
-  resources: { [resource: string]: boolean }; //tv, whiteboard
+  resources: { [resource: string]: boolean }; //value is true IF resource is available, false IF unavailable. Resources currently includes: TV, Whiteboard
   img: string;
 };
 
