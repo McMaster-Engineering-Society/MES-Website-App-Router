@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb';
 
 export type TUser = {
   _id: string;
@@ -17,7 +17,7 @@ export type TApiResponse<T> = {
 };
 
 export type UHSForm = {
-  _id: string;
+  _id: string | ObjectId;
   clubId: string;
   formInfo: string;
   formStatus: 'pending' | 'approved' | 'rejected';
