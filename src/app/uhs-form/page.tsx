@@ -2,52 +2,35 @@
 "use client"
 import { FormEvent, useState } from 'react';
 
-//import { useAsyncList } from '@react-stately/data';
 import Button from '@/components/buttons/Button';
 import { useMultistepForm } from '@/components/form/useMultistepForm';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
-import AlcoholEvent from '@/components/uhs-form/AlcoholEvent';
-import BestPractices from '@/components/uhs-form/BestPractices';
-import Danger from '@/components/uhs-form/Danger';
-import Event from '@/components/uhs-form/Event';
-import FoodAlcohol from '@/components/uhs-form/FoodAlcohol';
-import HazardEvents from '@/components/uhs-form/HazardEvents';
-import Intro from '@/components/uhs-form/Intro';
-import Policy from '@/components/uhs-form/Policy';
-import SafetyHazards from '@/components/uhs-form/SafetyHazards';
-import Travel from '@/components/uhs-form/Travel';
-import TravelEvents from '@/components/uhs-form/TravelEvents';
-import Understanding from '@/components/uhs-form/Understanding';
+
+import AlcoholEvent from '@/constant/uhs-form/AlcoholEvent';
+import BestPractices from '@/constant/uhs-form/BestPractices';
+import Danger from '@/constant/uhs-form/Danger';
+import Event from '@/constant/uhs-form/Event';
+import FoodAlcohol from '@/constant/uhs-form/FoodAlcohol';
+import HazardEvents from '@/constant/uhs-form/HazardEvents';
+import Intro from '@/constant/uhs-form/Intro';
+import Policy from '@/constant/uhs-form/Policy';
+import SafetyHazards from '@/constant/uhs-form/SafetyHazards';
+import Travel from '@/constant/uhs-form/Travel';
+import TravelEvents from '@/constant/uhs-form/TravelEvents';
+import Understanding from '@/constant/uhs-form/Understanding';
 
 export default function UHSFormPage() {
   const [isSubmitted, setSubmit] = useState(false);
   const [data, setData] = useState(INITIAL_DATA);
+  
   //updates the values in the state from outside this file
   function updateFields(fields: Partial<FormData>) {
     setData(prev => {
       return { ...prev, ...fields }
     })
   }
-
-
-  // //use it to fetch form data
-  // const fetchFormData = async () => {
-  //   const response = await fetch('/api/forms');
-  //   if (!response.ok) {
-  //     throw new Error('Failed to fetch form data');
-  //   }
-  //   const data = await response.json();
-  //   return data;
-  // };
-
-  // const list = useAsyncList({
-  //   async load() {
-  //     const data = await fetchFormData();
-  //     return { items: data };
-  //   },
-  // });
 
   const { currentStepIndex, step, isFirstStep, isLastStep, back1, back2, next1, next2, goTo } = useMultistepForm([
     //list of pages for the form as components
@@ -69,14 +52,10 @@ export default function UHSFormPage() {
   title = titles[currentStepIndex];
 
   //this is the next or submit button, sometimes skipping pages if an option is picked
-  console.log('Before fetch request...');
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     //This handles what happens after the form is submitted
-    console.log('Submitting form...');
     if (isLastStep) {
-      console.log('Is last step:', isLastStep);
-      console.log('Last step reached, submitting data...');
       try {
         const response = await fetch('/api/forms/create-form', {
           method: 'POST',
@@ -97,8 +76,7 @@ export default function UHSFormPage() {
       }
 
     } else {
-      console.log('Not the last step, navigating to next step...');
-      if ((currentStepIndex === 3 && data.dangerNo) || (currentStepIndex === 5 && data.involveHazardNo) || (currentStepIndex === 7 && data.alcoholNo) || (currentStepIndex === 9 && data.travelNo)) {
+      if ((currentStepIndex === 3 && !data.danger) || (currentStepIndex === 5 && !data.involveHazard) || (currentStepIndex === 7 && !data.alcohol) || (currentStepIndex === 9 && !data.travel)) {
         return next2();
       } else {
         return next1();
@@ -108,7 +86,7 @@ export default function UHSFormPage() {
 
   //this goes back a page and sometimes goes back twice if an option is picked
   function back() {
-    if ((currentStepIndex === 5 && data.dangerNo) || (currentStepIndex === 7 && data.involveHazardNo) || (currentStepIndex === 9 && data.alcoholNo) || (currentStepIndex === 11 && data.travelNo)) {
+    if ((currentStepIndex === 5 && !data.danger) || (currentStepIndex === 7 && !data.involveHazard) || (currentStepIndex === 9 && !data.alcohol) || (currentStepIndex === 11 && !data.travel)) {
       return back2();
     } else {
       return back1();
@@ -216,9 +194,7 @@ type FormData = {
   email: string,
   firstAgreement: boolean,
   secondAgreement: boolean,
-  groupMES: boolean,
-  groupDepartment: boolean,
-  groupCommittee: boolean,
+  groupCategory: string,
   groupName: string,
   eventName: string,
   eventDesc: string,
@@ -232,41 +208,29 @@ type FormData = {
   startTime: string,
   endDate: string,
   endTime: string,
-  repeatYes: boolean,
-  repeatNo: boolean,
+  repeat: boolean | undefined,
   repeatInfo: string,
-  execMeetingYes: boolean,
-  execMeetingNo: boolean,
+  execMeeting: boolean | undefined,
   thirdAgreement: boolean,
-  virtualYes: boolean,
-  virtualNo: boolean,
-  movieYes: boolean,
-  movieNo: boolean,
-  dangerYes: boolean,
-  dangerNo: boolean,
+  virtual: boolean | undefined,
+  movie: boolean | undefined,
+  danger: boolean | undefined,
   activityDesc: string,
   nameOfFirstAidIndividual: string,
   nameOfEmergencyIndividual: string,
   fourthAgreement: boolean,
   fifthAgreement: boolean,
-  involveHazardYes: boolean,
-  involveHazardNo: boolean,
+  involveHazard: boolean | undefined,
   equipmentDesc: string,
   certificateSent: boolean,
   sixthAgreement: boolean,
-  foodYes: boolean,
-  foodNo: boolean,
-  alcoholYes: boolean,
-  alcoholNo: boolean,
-  placeYes: boolean,
-  placeNo: boolean,
+  food: boolean | undefined,
+  alcohol: boolean | undefined,
+  place: boolean | undefined,
   seventhAgreement: boolean,
-  campusYes: boolean,
-  campusNo: boolean,
-  eighthAgreementYes: boolean,
-  eighthAgreementNo: boolean,
-  travelYes: boolean,
-  travelNo: boolean,
+  campus: boolean | undefined,
+  eighthAgreement: boolean | undefined,
+  travel: boolean | undefined,
   busName: string,
   busMonitor: string,
   safetyPlan: string,
@@ -285,9 +249,7 @@ const INITIAL_DATA: FormData = {
   email: "",
   firstAgreement: false,
   secondAgreement: false,
-  groupMES: false,
-  groupDepartment: false,
-  groupCommittee: false,
+  groupCategory: "",
   groupName: "",
   eventName: "",
   eventDesc: "",
@@ -301,41 +263,29 @@ const INITIAL_DATA: FormData = {
   startTime: "",
   endDate: "",
   endTime: "",
-  repeatYes: false,
-  repeatNo: false,
+  repeat: undefined,
   repeatInfo: "",
-  execMeetingYes: false,
-  execMeetingNo: false,
+  execMeeting: undefined,
   thirdAgreement: false,
-  virtualYes: false,
-  virtualNo: false,
-  movieYes: false,
-  movieNo: false,
-  dangerYes: false,
-  dangerNo: false,
+  virtual: undefined,
+  movie: undefined,
+  danger: undefined,
   activityDesc: "",
   nameOfFirstAidIndividual: "",
   nameOfEmergencyIndividual: "",
   fourthAgreement: false,
   fifthAgreement: false,
-  involveHazardYes: false,
-  involveHazardNo: false,
+  involveHazard: undefined,
   equipmentDesc: "",
   certificateSent: false,
   sixthAgreement: false,
-  foodYes: false,
-  foodNo: false,
-  alcoholYes: false,
-  alcoholNo: false,
-  placeYes: false,
-  placeNo: false,
+  food: undefined,
+  alcohol: undefined,
+  place: undefined,
   seventhAgreement: false,
-  campusYes: false,
-  campusNo: false,
-  eighthAgreementYes: false,
-  eighthAgreementNo: false,
-  travelYes: false,
-  travelNo: false,
+  campus: undefined,
+  eighthAgreement: undefined,
+  travel: undefined,
   busName: "",
   busMonitor: "",
   safetyPlan: "",
@@ -348,3 +298,4 @@ const INITIAL_DATA: FormData = {
   comments: "",
   finalAgreement: false
 }
+

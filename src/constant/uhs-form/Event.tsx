@@ -24,29 +24,22 @@ type EventData = {
   startTime: string,
   endDate: string,
   endTime: string,
-  repeatYes: boolean,
-  repeatNo: boolean,
+  repeat: boolean | undefined,
   repeatInfo: string,
-  execMeetingYes: boolean,
-  execMeetingNo: boolean,
+  execMeeting: boolean | undefined,
   thirdAgreement: boolean,
-  virtualYes: boolean,
-  virtualNo: boolean,
-  movieYes: boolean,
-  movieNo: boolean
+  virtual: boolean | undefined,
+  movie: boolean | undefined
 }
 
 type EventProps = EventData & {
   updateFields: (fields: Partial<EventData>) => void
 }
 
-function Event({ eventName, eventDesc, organizerName, organizerNumber, organizerEmail, location, numberOfParticipants, emergencyName, startDate, startTime, endDate, endTime, repeatYes, repeatNo, repeatInfo, execMeetingYes, execMeetingNo, thirdAgreement, virtualYes, virtualNo, movieYes, movieNo, updateFields }: EventProps) {
+function Event({ eventName, eventDesc, organizerName, organizerNumber, organizerEmail, location, numberOfParticipants, emergencyName, startDate, startTime, endDate, endTime, repeat, repeatInfo, execMeeting, thirdAgreement, virtual, movie, updateFields }: EventProps) {
   return (
     <div className="flex flex-col">
         <div id='text-body' className='flex flex-col gap-x-4 gap-y-4'>
-          
-
-
 
           <Question title="Event Name" required={true}>
             <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter your event name..." name="eventName" value={eventName} onChange={e => updateFields({ eventName: e.target.value })} />
@@ -162,11 +155,11 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
 
           <Question title="Does this event repeat?" required={true}>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='repeat' value="repeatYes" checked={repeatYes} onChange={() => updateFields({ repeatYes: true, repeatNo: false })} />
+              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='repeat' value="repeatYes" checked={repeat === true} onChange={() => updateFields({ repeat: true})} />
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">Yes</div>
             </label>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='repeat' value="repeatNo" checked={repeatNo} onChange={() => updateFields({ repeatYes: false, repeatNo: true })} />
+              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='repeat' value="repeatNo" checked={repeat === false} onChange={() => updateFields({ repeat: false })} />
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">No</div>
             </label>
           </Question>
@@ -177,11 +170,11 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
 
           <Question title="Is this a student group executive meeting?" required={true}>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='exec' value="execYes" checked={execMeetingYes} onChange={() => updateFields({ execMeetingYes: true, execMeetingNo: false })} />
+              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='exec' value="execYes" checked={execMeeting === true} onChange={() => updateFields({ execMeeting: true })} />
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">Yes</div>
             </label>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='exec' value="execNo" checked={execMeetingNo} onChange={() => updateFields({ execMeetingYes: false, execMeetingNo: true })} />
+              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='exec' value="execNo" checked={execMeeting === false} onChange={() => updateFields({ execMeeting: false})} />
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">No</div>
             </label>
           </Question>
@@ -195,22 +188,22 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
 
           <Question title="Is this a virtual event?" required={true}>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='virtual' value="virtualYes" checked={virtualYes} onChange={() => updateFields({ virtualYes: true, virtualNo: false })}/>
+              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='virtual' value="virtualYes" checked={virtual === true} onChange={() => updateFields({ virtual: true })}/>
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">Yes</div>
             </label>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='virtual' value="virtualNo" checked={virtualNo} onChange={() => updateFields({ virtualYes: false, virtualNo: true })}/>
+              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='virtual' value="virtualNo" checked={virtual === false} onChange={() => updateFields({ virtual: false })}/>
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">No</div>
             </label>
           </Question>
 
           <Question title="Are you planning an event that includes screening a movie?" description="MSU Criterion license: http://www.criterionpic.com/cpl/qsearch.htx. (Search for your movie title here) Films not found here i.e. documentaries or independent films can only be shown with permission from the director or film/distribution company. Please complete the film waiver and submit with your event request." required={true}>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='movie' value="movieYes" checked={movieYes} onChange={() => updateFields({ movieYes: true, movieNo: false })}/>
+              <input required className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='movie' value="movieYes" checked={movie === true} onChange={() => updateFields({ movie: true })}/>
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">Yes, and my movie is approved under the MSU Criterion License</div>
             </label>
             <label className="flex flex-row mt-2 h-fit justify-items-start content-center">
-              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='movie' value="movieNo" checked={movieNo} onChange={() => updateFields({ movieYes: false, movieNo: true })}/>
+              <input className="mr-2 h-6 w-6 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40" type="radio" name='movie' value="movieNo" checked={movie === false} onChange={() => updateFields({ movie: false})}/>
               <div className="text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">No</div>
             </label>
           </Question>
