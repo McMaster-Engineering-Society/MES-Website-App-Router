@@ -4,6 +4,10 @@ export async function fetchAvailabilities(
   pickerStartDate: Date,
   pickerEndDate: Date,
 ): Promise<RoomAvailabilities> {
+  if (process.env.NEXT_PUBLIC_URL === undefined) {
+    throw new Error('NEXT_PUBLIC_URL is not defined');
+  }
+
   const pickerStartDateISO = pickerStartDate
     .toISOString()
     .replace('.000Z', '+00:00');
