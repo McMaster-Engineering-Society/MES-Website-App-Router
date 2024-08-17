@@ -8,12 +8,34 @@ import {
 } from '@nextui-org/react';
 import React from 'react';
 
+import { fetchAddBooking } from '@/lib/api/bookingApi';
+import { TBooking } from '@/lib/types';
+
 import AvailableRooms from '@/components/bookings/AvailableRooms';
 import TimePicker from '@/components/bookings/TimePicker';
 import PageLayout from '@/components/layout/PageLayout';
 
 export default function NewBookingSystemPage() {
   const [availableRoomIds, setAvailableRoomIds] = React.useState<string[]>([]);
+  const [startTimeDate, setStartTimeDate] = React.useState<Date | undefined>(
+    undefined,
+  );
+  const [endTimeDate, setEndTimeDate] = React.useState<Date | undefined>(
+    undefined,
+  );
+
+  function handleAddBookRoom(room: string) {
+    const newBooking: TBooking = {
+      userId: 'placeholder ID',
+      room: room,
+      startTime: startTimeDate || new Date(),
+      endTime: endTimeDate || new Date(),
+      hasConfirmed: false,
+      email: 'placeholder email',
+    };
+
+    fetchAddBooking(newBooking);
+  }
 
   return (
     <PageLayout noFooter>
@@ -66,8 +88,15 @@ export default function NewBookingSystemPage() {
           </div>
           <div className='flex mt-4 w-full max-w-screen-lg justify-end'>
             <div className='w-full flex justify-end'>
-              <TimePicker setAvailableRoomIds={setAvailableRoomIds} />
-              <AvailableRooms availableRoomIds={availableRoomIds} />
+              <TimePicker
+                setAvailableRoomIds={setAvailableRoomIds}
+                setStartTimeDate={setStartTimeDate}
+                setEndTimeDate={setEndTimeDate}
+              />
+              <AvailableRooms
+                availableRoomIds={availableRoomIds}
+                handleAddBookRoom={handleAddBookRoom}
+              />
             </div>
           </div>
         </div>
