@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { fetchAvailabilities } from '@/lib/api/bookingApi';
+
 /**
  * human readable time slots (local time)
  */
@@ -41,7 +43,7 @@ const timeslots = [
 ];
 const firstTimeSlotOfTheDayUTC = 11; // 7 AM EST
 
-type RoomAvailabilities = {
+export type RoomAvailabilities = {
   H201: string[];
   H203: string[];
   H205: string[];
@@ -53,102 +55,28 @@ type RoomAvailabilities = {
  * mock API call to fetch room availabilities
  * @todo replace with actual API call
  */
-async function fetchAvailabilities(): Promise<RoomAvailabilities> {
-  const mockAvailabilities: RoomAvailabilities = {
-    H201: [
-      '2024-08-11T11:00:00.000Z',
-      '2024-08-11T12:00:00.000Z',
-      '2024-08-11T13:00:00.000Z',
-      '2024-08-11T14:00:00.000Z',
-      '2024-08-11T14:30:00.000Z',
-      '2024-08-11T15:00:00.000Z',
-      '2024-08-11T15:30:00.000Z',
-      '2024-08-11T16:00:00.000Z',
-      '2024-08-11T16:30:00.000Z',
-      '2024-08-11T17:00:00.000Z',
-      '2024-08-11T17:30:00.000Z',
-      '2024-08-11T18:00:00.000Z',
-      '2024-08-11T18:30:00.000Z',
-      '2024-08-12T11:00:00.000Z',
-      '2024-08-12T12:00:00.000Z',
-      '2024-08-12T13:00:00.000Z',
-      '2024-08-12T14:00:00.000Z',
-      '2024-08-12T14:30:00.000Z',
-      '2024-08-12T15:00:00.000Z',
-      '2024-08-13T11:00:00.000Z',
-      '2024-08-14T12:00:00.000Z',
-      '2024-08-14T13:00:00.000Z',
-      '2024-08-14T14:00:00.000Z',
-      '2024-08-14T14:30:00.000Z',
-      '2024-08-14T15:00:00.000Z',
-      '2024-08-15T11:00:00.000Z',
-      '2024-08-15T11:30:00.000Z',
-      '2024-08-15T12:00:00.000Z',
-    ],
-    H203: [
-      '2024-08-11T11:00:00.000Z',
-      '2024-08-11T12:00:00.000Z',
-      '2024-08-11T13:00:00.000Z',
-      '2024-08-11T14:00:00.000Z',
-      '2024-08-11T14:30:00.000Z',
-      '2024-08-11T15:00:00.000Z',
-      '2024-08-12T11:00:00.000Z',
-      '2024-08-12T12:00:00.000Z',
-      '2024-08-12T13:00:00.000Z',
-      '2024-08-12T14:00:00.000Z',
-      '2024-08-12T14:30:00.000Z',
-      '2024-08-12T15:00:00.000Z',
-      '2024-08-13T11:00:00.000Z',
-      '2024-08-14T12:00:00.000Z',
-      '2024-08-14T13:00:00.000Z',
-      '2024-08-14T14:00:00.000Z',
-      '2024-08-14T14:30:00.000Z',
-      '2024-08-14T15:00:00.000Z',
-    ],
-    H205: [
-      '2024-08-11T11:00:00.000Z',
-      '2024-08-13T11:00:00.000Z',
-      '2024-08-11T12:00:00.000Z',
-      '2024-08-11T13:00:00.000Z',
-      '2024-08-11T14:00:00.000Z',
-      '2024-08-11T14:30:00.000Z',
-      '2024-08-11T15:00:00.000Z',
-      '2024-08-12T11:00:00.000Z',
-      '2024-08-12T12:00:00.000Z',
-      '2024-08-12T13:00:00.000Z',
-      '2024-08-12T14:00:00.000Z',
-      '2024-08-12T14:30:00.000Z',
-      '2024-08-12T15:00:00.000Z',
-      '2024-08-13T11:00:00.000Z',
-      '2024-08-14T12:00:00.000Z',
-      '2024-08-14T13:00:00.000Z',
-      '2024-08-14T14:00:00.000Z',
-      '2024-08-14T14:30:00.000Z',
-      '2024-08-14T15:00:00.000Z',
-      '2024-08-15T11:00:00.000Z',
-    ],
-    H204A: [
-      '2024-08-15T11:00:00.000Z',
-      '2024-08-15T15:00:00.000Z',
-      '2024-08-15T15:30:00.000Z',
-      '2024-08-15T16:00:00.000Z',
-      '2024-08-15T19:00:00.000Z',
-      '2024-08-15T12:00:00.000Z',
-      '2024-08-11T23:00:00.000Z',
-    ],
-    H204B: [],
-  };
-  return mockAvailabilities;
-}
 
-export default function TimePicker() {
+type TimePickerProps = {
+  setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export default function TimePicker({ setAvailableRoomIds }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const [pickerStartDate] = useState<Date>(
-    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-  );
+  // const [pickerStartDate] = useState<Date>(
+  //   new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
+  // );
+
+  const [pickerStartDate] = useState<Date>(() => {
+    const date = new Date();
+    date.setUTCFullYear(date.getUTCFullYear()); // Keeps the current year
+    date.setUTCMonth(7); // Months are 0-indexed, so 7 corresponds to August
+    date.setUTCDate(11); // Sets the date to 11th
+    date.setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0); // Sets the time as before
+    return date;
+  });
 
   /**
    * changes based on screen size (ex. on mobile only show 1 day at a time)
@@ -177,8 +105,12 @@ export default function TimePicker() {
     H204B: [],
   });
   useEffect(() => {
-    fetchAvailabilities().then((data) => setAvailabilities(data));
-  }, []);
+    const pickerEndDate = new Date(pickerStartDate);
+    pickerEndDate.setDate(pickerEndDate.getDate() + 14);
+    fetchAvailabilities(pickerStartDate, pickerEndDate).then((data) =>
+      setAvailabilities(data),
+    );
+  }, [pickerStartDate]);
 
   /**
    * max number of 30 minute slots that can be selected
@@ -247,6 +179,7 @@ export default function TimePicker() {
       roomsAvailableByTime={roomsAvailableByTime}
       timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
       maxBlockLength={maxBlockLength}
+      setAvailableRoomIds={setAvailableRoomIds}
     />
   );
 }
@@ -256,6 +189,7 @@ type TimePickerTableProps = {
   roomsAvailableByTime: Record<string, string[]>;
   timeSlotIndexToTimeISO: (i: number) => string;
   maxBlockLength: number;
+  setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 function TimePickerTable({
@@ -263,6 +197,7 @@ function TimePickerTable({
   roomsAvailableByTime,
   timeSlotIndexToTimeISO,
   maxBlockLength,
+  setAvailableRoomIds,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const [startIndex, setStartIndex] = useState<number>(-1);
@@ -271,6 +206,45 @@ function TimePickerTable({
   const [dragOperation, setDragOperation] = useState<
     'Selecting' | 'DeselectingFromStart' | 'DeselectingFromEnd' | 'None'
   >('None');
+
+  useEffect(() => {
+    const handleSetAvailableRoomIds = () => {
+      if (startIndex > endIndex) {
+        // If the range is invalid, exit early
+        return;
+      }
+
+      const times = Array.from({ length: endIndex - startIndex + 1 }, (_, i) =>
+        timeSlotIndexToTimeISO(startIndex + i),
+      );
+      let intersectionRooms: string[] = [];
+
+      times.forEach((time) => {
+        const availableRooms = roomsAvailableByTime[time] || [];
+
+        if (!intersectionRooms.length) {
+          // Initialize the intersection set with the rooms available at the first time slot
+          intersectionRooms = availableRooms;
+        } else {
+          // Compute the intersection of available rooms
+          intersectionRooms = [...intersectionRooms].filter((room) =>
+            availableRooms.includes(room),
+          );
+        }
+      });
+
+      // Convert intersectionRooms to an array and set state
+      setAvailableRoomIds(intersectionRooms);
+    };
+
+    handleSetAvailableRoomIds();
+  }, [
+    startIndex,
+    endIndex,
+    roomsAvailableByTime,
+    setAvailableRoomIds,
+    timeSlotIndexToTimeISO,
+  ]);
 
   // disallow selecting more than maxBlockLength
   const [canSelect, setCanSelect] = useState(true);
@@ -450,7 +424,7 @@ function TimePickerTable({
                     key={`${day} ${slot}`}
                     className={`h-4 relative border border-b-0 border-black/20 flex-1 
                       ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
-                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
+                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-red-200'} 
                       ${i % 2 === 1 && 'border-t-0'} 
                       ${j === 0 && 'border-l-0'} 
                       ${j === daysToShow.length - 1 && 'border-r-0'}`}

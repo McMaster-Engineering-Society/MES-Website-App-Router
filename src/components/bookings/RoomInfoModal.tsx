@@ -10,16 +10,12 @@ import {
 import Image from 'next/image';
 import React from 'react';
 
+import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  roomInfo: {
-    roomNum: string;
-    capacity: number;
-    outlets: number;
-    resources: { [resource: string]: boolean };
-    img: string;
-  };
+  roomInfo: HatchRoomType;
 };
 
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
@@ -37,7 +33,7 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
         {(onClose) => (
           <>
             <ModalHeader className='flex flex-col gap-1'>
-              Room: {roomInfo.roomNum}
+              Room: {roomInfo.roomName}
             </ModalHeader>
             <ModalBody>
               <p>Room capacity: {roomInfo.capacity}</p>
