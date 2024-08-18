@@ -52,31 +52,17 @@ export type RoomAvailabilities = {
   H204B: string[];
 };
 
-/**
- * mock API call to fetch room availabilities
- * @todo replace with actual API call
- */
-
 export default function TimePicker() {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  // const [pickerStartDate] = useState<Date>(
-  //   new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-  // );
-
   const { setAvailableRoomIds, setStartTimeDate, setEndTimeDate } =
     useTimePickerContext();
 
-  const [pickerStartDate] = useState<Date>(() => {
-    const date = new Date();
-    date.setUTCFullYear(date.getUTCFullYear()); // Keeps the current year
-    date.setUTCMonth(7); // Months are 0-indexed, so 7 corresponds to August
-    date.setUTCDate(11); // Sets the date to 11th
-    date.setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0); // Sets the time as before
-    return date;
-  });
+  const [pickerStartDate] = useState<Date>(
+    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
+  );
 
   const pickerEndDate = new Date(pickerStartDate);
   pickerEndDate.setDate(pickerEndDate.getDate() + 14);
@@ -473,7 +459,7 @@ function TimePickerTable({
                     key={`${day} ${slot}`}
                     className={`h-4 relative border border-b-0 border-black/20 flex-1 
                       ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
-                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-red-200'} 
+                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
                       ${i % 2 === 1 && 'border-t-0'} 
                       ${j === 0 && 'border-l-0'} 
                       ${j === daysToShow.length - 1 && 'border-r-0'}`}
