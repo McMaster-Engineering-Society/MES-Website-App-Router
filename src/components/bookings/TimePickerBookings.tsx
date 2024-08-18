@@ -217,7 +217,7 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
   };
 
   return (
-    <div className='flex absolute top-8 w-full h-full top-0 pointer-events-none'>
+    <div className='flex absolute top-8 w-full h-full pointer-events-none'>
       {[...Array(columnCount)].map((_, i) => {
         // initializes the starting date & time for each column
         const startTime = new Date();
