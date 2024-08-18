@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { fetchAvailabilities } from '@/lib/api/bookingApi';
+import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
 /**
  * human readable time slots (local time)
@@ -56,17 +57,7 @@ export type RoomAvailabilities = {
  * @todo replace with actual API call
  */
 
-type TimePickerProps = {
-  setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
-  setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-};
-
-export default function TimePicker({
-  setAvailableRoomIds,
-  setStartTimeDate,
-  setEndTimeDate,
-}: TimePickerProps) {
+export default function TimePicker() {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
@@ -74,6 +65,9 @@ export default function TimePicker({
   // const [pickerStartDate] = useState<Date>(
   //   new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
   // );
+
+  const { setAvailableRoomIds, setStartTimeDate, setEndTimeDate } =
+    useTimePickerContext();
 
   const [pickerStartDate] = useState<Date>(() => {
     const date = new Date();
