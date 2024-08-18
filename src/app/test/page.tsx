@@ -1,4 +1,3 @@
-import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerAdmin from '@/components/bookings/TimePickerAdmin';
 import { ConferencePageSection } from '@/components/conferences/ConferencePageSection';
 import DiscountLocation from '@/components/DiscountLocation';
@@ -17,7 +16,6 @@ export default function TestPage() {
           2024-06-01 will be here
         </h1>
         <br />
-        <TimePicker />
         <TimePickerAdmin />
         <ConferencePageSection
           title='Conf'

@@ -489,17 +489,12 @@ function TimePickerTable({
       <TimeIndicators />
 
       <div
-<<<<<<< HEAD
         className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
-=======
-        className='relative bg-white rounded-lg shadow-lg shadow-black/25'
->>>>>>> 930f3db (feat: show circle for booking)
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
         <TimePickerHeader />
-<<<<<<< HEAD
         {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
         <div className='relative'>
           <TimePickerBody />
@@ -611,11 +606,20 @@ function TimePickerTable({
             </div>
           </Switch>
         </div>
-=======
-        <TimePickerBody />
-        <TimePickerBookings firstDate={18} />
->>>>>>> 930f3db (feat: show circle for booking)
       </div>
+
+      <Switch
+        defaultSelected
+        size='lg'
+        color='success'
+        aria-label='Toggle Bookings'
+        className='h-32 pl-8'
+        onChange={(e) => {
+          setAreBookingsVisible(e.target.checked);
+        }}
+      >
+        Toggle Bookings
+      </Switch>
     </div>
   );
 }
