@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-import { fetchAddBooking } from '@/lib/api/bookingApi';
+import { useAddRoomBookingHook } from '@/lib/hooks/bookingHooks';
 import { TBooking } from '@/lib/types';
 
 type TTimePickerContext = {
@@ -36,6 +36,8 @@ export const TimePickerProvider = ({ children }: Props) => {
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
 
+  const addRoomBooking = useAddRoomBookingHook();
+
   function handleAddBookRoom(room: string) {
     const newBooking: TBooking = {
       userId: 'placeholder ID',
@@ -46,7 +48,7 @@ export const TimePickerProvider = ({ children }: Props) => {
       email: 'placeholder email',
     };
 
-    fetchAddBooking(newBooking);
+    addRoomBooking.mutate(newBooking);
   }
 
   function handlePickerStartDateShiftByDay(shift: number) {

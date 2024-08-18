@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { fetchAvailabilities } from '@/lib/api/bookingApi';
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
 
 /**
  * human readable time slots (local time)
@@ -78,6 +78,14 @@ export default function TimePicker() {
     return date;
   });
 
+  const pickerEndDate = new Date(pickerStartDate);
+  pickerEndDate.setDate(pickerEndDate.getDate() + 14);
+
+  const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
+    pickerStartDate,
+    pickerEndDate,
+  );
+
   /**
    * changes based on screen size (ex. on mobile only show 1 day at a time)
    * @todo integrate with screen size
@@ -104,13 +112,12 @@ export default function TimePicker() {
     H204A: [],
     H204B: [],
   });
+
   useEffect(() => {
-    const pickerEndDate = new Date(pickerStartDate);
-    pickerEndDate.setDate(pickerEndDate.getDate() + 14);
-    fetchAvailabilities(pickerStartDate, pickerEndDate).then((data) =>
-      setAvailabilities(data),
-    );
-  }, [pickerStartDate]);
+    if (!isLoading && roomAvailabilities) {
+      setAvailabilities(roomAvailabilities);
+    }
+  }, [roomAvailabilities, isLoading]);
 
   /**
    * max number of 30 minute slots that can be selected
