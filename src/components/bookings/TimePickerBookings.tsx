@@ -1,5 +1,6 @@
 'use client';
 
+import { Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
 import { TBooking } from '@/app/api/types';
@@ -43,7 +44,7 @@ async function fetchBookings(): Promise<TBooking[]> {
     {
       _id: '66c2205187f9ac38c4ba6462',
       userId: 'placeholder ID',
-      room: 'H201',
+      room: 'H205',
       startTime: new Date('2024-08-22T14:00:00.000Z'),
       endTime: new Date('2024-08-22T15:30:00.000Z'),
       hasConfirmed: false,
@@ -169,14 +170,45 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
       return booking.time == time;
     });
 
+    const getRoomColour = (room: string) => {
+      let roomColour = '';
+      switch (room) {
+        case 'H201':
+          roomColour = 'bg-red-500';
+          break;
+        case 'H203':
+          roomColour = 'bg-orange-500';
+          break;
+        case 'H205':
+          roomColour = 'bg-yellow-500';
+          break;
+        case 'H204A':
+          roomColour = 'bg-green-500';
+          break;
+        case 'H204B':
+          roomColour = 'bg-blue-500';
+          break;
+        default:
+          roomColour = 'bg-gray-500';
+      }
+      return roomColour;
+    };
+
     return (
-      <div id={time} className='h-4 flex gap-2'>
+      <div id={time} className='h-4 flex justify-evenly w-32'>
         {result.length != 0
           ? result.map((booking) => {
               return (
-                <p key={`${time}-${booking.room}`} className='text-xs'>
-                  {booking.room}
-                </p>
+                <div
+                  key={`${time}-${booking.room}`}
+                  className='flex justify-center items-center text-xs'
+                >
+                  <Tooltip showArrow content={booking.room} placement='bottom'>
+                    <div
+                      className={`w-2 h-2 rounded-full ${getRoomColour(booking.room)} pointer-events-auto`}
+                    />
+                  </Tooltip>
+                </div>
               );
             })
           : null}
@@ -185,7 +217,7 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
   };
 
   return (
-    <div className='flex absolute w-full h-full top-0 bg-red-500/20 pointer-events-none'>
+    <div className='flex absolute top-8 w-full h-full top-0 pointer-events-none'>
       {[...Array(columnCount)].map((_, i) => {
         // initializes the starting date & time for each column
         const startTime = new Date();
@@ -195,7 +227,7 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
         return (
           <div
             key={`day-${startTime.getUTCDate()}`}
-            className='flex-1 flex flex-col justify-center items-center border-1 border-indigo-500 opacity-100'
+            className='flex-1 flex flex-col justify-center items-center opacity-100'
           >
             {[...Array(rowCount)].map(() => {
               // increments the starting time by 30 minutes for each following row
