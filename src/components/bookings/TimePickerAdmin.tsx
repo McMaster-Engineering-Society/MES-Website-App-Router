@@ -1,5 +1,6 @@
 'use client';
 
+import { Switch } from '@nextui-org/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
@@ -469,6 +470,8 @@ function TimePickerTable({
     );
   };
 
+  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+
   return (
     <div className='flex flex-row justify-center'>
       <TimeIndicators />
@@ -481,8 +484,21 @@ function TimePickerTable({
       >
         <TimePickerHeader />
         <TimePickerBody />
-        <TimePickerBookings firstDate={18} />
+        {areBookingsVisible ? <TimePickerBookings firstDate={18} /> : null}
       </div>
+
+      <Switch
+        defaultSelected
+        size='lg'
+        color='success'
+        aria-label='Toggle Bookings'
+        className='h-32 pl-8'
+        onChange={(e) => {
+          setAreBookingsVisible(e.target.checked);
+        }}
+      >
+        Toggle Bookings
+      </Switch>
     </div>
   );
 }
