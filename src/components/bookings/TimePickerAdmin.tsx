@@ -149,8 +149,8 @@ export default function TimePickerAdmin() {
    * @todo integrate with date picker arrows
    */
   const [pickerStartDate] = useState<Date>(
-    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-    // new Date(new Date().setUTCDate(11)),
+    // new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
+    new Date(new Date().setUTCDate(7)),
   );
 
   /**
@@ -443,7 +443,7 @@ function TimePickerTable({
 
   const TimePickerBody = () => {
     return (
-      <div className='relative'>
+      <div>
         {timeslots.map((slot, i) => (
           <div key={slot} className='flex'>
             {daysToShow.map((day, j) => {
@@ -465,7 +465,6 @@ function TimePickerTable({
             })}
           </div>
         ))}
-        <TimePickerBookings firstDate={18} />
       </div>
     );
   };
@@ -475,13 +474,14 @@ function TimePickerTable({
       <TimeIndicators />
 
       <div
-        className='bg-white rounded-lg shadow-lg shadow-black/25'
+        className='relative bg-white rounded-lg shadow-lg shadow-black/25'
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
         <TimePickerHeader />
         <TimePickerBody />
+        <TimePickerBookings firstDate={18} />
       </div>
     </div>
   );
