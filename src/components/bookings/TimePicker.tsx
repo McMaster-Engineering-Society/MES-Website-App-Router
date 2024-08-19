@@ -376,6 +376,21 @@ function TimePickerTable({
   };
 
   /**
+   * onTouchMove will not fire for the proper timeSlotIndex
+   * So we need to convert the touch coordinates to the proper timeSlotIndex
+   */
+  const touchEventToTimeslot = (event: React.TouchEvent): number | null => {
+    const { touches } = event;
+    if (!touches || touches.length === 0) return null;
+    const { clientX, clientY } = touches[0];
+    const targetElement = document.elementFromPoint(clientX, clientY);
+    if (targetElement) {
+      return parseInt(targetElement.id);
+    }
+    return null;
+  };
+
+  /**
    * stop dragging when we let go of the mouse
    */
   const onMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -450,14 +465,21 @@ function TimePickerTable({
                 return (
                   <td
                     key={`${day} ${slot}`}
-                    className={`h-4 relative border border-b-0 border-black/20 flex-1 
+                    id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
+                    className={`h-4 relative border border-b-0 border-black/20 flex-1 touch-none
                       ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
                       ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
                       ${i % 2 === 1 && 'border-t-0'} 
                       ${j === 0 && 'border-l-0'} 
                       ${j === daysToShow.length - 1 && 'border-r-0'}`}
-                    onMouseEnter={() => handleDrag(timeSlotIndex)}
-                    onMouseDown={() => handleMouseDown(timeSlotIndex)}
+                    onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
+                    onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
+                    onTouchMove={(e) => {
+                      // onTouchMove will not fire for the proper timeSlotIndex
+                      // so we need to convert the touch to the proper timeSlotIndex
+                      const timeSlotIndex = touchEventToTimeslot(e);
+                      timeSlotIndex && handleDrag(timeSlotIndex);
+                    }} // fired on mobile only
                   />
                 );
               })}
