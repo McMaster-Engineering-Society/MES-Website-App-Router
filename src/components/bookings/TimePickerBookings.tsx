@@ -113,9 +113,15 @@ type Booking = {
 
 type TimePickerBookingsProps = {
   firstDate: number;
+  roomVisibilities: {
+    [room: string]: boolean;
+  };
 };
 
-const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
+const TimePickerBookings = ({
+  firstDate,
+  roomVisibilities,
+}: TimePickerBookingsProps) => {
   const columnCount = 7;
   const rowCount = 32;
 
@@ -133,6 +139,8 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
         timeSlots.push({ room: room, time: start.toISOString() });
         start.setUTCMinutes(start.getUTCMinutes() + 30);
       }
+
+      // push after the while loop to add the end time to time slots
       timeSlots.push({ room: room, time: start.toISOString() });
 
       return timeSlots;
@@ -198,6 +206,9 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
       <div id={time} className='h-4 flex justify-evenly w-32'>
         {result.length != 0
           ? result.map((booking) => {
+              if (!roomVisibilities[`${booking.room}`]) {
+                return null;
+              }
               return (
                 <div
                   key={`${time}-${booking.room}`}
@@ -217,7 +228,7 @@ const TimePickerBookings = ({ firstDate }: TimePickerBookingsProps) => {
   };
 
   return (
-    <div className='flex absolute top-8 w-full h-full pointer-events-none'>
+    <div className='flex absolute top-0 w-full h-full pointer-events-none'>
       {[...Array(columnCount)].map((_, i) => {
         // initializes the starting date & time for each column
         const startTime = new Date();
