@@ -608,18 +608,106 @@ function TimePickerTable({
         </div>
       </div>
 
-      <Switch
-        defaultSelected
-        size='lg'
-        color='success'
-        aria-label='Toggle Bookings'
-        className='h-32 pl-8'
-        onChange={(e) => {
-          setAreBookingsVisible(e.target.checked);
-        }}
-      >
-        Toggle Bookings
-      </Switch>
+      <div>
+        <Switch
+          size='lg'
+          color='success'
+          className='h-32 pl-8'
+          onChange={() => {
+            setAreBookingsVisible(!areBookingsVisible);
+          }}
+          isSelected={areBookingsVisible}
+        >
+          Toggle Bookings
+        </Switch>
+        <div>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H201: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H201</p>
+              <div className='w-2 h-2 rounded-full bg-red-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H203: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H203</p>
+              <div className='w-2 h-2 rounded-full bg-orange-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H205: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H205</p>
+              <div className='w-2 h-2 rounded-full bg-yellow-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H204A: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H204A</p>
+              <div className='w-2 h-2 rounded-full bg-green-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H204B: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H204B</p>
+              <div className='w-2 h-2 rounded-full bg-blue-500' />
+            </div>
+          </Switch>
+        </div>
+      </div>
     </div>
   );
 }
