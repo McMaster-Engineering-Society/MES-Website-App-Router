@@ -1,3 +1,5 @@
+import { Button, Image } from '@nextui-org/react';
+
 import BookingInstructions from '@/components/bookings/BookingInstructions';
 import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
 import PageLayout from '@/components/layout/PageLayout';
