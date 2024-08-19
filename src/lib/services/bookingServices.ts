@@ -1,6 +1,7 @@
 import {
   createBookingDb,
   deleteBookingByIdDb,
+  getBookingsByUserDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/lib/db/bookingDb';
@@ -128,6 +129,19 @@ export const updateBookingByIdService = async (
 ): Promise<TBooking | null> => {
   try {
     const booking = await updateBookingByIdDb(bookingId, bookingInfo);
+    return booking;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error in booking services:', error);
+    return null;
+  }
+};
+
+export const getBookingsByUserIdService = async (
+  userId: string,
+): Promise<TBooking[] | null> => {
+  try {
+    const booking = await getBookingsByUserDb(userId);
     return booking;
   } catch (error) {
     /* eslint-disable no-console */
