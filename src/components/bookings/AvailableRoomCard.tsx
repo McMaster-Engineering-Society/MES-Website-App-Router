@@ -3,12 +3,19 @@ import { Button, useDisclosure } from '@nextui-org/react';
 import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
 
+import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
 import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
 
-export default function AvailableRoom(roomInfo: HatchRoomType) {
+type AvailableRoomType = {
+  roomInfo: HatchRoomType;
+};
+
+export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
+  const { handleAddBookRoom } = useTimePickerContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const resourceKeys = Object.keys(roomInfo.resources);
 
@@ -48,6 +55,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
           className='m-1 font-semibold bg-[#FFFFFF]'
           size='sm'
           color='success'
+          onClick={() => handleAddBookRoom(roomInfo.roomName)}
         >
           Book Now
         </Button>
@@ -61,4 +69,4 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
       />
     </>
   );
-}
+};

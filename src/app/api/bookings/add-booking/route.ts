@@ -15,8 +15,14 @@ export async function POST(req: Request) {
     );
   }
 
+  const adaptedBooking: TBooking = {
+    ...booking,
+    startTime: new Date(booking.startTime),
+    endTime: new Date(booking.endTime),
+  };
+
   try {
-    const newBooking = await createBookingService(booking);
+    const newBooking = await createBookingService(adaptedBooking);
     if (!newBooking) {
       return NextResponse.json<TMessageResponse>(
         { message: 'Booking not found' },

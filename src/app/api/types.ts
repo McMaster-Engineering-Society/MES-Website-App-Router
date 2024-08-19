@@ -6,14 +6,14 @@ export type TUser = {
 };
 
 export type TBooking = {
-  _id: string;
+  _id?: string;
   userId: string;
   room: string;
   email: string;
   startTime: Date;
   endTime: Date;
   hasConfirmed: boolean;
-  createdDate: Date;
+  createdDate?: Date;
 };
 
 export type TMessageResponse = {

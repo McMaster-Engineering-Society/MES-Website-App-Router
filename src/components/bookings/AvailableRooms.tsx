@@ -1,15 +1,15 @@
 import { ScrollShadow } from '@nextui-org/react';
 import React from 'react';
 
-import AvailableRoom from '@/components/bookings/AvailableRoomCard';
+import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+
+import { AvailableRoomCard } from '@/components/bookings/AvailableRoomCard';
 
 import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 
-type ContentProps = {
-  availableRoomIds: string[];
-};
+export default function AvailableRooms() {
+  const { availableRoomIds } = useTimePickerContext();
 
-export default function AvailableRooms({ availableRoomIds }: ContentProps) {
   return (
     <div className='flex justify-center w-[200px] h-[500px] my-8 rounded-lg bg-[#CACDD1]'>
       <ScrollShadow hideScrollBar>
@@ -17,7 +17,7 @@ export default function AvailableRooms({ availableRoomIds }: ContentProps) {
         {HatchRoomsData.filter((room) =>
           availableRoomIds.includes(room.roomName),
         ).map((roomInfo) => (
-          <AvailableRoom key={roomInfo.roomName} {...roomInfo} />
+          <AvailableRoomCard key={roomInfo.roomName} roomInfo={roomInfo} />
         ))}
       </ScrollShadow>
     </div>
