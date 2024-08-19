@@ -1,3 +1,5 @@
+'use server';
+
 import { TBooking } from '@/lib/types';
 
 import { RoomAvailabilities } from '@/components/bookings/TimePicker';
