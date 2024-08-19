@@ -259,13 +259,6 @@ function TimePickerTable({
     timeSlotIndexToTimeISO,
   ]);
 
-  // disallow selecting more than maxBlockLength
-  const [canSelect, setCanSelect] = useState(true);
-  useEffect(() => {
-    const currentSelectedBlockLength = endIndex - startIndex + 1; // ex. 5 - 0 + 1 = 6
-    setCanSelect(currentSelectedBlockLength < maxBlockLength);
-  }, [startIndex, endIndex, maxBlockLength]);
-
   const slotIsSelected = (slotIndex: number) =>
     startIndex <= slotIndex && slotIndex <= endIndex;
 
@@ -319,7 +312,7 @@ function TimePickerTable({
       }
     } else if (
       slotIsAdjacentToSelected(slotIndex) &&
-      canSelect &&
+      endIndex - startIndex + 1 < maxBlockLength &&
       atLeastOneRoomAvailable(slotIndex)
     ) {
       // add to selected block
@@ -345,20 +338,28 @@ function TimePickerTable({
    * because when dragging quickly, the drag handler will not be called for every cell
    */
   const handleDrag = (slotIndex: number) => {
-    if (dragOperation === 'Selecting' && canSelect) {
+    if (dragOperation === 'Selecting') {
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
         allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex)
       ) {
-        setStartIndex(slotIndex);
-        setStartTimeDate(timeSlotIndexToTimeISODate(slotIndex));
+        const newStartIndex = Math.max(
+          slotIndex,
+          endIndex - maxBlockLength + 1,
+        );
+        setStartIndex(newStartIndex);
+        setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       } else if (
         slotIndex > endIndex &&
         allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex)
       ) {
-        setEndIndex(slotIndex);
-        setEndTimeDate(timeSlotIndexToTimeISODate(slotIndex));
+        const newEndIndex = Math.min(
+          slotIndex,
+          startIndex + maxBlockLength - 1,
+        );
+        setEndIndex(newEndIndex);
+        setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
       }
     } else if (
       dragOperation === 'DeselectingFromStart' &&
@@ -413,7 +414,7 @@ function TimePickerTable({
         })}
       </div>
       <table
-        className='table-fixed bg-white rounded-lg shadow-lg shadow-black/25'
+        className='w-full table-fixed bg-white rounded-lg shadow-lg shadow-black/25'
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
@@ -424,7 +425,7 @@ function TimePickerTable({
             {daysToShow.map((day, i) => (
               <th
                 key={day.toString()}
-                className={`w-32 px-4 border-black/20 border border-t-0 ${i === 0 && 'border-l-0'} ${i === daysToShow.length - 1 && 'border-r-0'}`}
+                className={`border-black/20 border border-t-0 ${i === 0 && 'border-l-0'} ${i === daysToShow.length - 1 && 'border-r-0'}`}
               >
                 <span className='text-sm font-light'>
                   {/* ex. "MONDAY" */}
