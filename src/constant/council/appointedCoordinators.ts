@@ -315,6 +315,11 @@ export const InternalPortfolioCoordinators: CoordinatorDetails[] = [
     image: '/images/council-24-25/maria-akhtar.jpg',
   },
   {
+    name: 'Sarvin Azadi',
+    role: 'Infrastructure Technology Team',
+    image: '/images/council-24-25/sarvin-azadi.jpg',
+  },
+  {
     name: 'Owen Gretzinger',
     role: 'Infrastructure Technology Team',
     image: '/images/council-24-25/owen-gretzinger.jpg',
@@ -363,6 +368,11 @@ export const InternalPortfolioCoordinators: CoordinatorDetails[] = [
     name: 'Anuja Perera',
     role: 'Infrastructure Technology Team',
     image: '/images/council-24-25/anuja-perera.jpg',
+  },
+  {
+    name: 'Arya Pisharody',
+    role: 'Infrastructure Technology Team',
+    image: '/images/council-24-25/arya-pisharody.jpg',
   },
   {
     name: 'Gary Qin',
