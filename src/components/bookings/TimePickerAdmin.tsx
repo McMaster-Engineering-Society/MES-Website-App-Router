@@ -150,8 +150,7 @@ export default function TimePickerAdmin() {
    * @todo integrate with date picker arrows
    */
   const [pickerStartDate] = useState<Date>(
-    // new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-    new Date(new Date().setUTCDate(7)),
+    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
   );
 
   /**
@@ -400,6 +399,9 @@ function TimePickerTable({
   };
 
   const TimeIndicators = () => {
+    {
+      /* time indicators along the side */
+    }
     return (
       <div className='flex flex-col justify-stretch mt-16 mr-1 -translate-y-1'>
         {timeslots.map((slot: string, i) => {
@@ -419,6 +421,9 @@ function TimePickerTable({
   };
 
   const TimePickerHeader = () => {
+    {
+      /* header that shows days of the week & month */
+    }
     return (
       <div className='h-16 flex'>
         {daysToShow.map((day, i) => (
@@ -471,34 +476,137 @@ function TimePickerTable({
   };
 
   const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+  const [roomVisibilities, setRoomVisibilities] = useState({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
 
   return (
     <div className='flex flex-row justify-center'>
       <TimeIndicators />
 
       <div
-        className='relative bg-white rounded-lg shadow-lg shadow-black/25'
+        className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
         <TimePickerHeader />
-        <TimePickerBody />
-        {areBookingsVisible ? <TimePickerBookings firstDate={18} /> : null}
+        {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
+        <div className='relative'>
+          <TimePickerBody />
+          {areBookingsVisible ? (
+            <TimePickerBookings
+              firstDate={18}
+              roomVisibilities={roomVisibilities}
+            />
+          ) : null}
+        </div>
       </div>
 
-      <Switch
-        defaultSelected
-        size='lg'
-        color='success'
-        aria-label='Toggle Bookings'
-        className='h-32 pl-8'
-        onChange={(e) => {
-          setAreBookingsVisible(e.target.checked);
-        }}
-      >
-        Toggle Bookings
-      </Switch>
+      <div>
+        <Switch
+          size='lg'
+          color='success'
+          className='h-32 pl-8'
+          onChange={() => {
+            setAreBookingsVisible(!areBookingsVisible);
+          }}
+          isSelected={areBookingsVisible}
+        >
+          Toggle Bookings
+        </Switch>
+        <div>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H201: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H201</p>
+              <div className='w-2 h-2 rounded-full bg-red-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H203: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H203</p>
+              <div className='w-2 h-2 rounded-full bg-orange-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H205: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H205</p>
+              <div className='w-2 h-2 rounded-full bg-yellow-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H204A: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H204A</p>
+              <div className='w-2 h-2 rounded-full bg-green-500' />
+            </div>
+          </Switch>
+          <Switch
+            defaultSelected
+            size='sm'
+            color='secondary'
+            className='pl-8'
+            onChange={(e) => {
+              setRoomVisibilities({
+                ...roomVisibilities,
+                H204B: e.target.checked,
+              });
+            }}
+          >
+            <div className='flex justify-center items-center gap-2'>
+              <p>H204B</p>
+              <div className='w-2 h-2 rounded-full bg-blue-500' />
+            </div>
+          </Switch>
+        </div>
+      </div>
     </div>
   );
 }
