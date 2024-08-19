@@ -3,6 +3,7 @@ import { Button, useDisclosure } from '@nextui-org/react';
 import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
 
+import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
@@ -43,14 +44,11 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
             </div>
           ))}
         </div>
-
-        <Button
-          className='m-1 font-semibold bg-[#FFFFFF]'
-          size='sm'
-          color='success'
-        >
-          Book Now
-        </Button>
+        <ConfirmationPopover>
+          <Button className='m-1 bg-white font-semibold' size='sm'>
+            Book Now
+          </Button>
+        </ConfirmationPopover>
       </div>
 
       {/*More room information pop up*/}

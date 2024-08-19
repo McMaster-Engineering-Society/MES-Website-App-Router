@@ -10,6 +10,7 @@ import {
 import Image from 'next/image';
 import React from 'react';
 
+import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -61,9 +62,12 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               <Button color='danger' variant='light' onPress={onClose}>
                 Close
               </Button>
-              <Button color='success' onPress={onClose}>
-                Book Now
-              </Button>
+
+              <ConfirmationPopover>
+                <Button color='warning' onPress={onClose}>
+                  Book Now
+                </Button>
+              </ConfirmationPopover>
             </ModalFooter>
           </>
         )}
