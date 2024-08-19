@@ -14,10 +14,10 @@ export default function AvailableRooms({ availableRoomIds }: ContentProps) {
     <div className='flex justify-center w-[200px] h-[500px] my-8 rounded-lg bg-[#CACDD1]'>
       <ScrollShadow hideScrollBar>
         {/* Displays only the available rooms for the selected timeslot */}
-        {HatchRoomsData.filter((room) => {
-          return availableRoomIds.includes(room.roomNum);
-        }).map((roomInfo) => (
-          <AvailableRoom key={roomInfo.roomNum} {...roomInfo} />
+        {HatchRoomsData.filter((room) =>
+          availableRoomIds.includes(room.roomName),
+        ).map((roomInfo) => (
+          <AvailableRoom key={roomInfo.roomName} {...roomInfo} />
         ))}
       </ScrollShadow>
     </div>

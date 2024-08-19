@@ -6,7 +6,7 @@ import {
 } from '@/lib/db/bookingDb';
 import { TBooking } from '@/lib/types';
 
-const availableRooms = ['H201', 'H203', 'H204', 'H205'];
+const availableRooms = ['H201', 'H203', 'H204A', 'H204B', 'H205'];
 
 export const createBookingService = async (
   newBooking: TBooking,

@@ -9,9 +9,12 @@ import {
 import React from 'react';
 
 import AvailableRooms from '@/components/bookings/AvailableRooms';
+import TimePicker from '@/components/bookings/TimePicker';
 import PageLayout from '@/components/layout/PageLayout';
 
 export default function NewBookingSystemPage() {
+  const [availableRoomIds, setAvailableRoomIds] = React.useState<string[]>([]);
+
   return (
     <PageLayout noFooter>
       <main className='layout'>
@@ -63,7 +66,8 @@ export default function NewBookingSystemPage() {
           </div>
           <div className='flex mt-4 w-full max-w-screen-lg justify-end'>
             <div className='w-full flex justify-end'>
-              <AvailableRooms availableRoomIds={['201', '203A']} />
+              <TimePicker setAvailableRoomIds={setAvailableRoomIds} />
+              <AvailableRooms availableRoomIds={availableRoomIds} />
             </div>
           </div>
         </div>
