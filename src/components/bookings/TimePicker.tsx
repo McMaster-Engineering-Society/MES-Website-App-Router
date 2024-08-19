@@ -113,28 +113,9 @@ export default function TimePicker() {
   const [maxBlockLength] = useState<number>(6);
 
   /**
-   * convert time slot index to ISO string for indexing into availabilities
+   * convert time slot index to Date for indexing into availabilities
    * ex. 0 -> "2024-08-11T11:00:00.000Z"
    */
-  const timeSlotIndexToTimeISO = useCallback(
-    (timeSlotIndex: number) => {
-      const time = new Date(pickerStartDate);
-      // slot at index timeslots.length+1 is the first slot of the next day
-      const daysOffset = Math.floor(timeSlotIndex / timeslots.length);
-      // i.e. first slot of every day should have an offset of 0
-      const hoursOffset = timeSlotIndex % timeslots.length;
-      time.setDate(time.getDate() + daysOffset);
-      time.setUTCHours(
-        firstTimeSlotOfTheDayUTC + Math.floor(hoursOffset / 2),
-        (hoursOffset % 2) * 30,
-        0,
-        0,
-      );
-      return time.toISOString();
-    },
-    [pickerStartDate],
-  );
-
   const timeSlotIndexToTimeISODate = useCallback(
     (timeSlotIndex: number) => {
       const time = new Date(pickerStartDate);
@@ -152,6 +133,17 @@ export default function TimePicker() {
       return time;
     },
     [pickerStartDate],
+  );
+
+  /**
+   * convert time slot index to ISO string for indexing into availabilities
+   * ex. 0 -> "2024-08-11T11:00:00.000Z"
+   */
+  const timeSlotIndexToTimeISO = useCallback(
+    (timeSlotIndex: number) => {
+      return timeSlotIndexToTimeISODate(timeSlotIndex).toISOString();
+    },
+    [timeSlotIndexToTimeISODate],
   );
 
   /**
