@@ -1,6 +1,5 @@
-import { Button, Image } from '@nextui-org/react';
-
 import BookingInstructions from '@/components/bookings/BookingInstructions';
+import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
@@ -77,38 +76,24 @@ const Bookings = () => {
           Click Here to Start Booking
         </ButtonLink>
 
-        <div className='bg-white p-2 rounded-lg outline outline-cyan-500 outline-2 w-2/4'>
-          <div className='flex w-full h-10 rounded-lg justify-between items-center'>
-            <div className=' flex items-center justify-start w-1/4 h-full bg-cyan-500 ml-1 rounded-s-3xl'>
-              <Image
-                src='/images/bookings/HatchRoomImage.jpg'
-                alt='Hatch Room Booking Image'
-                width={60}
-                height={10}
-                className='w-full h-full rounded-3xl'
-              />
-              <div className=' h-full ml-1 flex items-center text-white'>
-                {' '}
-                H203
-              </div>
-            </div>
-            <div className='flex flex-row items-center justify-between h-full rounded-lg'>
-              August 14, 2024{' '}
-            </div>
-            <div className='flex items-center justify-center  h-full rounded-lg'>
-              {' '}
-              6:00 PM - 7:00 PM
-            </div>
-            <Button
-              className='outline-cyan-500 outline-2 text-cyan-500  h-4'
-              color='primary'
-              size='sm'
-            >
-              {' '}
-              Edit{' '}
-            </Button>
-          </div>
-        </div>
+        <BookingTimeslot
+          imageSrc='/images/bookings/HatchRoomImage.jpg'
+          room='203'
+          date={new Date()}
+          variant='next'
+        />
+        <BookingTimeslot
+          imageSrc='/images/bookings/HatchRoomImage.jpg'
+          room='204'
+          date={new Date()}
+          variant='previous'
+        />
+        <BookingTimeslot
+          imageSrc='/images/bookings/HatchRoomImage.jpg'
+          room='205'
+          date={new Date()}
+          variant='upcoming'
+        />
       </main>
     </PageLayout>
   );
