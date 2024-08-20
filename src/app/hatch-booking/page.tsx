@@ -63,7 +63,7 @@ export default function NewBookingSystemPage() {
           </div>
           <div className='flex mt-4 w-full max-w-screen-lg justify-end'>
             <div className='w-full flex justify-end'>
-              <AvailableRooms availableRoomIds={['201', '203A']} />
+              <AvailableRooms availableRoomIds={['201', '203A', '204']} />
             </div>
           </div>
         </div>

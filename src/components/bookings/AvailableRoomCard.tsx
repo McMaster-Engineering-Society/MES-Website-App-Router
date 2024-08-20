@@ -19,7 +19,7 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
         <div className='relative inline-block w-full text-center justify-center items-center pb-1'>
           <div className='inline-block font-bold'>{roomInfo.roomNum}</div>
           <button
-            className='absolute right-0 top-0.5 hover:bg-yellow-600 rounded-full'
+            className='absolute right-0 top-0.5 hover:bg-primary-700 rounded-full'
             onClick={onOpen}
           >
             <InfoIcon size={20} />
@@ -45,7 +45,10 @@ export default function AvailableRoom(roomInfo: HatchRoomType) {
           ))}
         </div>
         <ConfirmationPopover>
-          <Button className='m-1 bg-white font-semibold' size='sm'>
+          <Button
+            className='m-1 bg-white font-semibold w-[130px] hover:bg-primary-700'
+            size='sm'
+          >
             Book Now
           </Button>
         </ConfirmationPopover>
