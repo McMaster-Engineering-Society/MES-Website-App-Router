@@ -500,7 +500,9 @@ function TimePickerTable({
           <TimePickerBody />
           {areBookingsVisible ? (
             <TimePickerBookings
-              firstDate={18}
+              daysToShow={daysToShow}
+              timeslotCount={32}
+              firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
               roomVisibilities={roomVisibilities}
             />
           ) : null}
