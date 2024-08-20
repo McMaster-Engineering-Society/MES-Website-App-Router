@@ -34,7 +34,27 @@ async function fetchBookings(): Promise<TBooking[]> {
     {
       _id: '66c2204f87f9ac38c4ba6461',
       userId: 'placeholder ID',
+      room: 'H205',
+      startTime: new Date('2024-08-21T14:30:00.000Z'),
+      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      hasConfirmed: false,
+      email: 'placeholder email',
+      createdDate: new Date('2024-08-18T16:24:47.038Z'),
+    },
+    {
+      _id: '66c2204f87f9ac38c4ba6462',
+      userId: 'placeholder ID',
       room: 'H204A',
+      startTime: new Date('2024-08-21T14:30:00.000Z'),
+      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      hasConfirmed: false,
+      email: 'placeholder email',
+      createdDate: new Date('2024-08-18T16:24:47.038Z'),
+    },
+    {
+      _id: '66c2204f87f9ac38c4ba6463',
+      userId: 'placeholder ID',
+      room: 'H204B',
       startTime: new Date('2024-08-21T14:30:00.000Z'),
       endTime: new Date('2024-08-21T16:30:00.000Z'),
       hasConfirmed: false,
@@ -108,46 +128,36 @@ async function fetchBookings(): Promise<TBooking[]> {
 
 type Booking = {
   room: string;
-  time: string;
+  startTime: Date;
+  endTime: Date;
 };
 
+/**
+ * @param daysToShow array containing the first dates of each time picker column
+ * @param timeslotCount number of timeslots to show on the time picker; determines rows
+ * @param firstTimeslot eg. "11:00:00.000Z"
+ * @param roomVisibilities boolean array to determine which rooms should have bookings shown
+ */
 type TimePickerBookingsProps = {
-  firstDate: number;
+  daysToShow: Date[];
+  timeslotCount: number;
+  firstTimeslot: string;
   roomVisibilities: {
     [room: string]: boolean;
   };
 };
 
 const TimePickerBookings = ({
-  firstDate,
+  daysToShow,
+  timeslotCount,
+  firstTimeslot,
   roomVisibilities,
 }: TimePickerBookingsProps) => {
-  const columnCount = 7;
-  const rowCount = 32;
-
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   useEffect(() => {
-    // finds all timeslots between two times
-    const findTimeSlotsBetween = (
-      start: Date,
-      end: Date,
-      room: string,
-    ): Booking[] => {
-      const timeSlots = [];
-      while (start.toISOString() != end.toISOString()) {
-        timeSlots.push({ room: room, time: start.toISOString() });
-        start.setUTCMinutes(start.getUTCMinutes() + 30);
-      }
-
-      // push after the while loop to add the end time to time slots
-      timeSlots.push({ room: room, time: start.toISOString() });
-
-      return timeSlots;
-    };
-
     fetchBookings().then((data) => {
-      let visibleBookings: Booking[] = [];
+      const visibleBookings: Booking[] = [];
 
       data.forEach((booking) => {
         // checking if the time slots for a booking are currently visible on the time picker
@@ -156,15 +166,11 @@ const TimePickerBookings = ({
         );
 
         if (timeslotDiv) {
-          // spread the occupied time slots of the booking into visibleBookings
-          visibleBookings = [
-            ...visibleBookings,
-            ...findTimeSlotsBetween(
-              booking.startTime,
-              booking.endTime,
-              booking.room,
-            ),
-          ];
+          visibleBookings.push({
+            room: booking.room,
+            startTime: booking.startTime,
+            endTime: booking.endTime,
+          });
         }
       });
 
@@ -173,50 +179,100 @@ const TimePickerBookings = ({
   }, []);
 
   const TimePickerCell = ({ time }: { time: string }) => {
-    // finds all the bookings at a certain day & time
-    const result = bookings.filter((booking) => {
-      return booking.time == time;
+    // finds all the bookings at a certain time
+    const bookingsAtTime = bookings.filter((booking) => {
+      return booking.startTime.toISOString() == time;
     });
 
-    const getRoomColour = (room: string) => {
+    const getRoomIndicatorColour = (room: string) => {
       let roomColour = '';
       switch (room) {
         case 'H201':
-          roomColour = 'bg-red-500';
+          roomColour = 'bg-red-500/70';
           break;
         case 'H203':
-          roomColour = 'bg-orange-500';
+          roomColour = 'bg-orange-500/70';
           break;
         case 'H205':
-          roomColour = 'bg-yellow-500';
+          roomColour = 'bg-yellow-500/70';
           break;
         case 'H204A':
-          roomColour = 'bg-green-500';
+          roomColour = 'bg-green-500/70';
           break;
         case 'H204B':
-          roomColour = 'bg-blue-500';
+          roomColour = 'bg-blue-500/70';
           break;
         default:
-          roomColour = 'bg-gray-500';
+          roomColour = 'bg-gray-500/70';
       }
       return roomColour;
     };
 
+    const getRoomIndicatorPositioning = (room: string) => {
+      let indicatorPositioning = '';
+      switch (room) {
+        case 'H201':
+          indicatorPositioning = 'left-[10%]';
+          break;
+        case 'H203':
+          indicatorPositioning = 'left-[28.5%]';
+          break;
+        case 'H205':
+          indicatorPositioning = 'left-[47%]';
+          break;
+        case 'H204A':
+          indicatorPositioning = 'left-[65.5%]';
+          break;
+        case 'H204B':
+          indicatorPositioning = 'left-[84%]';
+          break;
+        default:
+          indicatorPositioning = '';
+      }
+      return indicatorPositioning;
+    };
+
+    const getRoomIndicatorHeight = (start: Date, end: Date) => {
+      return `${((end.getTime() - start.getTime()) / 1800000) * 16 + 8}px`;
+    };
+
     return (
-      <div id={time} className='h-4 flex justify-evenly w-32'>
-        {result.length != 0
-          ? result.map((booking) => {
+      <div id={time} className='relative h-4 flex justify-evenly w-32'>
+        {bookingsAtTime.length != 0
+          ? bookingsAtTime.map((booking) => {
               if (!roomVisibilities[`${booking.room}`]) {
                 return null;
               }
+
+              // substract 4 hours worth of milliseconds for EST
+              const formattedStartTime = new Date(
+                booking.startTime.getTime() - 14400000,
+              );
+              // substract 4 hours worth of milliseconds for EST
+              // add 30 minutes worth of milliseconds to make range include last timeslot
+              const formattedEndTime = new Date(
+                booking.endTime.getTime() - 14400000 + 1800000,
+              );
+              const bookingTooltipContent = `${booking.room}, ${formattedStartTime.toISOString().split('T')[1].substring(0, 5)}-${formattedEndTime.toISOString().split('T')[1].substring(0, 5)}`;
+
               return (
                 <div
                   key={`${time}-${booking.room}`}
-                  className='flex justify-center items-center text-xs'
+                  className={`absolute top-1/3 flex justify-center items-center text-xs ${getRoomIndicatorPositioning(booking.room)}`}
                 >
-                  <Tooltip showArrow content={booking.room} placement='bottom'>
+                  <Tooltip
+                    showArrow
+                    content={bookingTooltipContent}
+                    placement='bottom'
+                  >
                     <div
-                      className={`w-2 h-2 rounded-full ${getRoomColour(booking.room)} pointer-events-auto`}
+                      style={{
+                        height: getRoomIndicatorHeight(
+                          booking.startTime,
+                          booking.endTime,
+                        ),
+                      }}
+                      className={`w-2 rounded-full ${getRoomIndicatorColour(booking.room)} pointer-events-auto`}
                     />
                   </Tooltip>
                 </div>
@@ -229,25 +285,34 @@ const TimePickerBookings = ({
 
   return (
     <div className='flex absolute top-0 w-full h-full pointer-events-none'>
-      {[...Array(columnCount)].map((_, i) => {
+      {[...Array(daysToShow.length)].map((_, i) => {
         // initializes the starting date & time for each column
-        const startTime = new Date();
-        startTime.setUTCDate(firstDate + i);
-        startTime.setUTCHours(10, 30, 0, 0);
+        const firstTimeOfColumn = new Date(daysToShow[i].getTime());
+        firstTimeOfColumn.setUTCHours(
+          parseInt(firstTimeslot.split(':')[0]),
+          parseInt(firstTimeslot.split(':')[1]),
+          0,
+          0,
+        );
 
         return (
           <div
-            key={`day-${startTime.getUTCDate()}`}
-            className='flex-1 flex flex-col justify-center items-center opacity-100'
+            key={firstTimeOfColumn.toISOString().split('T')[0]}
+            id={firstTimeOfColumn.toISOString().split('T')[0]}
+            className='flex-1 flex flex-col justify-start items-center opacity-100'
           >
-            {[...Array(rowCount)].map(() => {
-              // increments the starting time by 30 minutes for each following row
-              startTime.setUTCMinutes(startTime.getUTCMinutes() + 30);
+            {[...Array(timeslotCount)].map((_, j) => {
+              // creates a shallow copy of firstTimeOfColumn
+              const firstTimeCopy = new Date(firstTimeOfColumn.getTime());
+
+              firstTimeCopy.setUTCMinutes(
+                firstTimeCopy.getUTCMinutes() + 30 * j,
+              );
 
               return (
                 <TimePickerCell
-                  key={startTime.toISOString()}
-                  time={startTime.toISOString()}
+                  key={firstTimeCopy.toISOString()}
+                  time={firstTimeCopy.toISOString()}
                 />
               );
             })}
