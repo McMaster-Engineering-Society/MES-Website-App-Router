@@ -11,7 +11,7 @@ export default function AvailableRooms() {
   const { availableRoomIds } = useTimePickerContext();
 
   return (
-    <div className='flex justify-center w-[200px] h-[500px] my-8 rounded-lg bg-[#CACDD1]'>
+    <div className='flex justify-center min-w-[200px] h-[500px] my-8 rounded-lg bg-[#CACDD1]'>
       <ScrollShadow hideScrollBar>
         {/* Displays only the available rooms for the selected timeslot */}
         {HatchRoomsData.filter((room) =>
