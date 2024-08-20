@@ -57,7 +57,8 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               <Button color='danger' variant='light' onPress={onClose}>
                 Close
               </Button>
-              <Button color='success' onPress={onClose}>
+
+              <Button color='warning' onPress={onClose}>
                 Book Now
               </Button>
             </ModalFooter>
