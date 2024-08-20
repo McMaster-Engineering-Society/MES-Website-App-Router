@@ -145,7 +145,7 @@ export const getBookingsByUserIdService = async (
     return booking;
   } catch (error) {
     /* eslint-disable no-console */
-    console.error('Error in booking services:', error);
+    console.error('Error in get booking by userId services:', error);
     return null;
   }
 };
