@@ -4,6 +4,10 @@ import { Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
 import { TBooking } from '@/app/api/types';
+import {
+  BookingIndicatorColours,
+  BookingIndicatorPositions,
+} from '@/constant/hatch-bookings/booking-indicator-data';
 
 /**
  * mock API call to fetch bookings
@@ -184,54 +188,6 @@ const TimePickerBookings = ({
       return booking.startTime.toISOString() == time;
     });
 
-    const getRoomIndicatorColour = (room: string) => {
-      let roomColour = '';
-      switch (room) {
-        case 'H201':
-          roomColour = 'bg-red-500/70';
-          break;
-        case 'H203':
-          roomColour = 'bg-orange-500/70';
-          break;
-        case 'H205':
-          roomColour = 'bg-yellow-500/70';
-          break;
-        case 'H204A':
-          roomColour = 'bg-green-500/70';
-          break;
-        case 'H204B':
-          roomColour = 'bg-blue-500/70';
-          break;
-        default:
-          roomColour = 'bg-gray-500/70';
-      }
-      return roomColour;
-    };
-
-    const getRoomIndicatorPositioning = (room: string) => {
-      let indicatorPositioning = '';
-      switch (room) {
-        case 'H201':
-          indicatorPositioning = 'left-[10%]';
-          break;
-        case 'H203':
-          indicatorPositioning = 'left-[28.5%]';
-          break;
-        case 'H205':
-          indicatorPositioning = 'left-[47%]';
-          break;
-        case 'H204A':
-          indicatorPositioning = 'left-[65.5%]';
-          break;
-        case 'H204B':
-          indicatorPositioning = 'left-[84%]';
-          break;
-        default:
-          indicatorPositioning = '';
-      }
-      return indicatorPositioning;
-    };
-
     const getRoomIndicatorHeight = (start: Date, end: Date) => {
       return `${((end.getTime() - start.getTime()) / 1800000) * 16 + 8}px`;
     };
@@ -258,7 +214,7 @@ const TimePickerBookings = ({
               return (
                 <div
                   key={`${time}-${booking.room}`}
-                  className={`absolute top-1/3 flex justify-center items-center text-xs ${getRoomIndicatorPositioning(booking.room)}`}
+                  className={`absolute top-1/3 flex justify-center items-center text-xs ${BookingIndicatorPositions[booking.room] || ''}`}
                 >
                   <Tooltip
                     showArrow
@@ -272,7 +228,7 @@ const TimePickerBookings = ({
                           booking.endTime,
                         ),
                       }}
-                      className={`w-2 rounded-full ${getRoomIndicatorColour(booking.room)} pointer-events-auto`}
+                      className={`w-2 rounded-full ${BookingIndicatorColours[booking.room] || 'bg-gray-500/70'} pointer-events-auto`}
                     />
                   </Tooltip>
                 </div>
