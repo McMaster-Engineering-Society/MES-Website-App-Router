@@ -57,8 +57,8 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
           <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter organizer phone number..." name="organizerNumber" value={organizerNumber} onChange={e => updateFields({ organizerNumber: e.target.value })} />
         </Question>
 
-        <Question title="Email address of primary event organizer" required={true}>
-          <input required type="email" className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter organizer email..." name="organizerEmail" value={organizerEmail} onChange={e => updateFields({ organizerEmail: e.target.value })} />
+        <Question title="Email address of primary event organizer (mcmaster.ca) " required={true}>
+          <input required type="email" placeholder="username@mcmaster.ca" pattern=".+@mcmaster\.ca" className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" name="organizerEmail" value={organizerEmail} onChange={e => updateFields({ organizerEmail: e.target.value })} />
         </Question>
 
         <Question title="Intended location of the event (including address)" required={true}>
@@ -72,7 +72,7 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
         <Question title="Name of individual not attending the event who stays back as an emergency contact (if needed)" required={true}>
           <input required className="mt-2 w-[40%] w-min-4 opacity-50 bg-[#ececec] rounded-[10px] border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0" placeholder="Enter emergency contact..." name="emergencyName" value={emergencyName} onChange={e => updateFields({ emergencyName: e.target.value })} />
         </Question>
-
+        {/* date picker question */}
         <Question title="Start Date" required={true}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -91,7 +91,7 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
             />
           </LocalizationProvider>
         </Question>
-
+        {/* time picker question */}
         <Question title="Start Time" required={true}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <TimePicker
@@ -213,6 +213,7 @@ function Event({ eventName, eventDesc, organizerName, organizerNumber, organizer
   );
 };
 
+//This are the style specifications for the date picker from material UI
 const textFieldProps: SxProps = {
   '& .MuiOutlinedInput-root': {
     borderRadius: '10px', // Set border radius
