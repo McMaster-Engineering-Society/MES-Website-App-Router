@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchAddBooking } from '@/lib/api/bookingApi';
+import { fetchAddBooking, fetchUserBookings } from '@/lib/api/bookingApi';
 import { fetchAvailabilities } from '@/lib/api/bookingApi';
 import { TBooking } from '@/lib/types';
 
@@ -25,5 +25,12 @@ export const useFetchAvailabilitiesHook = (
   return useQuery<RoomAvailabilities, Error>({
     queryKey: ['roomAvailabilities'],
     queryFn: () => fetchAvailabilities(pickerStartDate, pickerEndDate),
+  });
+};
+
+export const useFetchUserBookingsHook = (userId: string) => {
+  return useQuery<TBooking[], Error>({
+    queryKey: ['userBookings'],
+    queryFn: () => fetchUserBookings(userId),
   });
 };

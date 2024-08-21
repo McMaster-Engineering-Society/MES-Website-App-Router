@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
@@ -57,14 +57,22 @@ export default function TimePicker() {
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const { setAvailableRoomIds, setStartTimeDate, setEndTimeDate } =
-    useTimePickerContext();
+  const {
+    setAvailableRoomIds,
+    setStartTimeDate,
+    setEndTimeDate,
+    userBookings,
+  } = useTimePickerContext();
 
   const [pickerStartDate] = useState<Date>(
     new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
   );
 
-  const pickerEndDate = new Date(pickerStartDate);
+  const pickerEndDate = useMemo(
+    () => new Date(pickerStartDate),
+    [pickerStartDate],
+  );
+
   pickerEndDate.setDate(pickerEndDate.getDate() + 14);
 
   const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
@@ -105,12 +113,63 @@ export default function TimePicker() {
     }
   }, [roomAvailabilities, isLoading]);
 
-  /**
-   * max number of 30 minute slots that can be selected
-   * @todo implement functionality
-   * (complicated because there is a DAILY limit)
-   */
-  const [maxBlockLength] = useState<number>(6);
+  const calculatedDailyMaxBlockLength = useCallback((): number[] => {
+    if (!userBookings) {
+      return Array.from({ length: numDaysToShow }, () => 6);
+    }
+
+    const userBookingsHoursByDay = userBookings
+      .filter((booking) => {
+        return (
+          new Date(booking.startTime).getTime() >= pickerStartDate.getTime() &&
+          new Date(booking.endTime).getTime() <= pickerEndDate.getTime()
+        );
+      })
+      .reduce((accumulator: Record<number, number>, currentDay) => {
+        const dayIndex =
+          new Date(currentDay.startTime).getDay() - pickerStartDate.getDay();
+
+        const diffTimeInTimeSlots =
+          (new Date(currentDay.endTime).getTime() -
+            new Date(currentDay.startTime).getTime()) /
+            (1000 * 60 * 60) +
+          0.5;
+
+        if (dayIndex in accumulator) {
+          accumulator[dayIndex] += diffTimeInTimeSlots;
+        } else {
+          accumulator[dayIndex] = diffTimeInTimeSlots;
+        }
+
+        return accumulator;
+      }, {});
+
+    const userBookingsMaxBlockLength = [];
+    for (let i = 0; i < numDaysToShow; i++) {
+      const maxBlockLength = userBookingsHoursByDay[i]
+        ? 6 - userBookingsHoursByDay[i] * 2
+        : 6;
+      userBookingsMaxBlockLength.push(maxBlockLength);
+    }
+
+    return userBookingsMaxBlockLength;
+  }, [userBookings, pickerStartDate, pickerEndDate, numDaysToShow]);
+
+  const [maxBlockLengths, setMaxBlockLengths] = useState<number[]>(() =>
+    Array.from({ length: numDaysToShow }, () => 6),
+  );
+
+  useEffect(() => {
+    const newMaxBlockLengths = calculatedDailyMaxBlockLength();
+
+    // Only update state if the new calculated values differ from the current state
+    if (
+      JSON.stringify(maxBlockLengths) !== JSON.stringify(newMaxBlockLengths)
+    ) {
+      setMaxBlockLengths(newMaxBlockLengths);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calculatedDailyMaxBlockLength]);
 
   /**
    * convert time slot index to Date for indexing into availabilities
@@ -183,7 +242,7 @@ export default function TimePicker() {
       roomsAvailableByTime={roomsAvailableByTime}
       timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
       timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
-      maxBlockLength={maxBlockLength}
+      maxBlockLengths={maxBlockLengths}
       setAvailableRoomIds={setAvailableRoomIds}
       setStartTimeDate={setStartTimeDate}
       setEndTimeDate={setEndTimeDate}
@@ -196,7 +255,7 @@ type TimePickerTableProps = {
   roomsAvailableByTime: Record<string, string[]>;
   timeSlotIndexToTimeISO: (i: number) => string;
   timeSlotIndexToTimeISODate: (i: number) => Date;
-  maxBlockLength: number;
+  maxBlockLengths: number[];
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
@@ -207,7 +266,7 @@ function TimePickerTable({
   roomsAvailableByTime,
   timeSlotIndexToTimeISO,
   timeSlotIndexToTimeISODate,
-  maxBlockLength,
+  maxBlockLengths,
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
@@ -312,7 +371,7 @@ function TimePickerTable({
       }
     } else if (
       slotIsAdjacentToSelected(slotIndex) &&
-      endIndex - startIndex + 1 < maxBlockLength &&
+      endIndex - startIndex + 1 < maxBlockLengths[Math.floor(slotIndex / 32)] &&
       atLeastOneRoomAvailable(slotIndex)
     ) {
       // add to selected block
@@ -346,7 +405,7 @@ function TimePickerTable({
       ) {
         const newStartIndex = Math.max(
           slotIndex,
-          endIndex - maxBlockLength + 1,
+          endIndex - maxBlockLengths[Math.floor(slotIndex / 32)] + 1,
         );
         setStartIndex(newStartIndex);
         setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
@@ -356,7 +415,7 @@ function TimePickerTable({
       ) {
         const newEndIndex = Math.min(
           slotIndex,
-          startIndex + maxBlockLength - 1,
+          startIndex + maxBlockLengths[Math.floor(slotIndex / 32)] - 1,
         );
         setEndIndex(newEndIndex);
         setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
