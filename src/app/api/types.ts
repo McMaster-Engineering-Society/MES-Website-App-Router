@@ -34,7 +34,9 @@ export type UHSForm = {
   numberOfParticipants: string,
   emergencyName: string,
   startDate: string,
+  startTime: string,
   endDate: string,
+  endTime: string,
   repeat: boolean | undefined,
   repeatInfo: string,
   execMeeting: boolean | undefined,
@@ -69,6 +71,7 @@ export type UHSForm = {
   sexualViolencePolicy: boolean,
   comments: string,
   finalAgreement: boolean
+
 }
 
 
