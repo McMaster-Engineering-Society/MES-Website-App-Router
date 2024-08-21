@@ -24,7 +24,7 @@ import Understanding from '@/constant/uhs-form/Understanding';
 export default function UHSFormPage() {
   const [isSubmitted, setSubmit] = useState(false);
   const [data, setData] = useState(INITIAL_DATA);
-  
+
   //updates the values in the state from outside this file
   function updateFields(fields: Partial<FormData>) {
     setData(prev => {
@@ -57,6 +57,7 @@ export default function UHSFormPage() {
     //This handles what happens after the form is submitted
     if (isLastStep) {
       try {
+
         const response = await fetch('/api/forms/create-form', {
           method: 'POST',
           headers: {
