@@ -9,12 +9,12 @@ import {
 } from '@nextui-org/react';
 import Image from 'next/image';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { TimePickerProvider } from '@/lib/context/TimePickerContext';
 
 import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
-
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -65,8 +65,12 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
                   Close
                 </Button>
 
-                {/* TODO: INTEGRATE TIME PICKER CONTEXT FOR TIMESLOT START AND END TIME */}
-                <Button color='warning' onPress={onClose}>
+                {/* TODO: update time with selected booking timeslot */}
+                <Button
+                  color='warning'
+                  onPress={onClose}
+                  onClick={() => toast('Room has been successfully booked!')}
+                >
                   {/* Book room from {startTimeDate?.toDateString()} to {endTimeDate?.toDateString()} */}
                   Book from 6:00 - 8:30 pm
                 </Button>
