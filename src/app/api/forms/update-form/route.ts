@@ -1,6 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
+import { updateFormByIdService } from '@/lib/services/formServices';
+
+<<<<<<< HEAD
 import { updateFormByIdService } from "@/lib/services/formServices";
+=======
+import { TApiResponse, TMessageResponse, UHSForm } from '@/app/api/types';
+>>>>>>> 766e2139ad39514ea6a1e64700ebef83d800b9b4
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
@@ -16,7 +22,10 @@ export async function PATCH(req: Request) {
       { status: 400 },
     );
   }
-  if (!formStatus || !['pending', 'approved', 'rejected'].includes(formStatus)) {
+  if (
+    !formStatus ||
+    !['pending', 'approved', 'rejected'].includes(formStatus)
+  ) {
     return NextResponse.json<TMessageResponse>(
       { message: 'Invalid form status' },
       { status: 400 },

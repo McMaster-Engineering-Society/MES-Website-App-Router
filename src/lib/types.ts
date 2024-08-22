@@ -1,5 +1,5 @@
 
-
+// unused original example for endpoints, databases and services
 export type TUser = {
   _id: string;
   firstName: string;
@@ -15,4 +15,6 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
-
+ export type TProfile={
+  
+ }
