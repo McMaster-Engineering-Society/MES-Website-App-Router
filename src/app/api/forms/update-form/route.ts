@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { updateFormByIdService } from "@/lib/services/formServices";
+import { updateFormByIdService } from '@/lib/services/formServices';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
-import { UHSForm } from '@/types/form';
+import { UHSForm } from '@/types/uhsForm';
+
 export async function PATCH(req: Request) {
   const { searchParams } = new URL(req.url);
   const formId = searchParams.get('formId');

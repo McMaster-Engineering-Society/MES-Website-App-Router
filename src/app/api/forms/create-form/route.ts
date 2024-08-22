@@ -5,7 +5,7 @@ import { TApiResponse } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
 
-import { UHSForm } from '@/types/form';
+import { UHSForm } from '@/types/uhsForm';
 
 export async function POST(req: Request) {
   const form = await req.json();
