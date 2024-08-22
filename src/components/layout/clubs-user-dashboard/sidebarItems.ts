@@ -41,7 +41,7 @@ export const sidebarItems: SidebarItem[] = [
   {
     name: 'Club Administration',
     icon: FaUserLarge,
-    link: `${url}/club-administration`,
+    link: `${url}/administration`,
   },
 ];
 
