@@ -31,13 +31,11 @@
     "@types/papaparse": "^5.3.14",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.12",
-<<<<<<< HEAD
     "express": "^4.19.2",
-=======
->>>>>>> 766e2139ad39514ea6a1e64700ebef83d800b9b4
     "framer-motion": "^11.2.4",
     "lucide-react": "^0.376.0",
     "mongodb": "^6.7.0",
+    "mongoose": "^8.5.1",
     "next": "^14.0.4",
     "next-auth": "5.0.0-beta.19",
     "nodemailer": "^6.9.14",
@@ -47,7 +45,6 @@
     "react-icons": "^4.12.0",
     "react-stately": "^3.31.1",
     "tailwind-merge": "^2.1.0",
-    "ts-nextjs-tailwind-starter": "file:",
     "use-resize-observer": "^9.1.0",
     "zod": "^3.22.4"
   },

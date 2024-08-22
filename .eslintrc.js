@@ -12,7 +12,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  parser: '@typescript-eslint/parser',
   rules: {
     'no-unused-vars': 'off',
     'no-console': 'warn',

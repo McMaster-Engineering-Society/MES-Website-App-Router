@@ -15,10 +15,10 @@ const ClubUserDashboardLayout = ({
   return (
     <div className='flex h-screen w-screen'>
       <Sidebar />
-      <div className='flex flex-col w-full p-12'>
+      <div className='w-full px-12 pt-12'>
         <h1>{pageName}</h1>
         <TaskBanner />
-        <div className='w-full overflow-hidden'>{children}</div>
+        <div className='w-full h-2/3 overflow-y-scroll'>{children}</div>
       </div>
     </div>
   );

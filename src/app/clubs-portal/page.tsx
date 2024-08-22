@@ -1,10 +1,17 @@
-import UpcomingEvents from '@/components/clubs-portal/UpcomingEvents';
 import ClubUserDashboardLayout from '@/components/layout/clubs-user-dashboard/ClubUserDashboardLayout';
+
+const UpcomingBookings = () => {
+  return (
+    <div>
+      <h3>Upcoming Bookings</h3>
+    </div>
+  );
+};
 
 export default function ClubsPortal() {
   return (
     <ClubUserDashboardLayout>
-      <UpcomingEvents />
+      <UpcomingBookings />
     </ClubUserDashboardLayout>
   );
 }

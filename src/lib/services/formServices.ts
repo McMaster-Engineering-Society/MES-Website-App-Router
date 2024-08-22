@@ -3,7 +3,7 @@ import {
   deleteFormByIdDb,
   getAllFormsDb,
   getFormByIdDb,
-  updateFormByIdDb,
+  updateFormByIdDb
 } from '@/lib/db/formsDB';
 
 import { UHSForm } from '@/types/form';
@@ -30,9 +30,7 @@ const getFormByIdService = async (formId: string): Promise<UHSForm | null> => {
   }
 };
 
-const deleteFormByIdService = async (
-  formId: string,
-): Promise<UHSForm | null> => {
+const deleteFormByIdService = async (formId: string): Promise<UHSForm | null> => {
   try {
     const form = await deleteFormByIdDb(formId);
     return form;
@@ -43,10 +41,9 @@ const deleteFormByIdService = async (
   }
 };
 
-const updateFormByIdService = async (
-  formId: string,
-  newStatus: 'pending' | 'approved' | 'rejected',
-): Promise<UHSForm | null> => {
+
+
+const updateFormByIdService = async (formId: string, newStatus: 'pending' | 'approved' | 'rejected'): Promise<UHSForm | null> => {
   try {
     const form = await updateFormByIdDb(formId, newStatus);
     return form;
@@ -68,9 +65,11 @@ const createFormService = async (newForm: UHSForm): Promise<UHSForm | null> => {
   }
 };
 
+
 export {
   createFormService,
   deleteFormByIdService,
   getAllFormsService,
+  getFormByIdService,
   updateFormByIdService
 };

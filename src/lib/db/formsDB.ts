@@ -12,6 +12,7 @@ const getFormsCollection = async () => {
 };
 
 
+
 const validStatuses = new Set(['pending', 'approved', 'rejected']);
 
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
@@ -35,6 +36,7 @@ const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
 
     return createdForm;
   } catch (error) {
+    console.error('Error creating form in database:', error);
     throw new Error('Database error');
   }
 };
@@ -42,9 +44,7 @@ const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
 const getAllFormsDb = async (): Promise<UHSForm[]> => {
   try {
     const formsCollection = await getFormsCollection();
-    const formList: WithId<UHSForm>[] = await formsCollection
-      .find({})
-      .toArray();
+    const formList: WithId<UHSForm>[] = await formsCollection.find({}).toArray();
     return formList;
   } catch (error) {
     /* eslint-disable no-console */
@@ -69,23 +69,24 @@ const getFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
     }
 
     return form;
-  } catch (error) {
+
+  }
+  catch (error) {
     console.error('Error fetching forms from database:', error);
     throw new Error('Database error');
   }
+
 };
 
 const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
   try {
     const formsCollection = await getFormsCollection();
     const formObjectId = new ObjectId(formId);
-    const form: WithId<UHSForm> | null = await formsCollection.findOneAndDelete(
-      {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore: ObjectId type mismatch
-        _id: formObjectId,
-      },
-    );
+    const form: WithId<UHSForm> | null = await formsCollection.findOneAndDelete({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: ObjectId type mismatch
+      _id: formObjectId,
+    });
 
     if (!form) {
       return null;
@@ -98,10 +99,7 @@ const deleteFormByIdDb = async (formId: string): Promise<UHSForm | null> => {
   }
 };
 
-const updateFormByIdDb = async (
-  formId: string,
-  newStatus: 'pending' | 'approved' | 'rejected',
-): Promise<UHSForm | null> => {
+const updateFormByIdDb = async (formId: string, newStatus: 'pending' | 'approved' | 'rejected'): Promise<UHSForm | null> => {
   try {
 
     // Validate the new status
@@ -115,7 +113,7 @@ const updateFormByIdDb = async (
     const result = await formsCollection.findOneAndUpdate(
       { _id: formObjectId },
       { $set: { formStatus: newStatus } },
-      { returnDocument: 'after' },
+      { returnDocument: 'after' }
     );
 
     if (!result) {
