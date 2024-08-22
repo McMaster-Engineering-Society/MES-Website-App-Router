@@ -1,7 +1,8 @@
 import { InsertOneResult, ObjectId, WithId } from 'mongodb';
+
 import clientPromise from '@/lib/db';
 
-import { UHSForm } from '@/lib/types';
+import { UHSForm } from '@/types/form';
 
 const getFormsCollection = async () => {
   const client = await clientPromise;
@@ -10,23 +11,13 @@ const getFormsCollection = async () => {
   return formsCollection;
 };
 
-// const getFormsCollection = async () => {
-//   const client = await clientPromise;
-//   console.log('Connected to MongoDB URL:', client);
-//   const db = client.db("testDB");
-//   console.log('Using database:', db.databaseName);
-//   const formsCollection = db.collection<UHSForm>('forms');
-//   return formsCollection;
-// };
+
 
 const validStatuses = new Set(['pending', 'approved', 'rejected']);
 
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
   try {
-    // // Validate formStatus
-    // if (!validStatuses.has(newForm.formStatus)) {
-    //   throw new Error('Invalid form status');
-    // }
+    
     if (!newForm.formStatus) {
       newForm.formStatus = 'pending';
     }
@@ -137,6 +128,4 @@ const updateFormByIdDb = async (formId: string, newStatus: 'pending' | 'approved
 };
 
 
-
-
-export { createFormDb, getFormByIdDb, deleteFormByIdDb, getAllFormsDb, updateFormByIdDb }
+export { createFormDb, deleteFormByIdDb, getAllFormsDb, getFormByIdDb, updateFormByIdDb }

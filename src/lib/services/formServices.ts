@@ -1,11 +1,12 @@
 import {
   createFormDb,
-  getFormByIdDb,
   deleteFormByIdDb,
   getAllFormsDb,
+  getFormByIdDb,
   updateFormByIdDb
 } from '@/lib/db/formsDB';
-import { UHSForm } from '@/lib/types';
+
+import { UHSForm } from '@/types/form';
 
 const getAllFormsService = async (): Promise<UHSForm[]> => {
   try {
@@ -67,8 +68,8 @@ const createFormService = async (newForm: UHSForm): Promise<UHSForm | null> => {
 
 export {
   createFormService,
-  getFormByIdService,
   deleteFormByIdService,
   getAllFormsService,
+  getFormByIdService,
   updateFormByIdService
 };
