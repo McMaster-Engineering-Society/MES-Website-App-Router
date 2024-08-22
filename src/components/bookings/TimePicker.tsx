@@ -43,6 +43,7 @@ const timeslots = [
   '10:30 PM',
 ];
 const firstTimeSlotOfTheDayUTC = 11; // 7 AM EST
+const timeslotsPerDay = timeslots.length;
 
 export type RoomAvailabilities = {
   H201: string[];
@@ -168,8 +169,7 @@ export default function TimePicker() {
     ) {
       setMaxBlockLengths(newMaxBlockLengths);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calculatedDailyMaxBlockLength]);
+  }, [calculatedDailyMaxBlockLength, maxBlockLengths]);
 
   /**
    * convert time slot index to Date for indexing into availabilities
@@ -371,7 +371,8 @@ function TimePickerTable({
       }
     } else if (
       slotIsAdjacentToSelected(slotIndex) &&
-      endIndex - startIndex + 1 < maxBlockLengths[Math.floor(slotIndex / 32)] &&
+      endIndex - startIndex + 1 <
+        maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] &&
       atLeastOneRoomAvailable(slotIndex)
     ) {
       // add to selected block
@@ -405,7 +406,9 @@ function TimePickerTable({
       ) {
         const newStartIndex = Math.max(
           slotIndex,
-          endIndex - maxBlockLengths[Math.floor(slotIndex / 32)] + 1,
+          endIndex -
+            maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] +
+            1,
         );
         setStartIndex(newStartIndex);
         setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
@@ -415,7 +418,9 @@ function TimePickerTable({
       ) {
         const newEndIndex = Math.min(
           slotIndex,
-          startIndex + maxBlockLengths[Math.floor(slotIndex / 32)] - 1,
+          startIndex +
+            maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] -
+            1,
         );
         setEndIndex(newEndIndex);
         setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
