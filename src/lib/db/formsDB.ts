@@ -2,7 +2,7 @@ import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
 
-import { UHSForm } from '@/types/form';
+import { UHSForm } from '@/types/uhsForm';
 
 const getFormsCollection = async () => {
   const client = await clientPromise;
