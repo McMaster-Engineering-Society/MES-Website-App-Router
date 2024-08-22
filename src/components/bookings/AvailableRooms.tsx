@@ -19,12 +19,15 @@ export default function AvailableRooms() {
         <div className=' w-[200px] p-2 bg-[#CACDD1] font-bold text-center rounded-lg items-center'>
           Available Rooms
         </div>
-        <div className='h-[565px] flex flex-col justify-center items-center w-[200px]  rounded-lg bg-[#CACDD1] mt-2 p-2'>
+        <div className='h-[565px] flex flex-col justify-center items-center w-[200px] rounded-lg bg-[#CACDD1] mt-2 p-1 '>
           <div className='flex justify-center items-center text-center font-bold'>
             {startTimeDate
-              ? numAvailRooms == 0 && 'No Rooms Available'
+              ? numAvailRooms == 0
+                ? 'No Rooms Available'
+                : null
               : 'Click/drag to select a time'}
           </div>
+
           <ScrollShadow hideScrollBar>
             {/* Displays only the available rooms for the selected timeslot */}
             {HatchRoomsData.filter((room) =>
