@@ -24,7 +24,6 @@ type Props = {
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
   const { startTimeDate, endTimeDate } = useTimePickerContext();
-  // const { startTimeDate } = useTimePickerContext();
   return (
     <Modal
       size='xs'
