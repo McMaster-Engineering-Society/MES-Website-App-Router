@@ -32,7 +32,6 @@ export const navItems: NavItem[] = [
       // Temporary removal of MES Card page
       // { title: 'MES Card', link: '/mes-card' },
       { title: 'Hatch Lockers', link: '/hatch-lockers' },
-      { title: 'UHS Form', link: '/uhs-form' },
     ],
   },
   {

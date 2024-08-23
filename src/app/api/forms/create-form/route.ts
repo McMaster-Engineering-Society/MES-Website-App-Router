@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import { createFormService } from '@/lib/services/formServices';
-import { TApiResponse, UHSForm } from '@/lib/types';
+import { TApiResponse } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
+
+import { UHSForm } from '@/types/uhsForm';
 
 export async function POST(req: Request) {
   const form = await req.json();

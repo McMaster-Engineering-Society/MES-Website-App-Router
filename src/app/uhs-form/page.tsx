@@ -19,14 +19,17 @@ import Policy from '@/constant/uhs-form/Policy';
 import SafetyHazards from '@/constant/uhs-form/SafetyHazards';
 import Travel from '@/constant/uhs-form/Travel';
 import TravelEvents from '@/constant/uhs-form/TravelEvents';
+import { INITIAL_UHS_DATA } from '@/constant/uhs-form/UHSPageData';
 import Understanding from '@/constant/uhs-form/Understanding';
+
+import { UHSFormData } from '@/types/uhsForm';
 
 export default function UHSFormPage() {
   const [isSubmitted, setSubmit] = useState(false);
-  const [data, setData] = useState(INITIAL_DATA);
+  const [data, setData] = useState(INITIAL_UHS_DATA);
 
   //updates the values in the state from outside this file
-  function updateFields(fields: Partial<FormData>) {
+  function updateFields(fields: Partial<UHSFormData>) {
     setData((prev) => {
       return { ...prev, ...fields };
     });
@@ -240,113 +243,3 @@ const titles = [
 ];
 
 let title: string;
-
-//the types for all the data
-type FormData = {
-  email: string;
-  firstAgreement: boolean;
-  secondAgreement: boolean;
-  groupCategory: string;
-  groupName: string;
-  eventName: string;
-  eventDesc: string;
-  organizerName: string;
-  organizerNumber: string;
-  organizerEmail: string;
-  location: string;
-  numberOfParticipants: string;
-  emergencyName: string;
-  startDate: string;
-  startTime: string;
-  endDate: string;
-  endTime: string;
-  repeat: boolean | undefined;
-  repeatInfo: string;
-  execMeeting: boolean | undefined;
-  thirdAgreement: boolean;
-  virtual: boolean | undefined;
-  movie: boolean | undefined;
-  danger: boolean | undefined;
-  activityDesc: string;
-  nameOfFirstAidIndividual: string;
-  nameOfEmergencyIndividual: string;
-  fourthAgreement: boolean;
-  fifthAgreement: boolean;
-  involveHazard: boolean | undefined;
-  equipmentDesc: string;
-  certificateSent: boolean;
-  sixthAgreement: boolean;
-  food: boolean | undefined;
-  alcohol: boolean | undefined;
-  place: boolean | undefined;
-  seventhAgreement: boolean;
-  campus: boolean | undefined;
-  eighthAgreement: boolean | undefined;
-  travel: boolean | undefined;
-  busName: string;
-  busMonitor: string;
-  safetyPlan: string;
-  ninthAgreement: boolean;
-  tenthAgreement: boolean;
-  informationSecurityPolicy: boolean;
-  studentRightsPolicy: boolean;
-  discriminationHarassmentPolicy: boolean;
-  sexualViolencePolicy: boolean;
-  comments: string;
-  finalAgreement: boolean;
-};
-
-//the intialization for all the data
-const INITIAL_DATA: FormData = {
-  email: '',
-  firstAgreement: false,
-  secondAgreement: false,
-  groupCategory: '',
-  groupName: '',
-  eventName: '',
-  eventDesc: '',
-  organizerName: '',
-  organizerNumber: '',
-  organizerEmail: '',
-  location: '',
-  numberOfParticipants: '',
-  emergencyName: '',
-  startDate: '',
-  startTime: '',
-  endDate: '',
-  endTime: '',
-  repeat: undefined,
-  repeatInfo: '',
-  execMeeting: undefined,
-  thirdAgreement: false,
-  virtual: undefined,
-  movie: undefined,
-  danger: undefined,
-  activityDesc: '',
-  nameOfFirstAidIndividual: '',
-  nameOfEmergencyIndividual: '',
-  fourthAgreement: false,
-  fifthAgreement: false,
-  involveHazard: undefined,
-  equipmentDesc: '',
-  certificateSent: false,
-  sixthAgreement: false,
-  food: undefined,
-  alcohol: undefined,
-  place: undefined,
-  seventhAgreement: false,
-  campus: undefined,
-  eighthAgreement: undefined,
-  travel: undefined,
-  busName: '',
-  busMonitor: '',
-  safetyPlan: '',
-  ninthAgreement: false,
-  tenthAgreement: false,
-  informationSecurityPolicy: false,
-  studentRightsPolicy: false,
-  discriminationHarassmentPolicy: false,
-  sexualViolencePolicy: false,
-  comments: '',
-  finalAgreement: false,
-};

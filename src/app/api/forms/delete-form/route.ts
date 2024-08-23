@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import { deleteFormByIdService } from '@/lib/services/formServices';
-import { TApiResponse, UHSForm } from '@/lib/types';
+import { TApiResponse } from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
+
+import { UHSForm } from '@/types/uhsForm';
 
 export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
