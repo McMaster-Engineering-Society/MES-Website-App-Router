@@ -1,4 +1,3 @@
-import { ScrollShadow } from '@nextui-org/react';
 import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
@@ -11,15 +10,15 @@ export default function AvailableRooms() {
   const { availableRoomIds } = useTimePickerContext();
 
   return (
-    <div className='flex justify-center min-w-[200px] h-[500px] my-8 rounded-lg bg-[#CACDD1]'>
-      <ScrollShadow hideScrollBar>
-        {/* Displays only the available rooms for the selected timeslot */}
-        {HatchRoomsData.filter((room) =>
-          availableRoomIds.includes(room.roomName),
-        ).map((roomInfo) => (
-          <AvailableRoomCard key={roomInfo.roomName} roomInfo={roomInfo} />
-        ))}
-      </ScrollShadow>
+    <div className='flex flex-col w-full h-[570px] rounded-lg bg-[#CACDD1] p-5 gap-4 overflow-auto items-center scrollbar-hide'>
+      {/* <ScrollShadow hideScrollBar> */}
+      {/* Displays only the available rooms for the selected timeslot */}
+      {HatchRoomsData.filter((room) =>
+        availableRoomIds.includes(room.roomName),
+      ).map((roomInfo) => (
+        <AvailableRoomCard key={roomInfo.roomName} roomInfo={roomInfo} />
+      ))}
+      {/* </ScrollShadow> */}
     </div>
   );
 }

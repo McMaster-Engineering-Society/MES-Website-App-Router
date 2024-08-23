@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
+import { cn } from '@/lib/utils';
 
 /**
  * human readable time slots (local time)
@@ -52,7 +53,11 @@ export type RoomAvailabilities = {
   H204B: string[];
 };
 
-export default function TimePicker() {
+type TimePickerProps = {
+  className?: string;
+};
+
+export default function TimePicker({ className }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
@@ -178,16 +183,18 @@ export default function TimePicker() {
   }
 
   return (
-    <TimePickerTable
-      daysToShow={daysToShow}
-      roomsAvailableByTime={roomsAvailableByTime}
-      timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
-      timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
-      maxBlockLength={maxBlockLength}
-      setAvailableRoomIds={setAvailableRoomIds}
-      setStartTimeDate={setStartTimeDate}
-      setEndTimeDate={setEndTimeDate}
-    />
+    <div className={cn('px-8', className)}>
+      <TimePickerTable
+        daysToShow={daysToShow}
+        roomsAvailableByTime={roomsAvailableByTime}
+        timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
+        timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
+        maxBlockLength={maxBlockLength}
+        setAvailableRoomIds={setAvailableRoomIds}
+        setStartTimeDate={setStartTimeDate}
+        setEndTimeDate={setEndTimeDate}
+      />
+    </div>
   );
 }
 
@@ -412,7 +419,7 @@ function TimePickerTable({
   };
 
   return (
-    <div className='p-8 m-2 flex'>
+    <div className='flex'>
       {/* time indicators along the side */}
       <div className='flex flex-col justify-stretch mt-14 mr-1 -translate-y-1'>
         {timeslots.map((slot: string, i) => {
