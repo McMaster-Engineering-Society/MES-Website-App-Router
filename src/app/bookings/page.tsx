@@ -77,22 +77,24 @@ const Bookings = () => {
         </ButtonLink>
 
         <BookingTimeslot
-          imageSrc='/images/bookings/HatchRoomImage.jpg'
-          room='203'
-          date={new Date()}
+          room='H203'
+          startTime={new Date()}
+          endTime={new Date()}
           variant='next'
         />
         <BookingTimeslot
-          imageSrc='/images/bookings/HatchRoomImage.jpg'
-          room='204'
-          date={new Date()}
+          room='H203'
+          startTime={new Date()}
+          endTime={new Date()}
           variant='previous'
         />
         <BookingTimeslot
-          imageSrc='/images/bookings/HatchRoomImage.jpg'
-          room='205'
-          date={new Date()}
-          variant='upcoming'
+          room='H204A'
+          startTime={new Date()}
+          endTime={new Date()}
+          variant='next'
+          // can't pass this rn from a server component into a client component
+          // handleEdit={() => console.log('Edit')}
         />
       </main>
     </PageLayout>

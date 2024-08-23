@@ -1,73 +1,103 @@
-import { Button, Image } from '@nextui-org/react';
+import { format } from 'date-fns';
+import { Clock, Ellipsis, LayoutPanelLeft, Pencil } from 'lucide-react';
+import React from 'react';
+
+import { cn } from '@/lib/utils';
 
 type BookingTimeslotProps = {
-  imageSrc?: string;
+  startTime: Date;
+  endTime: Date;
   room: string;
-  date: Date;
-  variant: 'next' | 'previous' | 'upcoming';
+  variant: 'next' | 'previous';
+  handleEdit?: () => void;
+  handleExpand?: () => void;
 };
 
 export const BookingTimeslot = ({
-  imageSrc,
+  startTime,
+  endTime,
   room,
-  date,
   variant,
+  handleEdit,
+  handleExpand,
 }: BookingTimeslotProps) => {
-  const formattedDate = date.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }); // August 14, 2024
-
-  // Assuming you have start and end times
-  const startTime = date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  }); // 6:00 PM
-
-  const imageColour = (
-    imageColour: 'next' | 'previous' | 'upcoming',
-  ): string => {
-    if (imageColour === 'next') {
-      return 'bg-cyan-500';
-    } else if (imageColour === 'previous') {
-      return 'bg-gray-500';
-    } else {
-      return 'bg-green-200';
-    }
-  };
+  const formattedDate = format(startTime, 'MMM. d, yyyy');
+  const bgColour = variant === 'next' ? 'bg-cyan-400' : 'bg-slate-400';
+  const borderColour =
+    variant === 'next' ? 'border-cyan-400' : 'border-slate-400';
+  const textColour = variant === 'next' ? 'text-cyan-400' : 'text-slate-400';
+  const hoverBgColour =
+    variant === 'next' ? 'hover:bg-cyan-500' : 'hover:bg-slate-500';
+  const hoverTextColour =
+    variant === 'next' ? 'hover:text-cyan-500' : 'hover:text-slate-500';
 
   return (
-    <div className='bg-white p-2 rounded-lg outline outline-2 w-2/4 flex justify-between'>
-      <div className='flex flex-row items-center justify-between rounded-lg'>
+    <div
+      className={cn(
+        'flex items-center rounded-full text-black border-2',
+        bgColour,
+        borderColour,
+      )}
+    >
+      <div className='flex-1 font-semibold flex justify-center text-white'>
         {formattedDate}
       </div>
-      <div className='flex items-center justify-center rounded-lg'>
-        {' '}
-        {startTime}
+      <div
+        className={cn(
+          'flex items-center flex-1 bg-white border-2',
+          borderColour,
+        )}
+      >
+        <Clock className={cn('w-4 h-4 mx-2', textColour)} />
+        <span className='w-full text-center'>
+          {format(startTime, 'h:mm a')} – {format(endTime, 'h:mm a')}
+        </span>
       </div>
       <div
-        className={` flex items-center justify-start w-1/4 h-full ml-1 rounded-s-3xl ${imageColour(variant)}`}
+        className={cn(
+          'flex items-center flex-1 bg-white border-2',
+          borderColour,
+        )}
       >
-        <Image
-          src={imageSrc}
-          alt='Hatch Room Booking Image'
-          width={60}
-          height={10}
-          className='w-full h-full rounded-3xl'
-        />
-        <div className=' h-full ml-1 flex items-center text-white'> {room}</div>
+        <LayoutPanelLeft className={cn('w-4 h-4 mx-2', textColour)} />
+        <span className='w-full text-center'>{room}</span>
       </div>
-
-      <Button
-        className='outline-cyan-500 outline-2 text-cyan-500  h-4'
-        color='primary'
-        size='sm'
+      <div
+        className={cn(
+          'flex items-center bg-white rounded-r-full border-2',
+          borderColour,
+        )}
       >
-        {' '}
-        Edit{' '}
-      </Button>
+        {handleEdit && (
+          <button
+            className={cn(
+              'p-1 bg-white border-r-2 transition-colors duration-200',
+              borderColour,
+              hoverBgColour,
+            )}
+            onClick={handleEdit}
+          >
+            <Pencil
+              className={cn(
+                'w-4 h-4',
+                textColour,
+                `group-hover:${hoverTextColour}`,
+              )}
+            />
+          </button>
+        )}
+        <button
+          onClick={handleExpand}
+          className={cn(
+            'p-1 rounded-r-full border-l-2 text-white transition-colors duration-200',
+            borderColour,
+            bgColour,
+            hoverBgColour,
+          )}
+        >
+          <Ellipsis className='w-4 h-4 mr-2' />
+        </button>
+      </div>
     </div>
   );
 };
