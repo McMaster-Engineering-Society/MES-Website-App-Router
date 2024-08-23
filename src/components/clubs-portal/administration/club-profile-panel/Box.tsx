@@ -10,17 +10,16 @@ type BoxProps = {
 
 const Box = ({ name, children, className }: BoxProps) => {
   return (
-    <>
+    <div className={cn([className, 'flex flex-col overflow-hidden'])}>
       <span className='text-primary-800 font-b'>{name}</span>
       <div
         className={cn([
-          className,
-          'flex p-3 border-2 rounded-xl bg-gray-100 border-gray-300 overflow-scroll',
+          'flex p-3 basis-full border-2 rounded-xl bg-gray-100 border-gray-300 overflow-scroll',
         ])}
       >
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
