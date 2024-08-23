@@ -5,6 +5,7 @@ import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
+import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
@@ -25,7 +26,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
         <div className='relative inline-block w-full text-center justify-center items-center pb-1'>
           <div className='inline-block font-bold'>{roomInfo.roomName}</div>
           <button
-            className='absolute right-0 top-0.5 hover:bg-yellow-600 rounded-full'
+            className='absolute right-0 top-0.5 hover:bg-primary-700 rounded-full'
             onClick={onOpen}
           >
             <InfoIcon size={20} />
@@ -50,15 +51,15 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
             </div>
           ))}
         </div>
-
-        <Button
-          className='m-1 font-semibold bg-[#FFFFFF]'
-          size='sm'
-          color='success'
-          onClick={() => handleAddBookRoom(roomInfo.roomName)}
-        >
-          Book Now
-        </Button>
+        <ConfirmationPopover>
+          <Button
+            className='m-1 bg-white font-semibold w-[130px] hover:bg-primary-700'
+            size='sm'
+            onClick={() => handleAddBookRoom(roomInfo.roomName)}
+          >
+            Book Now
+          </Button>
+        </ConfirmationPopover>
       </div>
 
       {/*More room information pop up*/}
