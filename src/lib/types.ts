@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type TUser = {
   _id: string;
   firstName: string;
@@ -19,4 +21,10 @@ export type TDocument = {
   title: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: Record<string, any>;
-}
+};
+export type UHSForm = {
+  _id: string | ObjectId;
+  clubId: string;
+  formInfo: string;
+  formStatus: 'pending' | 'approved' | 'rejected';
+};

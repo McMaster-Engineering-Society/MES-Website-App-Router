@@ -4,11 +4,12 @@ import * as React from 'react';
 import '@/styles/colors.css';
 
 export const metadata: Metadata = {
-  title: 'Conferences',
-  description: 'Internal and external conferences throughout the year.',
+  title: 'Clubs Portal',
+  description:
+    'A web portal for clubs where they can obtain all the information they need from MES',
 };
 
-export default function ConferencesLayout({
+export default function ClubsPortalLayout({
   children,
 }: {
   children: React.ReactNode;

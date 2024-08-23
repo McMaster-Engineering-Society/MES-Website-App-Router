@@ -1,7 +1,10 @@
-'use client';
+import UpcomingEvents from '@/components/clubs-portal/UpcomingEvents';
+import ClubUserDashboardLayout from '@/components/layout/clubs-user-dashboard/ClubUserDashboardLayout';
 
-import PageLayout from '@/components/layout/PageLayout';
-
-export default function DocumentsPage() {
-  return <PageLayout>hi</PageLayout>;
+export default function ClubsPortal() {
+  return (
+    <ClubUserDashboardLayout>
+      <UpcomingEvents />
+    </ClubUserDashboardLayout>
+  );
 }
