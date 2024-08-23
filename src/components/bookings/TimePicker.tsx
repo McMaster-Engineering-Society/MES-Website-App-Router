@@ -411,9 +411,11 @@ function TimePickerTable({
     e.preventDefault();
   };
 
-  return (
-    <div className='p-8 m-2 flex'>
-      {/* time indicators along the side */}
+  const TimeIndicators = () => {
+    {
+      /* time indicators along the side */
+    }
+    return (
       <div className='flex flex-col justify-stretch mt-14 mr-1 -translate-y-1'>
         {timeslots.map((slot: string, i) => {
           if (i % 2 === 1) return null;
@@ -428,65 +430,83 @@ function TimePickerTable({
           );
         })}
       </div>
-      <table
-        className='w-full table-fixed bg-white rounded-lg shadow-lg shadow-black/25'
+    );
+  };
+
+  const TimePickerHeader = () => {
+    return (
+      <div
+        className={`h-14 grid grid-rows-1 grid-cols-${daysToShow.length} auto-cols-max`}
+      >
+        {daysToShow.map((day, i) => (
+          <div
+            key={day.toString()}
+            className={`px-8 flex-1 flex flex-col justify-center items-center p-0 border-black/20 border-1 border-l-0 border-t-0 border-b-0 ${i === daysToShow.length - 1 && 'border-r-0'}`}
+          >
+            <span className='text-sm font-light'>
+              {/* ex. "MONDAY" */}
+              {day
+                .toLocaleDateString('en-US', { weekday: 'long' })
+                .toUpperCase()}
+            </span>
+            <span className='text-2xl font-light'>
+              {/* ex. "23" */}
+              {day.getDate()}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const TimePickerBody = () => {
+    return (
+      <div
+        className={`grid grid-rows-${timeslots.length} grid-cols-${daysToShow.length}`}
+      >
+        {timeslots.map((slot, i) =>
+          daysToShow.map((day, j) => {
+            const timeSlotIndex = j * timeslots.length + i;
+            return (
+              <div
+                key={`${day} ${slot}`}
+                id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
+                className={`h-4 relative border-1 border-b-0 border-black/20 flex-1 touch-none
+                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
+                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
+                      ${i % 2 === 1 && 'border-t-0'} 
+                      border-l-0
+                      ${j === daysToShow.length - 1 && 'border-r-0'}`}
+                onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
+                onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
+                onTouchMove={(e) => {
+                  // onTouchMove will not fire for the proper timeSlotIndex
+                  // so we need to convert the touch to the proper timeSlotIndex
+                  const timeSlotIndex = touchEventToTimeslot(e);
+                  timeSlotIndex && handleDrag(timeSlotIndex);
+                }} // fired on mobile only
+              />
+            );
+          }),
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className='p-8 m-2 flex flex-row justify-center'>
+      <TimeIndicators />
+      <div
+        className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
-        {/* header that shows days of the week & month */}
-        <thead className='h-14'>
-          <tr>
-            {daysToShow.map((day, i) => (
-              <th
-                key={day.toString()}
-                className={`border-black/20 border border-t-0 ${i === 0 && 'border-l-0'} ${i === daysToShow.length - 1 && 'border-r-0'}`}
-              >
-                <span className='text-sm font-light'>
-                  {/* ex. "MONDAY" */}
-                  {day
-                    .toLocaleDateString('en-US', { weekday: 'long' })
-                    .toUpperCase()}
-                </span>
-                <br />
-                <span className='text-2xl font-light'>
-                  {/* ex. "23" */}
-                  {day.getDate()}
-                </span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {timeslots.map((slot, i) => (
-            <tr key={slot}>
-              {daysToShow.map((day, j) => {
-                const timeSlotIndex = j * timeslots.length + i;
-                return (
-                  <td
-                    key={`${day} ${slot}`}
-                    id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
-                    className={`h-4 relative border border-b-0 border-black/20 flex-1 touch-none
-                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
-                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
-                      ${i % 2 === 1 && 'border-t-0'} 
-                      ${j === 0 && 'border-l-0'} 
-                      ${j === daysToShow.length - 1 && 'border-r-0'}`}
-                    onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
-                    onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
-                    onTouchMove={(e) => {
-                      // onTouchMove will not fire for the proper timeSlotIndex
-                      // so we need to convert the touch to the proper timeSlotIndex
-                      const timeSlotIndex = touchEventToTimeslot(e);
-                      timeSlotIndex && handleDrag(timeSlotIndex);
-                    }} // fired on mobile only
-                  />
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <TimePickerHeader />
+        <div className='relative'>
+          <TimePickerBody />
+        </div>
+      </div>
     </div>
   );
 }
