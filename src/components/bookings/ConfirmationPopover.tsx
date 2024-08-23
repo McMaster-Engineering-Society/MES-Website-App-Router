@@ -13,12 +13,14 @@ type Props = {
 
 function ConfirmationPopover({ children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+
   // TODO: connect to backend to send booking request, and receive response on whether the request was successful or not
   const handleConfirmBooking = () => {
-    toast('Room has been successfully booked!');
+    toast('Room has been successfully booked.');
     // toast('Room booking was unsuccessful!');
     setIsOpen(false); // Close the popover after clicking the button
   };
+
   return (
     <Popover
       placement='bottom'
