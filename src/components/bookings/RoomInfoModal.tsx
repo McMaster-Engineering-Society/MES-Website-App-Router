@@ -69,7 +69,7 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
                 <Button
                   color='warning'
                   onPress={onClose}
-                  onClick={() => toast('Room has been successfully booked!')}
+                  onClick={() => toast('Room has been successfully booked.')}
                 >
                   {/* Book room from {startTimeDate?.toDateString()} to {endTimeDate?.toDateString()} */}
                   Book from 6:00 - 8:30 pm
