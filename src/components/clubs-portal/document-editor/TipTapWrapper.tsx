@@ -1,27 +1,26 @@
 'use client';
 
 import { Block, BlockNoteEditor, PartialBlock } from '@blocknote/core';
-// import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from '@blocknote/mantine';
-import {
-  getHierarchicalIndexes,
-  TableOfContentData,
-  TableOfContents,
-} from '@tiptap-pro/extension-table-of-contents';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
 
+// import './document-styles/index.css';
+// import './document-styles/styles.css';
 import { TDocument } from '@/lib/types';
 
 import { DocumentPanel } from '@/components/clubs-portal/document-editor/DocumentPanel';
+import TableOfContents from '@/components/clubs-portal/document-editor/TableOfContentsPlugin';
 
 import { useFetchAllDocuments } from '@/app/clubs-portal/hooks/useFetchAllDocuments';
 import { useSaveDocument } from '@/app/clubs-portal/hooks/useSaveDocument';
 
-async function saveToLocalStorage(jsonBlocks: Block[]) {
+async function saveToStorage(jsonBlocks: Block[]) {
+  // Save contents to local storage. You might want to debounce this or replace
+  // with a call to your API / database.
   localStorage.setItem('editorContent', JSON.stringify(jsonBlocks));
 }
 
@@ -33,18 +32,33 @@ async function loadFromStorage() {
 }
 
 export const TipTapWrapper = ({ docId }: { docId: string }) => {
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [items, setItems] = useState<TableOfContentData>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | 'loading'
   >('loading');
   const { data: documents } = useFetchAllDocuments();
   const router = useRouter();
+  const [blocks, setBlocks] = useState<Block[]>([]);
+
+  async function uploadFile(file: File) {
+    const body = new FormData();
+    body.append('file', file);
+
+    const ret = await fetch('https://tmpfiles.org/api/v1/upload', {
+      method: 'POST',
+      body: body,
+    });
+    return (await ret.json()).data.url.replace(
+      'tmpfiles.org/',
+      'tmpfiles.org/dl/',
+    );
+  }
 
   useEffect(() => {
     if (documents && documents.length > 0) {
-      const firstDocument = documents.find((doc) => doc._id === docId);
+      const firstDocument = documents.find(
+        (doc: TDocument) => doc._id === docId,
+      );
       if (firstDocument && firstDocument.content) {
         setInitialContent(firstDocument.content as PartialBlock[]);
       }
@@ -64,18 +78,15 @@ export const TipTapWrapper = ({ docId }: { docId: string }) => {
       return undefined;
     }
 
-    const options = {
-      extensions: [
-        TableOfContents.configure({
-          getIndex: getHierarchicalIndexes,
-          onUpdate(content) {
-            setItems(content);
-          },
-        }),
-      ],
-    };
+    const editorInstance = BlockNoteEditor.create({
+      initialContent,
+      uploadFile,
+    });
 
-    return BlockNoteEditor.create({ initialContent, ...options });
+    // Set blocks to display the initial ToC
+    setBlocks(editorInstance.document);
+
+    return editorInstance;
   }, [initialContent]);
 
   // Render a loading state if editor is still being created
@@ -131,21 +142,18 @@ export const TipTapWrapper = ({ docId }: { docId: string }) => {
             <div className='flex flex-col items-start h-full gap-4 sticky top-4'>
               <h3>Table of Contents</h3>
               <div className='flex flex-col text-sm gap-1 overflow-auto no-underline'>
-                {/* <MemorizedDocumentTableOfContents
-                  editor={editor}
-                  items={items}
-                /> */}
+                <TableOfContents blocks={blocks} />
               </div>
             </div>
           </div>
         )}
         <div className='flex flex-col w-full h-full overflow-auto'>
-          {/* <EditorContent editor={editor} /> */}
           <BlockNoteView
             editor={editor}
             editable={true}
             onChange={() => {
-              saveToLocalStorage(editor.document);
+              saveToStorage(editor.document);
+              setBlocks(editor.document);
             }}
           />
         </div>

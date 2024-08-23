@@ -34,22 +34,13 @@ const CouncilResources = () => {
           >
             <div>
               MES Office Hours are your opportunities to talk one-on-one with
-              the MES Executive Team, AVPs, and administrators to get answers to
-              your burning questions or voice your concerns. Check below or the
-              calendar at the bottom of the page to find out when each member's
-              office hours are. Just make your way to Hatch 202 and you'll find
-              someone there, ready to help!
+              the MES Executives, Directors, and administrators to get answers
+              to your burning questions or voice your concerns. The Fall
+              schedule for office hours will be posted in September, so stay
+              tuned until then!
               <br />
               <br />
-              MES Council meetings occur biweekly on Tuesday evenings; anyone is
-              welcome to attend! This is the best way to meet your student
-              representatives, get the most up-to-date information, voice your
-              concerns to the council, and become inspired to join next year's
-              council! You can access the meetings by coming to JHE-A114.
-              <br />
-              <br />
-              The meetings start at 7PM. For more information about any MES
-              council resources, contact{' '}
+              For more information contact the MES Administrator, at{' '}
               <a
                 href='mailto:administrator@macengsociety.ca'
                 className='underline'

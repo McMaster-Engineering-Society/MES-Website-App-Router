@@ -32,15 +32,13 @@ const DropdownLink = ({
         <DropdownMenu variant='solid' aria-label='Dynamic Actions'>
           <DropdownSection title={title}>
             {dropdownItems.map((item, index) => (
-              <DropdownItem key={item.text + '_' + index}>
-                <a
-                  className={className}
-                  style={{ display: 'block' }}
-                  href={item.url}
-                  target='_blank'
-                >
-                  {item.text}
-                </a>
+              <DropdownItem
+                key={item.text + '_' + index}
+                startContent={item.icon}
+                href={item.url}
+                target='_blank'
+              >
+                {item.text}
               </DropdownItem>
             ))}
           </DropdownSection>

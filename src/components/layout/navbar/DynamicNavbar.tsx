@@ -1,13 +1,7 @@
 'use client';
 
 // navItems.ts is to add new links to the navbar
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -21,6 +15,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+
+import { NavbarDropdown } from '@/components/layout/navbar/NavbarDropdown';
 
 import { MESLogo } from './MESLogo';
 import { navItems } from './navItems';
@@ -85,57 +81,13 @@ const DynamicNavbar = ({
         {navItems.map((item, index) =>
           item.dropdownItems ? (
             // Dropdown menu item
-            <Dropdown key={`${index}-${item.title}`}>
-              <NavbarItem>
-                <DropdownTrigger>
-                  <Button
-                    disableRipple
-                    className='bg-transparent p-0 data-[hover=true]:bg-transparent'
-                    endContent={
-                      <ArrowDropDownIcon
-                        className={cn(['text-black', darkMode && 'text-white'])}
-                      />
-                    }
-                    radius='sm'
-                    variant='light'
-                  >
-                    <span
-                      className={cn([
-                        'text-sm font-medium text-black',
-                        darkMode && 'text-white',
-                      ])}
-                    >
-                      {item.title}
-                    </span>
-                  </Button>
-                </DropdownTrigger>
-              </NavbarItem>
-              <DropdownMenu
-                aria-label={`${item.title} Menu`}
-                itemClasses={{
-                  base: 'gap-4',
-                }}
-                variant='light'
-              >
-                {item.dropdownItems.map((dropdownItem, idx) => (
-                  // Temporary fix: onClick & <Link> both required for dropdown items to work
-                  <DropdownItem
-                    key={`${dropdownItem.title}-${idx}`}
-                    color='default'
-                    textValue={`${dropdownItem.title}`}
-                    onClick={() => {
-                      onDropdownClick(dropdownItem.link ?? '');
-                    }}
-                  >
-                    <Link color='foreground' href={dropdownItem.link ?? ''}>
-                      <span className='text-sm font-medium'>
-                        {dropdownItem.title}
-                      </span>
-                    </Link>
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            <NavbarDropdown
+              key={`${index}-${item.title}`}
+              title={item.title}
+              dropdownItems={item.dropdownItems}
+              darkMode={darkMode}
+              onDropdownClick={onDropdownClick}
+            />
           ) : (
             // Normal menu item
             <NavbarItem key={`${index}-${item.title}`} className='pb-[2px]'>
@@ -148,7 +100,7 @@ const DynamicNavbar = ({
         )}
       </NavbarContent>
 
-      <NavbarMenu className='py-12'>
+      <NavbarMenu className='pt-12 pb-40'>
         {navItems.map((item, index) => (
           <div key={`dropdown-navbar-${index}`}>
             {item.dropdownItems ? (

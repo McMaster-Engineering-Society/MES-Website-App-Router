@@ -21,18 +21,21 @@ const PageHeading = ({
         </div>
       )}
       <div
-        className={cn('px-5 py-3 text-4xl font-bold uppercase italic', [
-          (variant === 'red' || variant == 'default') && [
-            'bg-[#A6192E] text-white',
+        className={cn(
+          'px-5 py-3 text-pretty text-2xl md:text-4xl w-fit font-bold uppercase italic',
+          [
+            (variant === 'red' || variant == 'default') && [
+              'bg-[#A6192E] text-white',
+            ],
+            variant === 'white' && ['bg-white text-black'],
+            variant === 'blue' && ['bg-[#8BD3E6] text-black'],
+            variant === 'green' && ['bg-[#A1D884] text-black'],
+            variant === 'yellow' && ['bg-[#EDE04B] text-black'],
+            variant === 'purple' && ['bg-[#8C4799] text-white'],
+            variant === 'pink' && ['bg-[#F57EB6] text-black'],
+            variant === 'grey' && ['bg-[#E5E7EB] text-black'],
           ],
-          variant === 'white' && ['bg-white text-black'],
-          variant === 'blue' && ['bg-[#8BD3E6] text-black'],
-          variant === 'green' && ['bg-[#A1D884] text-black'],
-          variant === 'yellow' && ['bg-[#EDE04B] text-black'],
-          variant === 'purple' && ['bg-[#8C4799] text-white'],
-          variant === 'pink' && ['bg-[#F57EB6] text-black'],
-          variant === 'grey' && ['bg-[#E5E7EB] text-black'],
-        ])}
+        )}
       >
         {title}
       </div>
