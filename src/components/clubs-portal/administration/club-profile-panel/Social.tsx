@@ -20,7 +20,7 @@ const Social = ({ name, value }: SocialProps) => {
   return (
     <div className='flex flex-row items-center w-full'>
       <Icon className='mr-2' size='40' />
-      <Box className='items-center w-full'>
+      <Box className='w-full'>
         <input
           type='text'
           value={value}

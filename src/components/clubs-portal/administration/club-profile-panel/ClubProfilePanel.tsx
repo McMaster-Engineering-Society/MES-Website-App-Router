@@ -7,12 +7,12 @@ import Social from '@/components/clubs-portal/administration/club-profile-panel/
 const ClubProfilePanel = () => {
   const [email, setEmail] = React.useState('current_address@mcmaster.ca');
   return (
-    <div className='flex flex-row gap-12'>
-      <div className='flex flex-col basis-1/3'>
-        <Avatar sx={{ height: 175, width: 175 }} className='m-auto'>
+    <div className='flex flex-row gap-12 pt-5'>
+      <div className='flex flex-col basis-1/3 gap-12'>
+        <Avatar sx={{ height: 175, width: 175 }} className='mx-auto'>
           MES
         </Avatar>
-        <Box name='Description' className='basis-1/2'>
+        <Box name='Description' className='basis-full'>
           Lorem ipsum odor amet, consectetuer adipiscing elit. Sit nullam fusce
           ligula massa dignissim integer. At efficitur curabitur eleifend
           maecenas hendrerit; molestie egestas. Natoque elit sagittis mi ipsum
@@ -23,8 +23,8 @@ const ClubProfilePanel = () => {
           libero eos quidem itaque vel alias quisquam. Facere, facilis officiis!
         </Box>
       </div>
-      <div className='flex flex-col basis-full justify-around gap-12'>
-        <Box name='Club Email Address' className='items-center'>
+      <div className='flex flex-col basis-full gap-12'>
+        <Box name='Club Email Address' className='shrink-0'>
           <input
             type='text'
             value={email}
@@ -32,7 +32,7 @@ const ClubProfilePanel = () => {
             className='border-none p-0 focus:ring-0 outline-none bg-transparent w-full'
           />
         </Box>
-        <Box name='Social Media'>
+        <Box name='Social Media' className='basis-full'>
           <div className='flex flex-col gap-2 w-full'>
             <Social name='instagram' value='@mesmac' />
             <Social name='discord' value='discord.gg/mesmac' />
