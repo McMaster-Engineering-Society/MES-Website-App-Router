@@ -21,6 +21,7 @@ type Props = {
   roomInfo: HatchRoomType;
 };
 
+// TODO: Integrate start and end time (from TimePickerContext) for selected time slot in the Modal room booking button
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
   // const {startTimeDate, endTimeDate } = useTimePickerContext();
@@ -64,6 +65,7 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
                   Close
                 </Button>
 
+                {/* TODO: INTEGRATE TIME PICKER CONTEXT FOR TIMESLOT START AND END TIME */}
                 <Button color='warning' onPress={onClose}>
                   {/* Book room from {startTimeDate?.toDateString()} to {endTimeDate?.toDateString()} */}
                   Book from 6:00 - 8:30 pm
