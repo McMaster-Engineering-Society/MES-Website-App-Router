@@ -173,6 +173,18 @@
   content: attr(data-item-index) '.';
 }
 
+.table-of-contents ul {
+  list-style-type: none; /* Removes the bullet points */
+  padding-left: 0; /* Optional: Removes left padding */
+  margin: 0; /* Optional: Removes margin */
+}
+
+.editor-container {
+  height: 500px; /* Adjust as needed */
+  overflow-y: auto;
+  position: relative;
+}
+
 @media (max-width: 540px) {
   .col-group {
     flex-direction: column-reverse;
