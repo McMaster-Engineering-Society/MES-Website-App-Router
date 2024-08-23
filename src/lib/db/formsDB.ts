@@ -1,7 +1,8 @@
 import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
-import { UHSForm } from '@/lib/types';
+
+import { UHSForm } from '@/types/uhsForm';
 
 const getFormsCollection = async () => {
   const client = await clientPromise;
@@ -23,10 +24,7 @@ const validStatuses = new Set(['pending', 'approved', 'rejected']);
 
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
   try {
-    // // Validate formStatus
-    // if (!validStatuses.has(newForm.formStatus)) {
-    //   throw new Error('Invalid form status');
-    // }
+    
     if (!newForm.formStatus) {
       newForm.formStatus = 'pending';
     }
