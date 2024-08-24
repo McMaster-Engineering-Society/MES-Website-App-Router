@@ -94,10 +94,8 @@ export default function UHSFormPage() {
     e.preventDefault();
     //This handles what happens after the form is submitted
     if (isLastStep) {
-      
       await submitUHSForm(data);
       setSubmit(true);
-      
     } else {
       if (
         (currentStepIndex === 3 && !data.danger) ||

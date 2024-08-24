@@ -15,7 +15,6 @@ const validStatuses = new Set(['pending', 'approved', 'rejected']);
 
 const createFormDb = async (newForm: UHSForm): Promise<UHSForm | null> => {
   try {
-    
     if (!newForm.formStatus) {
       newForm.formStatus = 'pending';
     }
@@ -102,12 +101,10 @@ const updateFormByIdDb = async (
   newStatus: 'pending' | 'approved' | 'rejected',
 ): Promise<UHSForm | null> => {
   try {
-
     // Validate the new status
     if (!validStatuses.has(newStatus)) {
       throw new Error('Invalid form status');
     }
-
 
     const formsCollection = await getFormsCollection();
     const formObjectId = new ObjectId(formId);

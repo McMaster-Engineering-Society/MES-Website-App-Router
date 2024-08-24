@@ -1,4 +1,3 @@
-
 export type TUser = {
   _id: string;
   firstName: string;
@@ -14,6 +13,3 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
-
-
-
