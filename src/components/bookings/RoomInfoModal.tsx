@@ -20,6 +20,7 @@ type Props = {
   roomInfo: HatchRoomType;
 };
 
+// TODO: Fix date not outputting to modal
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
   const { startTimeDate, endTimeDate } = useTimePickerContext();

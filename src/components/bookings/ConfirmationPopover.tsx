@@ -19,7 +19,7 @@ function ConfirmationPopover({ children }: Props) {
     // toast('Room booking was unsuccessful!');
     setIsOpen(false); // Close the popover after clicking the button
   };
->>>>>>> 1b40d3c (feat: added sonner)
+
   return (
     <Popover
       placement='bottom'
