@@ -9,22 +9,21 @@ import {
 } from '@nextui-org/react';
 import Image from 'next/image';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
 import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
-
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   roomInfo: HatchRoomType;
 };
 
-// TODO: Integrate start and end time (from TimePickerContext) for selected time slot in the Modal room booking button
+// TODO: Fix date not outputting to modal
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
-  // const {startTimeDate, endTimeDate } = useTimePickerContext();
-  const { startTimeDate } = useTimePickerContext();
+  const { startTimeDate, endTimeDate } = useTimePickerContext();
   return (
     <Modal
       size='xs'
@@ -40,14 +39,19 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               Room: {roomInfo.roomName}
             </ModalHeader>
             <ModalBody>
-              <p>Date: {startTimeDate?.toDateString()}</p>
+              <p>
+                Date:{' '}
+                {startTimeDate
+                  ? new Date(startTimeDate).toDateString()
+                  : 'Invalid date'}{' '}
+              </p>
               <p>Room capacity: {roomInfo.capacity}</p>
               <p>Outlet: {roomInfo.outlets}</p>
               <p>
                 Resources:{' '}
                 {resourceKeys.map((resource, index) => {
                   return (
-                    resource + (index < resourceKeys.length - 1 ? ', ' : '')
+                    resource + (index < resourceKeys.length - 1 ? ', ' : '') //so that ", " does not output for the last item in the list                 );
                   );
                 })}
               </p>
@@ -63,10 +67,37 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
                 Close
               </Button>
 
-              {/* TODO: INTEGRATE TIME PICKER CONTEXT FOR TIMESLOT START AND END TIME */}
-              <Button color='warning' onPress={onClose}>
-                {/* Book room from {startTimeDate?.toDateString()} to {endTimeDate?.toDateString()} */}
-                Book from 6:00 - 8:30 pm
+              <Button
+                color='warning'
+                onPress={onClose}
+                onClick={() => toast('Room has been successfully booked.')} //displays room confirmation sonner
+              >
+                Book from{' '}
+                {startTimeDate // Formats as string like `8:00AM` or `2:30PM`
+                  ?.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                  })
+                  .replace(
+                    ' ',
+                    '',
+                  ) // Replaces space to display `8:00AM` instead of `8:00 AM`
+                }{' '}
+                -{' '}
+                {endTimeDate
+                  ? new Date(
+                      new Date(endTimeDate).setMinutes(
+                        new Date(endTimeDate).getMinutes() + 30,
+                      ), // Because the endTimeDate shows the start time of the *last* time slot, add 30 minutes since each time slot is 30 minutes.
+                    )
+                      .toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true,
+                      })
+                      .replace(' ', '') // Replaces space to display `8:00AM` instead of `8:00 AM`
+                  : ''}
               </Button>
             </ModalFooter>
           </>
