@@ -2,6 +2,8 @@
 import { FormEvent, useState } from 'react';
 import React from 'react';
 
+import { submitUHSForm } from '@/lib/services/uhsFormService';
+
 import Button from '@/components/buttons/Button';
 import { useMultistepForm } from '@/components/form/useMultistepForm';
 import PageLayout from '@/components/layout/PageLayout';
@@ -93,20 +95,8 @@ export default function UHSFormPage() {
     //This handles what happens after the form is submitted
     if (isLastStep) {
       try {
-        const response = await fetch('/api/forms/create-form', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-          setSubmit(true);
-        } else {
-          const errorResponse = await response.json();
-          throw new Error(errorResponse.message || 'Form submission failed');
-        }
+        await submitUHSForm(data);
+        setSubmit(true);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('An error occurred while submitting the form: ', error);
