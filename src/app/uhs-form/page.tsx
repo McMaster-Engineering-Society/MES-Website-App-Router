@@ -94,13 +94,10 @@ export default function UHSFormPage() {
     e.preventDefault();
     //This handles what happens after the form is submitted
     if (isLastStep) {
-      try {
-        await submitUHSForm(data);
-        setSubmit(true);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('An error occurred while submitting the form: ', error);
-      }
+      
+      await submitUHSForm(data);
+      setSubmit(true);
+      
     } else {
       if (
         (currentStepIndex === 3 && !data.danger) ||
