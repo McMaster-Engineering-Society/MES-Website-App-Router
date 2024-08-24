@@ -39,14 +39,19 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               Room: {roomInfo.roomName}
             </ModalHeader>
             <ModalBody>
-              <p>Date: {startTimeDate?.toDateString()}</p>
+              <p>
+                Date:{' '}
+                {startTimeDate
+                  ? new Date(startTimeDate).toDateString()
+                  : 'Invalid date'}{' '}
+              </p>
               <p>Room capacity: {roomInfo.capacity}</p>
               <p>Outlet: {roomInfo.outlets}</p>
               <p>
                 Resources:{' '}
                 {resourceKeys.map((resource, index) => {
                   return (
-                    resource + (index < resourceKeys.length - 1 ? ', ' : '')
+                    resource + (index < resourceKeys.length - 1 ? ', ' : '') //so that ", " does not output for the last item in the list                 );
                   );
                 })}
               </p>
@@ -65,7 +70,7 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               <Button
                 color='warning'
                 onPress={onClose}
-                onClick={() => toast('Room has been successfully booked.')}
+                onClick={() => toast('Room has been successfully booked.')} //displays room confirmation sonner
               >
                 Book from{' '}
                 {startTimeDate // Formats as string like `8:00AM` or `2:30PM`
