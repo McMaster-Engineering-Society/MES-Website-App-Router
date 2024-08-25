@@ -17,13 +17,6 @@ export type TApiResponse<T> = {
   message?: string;
 };
 
-export type UHSForm = {
-  _id: string | ObjectId;
-  clubId: string;
-  formInfo: string;
-  formStatus: 'pending' | 'approved' | 'rejected';
-};
-
 export type TRole = 'admin' | 'hatch-user' | 'club' | 'super-admin';
 
 export type TProfile = {

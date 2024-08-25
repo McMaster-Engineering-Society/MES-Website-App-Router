@@ -5,7 +5,8 @@ import {
   getFormByIdDb,
   updateFormByIdDb,
 } from '@/lib/db/formsDB';
-import { UHSForm } from '@/lib/types';
+
+import { UHSForm } from '@/types/uhsForm';
 
 const getAllFormsService = async (): Promise<UHSForm[]> => {
   try {
