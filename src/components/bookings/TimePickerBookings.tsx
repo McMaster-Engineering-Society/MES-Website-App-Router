@@ -19,8 +19,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2204b87f9ac38c4ba645f',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-21T14:30:00.000Z'),
-      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      startTime: new Date('2024-08-22T14:30:00.000Z'),
+      endTime: new Date('2024-08-22T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:43.845Z'),
@@ -29,8 +29,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2204d87f9ac38c4ba6460',
       userId: 'placeholder ID',
       room: 'H203',
-      startTime: new Date('2024-08-21T14:30:00.000Z'),
-      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      startTime: new Date('2024-08-22T14:30:00.000Z'),
+      endTime: new Date('2024-08-22T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:45.643Z'),
@@ -39,8 +39,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2204f87f9ac38c4ba6461',
       userId: 'placeholder ID',
       room: 'H205',
-      startTime: new Date('2024-08-21T14:30:00.000Z'),
-      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      startTime: new Date('2024-08-22T14:30:00.000Z'),
+      endTime: new Date('2024-08-22T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -49,8 +49,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2204f87f9ac38c4ba6462',
       userId: 'placeholder ID',
       room: 'H204A',
-      startTime: new Date('2024-08-21T14:30:00.000Z'),
-      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      startTime: new Date('2024-08-22T14:30:00.000Z'),
+      endTime: new Date('2024-08-22T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -59,8 +59,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2204f87f9ac38c4ba6463',
       userId: 'placeholder ID',
       room: 'H204B',
-      startTime: new Date('2024-08-21T14:30:00.000Z'),
-      endTime: new Date('2024-08-21T16:30:00.000Z'),
+      startTime: new Date('2024-08-22T14:30:00.000Z'),
+      endTime: new Date('2024-08-22T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -69,8 +69,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2205187f9ac38c4ba6462',
       userId: 'placeholder ID',
       room: 'H205',
-      startTime: new Date('2024-08-22T14:00:00.000Z'),
-      endTime: new Date('2024-08-22T15:30:00.000Z'),
+      startTime: new Date('2024-08-23T14:00:00.000Z'),
+      endTime: new Date('2024-08-23T15:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:49.131Z'),
@@ -79,8 +79,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2205387f9ac38c4ba6463',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-22T16:30:00.000Z'),
-      endTime: new Date('2024-08-22T17:00:00.000Z'),
+      startTime: new Date('2024-08-23T16:30:00.000Z'),
+      endTime: new Date('2024-08-23T17:00:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:51.461Z'),
@@ -89,8 +89,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2205887f9ac38c4ba6464',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-23T16:00:00.000Z'),
-      endTime: new Date('2024-08-23T16:00:00.000Z'),
+      startTime: new Date('2024-08-24T16:00:00.000Z'),
+      endTime: new Date('2024-08-24T16:00:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:56.580Z'),
@@ -99,8 +99,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2205c87f9ac38c4ba6465',
       userId: 'placeholder ID',
       room: 'H204A',
-      startTime: new Date('2024-08-22T17:00:00.000Z'),
-      endTime: new Date('2024-08-22T17:30:00.000Z'),
+      startTime: new Date('2024-08-23T17:00:00.000Z'),
+      endTime: new Date('2024-08-23T17:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:25:00.799Z'),
@@ -109,8 +109,8 @@ async function fetchBookings(): Promise<TBooking[]> {
       _id: '66c2206587f9ac38c4ba6466',
       userId: 'placeholder ID',
       room: 'H204B',
-      startTime: new Date('2024-08-22T18:00:00.000Z'),
-      endTime: new Date('2024-08-22T18:30:00.000Z'),
+      startTime: new Date('2024-08-23T18:00:00.000Z'),
+      endTime: new Date('2024-08-23T18:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:25:09.076Z'),
@@ -193,7 +193,7 @@ const TimePickerBookings = ({
     };
 
     return (
-      <div id={time} className='relative h-4 flex justify-evenly w-32'>
+      <div id={time} className='relative h-4 flex justify-evenly w-full'>
         {bookingsAtTime.length != 0
           ? bookingsAtTime.map((booking) => {
               if (!roomVisibilities[`${booking.room}`]) {
@@ -240,7 +240,9 @@ const TimePickerBookings = ({
   };
 
   return (
-    <div className='flex absolute top-0 w-full h-full pointer-events-none'>
+    <div
+      className={`grid grid-cols-${daysToShow.length} absolute top-0 w-full h-full pointer-events-none`}
+    >
       {[...Array(daysToShow.length)].map((_, i) => {
         // initializes the starting date & time for each column
         const firstTimeOfColumn = new Date(daysToShow[i].getTime());
@@ -255,7 +257,7 @@ const TimePickerBookings = ({
           <div
             key={firstTimeOfColumn.toISOString().split('T')[0]}
             id={firstTimeOfColumn.toISOString().split('T')[0]}
-            className='flex-1 flex flex-col justify-start items-center opacity-100'
+            className='flex flex-col justify-start items-center opacity-100'
           >
             {[...Array(timeslotCount)].map((_, j) => {
               // creates a shallow copy of firstTimeOfColumn
