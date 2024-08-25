@@ -11,6 +11,7 @@ export async function submitUHSForm(data: UHSFormData): Promise<void> {
 
   if (!response.ok) {
     const errorResponse = await response.json();
-    throw new Error(errorResponse.message || 'Form submission failed');
+    // eslint-disable-next-line no-console
+    console.log(errorResponse.message || 'Form submission failed');
   }
 }

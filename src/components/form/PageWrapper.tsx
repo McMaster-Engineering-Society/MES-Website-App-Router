@@ -4,6 +4,7 @@ type PageWrapperProps = {
   children: React.ReactNode;
 };
 
+// Page section component that helps apply basic styling to forms.
 const PageWrapper = React.forwardRef<HTMLLabelElement, PageWrapperProps>(
   ({ children }) => {
     return (
