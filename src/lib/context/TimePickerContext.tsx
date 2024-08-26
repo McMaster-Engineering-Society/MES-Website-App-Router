@@ -1,3 +1,4 @@
+import { addWeeks } from 'date-fns';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 import {
@@ -24,6 +25,8 @@ type TTimePickerContext = {
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
   endIndex: number;
   setEndIndex: React.Dispatch<React.SetStateAction<number>>;
+  checkBookingWithinTwoWeeks: () => boolean;
+  checkBookingNotInPast: () => boolean;
 };
 
 type Props = {
@@ -53,6 +56,21 @@ export const TimePickerProvider = ({ children }: Props) => {
   const addRoomBooking = useAddRoomBookingHook();
 
   const { data: userBookings } = useFetchUserBookingsHook(userId);
+
+  function checkBookingWithinTwoWeeks() {
+    const twoWeeksFromNow = addWeeks(new Date(), 2);
+    if (pickerStartDate && pickerStartDate > twoWeeksFromNow) {
+      return false;
+    }
+    return true;
+  }
+
+  function checkBookingNotInPast() {
+    if (pickerStartDate && pickerStartDate < new Date()) {
+      return false;
+    }
+    return true;
+  }
 
   function handleAddBookRoom(room: string) {
     const newBooking: TBooking = {
@@ -97,6 +115,8 @@ export const TimePickerProvider = ({ children }: Props) => {
         setStartIndex,
         endIndex,
         setEndIndex,
+        checkBookingNotInPast,
+        checkBookingWithinTwoWeeks,
       }}
     >
       {children}

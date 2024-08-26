@@ -341,9 +341,6 @@ function TimePickerTable({
    */
   const atLeastOneRoomAvailable = (slotIndex: number) => {
     const time = timeSlotIndexToTimeISO(slotIndex);
-    // if (!(time in roomsAvailableByTime)) {
-    //   throw `No availability data for time: ${time}`;
-    // }
     return roomsAvailableByTime[time]?.length > 0;
   };
   /**

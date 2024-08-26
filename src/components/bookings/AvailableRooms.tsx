@@ -8,7 +8,12 @@ import { AvailableRoomCard } from '@/components/bookings/AvailableRoomCard';
 import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 
 export default function AvailableRooms() {
-  const { availableRoomIds, startTimeDate } = useTimePickerContext();
+  const {
+    availableRoomIds,
+    startTimeDate,
+    checkBookingNotInPast,
+    checkBookingWithinTwoWeeks,
+  } = useTimePickerContext();
 
   const numAvailRooms = availableRoomIds.length;
 
@@ -18,10 +23,18 @@ export default function AvailableRooms() {
         Available Rooms
       </div>
       <div className='h-full flex flex-col justify-center items-center w-full rounded-xl bg-[#CACDD1] py-4 gap-2'>
-        {(startTimeDate && numAvailRooms == 0) || !startTimeDate ? (
-          <div className='flex justify-center items-center text-center font-bold w-full h-[490px]'>
+        {!checkBookingNotInPast() ? (
+          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
+            Booking cannot be made in the past
+          </div>
+        ) : !checkBookingWithinTwoWeeks() ? (
+          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
+            Booking can only be made within two weeks
+          </div>
+        ) : !startTimeDate || (startTimeDate && numAvailRooms === 0) ? (
+          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
             {startTimeDate
-              ? numAvailRooms == 0
+              ? numAvailRooms === 0
                 ? 'No Rooms Available'
                 : null
               : 'Click/drag to select a time'}
