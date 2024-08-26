@@ -1,6 +1,8 @@
-import { InsertOneResult, ObjectId, WithId } from 'mongodb';
+import { InsertManyResult, InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
+import { getDisabledRoomsService } from '@/lib/services/roomServices';
+import { TBatchBookingResponse } from '@/lib/types';
 
 import { TBooking } from '@/app/api/types';
 
@@ -16,8 +18,12 @@ export const createBookingDb = async (
   newBooking: TBooking,
 ): Promise<TBooking | null> => {
   try {
+    const disabledRooms = (await getDisabledRoomsService())?.disabledRooms;
     const bookingsCollection = await getBookingsCollection();
 
+    if (disabledRooms?.includes(newBooking.room)) {
+      throw new Error('Room is disabled.');
+    }
     newBooking.createdDate = new Date();
     const result: InsertOneResult =
       await bookingsCollection.insertOne(newBooking);
@@ -28,10 +34,110 @@ export const createBookingDb = async (
 
     const createdBooking: TBooking = {
       ...newBooking,
-      _id: result.insertedId.toString(),
+      _id: result.insertedId,
     };
 
     return createdBooking;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error inserting booking into database:', error);
+    throw new Error('Database error');
+  }
+};
+export const deleteBatchBookingDb = async (
+  bookingIdsToDelete: string[],
+): Promise<(WithId<TBooking> | null)[]> => {
+  try {
+    const bookingsCollection = await getBookingsCollection();
+    // Convert string IDs to ObjectId
+    const objectIdsToDelete = bookingIdsToDelete.map((id) => new ObjectId(id));
+
+    // Delete documents where _id is in the list of objectIds
+
+    const resultList = [];
+    for (const id of objectIdsToDelete) {
+      const result = await bookingsCollection.findOneAndDelete({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: ObjectId type mismatch
+        _id: id,
+      });
+      resultList.push(result);
+    }
+
+    return resultList;
+    //console.log(`${result.deletedCount} document(s) were deleted.`);
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error inserting booking into database:', error);
+    throw new Error('Database error');
+  }
+};
+export const createBatchBookingDb = async (
+  bookingList: TBooking[],
+): Promise<TBatchBookingResponse | null> => {
+  try {
+    const bookingsCollection = await getBookingsCollection();
+    const disabledRooms = (await getDisabledRoomsService())?.disabledRooms;
+
+    bookingList.forEach((booking) => {
+      booking._id = new ObjectId(booking._id);
+      booking.startTime = new Date(booking.startTime);
+      booking.endTime = new Date(booking.endTime);
+      booking.createdDate = new Date();
+    });
+
+    const conflictingBookings: {
+      booking: TBooking;
+      conflicts: WithId<TBooking>[];
+    }[] = [];
+    const promises = [];
+    const bookingsToAdd: TBooking[] = [];
+
+    // Check for conflicting rooms and disabled rooms
+    for (const booking of bookingList) {
+      const room = booking.room;
+      const startDate = new Date(booking.startTime);
+      const endDate = new Date(booking.endTime);
+      console.log('the room is' + room);
+      console.log(startDate);
+      console.log(endDate);
+      // Push the promise into the array, along with a reference to the current booking
+      const promise = getBookingsInDateRangeForOneRoomDb(
+        startDate,
+        endDate,
+        room,
+      ).then((result) => {
+        console.log(result);
+
+        if (result && result.length > 0) {
+          // If there are conflicting bookings, add them to the list
+          conflictingBookings.push({ booking: booking, conflicts: result });
+        } else if (disabledRooms && !disabledRooms.includes(room)) {
+          bookingsToAdd.push(booking);
+        }
+      });
+
+      promises.push(promise);
+    }
+
+    // Wait for all the promises to resolve
+    await Promise.all(promises);
+
+    if (bookingsToAdd.length > 0) {
+      const result: InsertManyResult =
+        await bookingsCollection.insertMany(bookingsToAdd);
+
+      if (!result.acknowledged) {
+        throw new Error('Failed to insert booking');
+      }
+    }
+
+    const response = {
+      bookingsAdded: bookingsToAdd,
+      conflictingBookings: conflictingBookings,
+      conflictExists: conflictingBookings.length > 0,
+    };
+    return response;
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Error inserting booking into database:', error);
@@ -62,6 +168,50 @@ export const deleteBookingByIdDb = async (
     throw new Error('Database error');
   }
 };
+
+export const getBookingsInDateRangeAndEmailDb = async (
+  startDate: Date,
+  endDate: Date,
+  email: string,
+) => {
+  const bookingsCollection = await getBookingsCollection();
+  const targetStart = startDate;
+  const targetEnd = endDate;
+  const cursor = await bookingsCollection.find({
+    email: email,
+    $or: [
+      {
+        startTime: {
+          $lt: targetEnd,
+        },
+        endTime: {
+          $gte: targetEnd,
+        },
+      },
+      {
+        startTime: {
+          $lte: targetStart,
+        },
+        endTime: {
+          $gt: targetStart,
+        },
+      },
+      {
+        endTime: {
+          $gt: targetStart,
+          $lte: targetEnd,
+        },
+        startTime: {
+          $gte: targetStart,
+          $lt: targetEnd,
+        },
+      },
+    ],
+  });
+  const bookings = cursor.toArray();
+  return bookings;
+};
+
 export const getBookingsInDateRangeDb = async (
   startDate: Date,
   endDate: Date,
@@ -142,7 +292,8 @@ export const getBookingsInDateRangeForOneRoomDb = async (
       },
     ],
   });
-  const bookings = cursor.toArray();
+  const bookings = await cursor.toArray();
+  console.log(bookings);
   return bookings;
 };
 

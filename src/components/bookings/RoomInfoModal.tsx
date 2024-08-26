@@ -10,12 +10,12 @@ import {
 import Image from 'next/image';
 import React from 'react';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  roomInfo: HatchRoomType;
+  roomInfo: THatchRoom;
 };
 
 function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {

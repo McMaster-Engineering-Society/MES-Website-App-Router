@@ -1,7 +1,7 @@
 import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getBookingsInDateRangeDb } from '@/lib/db/bookingDb';
+import { getBookingsInDateRangeAndEmailDb } from '@/lib/db/bookingDb';
 import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
 
 /**
@@ -14,33 +14,30 @@ import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
  * You can use https://querystring.io/ to test queries.
  * Example of a date: 2014-10-13T00:00:00.000+00:00
  *
- *
- * * GET /api/bookings/get-bookings-in-date-range
- * Format we'll use for query date input is ISO (append Z at the end)
- * 2011-04-11T10:20:30Z
- *
- *
- *
- * Example of a query:
- * http://localhost:3000/api/bookings/get-bookings-in-date-range?startdate=2014-10-13t00%3a00%3a00.000%2b00%3a00&enddate=2014-10-13t15%3a00%3a00.000%2b00%3a00
  */
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const startDateParam = searchParams.get('startdate');
   const endDateParam = searchParams.get('enddate');
+  const email = searchParams.get('email');
 
   let startDate;
   let endDate;
-  if (startDateParam && endDateParam) {
+  if (startDateParam && endDateParam && email) {
     startDate = new Date(startDateParam);
     endDate = new Date(endDateParam);
   } else {
     return NextResponse.json<TMessageResponse>({
-      message: 'Invalid query params, missing either start date or end date.',
+      message:
+        'Invalid query params, missing either start date or end date or email.',
     });
   }
 
-  const allBookingsList = await getBookingsInDateRangeDb(startDate, endDate);
+  const allBookingsList = await getBookingsInDateRangeAndEmailDb(
+    startDate,
+    endDate,
+    email,
+  );
 
   if (!allBookingsList)
     return NextResponse.json<TMessageResponse>({

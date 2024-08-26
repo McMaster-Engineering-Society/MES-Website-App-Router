@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type TUser = {
   _id: string;
   firstName: string;
@@ -6,7 +8,7 @@ export type TUser = {
 };
 
 export type TBooking = {
-  _id?: string;
+  _id: ObjectId;
   userId: string;
   room: string;
   email: string;
