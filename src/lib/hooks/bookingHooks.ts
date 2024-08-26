@@ -14,6 +14,7 @@ export const useAddRoomBookingHook = () => {
     mutationFn: fetchAddBooking,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });
+      queryClient.invalidateQueries({ queryKey: ['userBookings'] });
     },
   });
 };
