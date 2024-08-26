@@ -2,12 +2,20 @@ type StringValuesObject = {
   [key: string]: string;
 };
 
-export const BookingIndicatorColours: StringValuesObject = {
+export const AdminBookingIndicatorColours: StringValuesObject = {
   H201: 'bg-red-500/70',
   H203: 'bg-orange-500/70',
   H205: 'bg-yellow-500/70',
   H204A: 'bg-green-500/70',
   H204B: 'bg-blue-500/70',
+};
+
+export const UserBookingIndicatorColours: StringValuesObject = {
+  H201: 'bg-teal-500/70',
+  H203: 'bg-sky-500/70',
+  H205: 'bg-indigo-500/70',
+  H204A: 'bg-violet-500/70',
+  H204B: 'bg-fuchsia-500/70',
 };
 
 export const BookingIndicatorPositions: StringValuesObject = {

@@ -3,8 +3,6 @@
 import { Switch } from '@nextui-org/react';
 import { useCallback, useEffect, useState } from 'react';
 
-import TimePickerBookings from '@/components/bookings/TimePickerBookings';
-
 /**
  * human readable time slots (local time)
  */
@@ -498,14 +496,14 @@ function TimePickerTable({
         {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
         <div className='relative'>
           <TimePickerBody />
-          {areBookingsVisible ? (
+          {/* {areBookingsVisible ? (
             <TimePickerBookings
               daysToShow={daysToShow}
               timeslotCount={32}
               firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
               roomVisibilities={roomVisibilities}
             />
-          ) : null}
+          ) : null} */}
         </div>
       </div>
 
