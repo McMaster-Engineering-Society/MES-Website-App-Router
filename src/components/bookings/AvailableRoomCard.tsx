@@ -2,6 +2,7 @@
 import { Button, useDisclosure } from '@nextui-org/react';
 import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
@@ -19,6 +20,12 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
   const { handleAddBookRoom } = useTimePickerContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const resourceKeys = Object.keys(roomInfo.resources);
+
+  function handleConfirmBookingWithMessage() {
+    handleAddBookRoom(roomInfo.roomName).then((response: string) => {
+      toast(response);
+    });
+  }
 
   return (
     <>
@@ -51,11 +58,12 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
             </div>
           ))}
         </div>
-        <ConfirmationPopover>
+        <ConfirmationPopover
+          handleConfirmBookingWithMessage={handleConfirmBookingWithMessage}
+        >
           <Button
             className='m-1 bg-white font-semibold w-[130px] hover:bg-primary-700'
             size='sm'
-            onClick={() => handleAddBookRoom(roomInfo.roomName)}
           >
             Book Now
           </Button>
@@ -67,6 +75,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         roomInfo={roomInfo}
+        handleConfirmBookingWithMessage={handleConfirmBookingWithMessage}
       />
     </>
   );

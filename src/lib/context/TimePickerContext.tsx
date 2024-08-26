@@ -16,7 +16,7 @@ type TTimePickerContext = {
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   endTimeDate: Date | undefined;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  handleAddBookRoom: (room: string) => void;
+  handleAddBookRoom: (room: string) => Promise<string>;
   handlePickerStartDateShiftByDay: (shift: number) => void;
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
@@ -72,17 +72,31 @@ export const TimePickerProvider = ({ children }: Props) => {
     return true;
   }
 
-  function handleAddBookRoom(room: string) {
-    const newBooking: TBooking = {
-      userId: userId,
-      room: room,
-      startTime: startTimeDate || new Date(),
-      endTime: endTimeDate || new Date(),
-      hasConfirmed: false,
-      email: 'placeholder email',
-    };
+  function handleAddBookRoom(room: string): Promise<string> {
+    setStartIndex(-1);
+    setEndIndex(-1);
+    setStartTimeDate(undefined);
+    setEndTimeDate(undefined);
 
-    addRoomBooking.mutate(newBooking);
+    return new Promise((resolve) => {
+      const newBooking: TBooking = {
+        userId: userId,
+        room: room,
+        startTime: startTimeDate || new Date(),
+        endTime: endTimeDate || new Date(),
+        hasConfirmed: false,
+        email: 'placeholder email',
+      };
+
+      addRoomBooking.mutate(newBooking, {
+        onSuccess: () => {
+          resolve('Room has been successfully booked.');
+        },
+        onError: () => {
+          resolve('Room booking was unsuccessful.');
+        },
+      });
+    });
   }
 
   function handlePickerStartDateShiftByDay(shift: number) {
