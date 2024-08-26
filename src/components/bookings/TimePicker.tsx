@@ -8,12 +8,8 @@ import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
 import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
+import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
-
-import {
-  AdminBookingIndicatorColours,
-  UserBookingIndicatorColours,
-} from '@/constant/hatch-bookings/booking-indicator-data';
 
 /**
  * human readable time slots (local time)
@@ -580,7 +576,9 @@ function TimePickerTable({
   };
 
   const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
-  const [roomVisibilities, setRoomVisibilities] = useState({
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
     H201: true,
     H203: true,
     H205: true,
@@ -629,101 +627,36 @@ function TimePickerTable({
           Toggle Bookings
         </Switch>
         <div className='flex justify-center items-center'>
-          <Switch
-            defaultSelected
-            size='sm'
-            color='secondary'
-            className='pl-8'
-            onChange={(e) => {
-              setRoomVisibilities({
-                ...roomVisibilities,
-                H201: e.target.checked,
-              });
-            }}
-          >
-            <div className='flex justify-center items-center gap-2'>
-              <p>H201</p>
-              <div
-                className={`w-2 h-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours['H201'] : UserBookingIndicatorColours['H201']) || 'bg-gray-500/70'}`}
-              />
-            </div>
-          </Switch>
-          <Switch
-            defaultSelected
-            size='sm'
-            color='secondary'
-            className='pl-8'
-            onChange={(e) => {
-              setRoomVisibilities({
-                ...roomVisibilities,
-                H203: e.target.checked,
-              });
-            }}
-          >
-            <div className='flex justify-center items-center gap-2'>
-              <p>H203</p>
-              <div
-                className={`w-2 h-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours['H203'] : UserBookingIndicatorColours['H203']) || 'bg-gray-500/70'}`}
-              />
-            </div>
-          </Switch>
-          <Switch
-            defaultSelected
-            size='sm'
-            color='secondary'
-            className='pl-8'
-            onChange={(e) => {
-              setRoomVisibilities({
-                ...roomVisibilities,
-                H205: e.target.checked,
-              });
-            }}
-          >
-            <div className='flex justify-center items-center gap-2'>
-              <p>H205</p>
-              <div
-                className={`w-2 h-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours['H205'] : UserBookingIndicatorColours['H205']) || 'bg-gray-500/70'}`}
-              />
-            </div>
-          </Switch>
-          <Switch
-            defaultSelected
-            size='sm'
-            color='secondary'
-            className='pl-8'
-            onChange={(e) => {
-              setRoomVisibilities({
-                ...roomVisibilities,
-                H204A: e.target.checked,
-              });
-            }}
-          >
-            <div className='flex justify-center items-center gap-2'>
-              <p>H204A</p>
-              <div
-                className={`w-2 h-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours['H204A'] : UserBookingIndicatorColours['H204A']) || 'bg-gray-500/70'}`}
-              />
-            </div>
-          </Switch>
-          <Switch
-            defaultSelected
-            size='sm'
-            color='secondary'
-            className='pl-8'
-            onChange={(e) => {
-              setRoomVisibilities({
-                ...roomVisibilities,
-                H204B: e.target.checked,
-              });
-            }}
-          >
-            <div className='flex justify-center items-center gap-2'>
-              <p>H204B</p>
-              <div
-                className={`w-2 h-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours['H204B'] : UserBookingIndicatorColours['H204B']) || 'bg-gray-500/70'}`}
-              />
-            </div>
-          </Switch>
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H201'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H203'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204A'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204B'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H205'
+          />
         </div>
       </div>
     </div>
