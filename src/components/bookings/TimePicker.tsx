@@ -599,6 +599,7 @@ function TimePickerTable({
           onMouseLeave={onMouseLeave}
         >
           <TimePickerHeader />
+          {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
           <div className='relative'>
             <TimePickerBody />
             {areBookingsVisible ? (
