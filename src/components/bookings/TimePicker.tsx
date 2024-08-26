@@ -1,5 +1,6 @@
 'use client';
 
+import { differenceInCalendarDays } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
@@ -131,8 +132,10 @@ export default function TimePicker({ className }: TimePickerProps) {
         );
       })
       .reduce((accumulator: Record<number, number>, currentDay) => {
-        const dayIndex =
-          new Date(currentDay.startTime).getDay() - pickerStartDate.getDay();
+        const dayIndex = differenceInCalendarDays(
+          new Date(currentDay.endTime),
+          pickerStartDate,
+        );
 
         const diffTimeInTimeSlots =
           (new Date(currentDay.endTime).getTime() -
