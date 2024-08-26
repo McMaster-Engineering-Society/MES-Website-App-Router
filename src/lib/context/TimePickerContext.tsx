@@ -20,6 +20,10 @@ type TTimePickerContext = {
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
+  startIndex: number;
+  setStartIndex: React.Dispatch<React.SetStateAction<number>>;
+  endIndex: number;
+  setEndIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type Props = {
@@ -36,7 +40,10 @@ export const TimePickerProvider = ({ children }: Props) => {
   const [pickerStartDate, setPickerStartDate] = useState<Date>(
     new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
   );
+
   const [availableRoomIds, setAvailableRoomIds] = useState<string[]>([]);
+  const [startIndex, setStartIndex] = useState<number>(-1);
+  const [endIndex, setEndIndex] = useState<number>(-1);
   const [startTimeDate, setStartTimeDate] = useState<Date | undefined>(
     undefined,
   );
@@ -64,6 +71,10 @@ export const TimePickerProvider = ({ children }: Props) => {
     const newDate = new Date(pickerStartDate);
     newDate.setUTCDate(newDate.getUTCDate() + shift);
     setPickerStartDate(newDate);
+    setStartIndex(-1);
+    setEndIndex(-1);
+    setStartTimeDate(undefined);
+    setEndTimeDate(undefined);
   }
 
   return (
@@ -82,6 +93,10 @@ export const TimePickerProvider = ({ children }: Props) => {
         userId,
         setUserId,
         userBookings,
+        startIndex,
+        setStartIndex,
+        endIndex,
+        setEndIndex,
       }}
     >
       {children}

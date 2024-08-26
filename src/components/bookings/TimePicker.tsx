@@ -68,22 +68,12 @@ export default function TimePicker({ className }: TimePickerProps) {
     setStartTimeDate,
     setEndTimeDate,
     userBookings,
+    pickerStartDate,
   } = useTimePickerContext();
-
-  const [pickerStartDate] = useState<Date>(
-    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-  );
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
     [pickerStartDate],
-  );
-
-  pickerEndDate.setDate(pickerEndDate.getDate() + 14);
-
-  const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
-    pickerStartDate,
-    pickerEndDate,
   );
 
   /**
@@ -91,6 +81,15 @@ export default function TimePicker({ className }: TimePickerProps) {
    * @todo integrate with screen size
    */
   const [numDaysToShow] = useState<number>(7);
+
+  useEffect(() => {
+    pickerEndDate.setDate(pickerEndDate.getDate() + numDaysToShow);
+  }, [pickerStartDate, pickerEndDate, numDaysToShow]);
+
+  const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
+    pickerStartDate,
+    pickerEndDate,
+  );
 
   /**
    * actual date objects based on pickerStartDate and numDaysToShow
@@ -279,8 +278,8 @@ function TimePickerTable({
   setEndTimeDate,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
-  const [startIndex, setStartIndex] = useState<number>(-1);
-  const [endIndex, setEndIndex] = useState<number>(-1);
+  const { startIndex, setStartIndex, endIndex, setEndIndex } =
+    useTimePickerContext();
 
   const [dragOperation, setDragOperation] = useState<
     'Selecting' | 'DeselectingFromStart' | 'DeselectingFromEnd' | 'None'
@@ -342,10 +341,10 @@ function TimePickerTable({
    */
   const atLeastOneRoomAvailable = (slotIndex: number) => {
     const time = timeSlotIndexToTimeISO(slotIndex);
-    if (!(time in roomsAvailableByTime)) {
-      throw `No availability data for time: ${time}`;
-    }
-    return roomsAvailableByTime[time].length > 0;
+    // if (!(time in roomsAvailableByTime)) {
+    //   throw `No availability data for time: ${time}`;
+    // }
+    return roomsAvailableByTime[time]?.length > 0;
   };
   /**
    * used to prevent selecting unavailable cells by dragging past them

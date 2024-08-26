@@ -23,7 +23,11 @@ export const useFetchAvailabilitiesHook = (
   pickerEndDate: Date,
 ) => {
   return useQuery<RoomAvailabilities, Error>({
-    queryKey: ['roomAvailabilities'],
+    queryKey: [
+      'roomAvailabilities',
+      pickerStartDate.toISOString(),
+      pickerEndDate.toISOString(),
+    ],
     queryFn: () => fetchAvailabilities(pickerStartDate, pickerEndDate),
   });
 };
