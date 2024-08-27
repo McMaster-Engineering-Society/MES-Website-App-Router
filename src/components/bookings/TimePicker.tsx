@@ -420,7 +420,9 @@ function TimePickerTable({
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
-        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
+        // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newStartIndex = Math.max(
           slotIndex,
@@ -432,7 +434,8 @@ function TimePickerTable({
         setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       } else if (
         slotIndex > endIndex &&
-        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newEndIndex = Math.min(
           slotIndex,
