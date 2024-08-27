@@ -1,10 +1,15 @@
 'use client';
 
+import { Switch } from '@nextui-org/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
+import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
+
+import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
+import TimePickerBookings from '@/components/bookings/TimePickerBookings';
 
 /**
  * human readable time slots (local time)
@@ -252,6 +257,8 @@ export default function TimePicker({ className }: TimePickerProps) {
         setAvailableRoomIds={setAvailableRoomIds}
         setStartTimeDate={setStartTimeDate}
         setEndTimeDate={setEndTimeDate}
+        userBookings={userBookings}
+        isAdmin={false}
       />
     </div>
   );
@@ -266,6 +273,8 @@ type TimePickerTableProps = {
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  userBookings: TBooking[] | undefined;
+  isAdmin: boolean;
 };
 
 function TimePickerTable({
@@ -277,6 +286,8 @@ function TimePickerTable({
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
+  userBookings,
+  isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const [startIndex, setStartIndex] = useState<number>(-1);
@@ -564,18 +575,88 @@ function TimePickerTable({
     );
   };
 
+  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
+
   return (
-    <div className='flex flex-row justify-center'>
-      <TimeIndicators />
-      <div
-        className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
-      >
-        <TimePickerHeader />
-        <div className='relative'>
-          <TimePickerBody />
+    <div className='flex flex-col justify-center'>
+      <div className='flex flex-row justify-center'>
+        <TimeIndicators />
+        <div
+          className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+        >
+          <TimePickerHeader />
+          {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
+          <div className='relative'>
+            <TimePickerBody />
+            {areBookingsVisible ? (
+              <TimePickerBookings
+                isAdmin={isAdmin}
+                userBookings={userBookings}
+                daysToShow={daysToShow}
+                timeslotCount={32}
+                firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
+                roomVisibilities={roomVisibilities}
+              />
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      <div className='flex justify-center items-center'>
+        <Switch
+          size='lg'
+          color='success'
+          className='h-16 pl-8'
+          onChange={() => {
+            setAreBookingsVisible(!areBookingsVisible);
+          }}
+          isSelected={areBookingsVisible}
+        >
+          Toggle Bookings
+        </Switch>
+        <div className='flex justify-center items-center'>
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H201'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H203'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204A'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204B'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H205'
+          />
         </div>
       </div>
     </div>
