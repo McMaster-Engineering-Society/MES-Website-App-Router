@@ -410,6 +410,7 @@ function TimePickerTable({
       if (
         slotIndex < startIndex &&
         allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
+        // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
         ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newStartIndex = Math.max(
