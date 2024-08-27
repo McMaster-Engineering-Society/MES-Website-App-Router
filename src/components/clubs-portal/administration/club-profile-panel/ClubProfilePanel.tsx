@@ -9,7 +9,7 @@ const ClubProfilePanel = () => {
   return (
     <div className='flex flex-row gap-12 pt-5'>
       <div className='flex flex-col basis-1/3 gap-12'>
-        <Avatar sx={{ height: 175, width: 175 }} className='mx-auto'>
+        <Avatar sx={{ height: 175, width: 175 }} className='mx-auto mt-5'>
           MES
         </Avatar>
         <Box name='Description' className='basis-full'>
