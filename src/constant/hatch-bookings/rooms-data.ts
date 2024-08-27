@@ -15,7 +15,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       TV: true,
       Whiteboard: false,
     },
-    img: '/images/bookings/the-junction.jpg',
+    img: '/images/bookings/room201.jpg',
   },
   {
     roomName: 'H203',
@@ -25,7 +25,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       TV: true,
       Whiteboard: true,
     },
-    img: '/images/bookings/the-junction.jpg',
+    img: '/images/bookings/room203.jpg',
   },
   {
     roomName: 'H204A',
@@ -35,7 +35,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       TV: true,
       Whiteboard: true,
     },
-    img: '/images/bookings/the-junction.jpg',
+    img: '/images/bookings/room204a.jpg',
   },
   {
     roomName: 'H204B',
@@ -45,7 +45,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       TV: true,
       Whiteboard: true,
     },
-    img: '/images/bookings/the-junction.jpg',
+    img: '/images/bookings/room204b.jpg',
   },
   {
     roomName: 'H205',
@@ -55,6 +55,6 @@ export const HatchRoomsData: HatchRoomType[] = [
       TV: true,
       Whiteboard: false,
     },
-    img: '/images/bookings/the-junction.jpg',
+    img: '/images/bookings/room205.jpg',
   },
 ];
