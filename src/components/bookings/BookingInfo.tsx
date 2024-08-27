@@ -9,13 +9,11 @@ import {
 import { FileQuestion } from 'lucide-react';
 import React from 'react';
 
+import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 
-export default function BookingInfo() {
+export default function BookingInfoModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const handleButtonClick = () => {
-    window.location.href = 'https://example.com';
-  };
 
   return (
     <>
@@ -60,30 +58,22 @@ export default function BookingInfo() {
                     />
                   </div>
 
-                  <Button
-                    onClick={handleButtonClick}
-                    className='bg-red-500 text-white py-2 px-4 rounded font-bold'
-                  >
-                    <i> HOW TO USE HATCH TV'S</i>
-                  </Button>
-                  <Button
-                    onClick={handleButtonClick}
-                    className='bg-red-500 text-white py-2 px-4 rounded font-bold'
-                  >
-                    <i> ENGINEERING SUPPORT SERVICES</i>
-                  </Button>
-                  <Button
-                    onClick={handleButtonClick}
-                    className='bg-red-500 text-white py-2 px-4 rounded font-bold'
-                  >
-                    <i> REPORT ISSUES HERE</i>
-                  </Button>
-                  <Button
-                    onClick={handleButtonClick}
-                    className='bg-red-500 text-white py-2 px-4 rounded font-bold'
-                  >
-                    <i> EMAIL THE HATCH COORDINATOR</i>
-                  </Button>
+                  <ButtonLink href='https://docs.google.com/document/d/1a3_2fyJh-FhZ1T1B80O4mJoMfFFnjmGbhkbhMMi3MAk/edit'>
+                    {' '}
+                    HOW TO USE HATCH TV'S
+                  </ButtonLink>
+                  <ButtonLink href='https://www.eng.mcmaster.ca/engineering-support-services-hub/#Keys-Access-Cards'>
+                    {' '}
+                    ENGINEERING SUPPORT SERVICES
+                  </ButtonLink>
+                  <ButtonLink href='https://docs.google.com/forms/d/e/1FAIpQLSfCu5qtc2_HmYWJfM7aYtO0jcDEoB6rAt9VXJx-Op0k_Gc-kQ/viewform'>
+                    {' '}
+                    REPORT ISSUES HERE
+                  </ButtonLink>
+                  <ButtonLink href='mailto:ghc@mcmaster.ca'>
+                    {' '}
+                    EMAIL THE HATCH COORDINATOR
+                  </ButtonLink>
                 </div>
                 <div className='grid grid-cols-1 gap-4 p-4'>
                   <h4> Accessing Hatch Room</h4>

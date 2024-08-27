@@ -2,7 +2,7 @@ import { CircleUserRound } from 'lucide-react';
 import React from 'react';
 
 import AvailableRooms from '@/components/bookings/AvailableRooms';
-import BookingInfo from '@/components/bookings/BookingInfo';
+import BookingInfoModal from '@/components/bookings/BookingInfo';
 import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
 import Button from '@/components/buttons/Button';
@@ -39,7 +39,7 @@ const BookingPage = () => {
         >
           Booking By Room
         </Button>
-        <BookingInfo />
+        <BookingInfoModal />
       </div>
       <div className='col-span-4 row-span-5'>
         <TimePicker />
