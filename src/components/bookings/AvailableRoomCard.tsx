@@ -38,11 +38,13 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
         <div className='w-full text-left grid grid-cols-2 gap-x-auto gap-y-4 my-2 mb-4'>
           <div className='flex items-center justify-center'>
             <User className='mr-1' />
+            {/* width set to 25px for row alignment */}
             <p className='w-[25px]'>{roomInfo.capacity}</p>
           </div>
 
           <div className='flex items-center justify-center'>
             <Plug className='mr-1' />
+            {/* width set to 25px for row alignment */}
             <p className='w-[25px]'>{roomInfo.outlets}</p>
           </div>
 
