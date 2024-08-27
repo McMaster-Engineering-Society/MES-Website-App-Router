@@ -409,7 +409,8 @@ function TimePickerTable({
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
-        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newStartIndex = Math.max(
           slotIndex,
@@ -421,7 +422,8 @@ function TimePickerTable({
         setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       } else if (
         slotIndex > endIndex &&
-        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newEndIndex = Math.min(
           slotIndex,
