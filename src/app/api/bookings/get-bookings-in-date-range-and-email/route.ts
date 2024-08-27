@@ -1,7 +1,7 @@
 import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getBookingsInDateRangeAndEmailDb } from '@/lib/db/bookingDb';
+import { getBookingsInDateRangeAndEmailService } from '@/lib/services/bookingServices';
 import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
 
 /**
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const allBookingsList = await getBookingsInDateRangeAndEmailDb(
+  const allBookingsList = await getBookingsInDateRangeAndEmailService(
     startDate,
     endDate,
     email,

@@ -1,7 +1,6 @@
 import { InsertManyResult, InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
-import { getDisabledRoomsService } from '@/lib/services/roomServices';
 import { TBatchBookingResponse } from '@/lib/types';
 
 import { TBooking } from '@/app/api/types';
@@ -16,9 +15,9 @@ const getBookingsCollection = async () => {
 
 export const createBookingDb = async (
   newBooking: TBooking,
+  disabledRooms: string[],
 ): Promise<TBooking | null> => {
   try {
-    const disabledRooms = (await getDisabledRoomsService())?.disabledRooms;
     const bookingsCollection = await getBookingsCollection();
 
     if (disabledRooms?.includes(newBooking.room)) {
@@ -74,10 +73,10 @@ export const deleteBatchBookingDb = async (
 };
 export const createBatchBookingDb = async (
   bookingList: TBooking[],
+  disabledRooms: string[],
 ): Promise<TBatchBookingResponse | null> => {
   try {
     const bookingsCollection = await getBookingsCollection();
-    const disabledRooms = (await getDisabledRoomsService())?.disabledRooms;
 
     bookingList.forEach((booking) => {
       booking._id = new ObjectId(booking._id);

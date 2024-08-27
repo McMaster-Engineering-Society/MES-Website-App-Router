@@ -1,7 +1,7 @@
 import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getRoomDb } from '@/lib/db/roomsDb';
+import { getRoomService } from '@/lib/services/roomServices';
 import { TApiResponse, TMessageResponse } from '@/lib/types';
 
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const roomResult = await getRoomDb(room);
+  const roomResult = await getRoomService(room);
 
   if (!roomResult)
     return NextResponse.json<TMessageResponse>({

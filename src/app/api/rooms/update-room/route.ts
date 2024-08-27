@@ -5,7 +5,7 @@ import { updateRoomService } from '@/lib/services/roomServices';
 import { TApiResponse, TMessageResponse } from '@/lib/types';
 
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
-export type TRoomUpdateRequest = {
+type TRoomUpdateRequest = {
   room: string;
   update: {
     roomName?: string;
