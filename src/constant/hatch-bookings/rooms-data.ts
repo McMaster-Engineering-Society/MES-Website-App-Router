@@ -49,7 +49,7 @@ export const HatchRoomsData: HatchRoomType[] = [
   },
   {
     roomName: 'H205',
-    capacity: 4,
+    capacity: 40,
     outlets: 4,
     resources: {
       TV: true,
