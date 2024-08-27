@@ -14,8 +14,8 @@ export default function NewBookingSystemPage() {
     <PageLayout noFooter>
       <QueryClientProvider client={queryClient}>
         <TimePickerProvider>
-          <div className='h-[calc(100vh-81px)] flex justify-center'>
-            <div className='w-[85%] bg-white p-10'>
+          <div className='md:h-[calc(100vh-81px)] flex justify-center'>
+            <div className='md:w-[85%] bg-white p-10'>
               <BookingPage />
             </div>
           </div>
