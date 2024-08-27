@@ -1,11 +1,14 @@
 'use client';
 
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab } from '@mui/material';
+import { TabContext } from '@mui/lab';
+import { Box } from '@mui/material';
 import React from 'react';
 
 import ClubProfilePanel from '@/components/clubs-portal/administration/club-profile-panel/ClubProfilePanel';
 import ExecTeamPanel from '@/components/clubs-portal/administration/exec-team/ExecTeamPanel';
+import Tab from '@/components/layout/tab-panel/Tab';
+import TabList from '@/components/layout/tab-panel/TabList';
+import TabPanel from '@/components/layout/tab-panel/TabPanel';
 
 const ClubAdministrationContent = () => {
   const [tabIndex, setTabIndex] = React.useState('1');
@@ -14,56 +17,18 @@ const ClubAdministrationContent = () => {
     setTabIndex(newValue);
   };
 
-  const tabStyle = {
-    '&.Mui-selected': {
-      color: 'var(--color-primary-800)',
-    },
-    '&:hover': {
-      color: 'var(--color-primary-800)',
-    },
-  };
-
   return (
     <TabContext value={tabIndex}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <TabList
-          onChange={handleChange}
-          TabIndicatorProps={{
-            style: { backgroundColor: 'rgb(var(--tw-color-primary-800))' },
-          }}
-          sx={{
-            //this isnt working for some reason
-            '&.MuiTabs-flexContainer': {
-              justifyContent: 'space-around',
-            },
-          }}
-        >
-          <Tab label='Club Profile' disableRipple sx={tabStyle} value='1' />
-          <Tab label='Exec Team' disableRipple sx={tabStyle} value='2' />
-          <Tab
-            label='Hatch Access Card'
-            disableRipple
-            sx={tabStyle}
-            value='3'
-          />
-          <Tab label='Governing Docs' disableRipple sx={tabStyle} value='4' />
-          <Tab
-            label='Recruitment Notice'
-            disableRipple
-            sx={tabStyle}
-            value='5'
-          />
+        <TabList onChange={handleChange}>
+          <Tab label='Club Profile' value='1' />
+          <Tab label='Exec Team' value='2' />
+          <Tab label='Hatch Access Card' value='3' />
+          <Tab label='Governing Docs' value='4' />
+          <Tab label='Recruitment Notice' value='5' />
         </TabList>
       </Box>
-      <TabPanel
-        value='1'
-        sx={{
-          flexBasis: '100%',
-          overflow: 'hidden',
-          display: 'flex',
-          padding: 0,
-        }}
-      >
+      <TabPanel value='1'>
         <ClubProfilePanel />
       </TabPanel>
       <TabPanel value='2'>
