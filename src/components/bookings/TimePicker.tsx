@@ -56,9 +56,13 @@ export type RoomAvailabilities = {
 
 type TimePickerProps = {
   className?: string;
+  numDaysToShow: number;
 };
 
-export default function TimePicker({ className }: TimePickerProps) {
+export default function TimePicker({
+  className,
+  numDaysToShow,
+}: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
@@ -85,12 +89,6 @@ export default function TimePicker({ className }: TimePickerProps) {
     pickerStartDate,
     pickerEndDate,
   );
-
-  /**
-   * changes based on screen size (ex. on mobile only show 1 day at a time)
-   * @todo integrate with screen size
-   */
-  const [numDaysToShow] = useState<number>(7);
 
   /**
    * actual date objects based on pickerStartDate and numDaysToShow

@@ -54,7 +54,7 @@ const BookingPage = () => {
         </Popover>
       </div>
       <div className='col-span-4 row-span-5'>
-        <TimePicker />
+        <TimePicker numDaysToShow={7} />
       </div>
       <div className='col-span-1 row-span-5'>
         <AvailableRooms />
