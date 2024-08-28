@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
 
+import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
+
 /**
  * human readable time slots (local time)
  */
@@ -603,11 +605,11 @@ function TimePickerTable({
         </div>
       </div>
 
-      <div className='flex justify-center items-center'>
+      <div className='flex flex-col lg:flex-row lg:justify-center lg:items-center lg:pl-8'>
         <Switch
           size='lg'
           color='success'
-          className='h-16 pl-8'
+          className='h-16'
           onChange={() => {
             setAreBookingsVisible(!areBookingsVisible);
           }}
@@ -615,37 +617,16 @@ function TimePickerTable({
         >
           Toggle Bookings
         </Switch>
-        <div className='flex justify-center items-center'>
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H201'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H203'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H204A'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H204B'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H205'
-          />
+        <div className='flex flex-col lg:flex-row justify-center lg:items-center gap-2 lg:gap-8 lg:ml-8'>
+          {HatchRoomsData.map((room) => (
+            <RoomToggleSwitch
+              key={room.roomName}
+              roomVisibilities={roomVisibilities}
+              setRoomVisibilities={setRoomVisibilities}
+              isAdmin={isAdmin}
+              room={room.roomName}
+            />
+          ))}
         </div>
       </div>
     </div>

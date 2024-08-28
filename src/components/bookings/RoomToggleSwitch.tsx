@@ -24,7 +24,6 @@ const RoomToggleSwitch = ({
       defaultSelected
       size='sm'
       color='secondary'
-      className='pl-8'
       onChange={(e) => {
         setRoomVisibilities({
           ...roomVisibilities,

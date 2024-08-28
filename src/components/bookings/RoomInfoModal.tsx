@@ -31,6 +31,7 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
       onOpenChange={onOpenChange}
       isDismissable={false}
       isKeyboardDismissDisabled={true}
+      placement='center'
     >
       <ModalContent>
         {(onClose) => (
