@@ -78,7 +78,10 @@ export const TimePickerProvider = ({ children }: Props) => {
 
   function checkBookingWithinTwoWeeks() {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
-    if (pickerStartDate && pickerStartDate > twoWeeksFromNow) {
+    if (
+      (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
+      (endTimeDate && endTimeDate > twoWeeksFromNow)
+    ) {
       return false;
     }
     return true;
