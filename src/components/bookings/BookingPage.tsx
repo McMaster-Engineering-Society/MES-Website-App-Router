@@ -1,8 +1,8 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
-import { CircleUserRound, FileQuestion } from 'lucide-react';
+import { CircleUserRound } from 'lucide-react';
 import React from 'react';
 
 import AvailableRooms from '@/components/bookings/AvailableRooms';
+import BookingInfoModal from '@/components/bookings/BookingInfoModal';
 import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
 import Button from '@/components/buttons/Button';
@@ -39,19 +39,7 @@ const BookingPage = () => {
         >
           Booking By Room
         </Button>
-        <Popover placement='right'>
-          <PopoverTrigger>
-            <Button className='text-white rounded-lg'>
-              <FileQuestion />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className='px-1 py-2'>
-              <div className='text-small font-bold'>Popover Content</div>
-              <div className='text-tiny'>This is the popover content</div>
-            </div>
-          </PopoverContent>
-        </Popover>
+        <BookingInfoModal />
       </div>
       <div className='col-span-4 row-span-5'>
         <TimePicker />

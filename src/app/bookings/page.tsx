@@ -75,7 +75,6 @@ const Bookings = () => {
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
         </ButtonLink>
-
         <BookingTimeslot
           room='H203'
           startTime={new Date()}
