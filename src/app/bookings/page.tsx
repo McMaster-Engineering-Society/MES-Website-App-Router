@@ -1,4 +1,5 @@
 import BookingInstructions from '@/components/bookings/BookingInstructions';
+import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
@@ -74,6 +75,27 @@ const Bookings = () => {
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
         </ButtonLink>
+
+        <BookingTimeslot
+          room='H203'
+          startTime={new Date()}
+          endTime={new Date()}
+          variant='next'
+        />
+        <BookingTimeslot
+          room='H203'
+          startTime={new Date()}
+          endTime={new Date()}
+          variant='previous'
+        />
+        <BookingTimeslot
+          room='H204A'
+          startTime={new Date()}
+          endTime={new Date()}
+          variant='next'
+          // can't pass this rn from a server component into a client component
+          // handleEdit={() => console.log('Edit')}
+        />
       </main>
     </PageLayout>
   );

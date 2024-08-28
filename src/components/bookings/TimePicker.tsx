@@ -1,9 +1,15 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { Switch } from '@nextui-org/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
+import { TBooking } from '@/lib/types';
+import { cn } from '@/lib/utils';
+
+import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
+import TimePickerBookings from '@/components/bookings/TimePickerBookings';
 
 /**
  * human readable time slots (local time)
@@ -43,6 +49,7 @@ const timeslots = [
   '10:30 PM',
 ];
 const firstTimeSlotOfTheDayUTC = 11; // 7 AM EST
+const timeslotsPerDay = timeslots.length;
 
 export type RoomAvailabilities = {
   H201: string[];
@@ -52,19 +59,31 @@ export type RoomAvailabilities = {
   H204B: string[];
 };
 
-export default function TimePicker() {
+type TimePickerProps = {
+  className?: string;
+};
+
+export default function TimePicker({ className }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const { setAvailableRoomIds, setStartTimeDate, setEndTimeDate } =
-    useTimePickerContext();
+  const {
+    setAvailableRoomIds,
+    setStartTimeDate,
+    setEndTimeDate,
+    userBookings,
+  } = useTimePickerContext();
 
   const [pickerStartDate] = useState<Date>(
     new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
   );
 
-  const pickerEndDate = new Date(pickerStartDate);
+  const pickerEndDate = useMemo(
+    () => new Date(pickerStartDate),
+    [pickerStartDate],
+  );
+
   pickerEndDate.setDate(pickerEndDate.getDate() + 14);
 
   const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
@@ -105,12 +124,62 @@ export default function TimePicker() {
     }
   }, [roomAvailabilities, isLoading]);
 
-  /**
-   * max number of 30 minute slots that can be selected
-   * @todo implement functionality
-   * (complicated because there is a DAILY limit)
-   */
-  const [maxBlockLength] = useState<number>(6);
+  const calculatedDailyMaxBlockLength = useCallback((): number[] => {
+    if (!userBookings) {
+      return Array.from({ length: numDaysToShow }, () => 6);
+    }
+
+    const userBookingsHoursByDay = userBookings
+      .filter((booking) => {
+        return (
+          new Date(booking.startTime).getTime() >= pickerStartDate.getTime() &&
+          new Date(booking.endTime).getTime() <= pickerEndDate.getTime()
+        );
+      })
+      .reduce((accumulator: Record<number, number>, currentDay) => {
+        const dayIndex =
+          new Date(currentDay.startTime).getDay() - pickerStartDate.getDay();
+
+        const diffTimeInTimeSlots =
+          (new Date(currentDay.endTime).getTime() -
+            new Date(currentDay.startTime).getTime()) /
+            (1000 * 60 * 60) +
+          0.5;
+
+        if (dayIndex in accumulator) {
+          accumulator[dayIndex] += diffTimeInTimeSlots;
+        } else {
+          accumulator[dayIndex] = diffTimeInTimeSlots;
+        }
+
+        return accumulator;
+      }, {});
+
+    const userBookingsMaxBlockLength = [];
+    for (let i = 0; i < numDaysToShow; i++) {
+      const maxBlockLength = userBookingsHoursByDay[i]
+        ? 6 - userBookingsHoursByDay[i] * 2
+        : 6;
+      userBookingsMaxBlockLength.push(maxBlockLength);
+    }
+
+    return userBookingsMaxBlockLength;
+  }, [userBookings, pickerStartDate, pickerEndDate, numDaysToShow]);
+
+  const [maxBlockLengths, setMaxBlockLengths] = useState<number[]>(() =>
+    Array.from({ length: numDaysToShow }, () => 6),
+  );
+
+  useEffect(() => {
+    const newMaxBlockLengths = calculatedDailyMaxBlockLength();
+
+    // Only update state if the new calculated values differ from the current state
+    if (
+      JSON.stringify(maxBlockLengths) !== JSON.stringify(newMaxBlockLengths)
+    ) {
+      setMaxBlockLengths(newMaxBlockLengths);
+    }
+  }, [calculatedDailyMaxBlockLength, maxBlockLengths]);
 
   /**
    * convert time slot index to Date for indexing into availabilities
@@ -178,16 +247,20 @@ export default function TimePicker() {
   }
 
   return (
-    <TimePickerTable
-      daysToShow={daysToShow}
-      roomsAvailableByTime={roomsAvailableByTime}
-      timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
-      timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
-      maxBlockLength={maxBlockLength}
-      setAvailableRoomIds={setAvailableRoomIds}
-      setStartTimeDate={setStartTimeDate}
-      setEndTimeDate={setEndTimeDate}
-    />
+    <div className={cn('px-8', className)}>
+      <TimePickerTable
+        daysToShow={daysToShow}
+        roomsAvailableByTime={roomsAvailableByTime}
+        timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
+        timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
+        maxBlockLengths={maxBlockLengths}
+        setAvailableRoomIds={setAvailableRoomIds}
+        setStartTimeDate={setStartTimeDate}
+        setEndTimeDate={setEndTimeDate}
+        userBookings={userBookings}
+        isAdmin={false}
+      />
+    </div>
   );
 }
 
@@ -196,10 +269,12 @@ type TimePickerTableProps = {
   roomsAvailableByTime: Record<string, string[]>;
   timeSlotIndexToTimeISO: (i: number) => string;
   timeSlotIndexToTimeISODate: (i: number) => Date;
-  maxBlockLength: number;
+  maxBlockLengths: number[];
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  userBookings: TBooking[] | undefined;
+  isAdmin: boolean;
 };
 
 function TimePickerTable({
@@ -207,10 +282,12 @@ function TimePickerTable({
   roomsAvailableByTime,
   timeSlotIndexToTimeISO,
   timeSlotIndexToTimeISODate,
-  maxBlockLength,
+  maxBlockLengths,
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
+  userBookings,
+  isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const [startIndex, setStartIndex] = useState<number>(-1);
@@ -312,7 +389,8 @@ function TimePickerTable({
       }
     } else if (
       slotIsAdjacentToSelected(slotIndex) &&
-      endIndex - startIndex + 1 < maxBlockLength &&
+      endIndex - startIndex + 1 <
+        maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] &&
       atLeastOneRoomAvailable(slotIndex)
     ) {
       // add to selected block
@@ -342,21 +420,28 @@ function TimePickerTable({
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
-        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
+        // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newStartIndex = Math.max(
           slotIndex,
-          endIndex - maxBlockLength + 1,
+          endIndex -
+            maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] +
+            1,
         );
         setStartIndex(newStartIndex);
         setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       } else if (
         slotIndex > endIndex &&
-        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex)
+        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newEndIndex = Math.min(
           slotIndex,
-          startIndex + maxBlockLength - 1,
+          startIndex +
+            maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] -
+            1,
         );
         setEndIndex(newEndIndex);
         setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
@@ -411,9 +496,11 @@ function TimePickerTable({
     e.preventDefault();
   };
 
-  return (
-    <div className='p-8 m-2 flex'>
-      {/* time indicators along the side */}
+  const TimeIndicators = () => {
+    {
+      /* time indicators along the side */
+    }
+    return (
       <div className='flex flex-col justify-stretch mt-14 mr-1 -translate-y-1'>
         {timeslots.map((slot: string, i) => {
           if (i % 2 === 1) return null;
@@ -428,65 +515,153 @@ function TimePickerTable({
           );
         })}
       </div>
-      <table
-        className='w-full table-fixed bg-white rounded-lg shadow-lg shadow-black/25'
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
+    );
+  };
+
+  const TimePickerHeader = () => {
+    return (
+      <div
+        className={`h-14 grid grid-rows-1 grid-cols-${daysToShow.length} auto-cols-max`}
       >
-        {/* header that shows days of the week & month */}
-        <thead className='h-14'>
-          <tr>
-            {daysToShow.map((day, i) => (
-              <th
-                key={day.toString()}
-                className={`border-black/20 border border-t-0 ${i === 0 && 'border-l-0'} ${i === daysToShow.length - 1 && 'border-r-0'}`}
-              >
-                <span className='text-sm font-light'>
-                  {/* ex. "MONDAY" */}
-                  {day
-                    .toLocaleDateString('en-US', { weekday: 'long' })
-                    .toUpperCase()}
-                </span>
-                <br />
-                <span className='text-2xl font-light'>
-                  {/* ex. "23" */}
-                  {day.getDate()}
-                </span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {timeslots.map((slot, i) => (
-            <tr key={slot}>
-              {daysToShow.map((day, j) => {
-                const timeSlotIndex = j * timeslots.length + i;
-                return (
-                  <td
-                    key={`${day} ${slot}`}
-                    id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
-                    className={`h-4 relative border border-b-0 border-black/20 flex-1 touch-none
+        {daysToShow.map((day, i) => (
+          <div
+            key={day.toString()}
+            className={`px-8 flex-1 flex flex-col justify-center items-center p-0 border-black/20 border-1 border-l-0 border-t-0 border-b-0 ${i === daysToShow.length - 1 && 'border-r-0'}`}
+          >
+            <span className='text-sm font-light'>
+              {/* ex. "MONDAY" */}
+              {day
+                .toLocaleDateString('en-US', { weekday: 'long' })
+                .toUpperCase()}
+            </span>
+            <span className='text-2xl font-light'>
+              {/* ex. "23" */}
+              {day.getDate()}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const TimePickerBody = () => {
+    return (
+      <div
+        className={`grid grid-rows-${timeslots.length} grid-cols-${daysToShow.length}`}
+      >
+        {timeslots.map((slot, i) =>
+          daysToShow.map((day, j) => {
+            const timeSlotIndex = j * timeslots.length + i;
+            return (
+              <div
+                key={`${day} ${slot}`}
+                id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
+                className={`h-4 relative border-1 border-b-0 border-black/20 flex-1 touch-none
                       ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
                       ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
                       ${i % 2 === 1 && 'border-t-0'} 
-                      ${j === 0 && 'border-l-0'} 
+                      border-l-0
                       ${j === daysToShow.length - 1 && 'border-r-0'}`}
-                    onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
-                    onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
-                    onTouchMove={(e) => {
-                      // onTouchMove will not fire for the proper timeSlotIndex
-                      // so we need to convert the touch to the proper timeSlotIndex
-                      const timeSlotIndex = touchEventToTimeslot(e);
-                      timeSlotIndex && handleDrag(timeSlotIndex);
-                    }} // fired on mobile only
-                  />
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
+                onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
+                onTouchMove={(e) => {
+                  // onTouchMove will not fire for the proper timeSlotIndex
+                  // so we need to convert the touch to the proper timeSlotIndex
+                  const timeSlotIndex = touchEventToTimeslot(e);
+                  timeSlotIndex && handleDrag(timeSlotIndex);
+                }} // fired on mobile only
+              />
+            );
+          }),
+        )}
+      </div>
+    );
+  };
+
+  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
+
+  return (
+    <div className='flex flex-col justify-center'>
+      <div className='flex flex-row justify-center'>
+        <TimeIndicators />
+        <div
+          className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
+        >
+          <TimePickerHeader />
+          {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
+          <div className='relative'>
+            <TimePickerBody />
+            {areBookingsVisible ? (
+              <TimePickerBookings
+                isAdmin={isAdmin}
+                userBookings={userBookings}
+                daysToShow={daysToShow}
+                timeslotCount={32}
+                firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
+                roomVisibilities={roomVisibilities}
+              />
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      <div className='flex justify-center items-center'>
+        <Switch
+          size='lg'
+          color='success'
+          className='h-16 pl-8'
+          onChange={() => {
+            setAreBookingsVisible(!areBookingsVisible);
+          }}
+          isSelected={areBookingsVisible}
+        >
+          Toggle Bookings
+        </Switch>
+        <div className='flex justify-center items-center'>
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H201'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H203'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204A'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H204B'
+          />
+          <RoomToggleSwitch
+            roomVisibilities={roomVisibilities}
+            setRoomVisibilities={setRoomVisibilities}
+            isAdmin={isAdmin}
+            room='H205'
+          />
+        </div>
+      </div>
     </div>
   );
 }
