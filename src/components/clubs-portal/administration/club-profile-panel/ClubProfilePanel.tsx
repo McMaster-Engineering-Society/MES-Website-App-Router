@@ -4,7 +4,7 @@ import { Avatar, TextField } from '@mui/material';
 import React from 'react';
 
 import Box from '@/components/clubs-portal/administration/club-profile-panel/Box';
-import Social from '@/components/clubs-portal/administration/club-profile-panel/Social';
+import SocialsList from '@/components/clubs-portal/administration/club-profile-panel/SocialsList';
 
 import { SocialMedia } from '@/types/clubProfile';
 
@@ -73,22 +73,10 @@ const ClubProfilePanel = () => {
             onChange={(e) => handleChange('email', e.target.value)}
           />
         </Box>
-        <Box name='Social Media' className='basis-full'>
-          <div className='flex flex-col gap-2 w-full'>
-            {Object.entries(profileData.socialMedia).length > 0 ? (
-              Object.entries(profileData.socialMedia).map(([name, value]) => (
-                <Social
-                  key={name}
-                  name={name as SocialMedia}
-                  value={value}
-                  onChange={handleSocialChange}
-                />
-              ))
-            ) : (
-              <p>No social media added yet.</p>
-            )}
-          </div>
-        </Box>
+        <SocialsList
+          socials={profileData.socialMedia}
+          handleSocialChange={handleSocialChange}
+        />
       </div>
     </div>
   );
