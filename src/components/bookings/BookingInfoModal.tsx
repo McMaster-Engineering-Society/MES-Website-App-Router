@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalBody,
   ModalContent,
@@ -9,6 +8,7 @@ import {
 import { FileQuestion } from 'lucide-react';
 import React from 'react';
 
+import Button from '@/components/buttons/Button';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 
@@ -17,7 +17,7 @@ export default function BookingInfoModal() {
 
   return (
     <>
-      <Button className='text-white rounded-lg p-1 w-18 h-18' onPress={onOpen}>
+      <Button className='text-white rounded-lg p-1 w-18 h-18' onClick={onOpen}>
         <FileQuestion />
       </Button>
       <Modal
@@ -95,9 +95,7 @@ export default function BookingInfoModal() {
               </ModalBody>
 
               <ModalFooter>
-                <Button color='danger' variant='light' onPress={onClose}>
-                  Close
-                </Button>
+                <Button onClick={onClose}>Close</Button>
               </ModalFooter>
             </>
           )}

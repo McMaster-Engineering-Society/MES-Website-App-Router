@@ -2,7 +2,7 @@ import { CircleUserRound } from 'lucide-react';
 import React from 'react';
 
 import AvailableRooms from '@/components/bookings/AvailableRooms';
-import BookingInfoModal from '@/components/bookings/BookingInfo';
+import BookingInfoModal from '@/components/bookings/BookingInfoModal';
 import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
 import Button from '@/components/buttons/Button';
