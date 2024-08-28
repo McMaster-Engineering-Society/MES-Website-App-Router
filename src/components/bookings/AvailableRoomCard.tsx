@@ -24,7 +24,9 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
     <>
       <div className='bg-[#373A36] text-white box-border rounded-xl w-full h-auto p-4 border-4 text-center flex flex-col justify-between items-center'>
         <div className='relative inline-block w-full text-center justify-center items-center'>
-          <div className='inline-block font-bold'>{roomInfo.roomName}</div>
+          <div className='inline-block font-bold items-center'>
+            {roomInfo.roomName}
+          </div>
           <button
             className='absolute right-0 top-0.5 hover:bg-primary-700 rounded-full'
             onClick={onOpen}
@@ -33,24 +35,31 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
           </button>
         </div>
 
-        <div className='w-full text-left grid grid-cols-2 gap-x-6 gap-y-4 my-2 mb-4'>
-          <div className='flex justify-left'>
+        <div className='w-full text-left grid grid-cols-2 gap-x-auto gap-y-4 my-2 mb-4'>
+          <div className='flex items-center justify-center'>
             <User className='mr-1' />
-            <p>{roomInfo.capacity}</p>
+            {/* width set to 25px for row alignment */}
+            <p className='w-[25px]'>{roomInfo.capacity}</p>
           </div>
-          <div className='flex justify-left'>
+
+          <div className='flex items-center justify-center'>
             <Plug className='mr-1' />
-            <p>{roomInfo.outlets}</p>
+            {/* width set to 25px for row alignment */}
+            <p className='w-[25px]'>{roomInfo.outlets}</p>
           </div>
 
           {resourceKeys.map((resource, index) => (
-            <div className='flex justify-left' key={index}>
+            <div className='flex items-center justify-center' key={index}>
               <ResourcesIcon resource={resource} />
-              {/* outputs checkmark or X depending on if the resource is available for the room or not */}
-              {roomInfo.resources[resource] ? <Check /> : <X />}
+              {roomInfo.resources[resource] ? (
+                <Check className='w-[25px]' />
+              ) : (
+                <X className='w-[25px]' />
+              )}
             </div>
           ))}
         </div>
+
         <ConfirmationPopover>
           <Button
             className='m-1 bg-white font-semibold w-[130px] hover:bg-primary-700'
