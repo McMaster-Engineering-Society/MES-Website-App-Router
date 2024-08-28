@@ -1,5 +1,5 @@
 import { addWeeks } from 'date-fns';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import {
   useAddRoomBookingHook,
@@ -40,8 +40,27 @@ export const TimePickerContext = createContext<TTimePickerContext | undefined>(
 const firstTimeSlotOfTheDayUTC = 11;
 
 export const TimePickerProvider = ({ children }: Props) => {
-  const [pickerStartDate, setPickerStartDate] = useState<Date>(
-    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
+  // Gets the current date in EST and sets the time to the first time slot of the day
+  const [pickerStartDate, setPickerStartDate] = useState<Date>(() => {
+    const estDate = new Date(
+      new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+    );
+    return new Date(
+      Date.UTC(
+        estDate.getFullYear(),
+        estDate.getMonth(),
+        estDate.getDate(),
+        firstTimeSlotOfTheDayUTC,
+        0,
+        0,
+        0,
+      ),
+    );
+  });
+
+  const pickerEndDate = useMemo(
+    () => new Date(pickerStartDate),
+    [pickerStartDate],
   );
 
   const [availableRoomIds, setAvailableRoomIds] = useState<string[]>([]);
@@ -66,7 +85,11 @@ export const TimePickerProvider = ({ children }: Props) => {
   }
 
   function checkBookingNotInPast() {
-    if (pickerStartDate && pickerStartDate < new Date()) {
+    pickerEndDate.setDate(pickerStartDate.getDate() + 6);
+    if (
+      (startTimeDate && startTimeDate < new Date()) ||
+      (pickerEndDate && pickerEndDate < new Date())
+    ) {
       return false;
     }
     return true;

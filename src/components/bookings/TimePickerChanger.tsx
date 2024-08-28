@@ -25,7 +25,7 @@ const TimePickerChanger = () => {
       <h2 className='text-2xl font-semibold'>
         {format(pickerStartDate, 'MMMM do') +
           ' - ' +
-          format(addDays(pickerStartDate, 7), 'MMMM do, yyyy')}
+          format(addDays(pickerStartDate, 6), 'MMMM do, yyyy')}
       </h2>
       <Button onClick={handleShiftForward}>
         <ArrowRight />
