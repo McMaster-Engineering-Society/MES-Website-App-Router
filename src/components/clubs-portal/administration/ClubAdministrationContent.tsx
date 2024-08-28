@@ -28,7 +28,7 @@ const ClubAdministrationContent = () => {
           <Tab label='Recruitment Notice' value='5' />
         </TabList>
       </Box>
-      <TabPanel value='1'>
+      <TabPanel value='1' sx={{ flexBasis: '100%' }}>
         <ClubProfilePanel />
       </TabPanel>
       <TabPanel value='2'>
