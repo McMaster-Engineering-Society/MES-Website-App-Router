@@ -20,6 +20,10 @@ type TTimePickerContext = {
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
+  roomVisibilities: Record<string, boolean>;
+  setRoomVisibilities: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
 };
 
 type Props = {
@@ -46,6 +50,16 @@ export const TimePickerProvider = ({ children }: Props) => {
   const addRoomBooking = useAddRoomBookingHook();
 
   const { data: userBookings } = useFetchUserBookingsHook(userId);
+
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
 
   function handleAddBookRoom(room: string) {
     const newBooking: TBooking = {
@@ -82,6 +96,8 @@ export const TimePickerProvider = ({ children }: Props) => {
         userId,
         setUserId,
         userBookings,
+        roomVisibilities,
+        setRoomVisibilities,
       }}
     >
       {children}
