@@ -23,19 +23,28 @@ type TTimePickerContext = {
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
+<<<<<<< HEAD
   startIndex: number;
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
   endIndex: number;
   setEndIndex: React.Dispatch<React.SetStateAction<number>>;
   checkBookingWithinTwoWeeks: () => boolean;
   checkBookingNotInPast: () => boolean;
+<<<<<<< HEAD
   areBookingsVisible: boolean;
   setAreBookingsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+=======
+=======
+>>>>>>> 997678c (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
   roomVisibilities: Record<string, boolean>;
   setRoomVisibilities: React.Dispatch<
     React.SetStateAction<Record<string, boolean>>
   >;
+<<<<<<< HEAD
   isAdmin: boolean;
+=======
+>>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
+>>>>>>> 997678c (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
 };
 
 type Props = {
@@ -85,6 +94,7 @@ export const TimePickerProvider = ({ children }: Props) => {
 
   const { data: userBookings } = useFetchUserBookingsHook(userId);
 
+<<<<<<< HEAD
   function checkBookingWithinTwoWeeks() {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
     if (
@@ -95,6 +105,27 @@ export const TimePickerProvider = ({ children }: Props) => {
     }
     return true;
   }
+=======
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
+
+  function handleAddBookRoom(room: string) {
+    const newBooking: TBooking = {
+      userId: userId,
+      room: room,
+      startTime: startTimeDate || new Date(),
+      endTime: endTimeDate || new Date(),
+      hasConfirmed: false,
+      email: 'placeholder email',
+    };
+>>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
 
   function checkBookingNotInPast() {
     pickerEndDate.setDate(pickerStartDate.getDate() + 6);
@@ -173,17 +204,25 @@ export const TimePickerProvider = ({ children }: Props) => {
         userId,
         setUserId,
         userBookings,
+<<<<<<< HEAD
         startIndex,
         setStartIndex,
         endIndex,
         setEndIndex,
         checkBookingNotInPast,
         checkBookingWithinTwoWeeks,
+<<<<<<< HEAD
         areBookingsVisible,
         setAreBookingsVisible,
         roomVisibilities,
         setRoomVisibilities,
         isAdmin,
+=======
+=======
+        roomVisibilities,
+        setRoomVisibilities,
+>>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
+>>>>>>> 997678c (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
       }}
     >
       {children}
