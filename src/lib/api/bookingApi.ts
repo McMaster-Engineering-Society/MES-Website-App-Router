@@ -80,3 +80,30 @@ export async function fetchUserBookings(userId: string): Promise<TBooking[]> {
 
   return result.data;
 }
+
+export async function fetchDeleteBooking(bookingId: string): Promise<TBooking> {
+  if (process.env.NEXT_PUBLIC_URL === undefined) {
+    throw new Error('NEXT_PUBLIC_URL is not defined');
+  }
+
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL + '/api/bookings/delete-booking/' + bookingId,
+    {
+      method: 'DELETE',
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+
+  const data = result.data;
+
+  if (!data) {
+    throw new Error('Booking not found');
+  }
+
+  return data;
+}
