@@ -29,7 +29,13 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
 
   return (
     <>
-      <div className='bg-[#373A36] text-white box-border rounded-xl w-full h-auto p-4 border-4 text-center flex flex-col justify-between items-center'>
+      <Button
+        className='md:hidden bg-white rounded-xl relative inline-block'
+        onClick={onOpen}
+      >
+        {roomInfo.roomName}
+      </Button>
+      <div className='bg-[#373A36] text-white box-border rounded-xl w-full h-auto p-4 border-4 text-center hidden md:flex flex-col justify-between items-center'>
         <div className='relative inline-block w-full text-center justify-center items-center'>
           <div className='inline-block font-bold items-center'>
             {roomInfo.roomName}

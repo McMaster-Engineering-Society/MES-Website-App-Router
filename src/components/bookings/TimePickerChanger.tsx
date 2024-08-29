@@ -18,7 +18,7 @@ const TimePickerChanger = () => {
   }
 
   return (
-    <div className='flex justify-between ml-[36px] w-full bg-white border-2 border-primary-800 rounded-lg'>
+    <div className='flex justify-between items-center w-full bg-white border-2 border-primary-800 rounded-lg'>
       <Button onClick={handleShiftBackward}>
         <ArrowLeft />
       </Button>

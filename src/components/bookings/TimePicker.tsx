@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
 
+import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
+
 /**
  * human readable time slots (local time)
  */
@@ -60,11 +62,17 @@ export type RoomAvailabilities = {
   H204B: string[];
 };
 
+type NumDaysToShow = 1 | 3 | 7;
+
 type TimePickerProps = {
   className?: string;
+  numDaysToShow: NumDaysToShow;
 };
 
-export default function TimePicker({ className }: TimePickerProps) {
+export default function TimePicker({
+  className,
+  numDaysToShow,
+}: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
@@ -81,12 +89,6 @@ export default function TimePicker({ className }: TimePickerProps) {
     () => new Date(pickerStartDate),
     [pickerStartDate],
   );
-
-  /**
-   * changes based on screen size (ex. on mobile only show 1 day at a time)
-   * @todo integrate with screen size
-   */
-  const [numDaysToShow] = useState<number>(7);
 
   useEffect(() => {
     pickerEndDate.setDate(pickerEndDate.getDate() + numDaysToShow);
@@ -249,8 +251,9 @@ export default function TimePicker({ className }: TimePickerProps) {
   }
 
   return (
-    <div className={cn('px-8', className)}>
+    <div className={cn('md:px-8', className)}>
       <TimePickerTable
+        numDaysToShow={numDaysToShow}
         daysToShow={daysToShow}
         roomsAvailableByTime={roomsAvailableByTime}
         timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
@@ -267,6 +270,7 @@ export default function TimePicker({ className }: TimePickerProps) {
 }
 
 type TimePickerTableProps = {
+  numDaysToShow: NumDaysToShow;
   daysToShow: Date[];
   roomsAvailableByTime: Record<string, string[]>;
   timeSlotIndexToTimeISO: (i: number) => string;
@@ -280,6 +284,7 @@ type TimePickerTableProps = {
 };
 
 function TimePickerTable({
+  numDaysToShow,
   daysToShow,
   roomsAvailableByTime,
   timeSlotIndexToTimeISO,
@@ -460,21 +465,6 @@ function TimePickerTable({
   };
 
   /**
-   * onTouchMove will not fire for the proper timeSlotIndex
-   * So we need to convert the touch coordinates to the proper timeSlotIndex
-   */
-  const touchEventToTimeslot = (event: React.TouchEvent): number | null => {
-    const { touches } = event;
-    if (!touches || touches.length === 0) return null;
-    const { clientX, clientY } = touches[0];
-    const targetElement = document.elementFromPoint(clientX, clientY);
-    if (targetElement) {
-      return parseInt(targetElement.id);
-    }
-    return null;
-  };
-
-  /**
    * stop dragging when we let go of the mouse
    */
   const onMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -517,10 +507,16 @@ function TimePickerTable({
     );
   };
 
+  const gridColClass: Record<NumDaysToShow, string> = {
+    1: 'grid-cols-1',
+    3: 'grid-cols-3',
+    7: 'grid-cols-7',
+  };
+
   const TimePickerHeader = () => {
     return (
       <div
-        className={`h-14 grid grid-rows-1 grid-cols-${daysToShow.length} auto-cols-max`}
+        className={`h-14 grid grid-rows-1 ${gridColClass[numDaysToShow]} auto-cols-max`}
       >
         {daysToShow.map((day, i) => (
           <div
@@ -545,9 +541,7 @@ function TimePickerTable({
 
   const TimePickerBody = () => {
     return (
-      <div
-        className={`grid grid-rows-${timeslots.length} grid-cols-${daysToShow.length}`}
-      >
+      <div className={`grid ${gridColClass[numDaysToShow]} grid-flow-row`}>
         {timeslots.map((slot, i) =>
           daysToShow.map((day, j) => {
             const timeSlotIndex = j * timeslots.length + i;
@@ -560,15 +554,9 @@ function TimePickerTable({
                       ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
                       ${i % 2 === 1 && 'border-t-0'} 
                       border-l-0
-                      ${j === daysToShow.length - 1 && 'border-r-0'}`}
-                onPointerDown={() => handleMouseDown(timeSlotIndex)} // fired on desktop & mobile
-                onMouseEnter={() => handleDrag(timeSlotIndex)} // fired on desktop only
-                onTouchMove={(e) => {
-                  // onTouchMove will not fire for the proper timeSlotIndex
-                  // so we need to convert the touch to the proper timeSlotIndex
-                  const timeSlotIndex = touchEventToTimeslot(e);
-                  timeSlotIndex && handleDrag(timeSlotIndex);
-                }} // fired on mobile only
+                      ${j === numDaysToShow - 1 && 'border-r-0'}`}
+                onPointerDown={() => handleMouseDown(timeSlotIndex)}
+                onPointerEnter={() => handleDrag(timeSlotIndex)}
               />
             );
           }),
@@ -590,7 +578,7 @@ function TimePickerTable({
 
   return (
     <div className='flex flex-col justify-center'>
-      <div className='flex flex-row justify-center'>
+      <div className='flex flex-row md:justify-center'>
         <TimeIndicators />
         <div
           className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
@@ -616,11 +604,11 @@ function TimePickerTable({
         </div>
       </div>
 
-      <div className='flex justify-center items-center'>
+      <div className='flex flex-col lg:flex-row lg:justify-center lg:items-center lg:pl-8'>
         <Switch
           size='lg'
           color='success'
-          className='h-16 pl-8'
+          className='h-16'
           onChange={() => {
             setAreBookingsVisible(!areBookingsVisible);
           }}
@@ -628,37 +616,16 @@ function TimePickerTable({
         >
           Toggle Bookings
         </Switch>
-        <div className='flex justify-center items-center'>
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H201'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H203'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H204A'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H204B'
-          />
-          <RoomToggleSwitch
-            roomVisibilities={roomVisibilities}
-            setRoomVisibilities={setRoomVisibilities}
-            isAdmin={isAdmin}
-            room='H205'
-          />
+        <div className='flex flex-col lg:flex-row justify-center lg:items-center gap-2 lg:gap-8 lg:ml-8'>
+          {HatchRoomsData.map((room) => (
+            <RoomToggleSwitch
+              key={room.roomName}
+              roomVisibilities={roomVisibilities}
+              setRoomVisibilities={setRoomVisibilities}
+              isAdmin={isAdmin}
+              room={room.roomName}
+            />
+          ))}
         </div>
       </div>
     </div>
