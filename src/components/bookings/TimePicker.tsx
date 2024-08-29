@@ -6,13 +6,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
-import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
-
-import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 
 /**
  * human readable time slots (local time)
@@ -262,7 +258,6 @@ export default function TimePicker({
         setAvailableRoomIds={setAvailableRoomIds}
         setStartTimeDate={setStartTimeDate}
         setEndTimeDate={setEndTimeDate}
-        userBookings={userBookings}
         isAdmin={false}
       />
     </div>
@@ -279,7 +274,6 @@ type TimePickerTableProps = {
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  userBookings: TBooking[] | undefined;
   isAdmin: boolean;
 };
 
@@ -293,7 +287,6 @@ function TimePickerTable({
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
-  userBookings,
   isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
@@ -565,16 +558,7 @@ function TimePickerTable({
     );
   };
 
-  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
-  const [roomVisibilities, setRoomVisibilities] = useState<
-    Record<string, boolean>
-  >({
-    H201: true,
-    H203: true,
-    H205: true,
-    H204A: true,
-    H204B: true,
-  });
+  const [areBookingsVisible, setAreBookingsVisible] = useState(true);
 
   return (
     <div className='flex flex-col justify-center'>
@@ -593,11 +577,9 @@ function TimePickerTable({
             {areBookingsVisible ? (
               <TimePickerBookings
                 isAdmin={isAdmin}
-                userBookings={userBookings}
                 daysToShow={daysToShow}
                 timeslotCount={32}
                 firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
-                roomVisibilities={roomVisibilities}
               />
             ) : null}
           </div>
@@ -616,17 +598,6 @@ function TimePickerTable({
         >
           Toggle Bookings
         </Switch>
-        <div className='flex flex-col lg:flex-row justify-center lg:items-center gap-2 lg:gap-8 lg:ml-8'>
-          {HatchRoomsData.map((room) => (
-            <RoomToggleSwitch
-              key={room.roomName}
-              roomVisibilities={roomVisibilities}
-              setRoomVisibilities={setRoomVisibilities}
-              isAdmin={isAdmin}
-              room={room.roomName}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );
