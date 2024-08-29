@@ -1,6 +1,7 @@
 'use client';
 
 import { Switch } from '@nextui-org/react';
+import { differenceInCalendarDays } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
@@ -81,18 +82,17 @@ export default function TimePicker({
     setStartTimeDate,
     setEndTimeDate,
     userBookings,
+    pickerStartDate,
   } = useTimePickerContext();
-
-  const [pickerStartDate] = useState<Date>(
-    new Date(new Date().setUTCHours(firstTimeSlotOfTheDayUTC, 0, 0, 0)),
-  );
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
     [pickerStartDate],
   );
 
-  pickerEndDate.setDate(pickerEndDate.getDate() + 14);
+  useEffect(() => {
+    pickerEndDate.setDate(pickerEndDate.getDate() + numDaysToShow);
+  }, [pickerStartDate, pickerEndDate, numDaysToShow]);
 
   const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
     pickerStartDate,
@@ -139,8 +139,10 @@ export default function TimePicker({
         );
       })
       .reduce((accumulator: Record<number, number>, currentDay) => {
-        const dayIndex =
-          new Date(currentDay.startTime).getDay() - pickerStartDate.getDay();
+        const dayIndex = differenceInCalendarDays(
+          new Date(currentDay.endTime),
+          pickerStartDate,
+        );
 
         const diffTimeInTimeSlots =
           (new Date(currentDay.endTime).getTime() -
@@ -295,8 +297,8 @@ function TimePickerTable({
   isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
-  const [startIndex, setStartIndex] = useState<number>(-1);
-  const [endIndex, setEndIndex] = useState<number>(-1);
+  const { startIndex, setStartIndex, endIndex, setEndIndex } =
+    useTimePickerContext();
 
   const [dragOperation, setDragOperation] = useState<
     'Selecting' | 'DeselectingFromStart' | 'DeselectingFromEnd' | 'None'
@@ -358,10 +360,7 @@ function TimePickerTable({
    */
   const atLeastOneRoomAvailable = (slotIndex: number) => {
     const time = timeSlotIndexToTimeISO(slotIndex);
-    if (!(time in roomsAvailableByTime)) {
-      throw `No availability data for time: ${time}`;
-    }
-    return roomsAvailableByTime[time].length > 0;
+    return roomsAvailableByTime[time]?.length > 0;
   };
   /**
    * used to prevent selecting unavailable cells by dragging past them
