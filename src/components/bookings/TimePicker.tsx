@@ -295,9 +295,7 @@ function TimePickerTable({
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
-  userBookings,
   areBookingsVisible,
-  roomVisibilities,
   isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
@@ -591,11 +589,9 @@ function TimePickerTable({
             {areBookingsVisible ? (
               <TimePickerBookings
                 isAdmin={isAdmin}
-                userBookings={userBookings}
                 daysToShow={daysToShow}
                 timeslotCount={32}
                 firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
-                roomVisibilities={roomVisibilities}
               />
             ) : null}
           </div>
