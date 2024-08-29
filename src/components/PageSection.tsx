@@ -1,3 +1,6 @@
+import { LucideIcon } from 'lucide-react';
+import { IconType } from 'react-icons';
+
 import { cn } from '@/lib/utils';
 
 import { PageHeadingVariant } from '@/constant/variants';
@@ -5,6 +8,8 @@ import { PageHeadingVariant } from '@/constant/variants';
 type PageSectionProps = {
   heading?: string;
   headingSize?: 'sm' | 'md';
+  headingClassName?: string;
+  leftIcon?: IconType | LucideIcon;
   children: React.ReactNode;
   variant?: PageHeadingVariant;
   solid?: boolean;
@@ -13,6 +18,8 @@ type PageSectionProps = {
 const PageSection = ({
   heading,
   headingSize = 'md',
+  headingClassName,
+  leftIcon: Icon,
   children,
   variant = 'default',
   solid = false,
@@ -25,12 +32,16 @@ const PageSection = ({
       {heading ? (
         <div>
           <div
-            className={cn([
-              'w-max bg-gray-900 px-3 py-1 font-bold uppercase text-white',
-              headingSize === 'sm' && ['text-sm'],
-              headingSize === 'md' && ['text-md'],
-            ])}
+            className={cn(
+              [
+                'inline-flex items-center w-max bg-gray-900 px-3 py-1 font-bold uppercase text-white',
+                headingSize === 'sm' && ['text-sm'],
+                headingSize === 'md' && ['text-md'],
+              ],
+              headingClassName,
+            )}
           >
+            {Icon && <Icon size='1em' className='mr-1.5' />}
             {heading}
           </div>
         </div>
