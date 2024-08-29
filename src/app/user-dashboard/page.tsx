@@ -20,9 +20,8 @@ import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import PageSection from '@/components/PageSection';
 import DashboardIconSvg from '@/components/user-dashboard/DashboardIconSvg';
+import { TUser } from '@/lib/types';
 import ProfilePicture from '@/components/user-dashboard/ProfilePictureSvg';
-
-import { TUser } from '@/app/api/types';
 
 // todo: add routing protection, only logged in users should be able to access this page
 const UserDashboard = () => {
