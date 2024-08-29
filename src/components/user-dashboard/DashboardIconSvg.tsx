@@ -1,4 +1,4 @@
-function DashboardIconSvg() {
+const DashboardIconSvg = () => {
   return (
     <svg
       width='54'
@@ -29,6 +29,6 @@ function DashboardIconSvg() {
       />
     </svg>
   );
-}
+};
 
 export default DashboardIconSvg;
