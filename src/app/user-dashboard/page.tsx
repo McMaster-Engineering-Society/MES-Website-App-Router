@@ -204,8 +204,8 @@ const UserDashboard = () => {
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
-                {pastBookingsData.length > 0 ? (
-                  <div className='flex flex-col gap-8'>
+                {pastBookingsData.length < 0 ? (
+                  <div className='flex flex-col gap-8 min-h-[75px]'>
                     {pastBookingsData.map((booking) => {
                       return (
                         <BookingTimeslot
@@ -219,7 +219,7 @@ const UserDashboard = () => {
                     })}
                   </div>
                 ) : (
-                  <div className='flex flex-row items-center justify-center'>
+                  <div className='flex flex-row items-center justify-center min-h-[75px]'>
                     <p>You do not have any past bookings.</p>
                   </div>
                 )}
@@ -266,7 +266,7 @@ const UserDashboard = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className='flex flex-row items-center justify-center'>
+                  <div className='flex flex-row items-center justify-center min-h-[75px]'>
                     <p>You do not have any upcoming bookings.</p>
                   </div>
                 )}
@@ -279,7 +279,7 @@ const UserDashboard = () => {
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
-                {nextBookingsData.length > 0 ? (
+                {nextBookingsData.length < 0 ? (
                   <div className='flex flex-col gap-8'>
                     {nextBookingsData.map((booking) => {
                       return (
@@ -294,7 +294,7 @@ const UserDashboard = () => {
                     })}
                   </div>
                 ) : (
-                  <div className='flex flex-row items-center justify-center'>
+                  <div className='flex flex-row items-center justify-center min-h-[75px]'>
                     <p>You do not have any upcoming bookings.</p>
                   </div>
                 )}
