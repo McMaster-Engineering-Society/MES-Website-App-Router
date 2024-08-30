@@ -4,6 +4,7 @@ import { SignIn } from '@/components/auth/sign-in';
 import { SignOut } from '@/components/auth/sign-out';
 import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
+import ButtonLink from '@/components/links/ButtonLink';
 import PageHeading from '@/components/PageHeading';
 
 // Example function to send an email
@@ -34,6 +35,9 @@ export default function AuthPage() {
           <Button onClick={sendEmail}>Send mail</Button>
           <SignIn />
           <SignOut />
+          <ButtonLink href='/auth/sign-in'>
+            Sign in to absolute route
+          </ButtonLink>
         </section>
       </main>
     </PageLayout>

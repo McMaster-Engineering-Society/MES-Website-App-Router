@@ -7,6 +7,7 @@ interface SignOutProps {
   className?: string;
 }
 
+// A button that handles signing someone out. Redirects to sign-in page after.
 export function SignOut({ text, className }: SignOutProps) {
   return (
     <form action={SignOutComponent}>
