@@ -49,7 +49,7 @@ export const BookingTimeslot = ({
         )}
       >
         <Clock className={cn('w-4 h-4 mx-2', textColour)} />
-        <span className='w-full text-center'>
+        <span className='w-full text-center text-nowrap pr-3'>
           {format(startTime, 'h:mm a')} – {format(endTime, 'h:mm a')}
         </span>
       </div>

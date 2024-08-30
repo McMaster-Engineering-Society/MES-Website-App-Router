@@ -5,21 +5,20 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import React, { ReactNode, useState } from 'react';
-import { toast } from 'sonner';
 
 type Props = {
   children: ReactNode;
+  handleConfirmBookingWithMessage: () => void;
 };
 
-function ConfirmationPopover({ children }: Props) {
+function ConfirmationPopover({
+  children,
+  handleConfirmBookingWithMessage,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  // TODO: connect to backend to send booking request, and receive response on whether the request was successful or not
-  const handleConfirmBooking = () => {
-    toast('Room has been successfully booked.');
-    // toast('Room booking was unsuccessful!');
-    setIsOpen(false); // Close the popover after clicking the button
-  };
 
+  // TODO: connect to backend to send booking request, and receive response on whether the request was successful or not
+  // TODO (amend): should receive the message whether it was a success or failure, needs to be handled in the backend as a next step
   return (
     <Popover
       placement='bottom'
@@ -36,7 +35,7 @@ function ConfirmationPopover({ children }: Props) {
             className='m-1 font-semibold bg-green-400 w-[130px]'
             size='sm'
             color='success'
-            onClick={handleConfirmBooking}
+            onClick={handleConfirmBookingWithMessage}
           >
             Confirm Booking
           </Button>
