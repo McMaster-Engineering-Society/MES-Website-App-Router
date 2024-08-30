@@ -3,16 +3,24 @@ import { MessageCircleWarningIcon } from 'lucide-react';
 import { MailIcon } from 'lucide-react';
 import { NotebookPenIcon } from 'lucide-react';
 import { ChevronLeftIcon } from 'lucide-react';
+import { useState } from 'react';
 
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
+import RebookModal from '@/components/modals/RebookModal';
 import ActionCard from '@/components/user-dashboard/ActionCard';
 import DashboardIconSvg from '@/components/user-dashboard/DashboardIconSvg';
 import NextBooking from '@/components/user-dashboard/NextBooking';
 import UpcomingBookings from '@/components/user-dashboard/UpcomingBookings';
 import UserInfo from '@/components/user-dashboard/UserInfo';
 
-const UserDashboard = () => {
+const UserDashboard = () => {  
+  const [open, setOpen] = useState<boolean>(false)
+  
+  // const bookingId = "6531a67db0a3f963db5b4175"
+  // const handleOpen = () => setOpen(true)
+  // const handleClose = () => setOpen(false)
+
   return (
     <PageLayout noBackground>
       <main className='layout'>
@@ -97,6 +105,16 @@ const UserDashboard = () => {
               <UpcomingBookings />
             </div>
           </div>
+
+          <div className="p-10 flex justify-center w-full">
+            <button className="rounded-full py-1.5 px-3 bg-sky-500 hover:bg-blue-500 text-white"
+              onClick={() => setOpen(true)}>
+                ···
+            </button>
+            <RebookModal open={open} onClose={() => setOpen(false)} bookingId="6531a67db0a3f963db5b4175">
+            </RebookModal>
+          </div>
+          
         </section>
       </main>
     </PageLayout>
