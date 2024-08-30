@@ -15,4 +15,5 @@ Please include a summary of the technical solution and how it solves the problem
 Provide screenshots or videos of the changes made if any.
 
 # Issue number
-Closes #<issue>
+
+Closes # number
