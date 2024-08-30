@@ -1,3 +1,4 @@
+import { addDays, format } from 'date-fns';
 import React, { useState } from 'react';
 
 import TomorrowModal from '@/components/modals/TomorrowModal';
@@ -5,20 +6,31 @@ import TomorrowModal from '@/components/modals/TomorrowModal';
 type RebookModalProps = {
   open: boolean;
   onClose: () => void;
-  bookingId: string;
+  startTime: Date;
+  endTime: Date;
+  room: string;
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 const RebookModal: React.FC<RebookModalProps> = ({
+  startTime,
+  endTime,
+  room,
   open,
   onClose,
-  bookingId,
 }) => {
   const [tomorrowOpen, setTomOpen] = useState<boolean>(false);
   // const closeOpen=()=>{
   //   console.log("hello")
   //   setTomOpen(true)
   // }
+
+  // const { data: roomAvailabilities } = useFetchAvailabilitiesHook(
+  //   new Date(),
+  //   addDays(new Date(), 7)
+  // );
+
+  // console.log(roomAvailabilities)
 
   const handleButtonClick = () => {
     setTomOpen(true);
@@ -57,7 +69,7 @@ const RebookModal: React.FC<RebookModalProps> = ({
         >
           <div>
             <b className='text-lg'>
-              Same time
+              Same time {startTime.toString() + endTime.toString() + room}
               <br />
               tomorrow:
               <br />
@@ -67,7 +79,7 @@ const RebookModal: React.FC<RebookModalProps> = ({
               <br />
             </i>
             <i>
-              07/31/24
+              {format(addDays(startTime, 1), 'MMMM-do')}
               <br />
             </i>
           </div>
