@@ -25,10 +25,21 @@ const SignInCard = () => {
           type='email'
           className='w-3/4'
           maxLength={320}
-          placeholder='Email Address'
+          placeholder='username@mcmaster.ca'
+          pattern='.+@mcmaster\.ca'
           value={formData.email}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setFormData({ email: event.target.value });
+          }}
+          // These next two onInvalid and onInput are used for custom error messages about requiring a mac email.
+          onInvalid={(event: React.InvalidEvent<HTMLInputElement>) => {
+            event.target.setCustomValidity(
+              'Please use a McMaster email address',
+            );
+          }}
+          onInput={(event: React.FormEvent<HTMLInputElement>) => {
+            const inputElement = event.target as HTMLInputElement; // Type assertion to use
+            inputElement.setCustomValidity(''); // Clear the custom message when input changes
           }}
           disabled={isPending}
           required
