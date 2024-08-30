@@ -204,7 +204,7 @@ const UserDashboard = () => {
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
-                {pastBookingsData.length < 0 ? (
+                {pastBookingsData.length > 0 ? (
                   <div className='flex flex-col gap-8 min-h-[75px]'>
                     {pastBookingsData.map((booking) => {
                       return (
@@ -279,7 +279,7 @@ const UserDashboard = () => {
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
-                {nextBookingsData.length < 0 ? (
+                {nextBookingsData.length > 0 ? (
                   <div className='flex flex-col gap-8'>
                     {nextBookingsData.map((booking) => {
                       return (
