@@ -29,12 +29,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       from: process.env.EMAIL_FROM,
       normalizeIdentifier(identifier: string): string {
-        // TODO: temporarily disabled because Mac emails have outlook error where they can't verify the link (I'm guessing because it's local host?)
-        // // Throw an error if not Mac email
-        // if (!isMacEmail(identifier)) {
-        //   // throws error which will redirect the user to the sign-in page with error=EmailSignin in the URL
-        //   throw new Error('Must use a McMaster email address to sign in.');
-        // }
+        // Throw an error if not Mac email. This is an extra safety check because the form should already do that.
+        if (!isMacEmail(identifier)) {
+          // throws error which will redirect the user to the error page in default behaviour.
+          throw new Error('Must use a McMaster email address to sign in.');
+        }
 
         // Default behaviour for this function
         // eslint-disable-next-line prefer-const
