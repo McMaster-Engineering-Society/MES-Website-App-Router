@@ -216,36 +216,38 @@ export const getBookingsInDateRangeDb = async (
   const bookingsCollection = await getBookingsCollection();
   const targetStart = startDate;
   const targetEnd = endDate;
-  const cursor = await bookingsCollection.find({
-    $or: [
-      {
-        startTime: {
-          $lt: targetEnd,
+  const cursor = await bookingsCollection
+    .find({
+      $or: [
+        {
+          startTime: {
+            $lt: targetEnd,
+          },
+          endTime: {
+            $gte: targetEnd,
+          },
         },
-        endTime: {
-          $gte: targetEnd,
+        {
+          startTime: {
+            $lte: targetStart,
+          },
+          endTime: {
+            $gt: targetStart,
+          },
         },
-      },
-      {
-        startTime: {
-          $lte: targetStart,
+        {
+          endTime: {
+            $gt: targetStart,
+            $lte: targetEnd,
+          },
+          startTime: {
+            $gte: targetStart,
+            $lt: targetEnd,
+          },
         },
-        endTime: {
-          $gt: targetStart,
-        },
-      },
-      {
-        endTime: {
-          $gt: targetStart,
-          $lte: targetEnd,
-        },
-        startTime: {
-          $gte: targetStart,
-          $lt: targetEnd,
-        },
-      },
-    ],
-  });
+      ],
+    })
+    .sort({ startTime: 1 });
   const bookings = cursor.toArray();
   return bookings;
 };
