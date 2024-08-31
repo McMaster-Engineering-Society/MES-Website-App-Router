@@ -1,12 +1,13 @@
-export type HatchRoomType = {
+export type THatchRoom = {
   roomName: string;
   capacity: number;
   outlets: number;
   resources: { [resource: string]: boolean }; //value is true IF resource is available, false IF unavailable. Resources currently includes: TV, Whiteboard
   img: string;
+  enabled: boolean;
 };
 
-export const HatchRoomsData: HatchRoomType[] = [
+export const HatchRoomsData: THatchRoom[] = [
   {
     roomName: 'H201',
     capacity: 16,
@@ -16,6 +17,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       Whiteboard: false,
     },
     img: '/images/bookings/room201.jpg',
+    enabled: true,
   },
   {
     roomName: 'H203',
@@ -26,6 +28,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room203.jpg',
+    enabled: true,
   },
   {
     roomName: 'H204A',
@@ -36,6 +39,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room204a.jpg',
+    enabled: true,
   },
   {
     roomName: 'H204B',
@@ -46,6 +50,7 @@ export const HatchRoomsData: HatchRoomType[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room204b.jpg',
+    enabled: true,
   },
   {
     roomName: 'H205',
@@ -56,5 +61,6 @@ export const HatchRoomsData: HatchRoomType[] = [
       Whiteboard: false,
     },
     img: '/images/bookings/room205.jpg',
+    enabled: true,
   },
 ];

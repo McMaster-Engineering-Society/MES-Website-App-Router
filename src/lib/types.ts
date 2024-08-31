@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type TUser = {
   _id: string;
   firstName: string;
@@ -6,7 +8,7 @@ export type TUser = {
 };
 
 export type TBooking = {
-  _id?: string;
+  _id?: ObjectId | string;
   userId: string;
   room: string;
   email: string;
@@ -16,6 +18,22 @@ export type TBooking = {
   createdDate?: Date;
 };
 
+export type TBatchBookingRequest = { bookingList: TBooking[] };
+export type TBatchDeleteBookingRequest = { bookingIdList: string[] };
+
+export type TBatchBookingResponse = {
+  bookingsAdded: TBooking[];
+  conflictExists: boolean;
+  conflictingBookings: {
+    booking: TBooking;
+    conflicts: TBooking[];
+  }[];
+};
+
+export type TRoomEnableRequest = {
+  enabled: boolean;
+  room: string;
+};
 export type TMessageResponse = {
   message: string;
 };

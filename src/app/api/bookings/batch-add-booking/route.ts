@@ -1,36 +1,39 @@
 import { NextResponse } from 'next/server';
 
-import { createBookingService } from '@/lib/services/bookingServices';
-import { TApiResponse, TBooking } from '@/lib/types';
+import { createBatchBookingService } from '@/lib/services/bookingServices';
+import {
+  TApiResponse,
+  TBatchBookingRequest,
+  TBatchBookingResponse,
+} from '@/lib/types';
 
 import { TMessageResponse } from '@/app/api/types';
 
 export async function POST(req: Request) {
-  const booking: TBooking = await req.json();
+  const reqObject: TBatchBookingRequest = await req.json();
 
-  if (!booking) {
+  const bookingList = reqObject.bookingList;
+  if (!bookingList) {
     return NextResponse.json<TMessageResponse>(
       { message: 'Booking information is required' },
       { status: 400 },
     );
   }
 
-  const adaptedBooking: TBooking = {
-    ...booking,
-    startTime: new Date(booking.startTime),
-    endTime: new Date(booking.endTime),
-  };
-
   try {
-    const newBooking = await createBookingService(adaptedBooking);
+    const newBooking = await createBatchBookingService(bookingList);
     if (!newBooking) {
       return NextResponse.json<TMessageResponse>(
-        { message: 'Booking not found (booking error encountered)' },
+        { message: 'Batch booking failed' },
         { status: 404 },
       );
     }
-    return NextResponse.json<TApiResponse<TBooking>>(
-      { data: newBooking, message: 'Successfully created booking' },
+    return NextResponse.json<TApiResponse<TBatchBookingResponse>>(
+      {
+        data: newBooking,
+        message:
+          'No errors encountered, check data response to see if booking succeeded.',
+      },
       { status: 200 },
     );
   } catch (error) {

@@ -1,11 +1,17 @@
+import { WithId } from 'mongodb';
+
 import {
+  createBatchBookingDb,
   createBookingDb,
+  deleteBatchBookingDb,
   deleteBookingByIdDb,
   getBookingsByUserDb,
+  getBookingsInDateRangeAndEmailDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/lib/db/bookingDb';
-import { TBooking } from '@/lib/types';
+import { getDisabledRoomsService } from '@/lib/services/roomServices';
+import { TBatchBookingResponse, TBooking } from '@/lib/types';
 
 const availableRooms = ['H201', 'H203', 'H204A', 'H204B', 'H205'];
 
@@ -13,8 +19,48 @@ export const createBookingService = async (
   newBooking: TBooking,
 ): Promise<TBooking | null> => {
   try {
-    const booking = await createBookingDb(newBooking);
-    return booking;
+    const disabledRooms = await getDisabledRoomsService();
+    if (disabledRooms === null) {
+      throw new Error('Error in fetching disabled rooms');
+    } else {
+      const booking = await createBookingDb(
+        newBooking,
+        disabledRooms.disabledRooms,
+      );
+      return booking;
+    }
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error in booking services:', error);
+    return null;
+  }
+};
+export const deleteBatchBookingService = async (
+  bookingIDsToDelete: string[],
+): Promise<(WithId<TBooking> | null)[] | null> => {
+  try {
+    const bookings = await deleteBatchBookingDb(bookingIDsToDelete);
+    return bookings;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error in booking services:', error);
+    return null;
+  }
+};
+export const createBatchBookingService = async (
+  newBookings: TBooking[],
+): Promise<TBatchBookingResponse | null> => {
+  try {
+    const disabledRooms = await getDisabledRoomsService();
+    if (disabledRooms === null) {
+      throw new Error('Error in fetching disabled rooms');
+    } else {
+      const bookings = await createBatchBookingDb(
+        newBookings,
+        disabledRooms.disabledRooms,
+      );
+      return bookings;
+    }
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Error in booking services:', error);
@@ -66,6 +112,22 @@ export const getAvailabilityInDateRangeService = async (
   return availabilityList;
 };
 
+export const getBookingsInDateRangeAndEmailService = async (
+  startDate: Date,
+  endDate: Date,
+  email: string,
+) => {
+  try {
+    const allBookingsList = await getBookingsInDateRangeAndEmailDb(
+      startDate,
+      endDate,
+      email,
+    );
+    return allBookingsList;
+  } catch (e) {
+    return null;
+  }
+};
 /**
  * Approach:
  * Adds all times in the range as available

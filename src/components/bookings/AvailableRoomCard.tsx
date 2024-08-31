@@ -10,10 +10,10 @@ import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 
 type AvailableRoomType = {
-  roomInfo: HatchRoomType;
+  roomInfo: THatchRoom;
 };
 
 export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
