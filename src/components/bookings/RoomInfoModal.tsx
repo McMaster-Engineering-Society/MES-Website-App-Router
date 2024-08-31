@@ -7,8 +7,10 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
+import { format } from 'date-fns';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import React from 'react
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
@@ -18,19 +20,26 @@ type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   roomInfo: THatchRoom;
+  handleConfirmBookingWithMessage: () => void;
 };
 
 // TODO: Fix date not outputting to modal
-function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
+function RoomInfoModal({
+  isOpen,
+  onOpenChange,
+  roomInfo,
+  handleConfirmBookingWithMessage,
+}: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
   const { startTimeDate, endTimeDate } = useTimePickerContext();
   return (
     <Modal
-      size='xs'
+      size='md'
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       isDismissable={false}
       isKeyboardDismissDisabled={true}
+      placement='center'
     >
       <ModalContent>
         {(onClose) => (
@@ -39,14 +48,8 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               Room: {roomInfo.roomName}
             </ModalHeader>
             <ModalBody>
-              <p>
-                Date:{' '}
-                {startTimeDate
-                  ? new Date(startTimeDate).toDateString()
-                  : 'Invalid date'}{' '}
-              </p>
               <p>Room capacity: {roomInfo.capacity}</p>
-              <p>Outlet: {roomInfo.outlets}</p>
+              <p>Outlets: {roomInfo.outlets}</p>
               <p>
                 Resources:{' '}
                 {resourceKeys.map((resource, index) => {
@@ -70,34 +73,14 @@ function RoomInfoModal({ isOpen, onOpenChange, roomInfo }: Props) {
               <Button
                 color='warning'
                 onPress={onClose}
-                onClick={() => toast('Room has been successfully booked.')} //displays room confirmation sonner
+                onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
               >
-                Book from{' '}
-                {startTimeDate // Formats as string like `8:00AM` or `2:30PM`
-                  ?.toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true,
-                  })
-                  .replace(
-                    ' ',
-                    '',
-                  ) // Replaces space to display `8:00AM` instead of `8:00 AM`
-                }{' '}
-                -{' '}
-                {endTimeDate
-                  ? new Date(
-                      new Date(endTimeDate).setMinutes(
-                        new Date(endTimeDate).getMinutes() + 30,
-                      ), // Because the endTimeDate shows the start time of the *last* time slot, add 30 minutes since each time slot is 30 minutes.
-                    )
-                      .toLocaleTimeString('en-US', {
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        hour12: true,
-                      })
-                      .replace(' ', '') // Replaces space to display `8:00AM` instead of `8:00 AM`
-                  : ''}
+                {startTimeDate &&
+                  endTimeDate &&
+                  'Book for ' +
+                    format(startTimeDate, 'MMMM do h:mm') +
+                    ' to ' +
+                    format(endTimeDate, 'h:mm')}
               </Button>
             </ModalFooter>
           </>
