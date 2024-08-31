@@ -2,7 +2,6 @@ import { CircleUserRound } from 'lucide-react';
 import React from 'react';
 
 import AdminRoomSelector from '@/components/bookings/AdminRoomSelector';
-import AvailableRooms from '@/components/bookings/AvailableRooms';
 import BookingInfoModal from '@/components/bookings/BookingInfoModal';
 import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
@@ -50,7 +49,6 @@ const BookingPage = () => {
         />
       </div>
       <div className='col-span-1 row-span-5'>
-        <AvailableRooms />
         <AdminRoomSelector />
       </div>
     </div>
