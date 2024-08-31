@@ -21,19 +21,16 @@ type TTimePickerContext = {
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
-<<<<<<< HEAD
   startIndex: number;
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
   endIndex: number;
   setEndIndex: React.Dispatch<React.SetStateAction<number>>;
   checkBookingWithinTwoWeeks: () => boolean;
   checkBookingNotInPast: () => boolean;
-=======
   roomVisibilities: Record<string, boolean>;
   setRoomVisibilities: React.Dispatch<
     React.SetStateAction<Record<string, boolean>>
   >;
->>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
 };
 
 type Props = {
@@ -78,23 +75,6 @@ export const TimePickerProvider = ({ children }: Props) => {
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
   const [userId, setUserId] = useState<string>('placeholderID');
-
-  const addRoomBooking = useAddRoomBookingHook();
-
-  const { data: userBookings } = useFetchUserBookingsHook(userId);
-
-<<<<<<< HEAD
-  function checkBookingWithinTwoWeeks() {
-    const twoWeeksFromNow = addWeeks(new Date(), 2);
-    if (
-      (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
-      (endTimeDate && endTimeDate > twoWeeksFromNow)
-    ) {
-      return false;
-    }
-    return true;
-  }
-=======
   const [roomVisibilities, setRoomVisibilities] = useState<
     Record<string, boolean>
   >({
@@ -105,16 +85,20 @@ export const TimePickerProvider = ({ children }: Props) => {
     H204B: true,
   });
 
-  function handleAddBookRoom(room: string) {
-    const newBooking: TBooking = {
-      userId: userId,
-      room: room,
-      startTime: startTimeDate || new Date(),
-      endTime: endTimeDate || new Date(),
-      hasConfirmed: false,
-      email: 'placeholder email',
-    };
->>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
+  const addRoomBooking = useAddRoomBookingHook();
+
+  const { data: userBookings } = useFetchUserBookingsHook(userId);
+
+  function checkBookingWithinTwoWeeks() {
+    const twoWeeksFromNow = addWeeks(new Date(), 2);
+    if (
+      (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
+      (endTimeDate && endTimeDate > twoWeeksFromNow)
+    ) {
+      return false;
+    }
+    return true;
+  }
 
   function checkBookingNotInPast() {
     pickerEndDate.setDate(pickerStartDate.getDate() + 6);
@@ -180,17 +164,14 @@ export const TimePickerProvider = ({ children }: Props) => {
         userId,
         setUserId,
         userBookings,
-<<<<<<< HEAD
         startIndex,
         setStartIndex,
         endIndex,
         setEndIndex,
         checkBookingNotInPast,
         checkBookingWithinTwoWeeks,
-=======
         roomVisibilities,
         setRoomVisibilities,
->>>>>>> a2a5a35 (feat: create AdminRoomSelector.tsx and RoomButton.tsx)
       }}
     >
       {children}
