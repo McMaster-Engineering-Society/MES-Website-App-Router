@@ -30,7 +30,7 @@ const AdminRoomSelector = () => {
 
   const handleTimeslotAction = () => {
     toast(
-      `Performed "${Array.from(selectedAction)[0]}" on bookings in timeslot`,
+      `Performed "${Array.from(selectedAction)[0]}" on bookings in timeslot _ on room(s) ${selectedRooms.map((room) => ` ${room}`)}`,
     );
     setSelectedRooms([]);
     setSelectedAction(new Set([]));
@@ -98,36 +98,30 @@ const AdminRoomSelector = () => {
         )}
       </div>
       <div className='h-full flex flex-col justify-center items-center w-full rounded-xl bg-[#CACDD1] py-4 gap-2'>
-        {!startTimeDate ? (
-          <div className='flex w-full'>
-            <div className='flex flex-col h-[490px] justify-center items-center gap-[75px]'>
-              <RoomToggleSwitch room='H201' />
-              <RoomToggleSwitch room='H203' />
-              <RoomToggleSwitch room='H204A' />
-              <RoomToggleSwitch room='H204B' />
-              <RoomToggleSwitch room='H205' />
-            </div>
-            <CheckboxGroup
-              value={selectedRooms}
-              onChange={setSelectedRooms}
-              classNames={{
-                base: 'w-full h-full flex-1',
-                wrapper:
-                  ' flex flex-col gap-2 justify-center items-center text-center font-bold w-full h-[490px] pr-2',
-              }}
-            >
-              <RoomButton value='H201'>H201</RoomButton>
-              <RoomButton value='H203'>H203</RoomButton>
-              <RoomButton value='H204A'>H204A</RoomButton>
-              <RoomButton value='H204B'>H204B</RoomButton>
-              <RoomButton value='H205'>H205</RoomButton>
-            </CheckboxGroup>
+        <div className='flex w-full'>
+          <div className='flex flex-col h-[490px] justify-center items-center gap-[75px]'>
+            <RoomToggleSwitch room='H201' />
+            <RoomToggleSwitch room='H203' />
+            <RoomToggleSwitch room='H204A' />
+            <RoomToggleSwitch room='H204B' />
+            <RoomToggleSwitch room='H205' />
           </div>
-        ) : (
-          <div className='flex justify-center items-center text-center font-bold w-full h-[490px]'>
-            Placeholder
-          </div>
-        )}
+          <CheckboxGroup
+            value={selectedRooms}
+            onChange={setSelectedRooms}
+            classNames={{
+              base: 'w-full h-full flex-1',
+              wrapper:
+                ' flex flex-col gap-2 justify-center items-center text-center font-bold w-full h-[490px] pr-2',
+            }}
+          >
+            <RoomButton value='H201'>H201</RoomButton>
+            <RoomButton value='H203'>H203</RoomButton>
+            <RoomButton value='H204A'>H204A</RoomButton>
+            <RoomButton value='H204B'>H204B</RoomButton>
+            <RoomButton value='H205'>H205</RoomButton>
+          </CheckboxGroup>
+        </div>
       </div>
     </div>
   );
