@@ -9,8 +9,7 @@ import {
 } from '@nextui-org/react';
 import { format } from 'date-fns';
 import Image from 'next/image';
-import { toast } from 'sonner';
-import React from 'react
+import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
