@@ -1,9 +1,7 @@
 import { InsertManyResult, InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
-import { TBatchBookingResponse } from '@/lib/types';
-
-import { TBooking } from '@/app/api/types';
+import { TBatchBookingResponse, TBooking } from '@/lib/types';
 
 const getBookingsCollection = async () => {
   const client = await clientPromise;
@@ -131,7 +129,7 @@ export const createBatchBookingDb = async (
       }
     }
 
-    const response = {
+    const response: TBatchBookingResponse = {
       bookingsAdded: bookingsToAdd,
       conflictingBookings: conflictingBookings,
       conflictExists: conflictingBookings.length > 0,

@@ -17,6 +17,7 @@ export const HatchRoomsData: THatchRoom[] = [
       Whiteboard: false,
     },
     img: '/images/bookings/room201.jpg',
+    enabled: true,
   },
   {
     roomName: 'H203',
@@ -27,6 +28,7 @@ export const HatchRoomsData: THatchRoom[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room203.jpg',
+    enabled: true,
   },
   {
     roomName: 'H204A',
@@ -37,6 +39,7 @@ export const HatchRoomsData: THatchRoom[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room204a.jpg',
+    enabled: true,
   },
   {
     roomName: 'H204B',
@@ -47,6 +50,7 @@ export const HatchRoomsData: THatchRoom[] = [
       Whiteboard: true,
     },
     img: '/images/bookings/room204b.jpg',
+    enabled: true,
   },
   {
     roomName: 'H205',
@@ -57,5 +61,6 @@ export const HatchRoomsData: THatchRoom[] = [
       Whiteboard: false,
     },
     img: '/images/bookings/room205.jpg',
+    enabled: true,
   },
 ];

@@ -8,13 +8,12 @@ import {
   ModalHeader,
 } from '@nextui-org/react';
 import Image from 'next/image';
-import React from 'react';
 import { toast } from 'sonner';
 
-import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;

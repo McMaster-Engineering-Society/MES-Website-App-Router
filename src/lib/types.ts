@@ -8,7 +8,7 @@ export type TUser = {
 };
 
 export type TBooking = {
-  _id: ObjectId;
+  _id?: ObjectId | string;
   userId: string;
   room: string;
   email: string;
