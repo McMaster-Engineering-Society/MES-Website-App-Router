@@ -64,7 +64,10 @@ type TimePickerProps = {
   numDaysToShow: NumDaysToShow;
 };
 
-export default function TimePicker({ numDaysToShow }: TimePickerProps) {
+export default function TimePicker({
+  numDaysToShow,
+  className,
+}: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
@@ -246,21 +249,23 @@ export default function TimePicker({ numDaysToShow }: TimePickerProps) {
   }
 
   return (
-    <TimePickerTable
-      numDaysToShow={numDaysToShow}
-      daysToShow={daysToShow}
-      roomsAvailableByTime={roomsAvailableByTime}
-      timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
-      timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
-      maxBlockLengths={maxBlockLengths}
-      setAvailableRoomIds={setAvailableRoomIds}
-      setStartTimeDate={setStartTimeDate}
-      setEndTimeDate={setEndTimeDate}
-      userBookings={userBookings}
-      areBookingsVisible={areBookingsVisible}
-      roomVisibilities={roomVisibilities}
-      isAdmin={isAdmin}
-    />
+    <div className={className}>
+      <TimePickerTable
+        numDaysToShow={numDaysToShow}
+        daysToShow={daysToShow}
+        roomsAvailableByTime={roomsAvailableByTime}
+        timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
+        timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
+        maxBlockLengths={maxBlockLengths}
+        setAvailableRoomIds={setAvailableRoomIds}
+        setStartTimeDate={setStartTimeDate}
+        setEndTimeDate={setEndTimeDate}
+        userBookings={userBookings}
+        areBookingsVisible={areBookingsVisible}
+        roomVisibilities={roomVisibilities}
+        isAdmin={isAdmin}
+      />
+    </div>
   );
 }
 

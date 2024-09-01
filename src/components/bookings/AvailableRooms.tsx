@@ -2,12 +2,13 @@ import { ScrollShadow } from '@nextui-org/react';
 import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+import { cn } from '@/lib/utils';
 
 import { AvailableRoomCard } from '@/components/bookings/AvailableRoomCard';
 
 import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 
-export default function AvailableRooms() {
+export default function AvailableRooms({ className }: { className?: string }) {
   const {
     availableRoomIds,
     startTimeDate,
@@ -18,8 +19,8 @@ export default function AvailableRooms() {
   const numAvailRooms = availableRoomIds.length;
 
   return (
-    <div className='flex h-full flex-col gap-2 md:w-[250px]'>
-      <div className='w-full items-center rounded-xl bg-[#CACDD1] p-2 text-center font-bold'>
+    <div className={cn(className, 'flex flex-col gap-2 md:w-[250px]')}>
+      <div className='w-full items-center rounded-xl bg-[#CACDD1] p-2 text-center font-bold md:h-[42px]'>
         Available Rooms
         <div className='font-normal md:hidden'>Click to Book</div>
       </div>

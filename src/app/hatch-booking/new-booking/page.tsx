@@ -13,21 +13,31 @@ export default function BookingPage() {
 
   return (
     <div className='mb-8 flex w-full flex-col gap-8'>
-      <div className='grid grid-cols-2 gap-4 md:grid-cols-none md:gap-8'>
-        <div className='col-span-2'>
-          <TimePickerChanger />
-        </div>
-        <div className='md:h-[600px] md:max-h-[600px]'>
+      <div className='flex flex-col gap-4 md:hidden'>
+        <TimePickerChanger />
+        <div className='grid h-[600px] grid-cols-2 gap-4'>
           <TimePicker
             numDaysToShow={
               screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
             }
           />
-        </div>
-        <div className='md:h-[600px] md:max-h-[600px]'>
           <AvailableRooms />
         </div>
       </div>
+
+      <div className='hidden gap-4 md:flex'>
+        <div className='flex flex-col gap-2'>
+          <TimePickerChanger />
+          <TimePicker
+            numDaysToShow={
+              screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
+            }
+            className='h-full'
+          />
+        </div>
+        <AvailableRooms className='h-[600px]' />
+      </div>
+
       <RoomToggles />
     </div>
   );
