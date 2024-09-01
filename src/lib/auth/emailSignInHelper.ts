@@ -30,7 +30,7 @@ export const getSessionUser = async () => {
   // eslint-disable-next-line no-console
   console.log(session);
   if (session?.user) {
-    return session.user;
+    return session.user ?? null;
   } else {
     return null;
   }
