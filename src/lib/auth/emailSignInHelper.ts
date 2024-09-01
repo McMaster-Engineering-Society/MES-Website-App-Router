@@ -9,6 +9,15 @@ import { isRedirectError } from 'next/dist/client/components/redirect';
 import { redirect } from 'next/navigation';
 
 /**
+ * Finds user's email if the user is authenticated (has a valid and active session in the database).
+ * @returns email address if user is authenticated already, null if not.
+ */
+export const getUserEmail = async () => {
+  const session = await auth();
+  return session?.user?.email ?? null;
+};
+
+/**
  * Returns a boolean value detailing if a user is authenticated (has a valid and active session in the database).
  * @returns True if user is authenticated already, false if not.
  */

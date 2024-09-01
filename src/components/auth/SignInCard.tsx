@@ -44,7 +44,7 @@ const SignInCard = () => {
           disabled={isPending}
           required
         />
-        <Button type='submit' className='mt-2'>
+        <Button type='submit' className='mt-2' disabled={isPending}>
           Sign In
         </Button>
       </form>
