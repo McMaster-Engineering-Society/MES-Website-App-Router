@@ -1,45 +1,136 @@
-import { addDays, format } from 'date-fns';
-import React, { useState } from 'react';
+import { addDays, differenceInMinutes, format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
 
+import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
+
+import SameRoomModal from '@/components/modals/SameRoomModal';
 import TomorrowModal from '@/components/modals/TomorrowModal';
+import WeekModal from '@/components/modals/WeekModal';
 
 type RebookModalProps = {
   open: boolean;
   onClose: () => void;
   startTime: Date;
   endTime: Date;
-  room: string;
+  userRoom: string;
+};
+
+export type RoomAvailabilities = {
+  H201: string[];
+  H203: string[];
+  H205: string[];
+  H204A: string[];
+  H204B: string[];
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 const RebookModal: React.FC<RebookModalProps> = ({
   startTime,
   endTime,
-  room,
+  userRoom,
   open,
   onClose,
 }) => {
   const [tomorrowOpen, setTomOpen] = useState<boolean>(false);
-  // const closeOpen=()=>{
-  //   console.log("hello")
-  //   setTomOpen(true)
-  // }
+  const [nextWeekOpen, setNextOpen] = useState<boolean>(false);
+  const [sameRoomOpen, setSameOpen] = useState<boolean>(false);
 
-  // const { data: roomAvailabilities } = useFetchAvailabilitiesHook(
-  //   new Date(),
-  //   addDays(new Date(), 7)
-  // );
+  function getDuration(startTime: Date, endTime: Date) {
+    const timeMin = differenceInMinutes(endTime, startTime);
+    const hours = Math.floor(timeMin / 60);
+    const min = timeMin % 60;
+    if (min != 0) {
+      return hours + 0.5;
+    } else {
+      return hours;
+    }
+  }
 
-  // console.log(roomAvailabilities)
-
-  const handleButtonClick = () => {
-    setTomOpen(true);
-    onClose();
+  const handleButtonClick = (option: string, avail: boolean) => {
+    if (avail) {
+      if (option == '1') {
+        setTomOpen(true);
+      } else if (option == '2') {
+        setNextOpen(true);
+      } else {
+        setSameOpen(true);
+      }
+      onClose();
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Room unavailable. Select again!');
+    }
   };
 
-  const available1 = true;
-  const available2 = true;
-  const available3 = false;
+  function isAvail(availabilities: RoomAvailabilities): boolean {
+    return Object.values(availabilities).some(
+      (availability) => availability.length !== 0,
+    );
+  }
+
+  function sameWeekAvail(room: keyof RoomAvailabilities): boolean {
+    const avail = availabilities2[room];
+    return Array.isArray(avail) && avail.length !== 0;
+  }
+
+  const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
+    H201: [],
+    H203: [],
+    H205: [],
+    H204A: [],
+    H204B: [],
+  });
+
+  const [availabilities2, setAvailabilities2] = useState<RoomAvailabilities>({
+    H201: [],
+    H203: [],
+    H205: [],
+    H204A: [],
+    H204B: [],
+  });
+
+  // const [availabilities1, availabilities2, availabilities3] = availabilities;
+
+  // useEffect(() => {
+  //   const hooks = [
+  //     useFetchAvailabilitiesHook(addDays(startTime, 1), addDays(endTime, 1)),
+  //     useFetchAvailabilitiesHook(addDays(startTime, 7), addDays(endTime, 7)),
+  //     useFetchAvailabilitiesHook(addDays(startTime, 7), addDays(endTime, 7)),
+  //   ];
+
+  //   hooks.forEach((hook, index) => {
+  //     if (!hook.isLoading && hook.data) {
+  //       setAvailabilities((prev) => {
+  //         const newAvailabilities = [...prev];
+  //         newAvailabilities[index] = hook.data;
+  //         return newAvailabilities;
+  //       });
+  //     }
+  //   });
+  // })
+
+  const startTmrw = addDays(startTime, 1);
+  const endTmrw = addDays(endTime, 1);
+  const startWeek = addDays(startTime, 7);
+  const endWeek = addDays(endTime, 7);
+
+  const { data: roomAvailabilities1, isLoading: isLoading1 } =
+    useFetchAvailabilitiesHook(startTmrw, endTmrw);
+
+  const { data: roomAvailabilities2, isLoading: isLoading2 } =
+    useFetchAvailabilitiesHook(startWeek, endWeek);
+
+  useEffect(() => {
+    if (!isLoading1 && roomAvailabilities1) {
+      setAvailabilities1(roomAvailabilities1);
+    }
+  }, [roomAvailabilities1, isLoading1]);
+
+  useEffect(() => {
+    if (!isLoading2 && roomAvailabilities2) {
+      setAvailabilities2(roomAvailabilities2);
+    }
+  }, [roomAvailabilities2, isLoading2]);
 
   return (
     <div
@@ -63,23 +154,25 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-              ${available1 ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+              ${isAvail(availabilities1) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
               `}
-          onClick={handleButtonClick}
+          // className={optionButtonClass('1',isAvail(availabilities1))}
+          onClick={() => handleButtonClick('1', isAvail(availabilities1))}
         >
           <div>
             <b className='text-lg'>
-              Same time {startTime.toString() + endTime.toString() + room}
+              Same time
               <br />
               tomorrow:
               <br />
             </b>
             <i>
-              4:30pm (2H)
+              {format(startTime.toString(), 'p')} (
+              {getDuration(startTime, endTime)}H)
               <br />
             </i>
             <i>
-              {format(addDays(startTime, 1), 'MMMM-do')}
+              {format(addDays(startTime, 1), 'MMMM do')}
               <br />
             </i>
           </div>
@@ -87,45 +180,69 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${available2 ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${isAvail(availabilities2) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
+          // className={optionButtonClass('2',isAvail(availabilities2))}
+          onClick={() => handleButtonClick('2', isAvail(availabilities2))}
         >
           <div>
             <b className='text-lg'>
-              Same time<br></br>next week:<br></br>
+              Same time
+              <br />
+              next week:
+              <br />
             </b>
             <i>
-              4:30pm (2H)<br></br>
+              {format(startTime.toString(), 'p')} (
+              {getDuration(startTime, endTime)}H) <br />
             </i>
-            <i>
-              08/06/24<br></br>
-            </i>
+            <i>{format(addDays(startTime, 7), 'MMMM do')}</i>
           </div>
         </button>
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${available3 ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${sameWeekAvail(userRoom as keyof RoomAvailabilities) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
+          // className={optionButtonClass('3',sameWeekAvail(userRoom as keyof RoomAvailabilities))}
+          onClick={() => handleButtonClick('3', isAvail(availabilities2))}
         >
           <div>
             <b className='text-lg'>
-              Same room, <br></br>time, day:<br></br>
+              Same room, <br />
+              time, day:
+              <br />
             </b>
             <i>
-              4:30pm (2H)<br></br>
+              {format(startTime.toString(), 'p')} (
+              {getDuration(startTime, endTime)}H) <br />
             </i>
-            <i>
-              08/06/24<br></br>
-            </i>
+            <i>{format(addDays(startTime, 7), 'MMMM do')}</i>
           </div>
         </button>
       </div>
       <TomorrowModal
         open={tomorrowOpen}
         onClose={() => setTomOpen(false)}
-        tomInfo='6531a67db0a3f963db5b4175'
+        startTime={startTime}
+        endTime={endTime}
+        userId='placeholderID'
       ></TomorrowModal>
+      <WeekModal
+        open={nextWeekOpen}
+        onClose={() => setNextOpen(false)}
+        startTime={startTime}
+        endTime={endTime}
+        userId='placeholderID'
+      ></WeekModal>
+      <SameRoomModal
+        open={sameRoomOpen}
+        onClose={() => setSameOpen(false)}
+        startTime={startTime}
+        endTime={endTime}
+        userId='placeholderID'
+        userRoom={userRoom}
+      ></SameRoomModal>
     </div>
   );
 };

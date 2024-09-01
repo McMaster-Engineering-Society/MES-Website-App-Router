@@ -364,7 +364,7 @@ const UserDashboard = () => {
                 onClose={() => setOpen(false)}
                 startTime={displayStartTime}
                 endTime={displayEndTime}
-                room={displayRoom}
+                userRoom={displayRoom}
               ></RebookModal>
             </div>
           </section>

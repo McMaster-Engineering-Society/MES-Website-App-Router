@@ -7,7 +7,7 @@ import {
   useFetchAvailabilitiesHook,
 } from '@/lib/hooks/bookingHooks';
 
-type TomorrowModalProps = {
+type WeekModalProps = {
   open: boolean;
   onClose: () => void;
   startTime: Date;
@@ -24,8 +24,7 @@ export type RoomAvailabilities = {
 };
 
 // eslint-disable-next-line unused-imports/no-unused-vars
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-const TomorrowModal: React.FC<TomorrowModalProps> = ({
+const WeekModal: React.FC<WeekModalProps> = ({
   open,
   startTime,
   endTime,
@@ -43,12 +42,12 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
   const addRoomBooking = useAddRoomBookingHook();
-  const startTmrw = addDays(startTime, 1);
-  const endTmrw = addDays(endTime, 1);
+  const startWeek = addDays(startTime, 7);
+  const endWeek = addDays(endTime, 7);
 
   const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
-    startTmrw,
-    endTmrw,
+    startWeek,
+    endWeek,
   );
 
   useEffect(() => {
@@ -154,16 +153,16 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <b className='text-lg'>
                 Same time
                 <br />
-                tomorrow:
+                next week:
                 <br />
               </b>
               <i>
-                {format(startTmrw.toString(), 'p')} (
-                {getDuration(startTmrw, endTmrw)}H)
+                {format(startWeek.toString(), 'p')} (
+                {getDuration(startWeek, endWeek)}H)
                 <br />
               </i>
               <i>
-                {format(startTmrw, 'MMMM do')}
+                {format(startWeek, 'MMMM do')}
                 <br />
               </i>
             </div>
@@ -242,8 +241,8 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
             <h4 className='mt-3'>Confirm Booking:</h4>
             <p className='text-small mb-1.5'>
               <b> {selectedRoom ?? 'No Room Selected'}</b>,{' '}
-              {format(startTmrw, 'MMMM do')}, {format(endTmrw, 'p')} (
-              {getDuration(startTmrw, endTmrw)}H).
+              {format(startWeek, 'MMMM do')}, {format(endWeek, 'p')} (
+              {getDuration(startWeek, endWeek)}H).
             </p>
             <button
               className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
@@ -251,8 +250,8 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
                 handleBooking(
                   userId,
                   roomString,
-                  startTmrw,
-                  endTmrw,
+                  startWeek,
+                  endWeek,
                   false,
                   'DIDTHISWORK@mcmaster.ca',
                   startOfDay(new Date()),
@@ -261,8 +260,6 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
             >
               <div className='flex'>
                 <Bookmark className='w-4 h-4 text-red-700 pt-1 pr-1' />
-
-                {/* // TODO: booking has a delay, in which if you select it again while it's submitting the booking, it will double book */}
                 <b>
                   <i>BOOK NOW</i>
                 </b>
@@ -275,4 +272,4 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
   );
 };
 
-export default TomorrowModal;
+export default WeekModal;
