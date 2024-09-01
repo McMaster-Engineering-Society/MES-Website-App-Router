@@ -1,20 +1,24 @@
+import BookingInstructions from '@/components/bookings/BookingInstructions';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
 
-export default function HatchLockersPage() {
+export default function HatchInfo() {
   return (
     <PageLayout>
       <main className='layout'>
         <section className='flex flex-col justify-between'>
           <PageHeading
-            preTitle='Reservations'
-            title='Hatch Locker Booking'
+            preTitle='Hatch'
+            title='General Information'
             variant='blue'
           />
-          <PageSection variant='white' heading='Project Lockers'>
+          <PageSection heading='Hatch Booking FAQs' variant='white'>
+            <BookingInstructions />
+          </PageSection>
+          <PageSection variant='white' heading='Rent a Project Locker'>
             <div className='flex flex-col items-center gap-x-4 gap-y-4 md:flex-row'>
               <div id='text-body' className='flex flex-col'>
                 <div>
