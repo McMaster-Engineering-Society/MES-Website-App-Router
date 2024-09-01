@@ -1,26 +1,24 @@
-'use client';
+import { redirect } from 'next/navigation';
+import React from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
 
-import { TimePickerProvider } from '@/lib/context/TimePickerContext';
-
-import BookingPage from '@/components/bookings/BookingPage';
 import PageLayout from '@/components/layout/PageLayout';
 
-const queryClient = new QueryClient();
+import BookingSystem from '@/app/hatch-booking/BookingPage';
 
-export default function NewBookingSystemPage() {
-  return (
-    <PageLayout noFooter>
-      <QueryClientProvider client={queryClient}>
-        <TimePickerProvider>
-          <div className='md:h-[calc(100vh-81px)] flex justify-center'>
-            <div className='md:w-[85%] bg-white p-4'>
-              <BookingPage />
-            </div>
-          </div>
-        </TimePickerProvider>
-      </QueryClientProvider>
-    </PageLayout>
-  );
-}
+const HatchBookingPage = async () => {
+  const isAuthenticated = await checkIsAuthenticated();
+
+  if (!isAuthenticated) {
+    redirect('/auth/sign-in');
+  } else {
+    return (
+      <PageLayout noFooter>
+        <BookingSystem />
+      </PageLayout>
+    );
+  }
+};
+
+export default HatchBookingPage;
