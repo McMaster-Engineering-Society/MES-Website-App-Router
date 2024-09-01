@@ -2,46 +2,21 @@
 
 import { Avatar, TextField } from '@mui/material';
 import React from 'react';
+import { FaSave } from 'react-icons/fa';
+
+import {
+  ClubProfileContext,
+  TClubProfileContext,
+} from '@/lib/context/ClubProfileContext';
 
 import Box from '@/components/clubs-portal/administration/club-profile-panel/Box';
 import SocialsList from '@/components/clubs-portal/administration/club-profile-panel/SocialsList';
 
-import { SocialMedia } from '@/types/clubProfile';
-
 const ClubProfilePanel = () => {
-  const [profileData, setProfileData] = React.useState({
-    profilePicture: '',
-    email: '',
-    description: '',
-    socialMedia: {} as Record<SocialMedia, string>,
-  });
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchUserData();
-      setProfileData(data);
-    };
-    fetchData();
-  }, []);
-
-  const handleChange = (field: string, value: string) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  };
-
-  const handleSocialChange = (name: SocialMedia, value: string) => {
-    const updatedSocialMedia = profileData.socialMedia;
-    updatedSocialMedia[name] = value;
-    setProfileData((prevData) => ({
-      ...prevData,
-      socialMedia: updatedSocialMedia,
-    }));
-  };
-
+  const { profileData, handleChange, handleSocialChange, handleSocialDelete } =
+    React.useContext(ClubProfileContext) as TClubProfileContext;
   return (
-    <div className='flex flex-row gap-12 pt-5 basis-full'>
+    <div className='flex flex-row gap-12 pt-5 basis-full relative'>
       <div className='flex flex-col basis-1/3 gap-12'>
         <Avatar sx={{ height: 175, width: 175 }} className='mx-auto mt-5'>
           MES
@@ -74,26 +49,16 @@ const ClubProfilePanel = () => {
           />
         </Box>
         <SocialsList
-          socials={profileData.socialMedia}
+          socials={profileData.socials}
           handleSocialChange={handleSocialChange}
+          handleSocialDelete={handleSocialDelete}
         />
       </div>
+      <button className='top-5 left-5 absolute'>
+        <FaSave size='40' color='gray' />
+      </button>
     </div>
   );
 };
 
 export default ClubProfilePanel;
-
-const fetchUserData = async () => {
-  return {
-    profilePicture: '',
-    email: '', //'current_address@mcmaster.ca',
-    description: '', //'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus totam non iusto sapiente! Veritatis rerum consequuntur fugiat inventore sapiente porro labore laudantium minus iure. Consequatur vel nihil iusto odit nisi?',
-    socialMedia: {
-      instagram: '@mcmasterengsoc',
-      discord: 'McMaster Engineering Society',
-      linkedin: 'McMaster Engineering Society',
-      facebook: 'McMaster Engineering Society',
-    } as Record<SocialMedia, string>,
-  };
-};

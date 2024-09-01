@@ -4,6 +4,8 @@ import { TabContext } from '@mui/lab';
 import { Box } from '@mui/material';
 import React from 'react';
 
+import { ClubProfileProvider } from '@/lib/context/ClubProfileContext';
+
 import ClubProfilePanel from '@/components/clubs-portal/administration/club-profile-panel/ClubProfilePanel';
 import ExecTeamPanel from '@/components/clubs-portal/administration/exec-team/ExecTeamPanel';
 import Tab from '@/components/layout/tab-panel/Tab';
@@ -29,7 +31,9 @@ const ClubAdministrationContent = () => {
         </TabList>
       </Box>
       <TabPanel value='1' sx={{ flexBasis: '100%' }}>
-        <ClubProfilePanel />
+        <ClubProfileProvider>
+          <ClubProfilePanel />
+        </ClubProfileProvider>
       </TabPanel>
       <TabPanel value='2'>
         <ExecTeamPanel />

@@ -15,6 +15,7 @@ import {
   FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
+import { IoCloseOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 
 import Box from '@/components/clubs-portal/administration/club-profile-panel/Box';
@@ -25,9 +26,10 @@ type SocialProps = {
   name: SocialMedia;
   value: string;
   onChange: (name: SocialMedia, value: string) => void;
+  handleDelete: (name: SocialMedia) => void;
 };
 
-const Social = ({ name, value, onChange }: SocialProps) => {
+const Social = ({ name, value, onChange, handleDelete }: SocialProps) => {
   const Icon = socialIcons[name];
   return (
     <div className='flex flex-row items-center w-full'>
@@ -39,6 +41,13 @@ const Social = ({ name, value, onChange }: SocialProps) => {
           onChange={(e) => onChange(name, e.target.value)}
         />
       </Box>
+      <button
+        onClick={() => {
+          handleDelete(name);
+        }}
+      >
+        <IoCloseOutline className='ml-2' size='40' color='red' />
+      </button>
     </div>
   );
 };
