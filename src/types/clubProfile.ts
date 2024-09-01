@@ -1,8 +1,12 @@
-export type ClubProfile = {
-  id: string;
+import { ObjectId } from 'mongodb';
+
+export type TClubProfile = {
+  _id: string | ObjectId;
+  clubId: string;
   name: string;
   email: string;
-  description: string;
+  description?: string;
+  profilePicture?: string;
   socials: Record<SocialMedia, string>;
 };
 

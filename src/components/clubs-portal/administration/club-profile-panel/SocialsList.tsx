@@ -14,9 +14,14 @@ import { SocialMedia } from '@/types/clubProfile';
 type SocialsListProps = {
   socials: Record<SocialMedia, string>;
   handleSocialChange: (name: SocialMedia, value: string) => void;
+  handleSocialDelete: (name: SocialMedia) => void;
 };
 
-const SocialsList = ({ socials, handleSocialChange }: SocialsListProps) => {
+const SocialsList = ({
+  socials,
+  handleSocialChange,
+  handleSocialDelete,
+}: SocialsListProps) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -42,6 +47,7 @@ const SocialsList = ({ socials, handleSocialChange }: SocialsListProps) => {
               name={name as SocialMedia}
               value={value}
               onChange={handleSocialChange}
+              handleDelete={handleSocialDelete}
             />
           ))
         ) : (
