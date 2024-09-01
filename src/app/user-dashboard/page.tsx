@@ -351,22 +351,13 @@ const UserDashboard = () => {
                 Report Issue
               </ButtonLink>
             </div>
-
-            <div className='p-10 flex justify-center w-full'>
-              <button
-                className='rounded-full py-1.5 px-3 bg-sky-500 hover:bg-blue-500 text-white'
-                onClick={() => setOpen(true)}
-              >
-                ···
-              </button>
-              <RebookModal
-                open={open}
-                onClose={() => setOpen(false)}
-                startTime={displayStartTime}
-                endTime={displayEndTime}
-                userRoom={displayRoom}
-              ></RebookModal>
-            </div>
+            <RebookModal
+              open={open}
+              onClose={() => setOpen(false)}
+              startTime={displayStartTime}
+              endTime={displayEndTime}
+              userRoom={displayRoom}
+            ></RebookModal>
           </section>
         </main>
       </PageLayout>

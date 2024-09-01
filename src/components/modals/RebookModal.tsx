@@ -205,7 +205,12 @@ const RebookModal: React.FC<RebookModalProps> = ({
             ${sameWeekAvail(userRoom as keyof RoomAvailabilities) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
           // className={optionButtonClass('3',sameWeekAvail(userRoom as keyof RoomAvailabilities))}
-          onClick={() => handleButtonClick('3', isAvail(availabilities2))}
+          onClick={() =>
+            handleButtonClick(
+              '3',
+              sameWeekAvail(userRoom as keyof RoomAvailabilities),
+            )
+          }
         >
           <div>
             <b className='text-lg'>
