@@ -33,7 +33,7 @@ const UserDashboard = () => {
   const [pastBookingsData, setPastBookingsData] = useState<TBooking[]>([]);
   const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
 
-  // todo: ask if we should we only display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
+  // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
   const fetchUserInfo = async (userId: string) => {
     const response = await fetch(`/api/users/get-user?userId=${userId}`, {
@@ -58,8 +58,6 @@ const UserDashboard = () => {
 
     const startDateISO = startDate.toISOString().slice(0, -1);
     const endDateISO = endDate.toISOString().slice(0, -1);
-    // todo: update this route after aidan's pr gets merged, right now not filtering by email
-    // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
       `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
@@ -94,8 +92,6 @@ const UserDashboard = () => {
     );
     const startDateISO = startDate.toISOString().slice(0, -1);
     const endDateISO = endDate.toISOString().slice(0, -1);
-    // todo: update this route after aidan's pr gets merged, right now not filtering by email
-    // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
       `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
@@ -104,7 +100,6 @@ const UserDashboard = () => {
     );
     const jsonResponse = await response.json();
 
-    // todo: looks like the response from the api is not sorted by date, double check with aidan, update this accordingly
     setNextBooking(jsonResponse.data.shift());
 
     setNextBookingsData((oldNextBookingsData) => {
