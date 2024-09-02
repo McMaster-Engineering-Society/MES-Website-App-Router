@@ -1,3 +1,4 @@
+'use client';
 import { FaHouse } from 'react-icons/fa6';
 import { FaMoneyBill } from 'react-icons/fa6';
 import { FaSquareCheck } from 'react-icons/fa6';
