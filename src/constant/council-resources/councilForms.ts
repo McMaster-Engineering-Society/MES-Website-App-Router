@@ -16,13 +16,9 @@ export const councilForms: FormSection[] = [
         title: 'Ad Request Form',
         link: 'https://forms.gle/whC5zyWGeFjrmoK18',
       },
-      {
-        title: 'Website Update Form',
-        link: 'https://forms.gle/DyEaiSUYxLvT7j6P7',
-      },
     ],
     description:
-      'Use these forms if you would like to request advertising on our website and/or social media, or if you would like to request a new page or update to an existing page on this website.',
+      'Use this form if you would like to request advertising on our website and/or social media. If you have a website request please reach out to vp.communications@macengsociety.ca',
     contactEmail: 'vp.communications@macengsociety.ca',
   },
   {
