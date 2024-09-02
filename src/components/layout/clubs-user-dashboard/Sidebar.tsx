@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import IconButton from '@/components/buttons/IconButton';
 import { MESLogo } from '@/components/layout/navbar/MESLogo';
 
-import { sidebarItems } from './sidebarItems';
+import SidebarProps from '@/types/clubs-dashboard/SidebarProps';
 
 type ClubProfileProps = {
   open: boolean;
@@ -43,7 +43,7 @@ const ClubProfile = ({ open }: ClubProfileProps) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = (sidebarProps: SidebarProps) => {
   const [open, setOpen] = React.useState(false);
   const iconSize = 30;
   const iconColor = 'gray';
@@ -71,7 +71,7 @@ const Sidebar = () => {
         />
         <ClubProfile open={open} />
         <div className='flex-col mt-4'>
-          {sidebarItems.map((item) => (
+          {sidebarProps.items.map((item) => (
             <div
               key={item.name}
               className='flex flex-row items-center text-nowrap mx-8 my-3'
