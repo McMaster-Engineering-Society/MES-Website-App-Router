@@ -93,7 +93,7 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
                     onClose();
                   }}
                 >
-                  Delete Booking
+                  Cancel Booking
                 </Button>
               </ModalFooter>
             </>

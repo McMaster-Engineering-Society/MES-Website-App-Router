@@ -37,12 +37,13 @@ const AdminRoomSelector = () => {
   };
 
   return (
-    <div className='flex flex-col max-h-[570px] w-full gap-2'>
-      <div className=' w-full p-2 bg-[#CACDD1] font-bold text-center rounded-xl items-center'>
+    <div className='flex flex-col h-[600px] w-[350px] gap-2'>
+      <div className='flex-none h-[70px] w-full p-2 bg-[#CACDD1] font-bold text-center rounded-xl items-center justify-center'>
         {!startTimeDate ? (
           selectedRooms.length ? (
             <div className='flex gap-1'>
               <Select
+                size='sm'
                 selectedKeys={selectedAction}
                 onSelectionChange={(keys) =>
                   setSelectedAction(
@@ -59,6 +60,7 @@ const AdminRoomSelector = () => {
               <div className='flex-1 px-0 flex flex-col justify-end'>
                 <Button
                   color='secondary'
+                  size='sm'
                   isDisabled={selectedAction.size == 0}
                   onClick={handleRoomAction}
                 >
@@ -67,11 +69,14 @@ const AdminRoomSelector = () => {
               </div>
             </div>
           ) : (
-            'Click a room to view options'
+            <div className='flex w-full h-full justify-center items-center'>
+              <p>Click a room to view options</p>
+            </div>
           )
         ) : (
           <div className='flex gap-1'>
             <Select
+              size='sm'
               selectedKeys={selectedAction}
               onSelectionChange={(keys) =>
                 setSelectedAction(
@@ -88,6 +93,7 @@ const AdminRoomSelector = () => {
             <div className='flex-1 px-0 flex flex-col justify-end'>
               <Button
                 color='secondary'
+                size='sm'
                 isDisabled={selectedAction.size == 0}
                 onClick={handleTimeslotAction}
               >
@@ -97,7 +103,7 @@ const AdminRoomSelector = () => {
           </div>
         )}
       </div>
-      <div className='h-full flex flex-col justify-center items-center w-full rounded-xl bg-[#CACDD1] py-4 gap-2'>
+      <div className='flex-1 flex flex-col justify-center items-center w-full rounded-xl bg-[#CACDD1] py-4 gap-2'>
         <div className='flex w-full'>
           <div className='flex flex-col h-[490px] justify-center items-center gap-[75px]'>
             <RoomToggleSwitch room='H201' />
