@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getUserByIdService } from '@/lib/services/userServices';
 
-import { TApiResponse, TMessageResponse, TUser } from '@/app/api/types';
+import { TApiResponse, TMessageResponse, TUserDb } from '@/app/api/types';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
         { status: 404 },
       );
     }
-    return NextResponse.json<TApiResponse<TUser>>({ data: user });
+    return NextResponse.json<TApiResponse<TUserDb>>({ data: user });
   } catch (error) {
     /* eslint-disable no-console */
     console.error('API error:', error);

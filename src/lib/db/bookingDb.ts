@@ -1,20 +1,22 @@
 import { InsertManyResult, InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
-import { TBatchBookingResponse, TBooking } from '@/lib/types';
+import { TBatchBookingResponse } from '@/lib/types';
+
+import { TBookingDb } from '@/app/api/types';
 
 const getBookingsCollection = async () => {
   const client = await clientPromise;
 
   const db = client.db();
-  const bookingsCollection = db.collection<TBooking>('bookings');
+  const bookingsCollection = db.collection<TBookingDb>('bookings');
   return bookingsCollection;
 };
 
 export const createBookingDb = async (
-  newBooking: TBooking,
+  newBooking: TBookingDb,
   disabledRooms: string[],
-): Promise<TBooking | null> => {
+): Promise<TBookingDb> => {
   try {
     const bookingsCollection = await getBookingsCollection();
 
@@ -29,7 +31,7 @@ export const createBookingDb = async (
       throw new Error('Failed to insert booking');
     }
 
-    const createdBooking: TBooking = {
+    const createdBooking: TBookingDb = {
       ...newBooking,
       _id: result.insertedId,
     };
@@ -43,7 +45,7 @@ export const createBookingDb = async (
 };
 export const deleteBatchBookingDb = async (
   bookingIdsToDelete: string[],
-): Promise<(WithId<TBooking> | null)[]> => {
+): Promise<(WithId<TBookingDb> | null)[]> => {
   try {
     const bookingsCollection = await getBookingsCollection();
     // Convert string IDs to ObjectId
@@ -70,7 +72,7 @@ export const deleteBatchBookingDb = async (
   }
 };
 export const createBatchBookingDb = async (
-  bookingList: TBooking[],
+  bookingList: TBookingDb[],
   disabledRooms: string[],
 ): Promise<TBatchBookingResponse | null> => {
   try {
@@ -84,11 +86,11 @@ export const createBatchBookingDb = async (
     });
 
     const conflictingBookings: {
-      booking: TBooking;
-      conflicts: WithId<TBooking>[];
+      booking: TBookingDb;
+      conflicts: WithId<TBookingDb>[];
     }[] = [];
     const promises = [];
-    const bookingsToAdd: TBooking[] = [];
+    const bookingsToAdd: TBookingDb[] = [];
 
     // Check for conflicting rooms and disabled rooms
     for (const booking of bookingList) {
@@ -144,11 +146,11 @@ export const createBatchBookingDb = async (
 
 export const deleteBookingByIdDb = async (
   bookingId: string,
-): Promise<TBooking | null> => {
+): Promise<TBookingDb | null> => {
   try {
     const bookingsCollection = await getBookingsCollection();
     const bookingObjectId = new ObjectId(bookingId);
-    const booking: WithId<TBooking> | null =
+    const booking: WithId<TBookingDb> | null =
       await bookingsCollection.findOneAndDelete({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore: ObjectId type mismatch
@@ -298,8 +300,8 @@ export const getBookingsInDateRangeForOneRoomDb = async (
 
 export const updateBookingByIdDb = async (
   bookingId: string,
-  bookingInfo: TBooking,
-): Promise<TBooking | null> => {
+  bookingInfo: TBookingDb,
+): Promise<TBookingDb | null> => {
   try {
     const bookingsCollection = await getBookingsCollection();
     const bookingObjectId = new ObjectId(bookingId);

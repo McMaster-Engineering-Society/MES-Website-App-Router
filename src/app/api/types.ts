@@ -1,13 +1,13 @@
 import { ObjectId } from 'mongodb';
 
-export type TUser = {
+export type TUserDb = {
   _id: string;
   firstName: string;
   lastName: string;
   email: string;
 };
 
-export type TBooking = {
+export type TBookingDb = {
   _id?: ObjectId | string;
   userId: string;
   room: string;

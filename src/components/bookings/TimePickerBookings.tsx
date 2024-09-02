@@ -3,7 +3,7 @@
 import { Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
-import { TBooking } from '@/app/api/types';
+import { TBookingDb } from '@/app/api/types';
 import {
   AdminBookingIndicatorColours,
   BookingIndicatorPositions,
@@ -14,8 +14,8 @@ import {
  * mock API call to fetch bookings
  * @todo replace with actual API call
  */
-async function fetchAllBookings(): Promise<TBooking[]> {
-  const mockBookings: TBooking[] = [
+async function fetchAllBookings(): Promise<TBookingDb[]> {
+  const mockBookings: TBookingDb[] = [
     {
       _id: '66c2204b87f9ac38c4ba645f',
       userId: 'placeholder ID',
@@ -147,7 +147,7 @@ type Booking = {
  */
 type TimePickerBookingsProps = {
   isAdmin: boolean;
-  userBookings: TBooking[] | undefined;
+  userBookings: TBookingDb[] | undefined;
   daysToShow: Date[];
   timeslotCount: number;
   firstTimeslot: string;

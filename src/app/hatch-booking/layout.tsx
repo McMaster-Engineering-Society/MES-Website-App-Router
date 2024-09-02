@@ -5,7 +5,7 @@ import '@/styles/colors.css';
 
 import { Toaster } from '@/components/ui/sonner';
 export const metadata: Metadata = {
-  title: 'New Booking System',
+  title: 'Hatch Booking System',
   description: 'Book a meeting room in Gerald Hatch Centre.',
 };
 

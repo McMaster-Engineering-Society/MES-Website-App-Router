@@ -70,7 +70,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     undefined,
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
-  const [userId, setUserId] = useState<string>('placeholderID');
+  const [userId, setUserId] = useState<string>('placeholderID'); // TODO: replace with real ID or just get rid of ID.
 
   const addRoomBooking = useAddRoomBookingHook();
 
@@ -111,7 +111,6 @@ export const TimePickerProvider = ({ children }: Props) => {
         startTime: startTimeDate || new Date(),
         endTime: endTimeDate || new Date(),
         hasConfirmed: false,
-        email: 'placeholder email',
       };
 
       addRoomBooking.mutate(newBooking, {

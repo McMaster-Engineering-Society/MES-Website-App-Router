@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getBookingsByUserIdService } from '@/lib/services/bookingServices';
+import { TBooking } from '@/lib/types';
 
-import { TApiResponse, TBooking, TMessageResponse } from '@/app/api/types';
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
