@@ -1,7 +1,7 @@
 'use client';
 
 import { TextField } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   FaDiscord,
   FaFacebook,
@@ -18,6 +18,11 @@ import {
 import { IoCloseOutline } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 
+import {
+  ClubProfileContext,
+  TClubProfileContext,
+} from '@/lib/context/ClubProfileContext';
+
 import Box from '@/components/clubs-portal/administration/club-profile-panel/Box';
 
 import { SocialMedia } from '@/types/clubProfile';
@@ -25,11 +30,12 @@ import { SocialMedia } from '@/types/clubProfile';
 type SocialProps = {
   name: SocialMedia;
   value: string;
-  onChange: (name: SocialMedia, value: string) => void;
-  handleDelete: (name: SocialMedia) => void;
 };
 
-const Social = ({ name, value, onChange, handleDelete }: SocialProps) => {
+const Social = ({ name, value }: SocialProps) => {
+  const { handleSocialChange, handleSocialDelete } = useContext(
+    ClubProfileContext,
+  ) as TClubProfileContext;
   const Icon = socialIcons[name];
   return (
     <div className='flex flex-row items-center w-full'>
@@ -38,12 +44,12 @@ const Social = ({ name, value, onChange, handleDelete }: SocialProps) => {
         <TextField
           fullWidth
           value={value}
-          onChange={(e) => onChange(name, e.target.value)}
+          onChange={(e) => handleSocialChange(name, e.target.value)}
         />
       </Box>
       <button
         onClick={() => {
-          handleDelete(name);
+          handleSocialDelete(name);
         }}
       >
         <IoCloseOutline className='ml-2' size='40' color='red' />
