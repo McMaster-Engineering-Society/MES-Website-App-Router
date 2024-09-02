@@ -206,10 +206,10 @@ const UserDashboard = () => {
               >
                 {pastBookingsData.length > 0 ? (
                   <div className='flex flex-col gap-8 min-h-[75px]'>
-                    {pastBookingsData.map((booking) => {
+                    {pastBookingsData.map((booking, index) => {
                       return (
                         <BookingTimeslot
-                          key={booking._id}
+                          key={index}
                           startTime={booking.startTime}
                           endTime={booking.endTime}
                           room={booking.room}
@@ -281,10 +281,10 @@ const UserDashboard = () => {
               >
                 {nextBookingsData.length > 0 ? (
                   <div className='flex flex-col gap-8'>
-                    {nextBookingsData.map((booking) => {
+                    {nextBookingsData.map((booking, index) => {
                       return (
                         <BookingTimeslot
-                          key={booking._id}
+                          key={index}
                           startTime={booking.startTime}
                           endTime={booking.endTime}
                           room={booking.room}
