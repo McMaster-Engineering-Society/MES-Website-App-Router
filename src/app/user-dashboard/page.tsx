@@ -171,7 +171,8 @@ const UserDashboard = () => {
               <PageSection
                 heading='Account Information'
                 variant='white'
-                headingClassName='bg-[#988ED7] capitalize'
+                headingVariant='lavendar'
+                headingCapitalize={true}
                 leftIcon={UserRoundCogIcon}
                 className='rounded-lg max-h-[350px]'
               >
@@ -200,7 +201,8 @@ const UserDashboard = () => {
               <PageSection
                 heading='Past Bookings'
                 variant='white'
-                headingClassName='bg-slate-400 capitalize'
+                headingVariant='slate'
+                headingCapitalize={true}
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
@@ -229,7 +231,8 @@ const UserDashboard = () => {
               <PageSection
                 heading='Your Next Booking'
                 variant='white'
-                headingClassName='bg-[#A1D884] capitalize'
+                headingVariant='light-green'
+                headingCapitalize={true}
                 leftIcon={CalendarClockIcon}
                 className='rounded-lg'
               >
@@ -275,7 +278,8 @@ const UserDashboard = () => {
               <PageSection
                 heading='Upcoming Bookings'
                 variant='white'
-                headingClassName='bg-cyan-400 capitalize'
+                headingVariant='cyan'
+                headingCapitalize={true}
                 leftIcon={CalendarDaysIcon}
                 className='rounded-lg'
               >
