@@ -1,13 +1,11 @@
 'use client';
 
-import React from 'react';
-
-import AvailableRooms from '@/components/bookings/AvailableRooms';
+import AdminRoomSelector from '@/components/bookings/AdminRoomSelector';
 import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
 import { useScreenSize } from '@/components/bookings/useScreenSize';
 
-export default function BookingPage() {
+export default function AdminDashboard() {
   const screenSize = useScreenSize();
 
   return (
@@ -20,7 +18,7 @@ export default function BookingPage() {
               screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
             }
           />
-          <AvailableRooms />
+          <AdminRoomSelector />
         </div>
       </div>
 
@@ -34,7 +32,7 @@ export default function BookingPage() {
             className='h-full'
           />
         </div>
-        <AvailableRooms className='h-[600px]' />
+        <AdminRoomSelector />
       </div>
     </div>
   );

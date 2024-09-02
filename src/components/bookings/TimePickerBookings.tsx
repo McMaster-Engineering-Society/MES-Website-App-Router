@@ -131,7 +131,6 @@ async function fetchAllBookings(): Promise<TBooking[]> {
 
 /**
  * @param isAdmin if true, display all existing bookings. if false, display only user's existing bookings
- * @param userBookings array of user's existing bookings
  * @param daysToShow array containing the first dates of each time picker column
  * @param timeslotCount number of timeslots to show on the time picker; determines rows
  * @param firstTimeslot eg. "11:00:00.000Z"
