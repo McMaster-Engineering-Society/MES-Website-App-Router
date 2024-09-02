@@ -218,7 +218,7 @@ const TimePickerBookings = ({
     };
 
     return (
-      <div id={time} className='relative h-4 flex justify-evenly w-full'>
+      <div id={time} className='relative flex w-full flex-1 justify-evenly'>
         {bookingsAtTime.length != 0
           ? bookingsAtTime.map((booking) => {
               if (!roomVisibilities[`${booking.room}`]) {
@@ -239,7 +239,7 @@ const TimePickerBookings = ({
               return (
                 <div
                   key={`${time}-${booking.room}`}
-                  className={`absolute top-1/3 flex justify-center items-center text-xs ${BookingIndicatorPositions[booking.room] || ''}`}
+                  className={`absolute top-1/3 flex items-center justify-center text-xs ${BookingIndicatorPositions[booking.room] || ''}`}
                 >
                   <Tooltip
                     showArrow
@@ -266,7 +266,7 @@ const TimePickerBookings = ({
 
   return (
     <div
-      className={`grid grid-cols-${daysToShow.length} absolute top-0 w-full h-full pointer-events-none`}
+      className={`grid grid-cols-${daysToShow.length} pointer-events-none absolute top-0 h-full w-full`}
     >
       {[...Array(daysToShow.length)].map((_, i) => {
         // initializes the starting date & time for each column
@@ -282,7 +282,7 @@ const TimePickerBookings = ({
           <div
             key={firstTimeOfColumn.toISOString().split('T')[0]}
             id={firstTimeOfColumn.toISOString().split('T')[0]}
-            className='flex flex-col justify-start items-center opacity-100'
+            className='flex flex-col items-center justify-start opacity-100'
           >
             {[...Array(timeslotCount)].map((_, j) => {
               // creates a shallow copy of firstTimeOfColumn

@@ -47,6 +47,8 @@ const UserDashboard = () => {
 
   // todo: ask if we should we only display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
+  // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
+
   const fetchUserInfo = async (userId: string) => {
     const response = await fetch(`/api/users/get-user?userId=${userId}`, {
       method: 'GET',
@@ -70,10 +72,8 @@ const UserDashboard = () => {
 
     const startDateISO = startDate.toISOString().slice(0, -1);
     const endDateISO = endDate.toISOString().slice(0, -1);
-    // todo: update this route after aidan's pr gets merged, right now not filtering by email
-    // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
-      `/api/bookings/get-bookings-in-date-range?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
         method: 'GET',
       },
@@ -106,17 +106,14 @@ const UserDashboard = () => {
     );
     const startDateISO = startDate.toISOString().slice(0, -1);
     const endDateISO = endDate.toISOString().slice(0, -1);
-    // todo: update this route after aidan's pr gets merged, right now not filtering by email
-    // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
-      `/api/bookings/get-bookings-in-date-range?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
         method: 'GET',
       },
     );
     const jsonResponse = await response.json();
 
-    // todo: looks like the response from the api is not sorted by date, double check with aidan, update this accordingly
     setNextBooking(jsonResponse.data.shift());
 
     setNextBookingsData((oldNextBookingsData) => {
@@ -144,8 +141,8 @@ const UserDashboard = () => {
       // sessionUser?.email? setUserEmail(sessionUser.email) : null;
 
       // hard coded for testing purposes:
-      setUserEmail('ann@email.com');
-      setUserId('66c3caf909e523e22135eb21');
+      setUserEmail('email@email.com');
+      setUserId('66d3cb524cace04fac19f4b6');
     };
 
     fetchUser();
@@ -199,7 +196,8 @@ const UserDashboard = () => {
                 <PageSection
                   heading='Account Information'
                   variant='white'
-                  headingClassName='bg-[#988ED7] capitalize'
+                  headingVariant='lavendar'
+                  headingCapitalize={true}
                   leftIcon={UserRoundCogIcon}
                   className='rounded-lg max-h-[350px]'
                 >
@@ -228,19 +226,21 @@ const UserDashboard = () => {
                 <PageSection
                   heading='Past Bookings'
                   variant='white'
-                  headingClassName='bg-slate-400 capitalize'
+                  headingVariant='slate'
+                  headingCapitalize={true}
                   leftIcon={CalendarDaysIcon}
                   className='rounded-lg'
                 >
                   {pastBookingsData.length > 0 ? (
                     <div className='flex flex-col gap-8 min-h-[75px]'>
-                      {pastBookingsData.map((booking) => {
+                      {pastBookingsData.map((booking, index) => {
                         return (
                           <BookingTimeslot
-                            key={booking._id}
+                            key={index}
                             startTime={booking.startTime}
                             endTime={booking.endTime}
                             room={booking.room}
+                            variant='previous'
                             handleExpand={() =>
                               handleExpand(
                                 booking.startTime,
@@ -250,7 +250,6 @@ const UserDashboard = () => {
                                 booking.email,
                               )
                             }
-                            variant='previous'
                           ></BookingTimeslot>
                         );
                       })}
@@ -262,11 +261,13 @@ const UserDashboard = () => {
                   )}
                 </PageSection>
               </div>
+
               <div>
                 <PageSection
                   heading='Your Next Booking'
                   variant='white'
-                  headingClassName='bg-[#A1D884] capitalize'
+                  headingVariant='light-green'
+                  headingCapitalize={true}
                   leftIcon={CalendarClockIcon}
                   className='rounded-lg'
                 >
@@ -312,19 +313,21 @@ const UserDashboard = () => {
                 <PageSection
                   heading='Upcoming Bookings'
                   variant='white'
-                  headingClassName='bg-cyan-400 capitalize'
+                  headingVariant='cyan'
+                  headingCapitalize={true}
                   leftIcon={CalendarDaysIcon}
                   className='rounded-lg'
                 >
                   {nextBookingsData.length > 0 ? (
                     <div className='flex flex-col gap-8'>
-                      {nextBookingsData.map((booking) => {
+                      {nextBookingsData.map((booking, index) => {
                         return (
                           <BookingTimeslot
-                            key={booking._id}
+                            key={index}
                             startTime={booking.startTime}
                             endTime={booking.endTime}
                             room={booking.room}
+                            variant='next'
                             handleExpand={() =>
                               handleExpand(
                                 booking.startTime,
@@ -334,7 +337,6 @@ const UserDashboard = () => {
                                 booking.email,
                               )
                             }
-                            variant='next'
                           ></BookingTimeslot>
                         );
                       })}
@@ -347,7 +349,6 @@ const UserDashboard = () => {
                 </PageSection>
               </div>
             </div>
-
             <div className='relative flex flex-row justify-center rounded-lg border-1 border-primary-800 bg-white py-4 px-2 file:transition hover:opacity-100'>
               <div className='flex flex-row md:justify-items-center md:items-center '>
                 <p className='text-gray-700 text-center text-nowrap w-full'>

@@ -10,10 +10,10 @@ import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
 import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 
 type AvailableRoomType = {
-  roomInfo: HatchRoomType;
+  roomInfo: THatchRoom;
 };
 
 export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
@@ -30,25 +30,25 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
   return (
     <>
       <Button
-        className='md:hidden bg-white rounded-xl relative inline-block'
+        className='relative inline-block rounded-xl bg-white md:hidden'
         onClick={onOpen}
       >
         {roomInfo.roomName}
       </Button>
-      <div className='bg-[#373A36] text-white box-border rounded-xl w-full h-auto p-4 border-4 text-center hidden md:flex flex-col justify-between items-center'>
-        <div className='relative inline-block w-full text-center justify-center items-center'>
-          <div className='inline-block font-bold items-center'>
+      <div className='box-border hidden h-auto w-full flex-col items-center justify-between rounded-xl border-4 bg-[#373A36] p-4 text-center text-white md:flex'>
+        <div className='relative inline-block w-full items-center justify-center text-center'>
+          <div className='inline-block items-center font-bold'>
             {roomInfo.roomName}
           </div>
           <button
-            className='absolute right-0 top-0.5 hover:bg-primary-700 rounded-full'
+            className='absolute right-0 top-0.5 rounded-full hover:bg-primary-700'
             onClick={onOpen}
           >
             <InfoIcon size={20} />
           </button>
         </div>
 
-        <div className='w-full text-left grid grid-cols-2 gap-x-auto gap-y-4 my-2 mb-4'>
+        <div className='gap-x-auto my-2 mb-4 grid w-full grid-cols-2 gap-y-4 text-left'>
           <div className='flex items-center justify-center'>
             <User className='mr-1' />
             {/* width set to 25px for row alignment */}
@@ -76,7 +76,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
           handleConfirmBookingWithMessage={handleConfirmBookingWithMessage}
         >
           <Button
-            className='m-1 bg-white font-semibold w-[130px] hover:bg-primary-700'
+            className='m-1 w-[130px] bg-white font-semibold hover:bg-primary-700'
             size='sm'
           >
             Book Now

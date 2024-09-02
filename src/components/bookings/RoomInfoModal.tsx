@@ -13,11 +13,12 @@ import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  roomInfo: HatchRoomType;
+  roomInfo: THatchRoom;
   handleConfirmBookingWithMessage: () => void;
 };
 
@@ -63,8 +64,13 @@ function RoomInfoModal({
                 alt='room pic'
               />
             </ModalBody>
-            <ModalFooter>
-              <Button color='danger' variant='light' onPress={onClose}>
+            <ModalFooter className='justify-center'>
+              <Button
+                color='danger'
+                variant='light'
+                onPress={onClose}
+                className='hidden md:block'
+              >
                 Close
               </Button>
 
@@ -72,6 +78,7 @@ function RoomInfoModal({
                 color='warning'
                 onPress={onClose}
                 onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
+                className='flex-1'
               >
                 {startTimeDate &&
                   endTimeDate &&

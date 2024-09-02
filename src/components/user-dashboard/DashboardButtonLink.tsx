@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ButtonLinkVariant = ['green', 'blue', 'purple'] as const;
+const ButtonLinkVariant = ['light-green', 'cyan', 'lavendar'] as const;
 
 const ButtonLinkSize = ['sm', 'base'] as const;
 
@@ -42,15 +42,20 @@ const DashboardButtonLink = React.forwardRef<
           //#endregion  //*======== Size ===========
           //#region  //*=========== Variants ===========
           [
-            variant === 'green' && [
+            variant === 'light-green' && [
               'text-[#A1D884]',
               'border-[#A1D884] border',
               'hover:bg-[#A1D884] hover:text-white',
             ],
-            variant === 'purple' && [
+            variant === 'lavendar' && [
               'text-[#988ED7]',
               'border-[#988ED7] border',
               'hover:bg-[#988ED7] hover:text-white',
+            ],
+            variant === 'cyan' && [
+              'text-[bg-cyan-400]',
+              'border-[bg-cyan-500] border',
+              'hover:bg-[bg-cyan-500] hover:text-white',
             ],
           ],
           //#endregion  //*======== Variants ===========
