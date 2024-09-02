@@ -7,7 +7,6 @@ import { IconType } from 'react-icons';
 import {
   IoChatbubblesOutline,
   IoDocumentTextOutline,
-  IoGlobeOutline,
   IoNewspaperOutline,
   IoPeopleOutline,
 } from 'react-icons/io5';
@@ -67,11 +66,6 @@ const quickLinks: { icon: IconType; label: string; href: string }[] = [
     icon: IoNewspaperOutline,
     label: 'Advertisement Request',
     href: councilForms[0].forms[0].link,
-  },
-  {
-    icon: IoGlobeOutline,
-    label: 'Web Update Request',
-    href: councilForms[0].forms[1].link,
   },
 ];
 

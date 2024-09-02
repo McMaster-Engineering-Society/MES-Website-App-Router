@@ -2,13 +2,7 @@
 
 import * as React from 'react';
 import { IconType } from 'react-icons';
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaSnapchatGhost,
-  FaTwitter,
-} from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 import { cn } from '@/lib/utils';
 
@@ -32,16 +26,8 @@ const socialMedia: SocialMedia = [
     href: 'https://www.instagram.com/macengsociety/',
   },
   {
-    icon: FaTwitter,
-    href: 'https://twitter.com/macengsociety/',
-  },
-  {
     icon: FaFacebookF,
     href: 'https://www.facebook.com/MacEngSociety/',
-  },
-  {
-    icon: FaSnapchatGhost,
-    href: 'https://www.snapchat.com/add/macengsociety/',
   },
 ];
 
