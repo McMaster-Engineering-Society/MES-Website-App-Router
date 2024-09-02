@@ -19,10 +19,10 @@ import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import PageSection from '@/components/PageSection';
-import DashboardIconSvg from '@/components/user-dashboard/DashboardIconSvg';
-import ProfilePicture from '@/components/user-dashboard/ProfilePictureSvg';
 
 import { TUser } from '@/app/api/types';
+import DashboardIconSvg from '@/constant/user-dashboard/DashboardIconSvg';
+import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 
 // todo: add routing protection, only logged in users should be able to access this page
 const UserDashboard = () => {
@@ -61,7 +61,7 @@ const UserDashboard = () => {
     // todo: update this route after aidan's pr gets merged, right now not filtering by email
     // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
-      `/api/bookings/get-bookings-in-date-range?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
         method: 'GET',
       },
@@ -97,7 +97,7 @@ const UserDashboard = () => {
     // todo: update this route after aidan's pr gets merged, right now not filtering by email
     // todo: looks like the response from the api is not sorted by date, double check with aidan
     const response = await fetch(
-      `/api/bookings/get-bookings-in-date-range?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}`,
       {
         method: 'GET',
       },
@@ -132,7 +132,7 @@ const UserDashboard = () => {
       // sessionUser?.email? setUserEmail(sessionUser.email) : null;
 
       // hard coded for testing purposes:
-      setUserEmail('ann@email.com');
+      setUserEmail('email@email.com');
       setUserId('66c3caf909e523e22135eb21');
     };
 
