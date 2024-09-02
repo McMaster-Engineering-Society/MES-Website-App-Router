@@ -13,11 +13,12 @@ import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
-import { HatchRoomType } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+
 type Props = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
-  roomInfo: HatchRoomType;
+  roomInfo: THatchRoom;
   handleConfirmBookingWithMessage: () => void;
 };
 

@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchAddBooking, fetchUserBookings } from '@/lib/api/bookingApi';
+import {
+  fetchAddBooking,
+  fetchDeleteBooking,
+  fetchUserBookings,
+} from '@/lib/api/bookingApi';
 import { fetchAvailabilities } from '@/lib/api/bookingApi';
 import { TBooking } from '@/lib/types';
 
@@ -37,5 +41,16 @@ export const useFetchUserBookingsHook = (userId: string) => {
   return useQuery<TBooking[], Error>({
     queryKey: ['userBookings'],
     queryFn: () => fetchUserBookings(userId),
+  });
+};
+
+export const useDeleteBookingHook = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<TBooking, Error, string>({
+    mutationFn: fetchDeleteBooking,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userBookings'] });
+    },
   });
 };
