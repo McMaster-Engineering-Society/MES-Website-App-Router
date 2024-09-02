@@ -1,12 +1,11 @@
 'use client';
 
-import { Switch } from '@nextui-org/react';
 import { differenceInCalendarDays } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
-import { cn } from '@/lib/utils';
+import { TBooking } from '@/lib/types';
 
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
 
@@ -66,8 +65,8 @@ type TimePickerProps = {
 };
 
 export default function TimePicker({
-  className,
   numDaysToShow,
+  className,
 }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
@@ -79,6 +78,9 @@ export default function TimePicker({
     setEndTimeDate,
     userBookings,
     pickerStartDate,
+    areBookingsVisible,
+    roomVisibilities,
+    isAdmin,
   } = useTimePickerContext();
 
   const pickerEndDate = useMemo(
@@ -247,7 +249,7 @@ export default function TimePicker({
   }
 
   return (
-    <div className={cn('md:px-8', className)}>
+    <div className={className}>
       <TimePickerTable
         numDaysToShow={numDaysToShow}
         daysToShow={daysToShow}
@@ -258,7 +260,10 @@ export default function TimePicker({
         setAvailableRoomIds={setAvailableRoomIds}
         setStartTimeDate={setStartTimeDate}
         setEndTimeDate={setEndTimeDate}
-        isAdmin={false}
+        userBookings={userBookings}
+        areBookingsVisible={areBookingsVisible}
+        roomVisibilities={roomVisibilities}
+        isAdmin={isAdmin}
       />
     </div>
   );
@@ -274,6 +279,9 @@ type TimePickerTableProps = {
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  userBookings: TBooking[] | undefined;
+  areBookingsVisible: boolean;
+  roomVisibilities: Record<string, boolean>;
   isAdmin: boolean;
 };
 
@@ -287,6 +295,7 @@ function TimePickerTable({
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
+  areBookingsVisible,
   isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
@@ -398,7 +407,10 @@ function TimePickerTable({
       setEndIndex(newEndIndex);
       setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
-    } else if (atLeastOneRoomAvailable(slotIndex)) {
+    } else if (
+      atLeastOneRoomAvailable(slotIndex) &&
+      maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] >= 1
+    ) {
       // starting to select a new block
       setDragOperation('Selecting');
       setStartIndex(slotIndex);
@@ -483,14 +495,14 @@ function TimePickerTable({
       /* time indicators along the side */
     }
     return (
-      <div className='flex flex-col justify-stretch mt-14 mr-1 -translate-y-1'>
+      <div className='mr-1 mt-14 flex flex-col justify-stretch'>
         {timeslots.map((slot: string, i) => {
           if (i % 2 === 1) return null;
           return (
             <span
               key={`time-text-${slot}`}
               id={`time-text-${slot}`}
-              className='h-8 text-[#373A36]/80 italic text-xs whitespace-nowrap text-right'
+              className='flex-1 -translate-y-[6px] whitespace-nowrap text-right text-xs italic text-[#373A36]/80'
             >
               {slot}
             </span>
@@ -509,12 +521,12 @@ function TimePickerTable({
   const TimePickerHeader = () => {
     return (
       <div
-        className={`h-14 grid grid-rows-1 ${gridColClass[numDaysToShow]} auto-cols-max`}
+        className={`grid min-h-14 grid-rows-1 ${gridColClass[numDaysToShow]} auto-cols-max`}
       >
         {daysToShow.map((day, i) => (
           <div
             key={day.toString()}
-            className={`px-8 flex-1 flex flex-col justify-center items-center p-0 border-black/20 border-1 border-l-0 border-t-0 border-b-0 ${i === daysToShow.length - 1 && 'border-r-0'}`}
+            className={`flex flex-1 flex-col items-center justify-center border-1 border-b-0 border-l-0 border-t-0 border-black/20 p-0 px-8 ${i === daysToShow.length - 1 && 'border-r-0'}`}
           >
             <span className='text-sm font-light'>
               {/* ex. "MONDAY" */}
@@ -534,7 +546,9 @@ function TimePickerTable({
 
   const TimePickerBody = () => {
     return (
-      <div className={`grid ${gridColClass[numDaysToShow]} grid-flow-row`}>
+      <div
+        className={`grid ${gridColClass[numDaysToShow]} h-full grid-flow-row`}
+      >
         {timeslots.map((slot, i) =>
           daysToShow.map((day, j) => {
             const timeSlotIndex = j * timeslots.length + i;
@@ -542,7 +556,7 @@ function TimePickerTable({
               <div
                 key={`${day} ${slot}`}
                 id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
-                className={`h-4 relative border-1 border-b-0 border-black/20 flex-1 touch-none
+                className={`relative flex-1 touch-none border-1 border-b-0 border-black/20
                       ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
                       ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
                       ${i % 2 === 1 && 'border-t-0'} 
@@ -558,21 +572,19 @@ function TimePickerTable({
     );
   };
 
-  const [areBookingsVisible, setAreBookingsVisible] = useState(true);
-
   return (
-    <div className='flex flex-col justify-center'>
-      <div className='flex flex-row md:justify-center'>
+    <div className='flex h-full min-h-[400px] flex-col justify-center'>
+      <div className='flex h-full flex-row md:justify-center'>
         <TimeIndicators />
         <div
-          className='flex flex-col bg-white rounded-lg shadow-lg shadow-black/25'
+          className='flex flex-1 flex-col rounded-lg bg-white shadow-lg shadow-black/25'
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onMouseLeave={onMouseLeave}
         >
           <TimePickerHeader />
           {/* relative position is used here so that overlay components (eg. TimePickerBookings) can be positioned absolutely to be on top of TimePickerBody */}
-          <div className='relative'>
+          <div className='relative h-full'>
             <TimePickerBody />
             {areBookingsVisible ? (
               <TimePickerBookings
@@ -584,20 +596,6 @@ function TimePickerTable({
             ) : null}
           </div>
         </div>
-      </div>
-
-      <div className='flex flex-col lg:flex-row lg:justify-center lg:items-center lg:pl-8'>
-        <Switch
-          size='lg'
-          color='success'
-          className='h-16'
-          onChange={() => {
-            setAreBookingsVisible(!areBookingsVisible);
-          }}
-          isSelected={areBookingsVisible}
-        >
-          Toggle Bookings
-        </Switch>
       </div>
     </div>
   );

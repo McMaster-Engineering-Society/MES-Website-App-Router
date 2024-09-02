@@ -2,12 +2,13 @@ import { ScrollShadow } from '@nextui-org/react';
 import React from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+import { cn } from '@/lib/utils';
 
 import { AvailableRoomCard } from '@/components/bookings/AvailableRoomCard';
 
 import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 
-export default function AvailableRooms() {
+export default function AvailableRooms({ className }: { className?: string }) {
   const {
     availableRoomIds,
     startTimeDate,
@@ -18,22 +19,22 @@ export default function AvailableRooms() {
   const numAvailRooms = availableRoomIds.length;
 
   return (
-    <div className='flex flex-col max-h-[570px] w-full gap-2'>
-      <div className=' w-full p-2 bg-[#CACDD1] font-bold text-center rounded-xl items-center'>
+    <div className={cn(className, 'flex flex-col gap-2 md:w-[250px]')}>
+      <div className='w-full items-center rounded-xl bg-[#CACDD1] p-2 text-center font-bold md:h-[42px]'>
         Available Rooms
-        <div className='md:hidden font-normal'>Click to Book</div>
+        <div className='font-normal md:hidden'>Click to Book</div>
       </div>
-      <div className='h-full flex flex-col justify-center items-center w-full rounded-xl bg-[#CACDD1] py-4 gap-2'>
+      <div className='h-0 w-full flex-1 rounded-xl bg-[#CACDD1] py-4'>
         {!checkBookingNotInPast() ? (
-          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
+          <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             Booking cannot be made in the past
           </div>
         ) : !checkBookingWithinTwoWeeks() ? (
-          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
+          <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             Booking can only be made within two weeks
           </div>
         ) : !startTimeDate || (startTimeDate && numAvailRooms === 0) ? (
-          <div className='flex justify-center items-center text-center font-bold w-full h-[490px] p-4'>
+          <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             {startTimeDate
               ? numAvailRooms === 0
                 ? 'No Rooms Available'
@@ -41,10 +42,10 @@ export default function AvailableRooms() {
               : 'Click/drag to select a time'}
           </div>
         ) : (
-          <>
+          <div className='h-full'>
             <ScrollShadow
               hideScrollBar
-              className='w-full gap-2 flex flex-col px-4 h-[490px] overflow-auto'
+              className='flex h-full w-full flex-col gap-2 overflow-auto px-4'
             >
               {/* Displays only the available rooms for the selected timeslot */}
               {HatchRoomsData.filter((room) =>
@@ -56,7 +57,7 @@ export default function AvailableRooms() {
                 />
               ))}
             </ScrollShadow>
-          </>
+          </div>
         )}
       </div>
     </div>
