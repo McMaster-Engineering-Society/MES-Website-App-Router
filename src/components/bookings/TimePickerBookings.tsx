@@ -3,6 +3,8 @@
 import { Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
+import { TBooking } from '@/lib/types';
+
 import { TBookingDb } from '@/app/api/types';
 import {
   AdminBookingIndicatorColours,
@@ -147,7 +149,7 @@ type Booking = {
  */
 type TimePickerBookingsProps = {
   isAdmin: boolean;
-  userBookings: TBookingDb[] | undefined;
+  userBookings: TBooking[] | undefined;
   daysToShow: Date[];
   timeslotCount: number;
   firstTimeslot: string;
