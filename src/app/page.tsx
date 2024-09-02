@@ -34,6 +34,19 @@ const CALENDAR_IDS: CalendarId[] = [
     id: 'macengsociety.ca_1287bevihgvppm0boumra7eb6c@group.calendar.google.com',
   },
 ];
+
+const WeeklyNews = () => (
+  <div>
+    <iframe
+      src='https://drive.google.com/file/d/1n9nsqtIWQN7F6gt_1al_1bRBxYd7pXm6/preview'
+      width='853'
+      height='480'
+      allow='autoplay'
+      allowFullScreen
+    ></iframe>
+  </div>
+);
+
 const quickLinks: { icon: IconType; label: string; href: string }[] = [
   {
     icon: IoChatbubblesOutline,
@@ -312,6 +325,19 @@ export default function HomePage() {
             </Link>
           ))}
         </motion.section>
+        <section
+          style={{
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <h1>Weekly News</h1>
+          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 1</h4>
+          <WeeklyNews />
+        </section>
         <section id='calendar'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} darkMode />
         </section>
