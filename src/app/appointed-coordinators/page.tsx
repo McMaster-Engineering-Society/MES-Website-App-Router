@@ -47,7 +47,7 @@ export default function AppointedCoordinatorsPage() {
         <section className='flex flex-col justify-between'>
           <PageHeading
             title='Appointed Coordinators'
-            preTitle='2023-2024 Team'
+            preTitle='2024-2025 Team'
             variant='red'
           />
           <div className='my-5' />
