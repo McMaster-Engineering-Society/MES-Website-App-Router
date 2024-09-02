@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Sidebar from './Sidebar';
 import TaskBanner from './TaskBanner';
+import UserSidebar from './UserSidebar';
 
 type dashboardLayoutProps = {
   pageName?: string;
@@ -14,8 +14,8 @@ const ClubUserDashboardLayout = ({
 }: dashboardLayoutProps) => {
   return (
     <div className='flex h-screen w-screen'>
-      <Sidebar />
-      <div className='w-full px-12 pt-12'>
+      <UserSidebar />
+      <div className='flex flex-col w-full p-12'>
         <h1>{pageName}</h1>
         <TaskBanner />
         <div className='w-full h-2/3 overflow-y-scroll'>{children}</div>
