@@ -42,6 +42,8 @@ const UserDashboard = () => {
   const [displayStartTime, setDisplayStartTime] = useState<Date>(new Date());
   const [displayEndTime, setDisplayEndTime] = useState<Date>(new Date());
   const [displayRoom, setDisplayRoom] = useState<string>('');
+  const [displayUserId, setDisplayUserId] = useState<string>('');
+  const [displayEmail, setDisplayEmail] = useState<string>('');
 
   // todo: ask if we should we only display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
@@ -155,11 +157,19 @@ const UserDashboard = () => {
     userEmail ? fetchPastBookingsByEmail(userEmail) : null;
   }, [userId, userEmail]);
 
-  function handleExpand(startTime: Date, endTime: Date, room: string) {
+  function handleExpand(
+    startTime: Date,
+    endTime: Date,
+    room: string,
+    userId: string,
+    email: string,
+  ) {
     setOpen(true);
     setDisplayStartTime(startTime);
     setDisplayEndTime(endTime);
     setDisplayRoom(room);
+    setDisplayUserId(userId);
+    setDisplayEmail(email);
   }
 
   return (
@@ -231,7 +241,15 @@ const UserDashboard = () => {
                             startTime={booking.startTime}
                             endTime={booking.endTime}
                             room={booking.room}
-                            handleExpand={handleExpand}
+                            handleExpand={() =>
+                              handleExpand(
+                                booking.startTime,
+                                booking.endTime,
+                                booking.room,
+                                booking.userId,
+                                booking.email,
+                              )
+                            }
                             variant='previous'
                           ></BookingTimeslot>
                         );
@@ -307,7 +325,15 @@ const UserDashboard = () => {
                             startTime={booking.startTime}
                             endTime={booking.endTime}
                             room={booking.room}
-                            handleExpand={handleExpand}
+                            handleExpand={() =>
+                              handleExpand(
+                                booking.startTime,
+                                booking.endTime,
+                                booking.room,
+                                booking.userId,
+                                booking.email,
+                              )
+                            }
                             variant='next'
                           ></BookingTimeslot>
                         );
@@ -358,6 +384,8 @@ const UserDashboard = () => {
               startTime={displayStartTime}
               endTime={displayEndTime}
               userRoom={displayRoom}
+              userId={displayUserId}
+              email={displayEmail}
             ></RebookModal>
           </section>
         </main>

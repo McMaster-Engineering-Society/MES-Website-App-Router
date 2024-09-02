@@ -13,6 +13,7 @@ type TomorrowModalProps = {
   startTime: Date;
   endTime: Date;
   userId: string;
+  email: string;
 };
 
 export type RoomAvailabilities = {
@@ -31,6 +32,7 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
   endTime,
   onClose,
   userId,
+  email,
 }) => {
   const [availabilities, setAvailabilities] = useState<RoomAvailabilities>({
     H201: [],
@@ -145,7 +147,6 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
         >
           X
         </button>
-        {/* {children} */}
         <h1 className='text-center mx mb-5'>Same Time Tomorrow</h1>
 
         <div className='flex'>
@@ -254,7 +255,7 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
                   startTmrw,
                   endTmrw,
                   false,
-                  'DIDTHISWORK@mcmaster.ca',
+                  email,
                   startOfDay(new Date()),
                 );
               }}

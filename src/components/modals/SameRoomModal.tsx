@@ -10,6 +10,7 @@ type SameRoomModalProps = {
   endTime: Date;
   userId: string;
   userRoom: string;
+  email: string;
 };
 
 export type RoomAvailabilities = {
@@ -29,6 +30,7 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
   onClose,
   userId,
   userRoom,
+  email,
 }) => {
   // const [availabilities, setAvailabilities] = useState<RoomAvailabilities>({
   //   H201: [],
@@ -175,7 +177,7 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
                     startWeek,
                     endWeek,
                     false,
-                    'DIDTHISWORK@mcmaster.ca',
+                    email,
                     startOfDay(new Date()),
                   );
                 }}

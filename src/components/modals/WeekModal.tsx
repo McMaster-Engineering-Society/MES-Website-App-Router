@@ -13,6 +13,7 @@ type WeekModalProps = {
   startTime: Date;
   endTime: Date;
   userId: string;
+  email: string;
 };
 
 export type RoomAvailabilities = {
@@ -30,6 +31,7 @@ const WeekModal: React.FC<WeekModalProps> = ({
   endTime,
   onClose,
   userId,
+  email,
 }) => {
   const [availabilities, setAvailabilities] = useState<RoomAvailabilities>({
     H201: [],
@@ -253,7 +255,7 @@ const WeekModal: React.FC<WeekModalProps> = ({
                   startWeek,
                   endWeek,
                   false,
-                  'DIDTHISWORK@mcmaster.ca',
+                  email,
                   startOfDay(new Date()),
                 );
               }}

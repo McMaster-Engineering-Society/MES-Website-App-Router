@@ -1,4 +1,11 @@
-import { addDays, differenceInMinutes, format } from 'date-fns';
+import {
+  addDays,
+  differenceInMinutes,
+  format,
+  isBefore,
+  startOfDay,
+  subDays,
+} from 'date-fns';
 import React, { useEffect, useState } from 'react';
 
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
@@ -13,6 +20,8 @@ type RebookModalProps = {
   startTime: Date;
   endTime: Date;
   userRoom: string;
+  userId: string;
+  email: string;
 };
 
 export type RoomAvailabilities = {
@@ -28,6 +37,8 @@ const RebookModal: React.FC<RebookModalProps> = ({
   startTime,
   endTime,
   userRoom,
+  userId,
+  email,
   open,
   onClose,
 }) => {
@@ -62,11 +73,25 @@ const RebookModal: React.FC<RebookModalProps> = ({
     }
   };
 
-  function isAvail(availabilities: RoomAvailabilities): boolean {
-    return Object.values(availabilities).some(
-      (availability) => availability.length !== 0,
-    );
+  function isAvail(
+    availabilities: RoomAvailabilities,
+    startTime: Date,
+  ): boolean {
+    const today = startOfDay(new Date());
+    const isBeforeTd = isBefore(subDays(startTime, 1), today);
+    if (!isBeforeTd) {
+      return Object.values(availabilities).some(
+        (availability) => availability.length !== 0,
+      );
+    }
+    return false;
   }
+
+  // function isAvail(availabilities: RoomAvailabilities, startTime: Date): boolean {
+  //   return Object.values(availabilities).some(
+  //     (availability) => availability.length !== 0,
+  //   );
+  // }
 
   function sameWeekAvail(room: keyof RoomAvailabilities): boolean {
     const avail = availabilities2[room];
@@ -88,26 +113,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
     H204A: [],
     H204B: [],
   });
-
-  // const [availabilities1, availabilities2, availabilities3] = availabilities;
-
-  // useEffect(() => {
-  //   const hooks = [
-  //     useFetchAvailabilitiesHook(addDays(startTime, 1), addDays(endTime, 1)),
-  //     useFetchAvailabilitiesHook(addDays(startTime, 7), addDays(endTime, 7)),
-  //     useFetchAvailabilitiesHook(addDays(startTime, 7), addDays(endTime, 7)),
-  //   ];
-
-  //   hooks.forEach((hook, index) => {
-  //     if (!hook.isLoading && hook.data) {
-  //       setAvailabilities((prev) => {
-  //         const newAvailabilities = [...prev];
-  //         newAvailabilities[index] = hook.data;
-  //         return newAvailabilities;
-  //       });
-  //     }
-  //   });
-  // })
 
   const startTmrw = addDays(startTime, 1);
   const endTmrw = addDays(endTime, 1);
@@ -154,10 +159,11 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-              ${isAvail(availabilities1) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+              ${isAvail(availabilities1, startTmrw) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
               `}
-          // className={optionButtonClass('1',isAvail(availabilities1))}
-          onClick={() => handleButtonClick('1', isAvail(availabilities1))}
+          onClick={() =>
+            handleButtonClick('1', isAvail(availabilities1, startTmrw))
+          }
         >
           <div>
             <b className='text-lg'>
@@ -180,10 +186,11 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${isAvail(availabilities2) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${isAvail(availabilities2, startWeek) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
-          // className={optionButtonClass('2',isAvail(availabilities2))}
-          onClick={() => handleButtonClick('2', isAvail(availabilities2))}
+          onClick={() =>
+            handleButtonClick('2', isAvail(availabilities2, startWeek))
+          }
         >
           <div>
             <b className='text-lg'>
@@ -204,7 +211,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
             ${sameWeekAvail(userRoom as keyof RoomAvailabilities) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
-          // className={optionButtonClass('3',sameWeekAvail(userRoom as keyof RoomAvailabilities))}
           onClick={() =>
             handleButtonClick(
               '3',
@@ -231,22 +237,25 @@ const RebookModal: React.FC<RebookModalProps> = ({
         onClose={() => setTomOpen(false)}
         startTime={startTime}
         endTime={endTime}
-        userId='placeholderID'
+        userId={userId}
+        email={email}
       ></TomorrowModal>
       <WeekModal
         open={nextWeekOpen}
         onClose={() => setNextOpen(false)}
         startTime={startTime}
         endTime={endTime}
-        userId='placeholderID'
+        userId={userId}
+        email={email}
       ></WeekModal>
       <SameRoomModal
         open={sameRoomOpen}
         onClose={() => setSameOpen(false)}
         startTime={startTime}
         endTime={endTime}
-        userId='placeholderID'
+        userId={userId}
         userRoom={userRoom}
+        email={email}
       ></SameRoomModal>
     </div>
   );
