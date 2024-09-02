@@ -7,4 +7,8 @@ export type PageHeadingVariant =
   | 'yellow'
   | 'purple'
   | 'pink'
-  | 'grey';
+  | 'grey'
+  | 'lavendar'
+  | 'cyan'
+  | 'light-green'
+  | 'slate';
