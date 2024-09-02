@@ -10,8 +10,8 @@ export default function AVPsPage() {
       <main className='layout'>
         <section>
           <PageHeading
-            preTitle='2023-2024 Team'
-            title='Associate Vice Presidents'
+            preTitle='2024-2025 Team'
+            title='Directors'
             variant='red'
           />
           <div id='executives-list' className='mt-8 space-y-8'>
