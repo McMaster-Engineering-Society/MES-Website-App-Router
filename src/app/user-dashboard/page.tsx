@@ -1,4 +1,5 @@
 'use client';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import {
@@ -21,10 +22,10 @@ import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import RebookModal from '@/components/modals/RebookModal';
 import PageSection from '@/components/PageSection';
-import DashboardIconSvg from '@/components/user-dashboard/DashboardIconSvg';
-import ProfilePicture from '@/components/user-dashboard/ProfilePictureSvg';
 
 import { TUser } from '@/app/api/types';
+import DashboardIconSvg from '@/constant/user-dashboard/DashboardIconSvg';
+import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 
 const queryClient = new QueryClient();
 
