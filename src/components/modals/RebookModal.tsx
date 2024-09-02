@@ -87,15 +87,14 @@ const RebookModal: React.FC<RebookModalProps> = ({
     return false;
   }
 
-  // function isAvail(availabilities: RoomAvailabilities, startTime: Date): boolean {
-  //   return Object.values(availabilities).some(
-  //     (availability) => availability.length !== 0,
-  //   );
-  // }
-
-  function sameWeekAvail(room: keyof RoomAvailabilities): boolean {
+  function sameWeekAvail(
+    room: keyof RoomAvailabilities,
+    startTime: Date,
+  ): boolean {
     const avail = availabilities2[room];
-    return Array.isArray(avail) && avail.length !== 0;
+    const today = startOfDay(new Date());
+    const isBeforeTd = isBefore(subDays(startTime, 1), today);
+    return !isBeforeTd && Array.isArray(avail) && avail.length !== 0;
   }
 
   const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
@@ -209,12 +208,12 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${sameWeekAvail(userRoom as keyof RoomAvailabilities) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
           onClick={() =>
             handleButtonClick(
               '3',
-              sameWeekAvail(userRoom as keyof RoomAvailabilities),
+              sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek),
             )
           }
         >
