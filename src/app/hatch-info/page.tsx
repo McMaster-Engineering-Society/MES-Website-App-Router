@@ -5,7 +5,7 @@ import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
 
-export default function HatchInfo() {
+export default function HatchInfoPage() {
   return (
     <PageLayout>
       <main className='layout'>
