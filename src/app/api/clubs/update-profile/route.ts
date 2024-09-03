@@ -5,18 +5,15 @@ import { TApiResponse, TMessageResponse } from '@/lib/types';
 
 import { TClubProfile } from '@/types/clubProfile';
 
-export async function POST(req: NextRequest) {
-  const clubId = req.headers.get('club-id');
-
-  if (!clubId) {
+export async function PATCH(req: NextRequest) {
+  const profileUpdates: Partial<TClubProfile> = await req.json();
+  if (!profileUpdates.clubId) {
     return NextResponse.json<TMessageResponse>({
-      message: 'Club ID is required in headers',
+      message: 'Club ID is required in request body',
     });
   }
-
-  const updatedProfile: TClubProfile = await req.json();
-
-  const result = await updateProfileByClubId(clubId, updatedProfile);
+  const clubId = profileUpdates.clubId;
+  const result = await updateProfileByClubId(clubId, profileUpdates);
 
   if (!result) {
     return NextResponse.json<TMessageResponse>({

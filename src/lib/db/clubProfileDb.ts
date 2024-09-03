@@ -40,14 +40,13 @@ export const getProfileByClubId = async (
 
 export const updateProfileByClubId = async (
   clubId: string,
-  updatedProfile: TClubProfile,
+  profileUpdates: Partial<TClubProfile>,
 ): Promise<TClubProfile | null> => {
   try {
     const profileCollection = await getClubProfileCollection();
 
-    const { _id, ...profileUpdates } = updatedProfile;
     const result = await profileCollection.findOneAndUpdate(
-      { club_id: clubId },
+      { clubId: clubId },
       { $set: profileUpdates },
       { returnDocument: 'after' },
     );

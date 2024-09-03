@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect } from 'react';
 
-import { useFetchClubProfile } from '@/lib/hooks/clubProfileHooks';
+import {
+  useFetchClubProfile,
+  useUpdateClubProfile,
+} from '@/lib/hooks/clubProfileHooks';
 
 import { SocialMedia, TClubProfile } from '@/types/clubProfile';
 
@@ -9,10 +12,9 @@ export type TClubProfileContext = {
   clubId: string;
   setClubId: React.Dispatch<React.SetStateAction<string>>;
   setProfileData: React.Dispatch<React.SetStateAction<TClubProfile>>;
-  handleChange: (field: string, value: string) => void;
-  handleSocialChange: (name: SocialMedia, value: string) => void;
-  handleSocialDelete: (name: SocialMedia) => void;
+  handleChange: (fields: Partial<TClubProfile>) => void;
   handleSave: () => void;
+  hasChanges: boolean;
   status: string;
 };
 type Props = {
@@ -24,55 +26,53 @@ export const ClubProfileContext = createContext<
 
 export const ClubProfileProvider = ({ children }: Props) => {
   const [clubId, setClubId] = React.useState<string>('1');
-  const { data: currentProfile, status } = useFetchClubProfile(clubId);
-  const [profileData, setProfileData] = React.useState<TClubProfile>(
-    currentProfile || {
-      _id: '',
-      name: '',
-      clubId: '',
-      profilePicture: '',
-      email: '',
-      description: '',
-      socials: {} as Record<SocialMedia, string>,
-    },
-  );
+  const { data: persistedProfile, status } = useFetchClubProfile(clubId);
+  const [profileData, setProfileData] = React.useState<TClubProfile>({
+    _id: '',
+    name: '',
+    clubId: '',
+    profilePicture: '',
+    email: '',
+    description: '',
+    socials: {} as Record<SocialMedia, string>,
+  });
+  const [profileUpdates, setProfileUpdates] = React.useState<
+    Partial<TClubProfile>
+  >({});
+  const updateProfile = useUpdateClubProfile();
+  const hasChanges = Object.keys(profileUpdates).length > 0;
 
   useEffect(() => {
-    if (currentProfile) {
-      setProfileData(currentProfile);
+    if (persistedProfile) {
+      setProfileData(persistedProfile);
     }
-  }, [currentProfile]);
+  }, [persistedProfile]);
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (fields: Partial<TClubProfile>) => {
     setProfileData((prevData) => ({
       ...prevData,
-      [field]: value,
+      ...fields,
+    }));
+
+    setProfileUpdates((prevUpdates) => ({
+      ...prevUpdates,
+      ...fields,
     }));
   };
 
-  const handleSocialChange = (name: SocialMedia, value: string) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      socials: {
-        ...prevData.socials,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleSocialDelete = (name: SocialMedia) => {
-    setProfileData((prevData) => {
-      const updatedSocialMedia = { ...prevData.socials };
-      delete updatedSocialMedia[name];
-      return {
-        ...prevData,
-        socials: updatedSocialMedia,
-      };
+  const handleSave = (): Promise<string> => {
+    const updates = { ...profileUpdates, clubId: clubId };
+    return new Promise((resolve) => {
+      updateProfile.mutate(updates, {
+        onSuccess: () => {
+          setProfileUpdates({});
+          resolve('Profile updated successfully');
+        },
+        onError: () => {
+          resolve('Error updating profile');
+        },
+      });
     });
-  };
-
-  const handleSave = () => {
-    return true;
   };
 
   return (
@@ -80,12 +80,11 @@ export const ClubProfileProvider = ({ children }: Props) => {
       value={{
         profileData,
         clubId,
-        setClubId: setClubId,
+        setClubId,
         setProfileData,
         handleChange,
-        handleSocialChange,
-        handleSocialDelete,
         handleSave,
+        hasChanges,
         status,
       }}
     >

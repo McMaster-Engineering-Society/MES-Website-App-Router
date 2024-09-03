@@ -13,7 +13,8 @@ const ClubEmail = () => {
         fullWidth
         value={profileData.email}
         placeholder={!profileData.email ? `Add your club's address!` : ''}
-        onChange={(e) => handleChange('email', e.target.value)}
+        onChange={(e) => handleChange({ email: e.target.value })}
+        required
       />
     </Box>
   );
