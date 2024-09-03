@@ -14,7 +14,7 @@ const ClubDescription = () => {
         fullWidth
         placeholder='Add a description of your club!'
         value={profileData.description}
-        onChange={(e) => handleChange('description', e.target.value)}
+        onChange={(e) => handleChange({ description: e.target.value })}
         sx={{
           '& .MuiOutlinedInput-root': {
             flexBasis: '99%',

@@ -11,12 +11,19 @@ import ClubProfilePicture from '@/components/clubs-portal/administration/club-pr
 import SocialsList from '@/components/clubs-portal/administration/club-profile-panel/SocialsList';
 
 const ClubProfilePanel = () => {
-  const { status } = useClubProfileContext();
+  const { status, handleSave, hasChanges } = useClubProfileContext();
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSave();
+  };
   if (status === 'pending') {
     return <></>;
   }
   return (
-    <div className='flex flex-row gap-12 pt-5 basis-full relative'>
+    <form
+      className='flex flex-row gap-12 pt-5 basis-full relative'
+      onSubmit={onSubmit}
+    >
       <div className='flex flex-col basis-1/3 gap-12'>
         <ClubProfilePicture />
         <ClubDescription />
@@ -25,10 +32,21 @@ const ClubProfilePanel = () => {
         <ClubEmail />
         <SocialsList />
       </div>
-      <button className='top-5 left-5 absolute'>
-        <FaSave size='40' color='gray' />
+      <button
+        className='top-5 left-5 absolute'
+        disabled={!hasChanges}
+        type='submit'
+      >
+        <FaSave
+          size='40'
+          color={
+            hasChanges
+              ? 'rgb(var(--tw-color-primary-800))'
+              : 'rgb(var(--tw-color-primary-200))'
+          }
+        />
       </button>
-    </div>
+    </form>
   );
 };
 

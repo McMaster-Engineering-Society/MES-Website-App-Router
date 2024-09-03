@@ -1,10 +1,7 @@
 import { Popover } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-import {
-  ClubProfileContext,
-  TClubProfileContext,
-} from '@/lib/context/ClubProfileContext';
+import { useClubProfileContext } from '@/lib/context/ClubProfileContext';
 import { cn } from '@/lib/utils';
 
 import Button from '@/components/buttons/Button';
@@ -16,12 +13,20 @@ import Social, {
 import { SocialMedia } from '@/types/clubProfile';
 
 const SocialsList = () => {
-  const { profileData, handleSocialChange } = useContext(
-    ClubProfileContext,
-  ) as TClubProfileContext;
+  const { profileData, handleChange } = useClubProfileContext();
   const { socials } = profileData;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
+  const handleSocialChange = (
+    name: SocialMedia,
+    value: string | null = null,
+  ) => {
+    const updatedSocials = { ...socials, [name]: value };
+    if (value === null) {
+      delete updatedSocials[name];
+    }
+    handleChange({ socials: updatedSocials });
+  };
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,7 +43,12 @@ const SocialsList = () => {
       <div className='flex flex-col gap-2 w-full'>
         {Object.entries(socials).length > 0 ? (
           Object.entries(socials).map(([name, value]) => (
-            <Social key={name} name={name as SocialMedia} value={value} />
+            <Social
+              key={name}
+              name={name as SocialMedia}
+              value={value}
+              handleChange={handleSocialChange}
+            />
           ))
         ) : (
           <p className='m-auto mb-0'>No social media added yet.</p>
