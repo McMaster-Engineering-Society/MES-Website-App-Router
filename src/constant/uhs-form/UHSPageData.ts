@@ -93,6 +93,42 @@ export const textFieldProps: SxProps = {
   },
 };
 
+//This are the style specifications for the date picker in filter from material UI
+export const filterTextFieldProps: SxProps = {
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '10px', // Set border radius
+    borderWidth: '2px', // Set border width
+    height: '3rem',
+    '& fieldset': {
+      borderColor: 'rgba(0, 0, 0, 0.4)',
+      borderWidth: '2px', // Set border width for fieldset
+    },
+    '&:hover fieldset': {
+      borderColor: '#a8b3c9',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#a8b3c9',
+    },
+    '&.Mui-error fieldset': {
+      borderColor: 'rgba(0, 0, 0, 0.4)', // Same as normal state
+    },
+    '& input': {
+      backgroundColor: '##fcfcfc', // Background color of the input field
+      outline: 'none', // Remove the default outline
+      boxShadow: 'none', // Remove the default box-shadow (ring)
+      borderRadius: '10px', // Set border radius for input
+      color: '#4b4b4b',
+    },
+  },
+  '& .MuiInputBase-input': {
+    backgroundColor: '##fcfcfc', // Background color of the input field
+    outline: 'none', // Remove the default outline
+    boxShadow: 'none', // Remove the default box-shadow (ring)
+    borderRadius: '10px', // Set border radius for input
+    color: '#4b4b4b',
+  },
+};
+
 export const informationPolicy = `
 Information Security Policy
 INTRODUCTION
