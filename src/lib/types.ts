@@ -12,7 +12,7 @@ export type TBooking = {
   _id?: ObjectId | string;
   userId: string;
   room: string;
-  email?: string;
+  email: string;
   startTime: Date;
   endTime: Date;
   hasConfirmed: boolean;

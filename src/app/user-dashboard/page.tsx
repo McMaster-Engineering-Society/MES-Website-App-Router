@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import { TBooking } from '@/lib/types';
+import { TUser } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
@@ -23,7 +24,6 @@ import ButtonLink from '@/components/links/ButtonLink';
 import RebookModal from '@/components/modals/RebookModal';
 import PageSection from '@/components/PageSection';
 
-import { TUser } from '@/app/api/types';
 import DashboardIconSvg from '@/constant/user-dashboard/DashboardIconSvg';
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 

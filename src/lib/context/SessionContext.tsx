@@ -1,4 +1,4 @@
-'use server';
+'use client';
 
 /**
  * This file contains a context and provider that allows access to variables related to the current user.

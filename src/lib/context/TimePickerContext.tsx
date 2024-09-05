@@ -18,7 +18,7 @@ type TTimePickerContext = {
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   endTimeDate: Date | undefined;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  handleAddBookRoom: (room: string) => Promise<string>;
+  handleAddBookRoom: (room: string, email: string) => Promise<string>;
   handlePickerStartDateShiftByDay: (shift: number) => void;
   userId: string;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
@@ -107,7 +107,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     return true;
   }
 
-  function handleAddBookRoom(room: string): Promise<string> {
+  function handleAddBookRoom(room: string, email: string): Promise<string> {
     setStartIndex(-1);
     setEndIndex(-1);
     setStartTimeDate(undefined);
@@ -120,6 +120,7 @@ export const TimePickerProvider = ({ children }: Props) => {
         startTime: startTimeDate || new Date(),
         endTime: endTimeDate || new Date(),
         hasConfirmed: false,
+        email: email,
       };
 
       addRoomBooking.mutate(newBooking, {
