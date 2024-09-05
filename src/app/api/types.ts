@@ -5,6 +5,7 @@ export type TUserDb = {
   firstName: string;
   lastName: string;
   email: string;
+  hatchNumber: string;
 };
 
 export type TBookingDb = {

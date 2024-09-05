@@ -10,7 +10,7 @@ type BookingTimeslotProps = {
   room: string;
   variant: 'next' | 'previous';
   handleEdit?: () => void;
-  handleExpand?: () => void;
+  handleExpand?: (startTime: Date, endTime: Date, room: string) => void;
 };
 
 export const BookingTimeslot = ({
@@ -49,7 +49,7 @@ export const BookingTimeslot = ({
         )}
       >
         <Clock className={cn('w-4 h-4 mx-2', textColour)} />
-        <span className='w-full text-center'>
+        <span className='w-full text-center text-nowrap pr-3'>
           {format(startTime, 'h:mm a')} – {format(endTime, 'h:mm a')}
         </span>
       </div>
@@ -87,7 +87,9 @@ export const BookingTimeslot = ({
           </button>
         )}
         <button
-          onClick={handleExpand}
+          onClick={() => {
+            handleExpand && handleExpand(startTime, endTime, room);
+          }}
           className={cn(
             'p-1 rounded-r-full border-l-2 text-white transition-colors duration-200',
             borderColour,
@@ -97,6 +99,7 @@ export const BookingTimeslot = ({
         >
           <Ellipsis className='w-4 h-4 mr-2' />
         </button>
+        <></>
       </div>
     </div>
   );

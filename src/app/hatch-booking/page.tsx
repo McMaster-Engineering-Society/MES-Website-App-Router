@@ -1,11 +1,6 @@
 import { redirect } from 'next/navigation';
-import React from 'react';
 
 import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
-
-import PageLayout from '@/components/layout/PageLayout';
-
-import BookingSystem from '@/app/hatch-booking/BookingPage';
 
 const HatchBookingPage = async () => {
   const isAuthenticated = await checkIsAuthenticated();
@@ -13,11 +8,7 @@ const HatchBookingPage = async () => {
   if (!isAuthenticated) {
     redirect('/auth/sign-in');
   } else {
-    return (
-      <PageLayout noFooter>
-        <BookingSystem />
-      </PageLayout>
-    );
+    redirect('/hatch-booking/new-booking');
   }
 };
 

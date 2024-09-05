@@ -1,3 +1,5 @@
+'use client';
+
 import { addWeeks } from 'date-fns';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
@@ -27,6 +29,13 @@ type TTimePickerContext = {
   setEndIndex: React.Dispatch<React.SetStateAction<number>>;
   checkBookingWithinTwoWeeks: () => boolean;
   checkBookingNotInPast: () => boolean;
+  areBookingsVisible: boolean;
+  setAreBookingsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  roomVisibilities: Record<string, boolean>;
+  setRoomVisibilities: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
+  isAdmin: boolean;
 };
 
 type Props = {
@@ -134,6 +143,19 @@ export const TimePickerProvider = ({ children }: Props) => {
     setEndTimeDate(undefined);
   }
 
+  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
+
+  const isAdmin = false;
+
   return (
     <TimePickerContext.Provider
       value={{
@@ -156,6 +178,11 @@ export const TimePickerProvider = ({ children }: Props) => {
         setEndIndex,
         checkBookingNotInPast,
         checkBookingWithinTwoWeeks,
+        areBookingsVisible,
+        setAreBookingsVisible,
+        roomVisibilities,
+        setRoomVisibilities,
+        isAdmin,
       }}
     >
       {children}

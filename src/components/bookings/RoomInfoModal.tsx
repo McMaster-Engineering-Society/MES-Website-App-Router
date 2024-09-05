@@ -64,8 +64,13 @@ function RoomInfoModal({
                 alt='room pic'
               />
             </ModalBody>
-            <ModalFooter>
-              <Button color='danger' variant='light' onPress={onClose}>
+            <ModalFooter className='justify-center'>
+              <Button
+                color='danger'
+                variant='light'
+                onPress={onClose}
+                className='hidden md:block'
+              >
                 Close
               </Button>
 
@@ -73,6 +78,7 @@ function RoomInfoModal({
                 color='warning'
                 onPress={onClose}
                 onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
+                className='flex-1'
               >
                 {startTimeDate &&
                   endTimeDate &&

@@ -1,16 +1,13 @@
 'use client';
 
-import { Tooltip } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 
+import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { TBooking } from '@/lib/types';
 
+import BookingIndicator from '@/components/bookings/BookingIndicator';
+
 import { TBookingDb } from '@/app/api/types';
-import {
-  AdminBookingIndicatorColours,
-  BookingIndicatorPositions,
-  UserBookingIndicatorColours,
-} from '@/constant/hatch-bookings/booking-indicator-data';
 
 /**
  * mock API call to fetch bookings
@@ -22,8 +19,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2204b87f9ac38c4ba645f',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-24T14:30:00.000Z'),
-      endTime: new Date('2024-08-24T16:30:00.000Z'),
+      startTime: new Date('2024-08-30T14:30:00.000Z'),
+      endTime: new Date('2024-08-30T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:43.845Z'),
@@ -32,8 +29,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2204d87f9ac38c4ba6460',
       userId: 'placeholder ID',
       room: 'H203',
-      startTime: new Date('2024-08-24T14:30:00.000Z'),
-      endTime: new Date('2024-08-24T16:30:00.000Z'),
+      startTime: new Date('2024-08-30T14:30:00.000Z'),
+      endTime: new Date('2024-08-30T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:45.643Z'),
@@ -42,8 +39,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2204f87f9ac38c4ba6461',
       userId: 'placeholder ID',
       room: 'H205',
-      startTime: new Date('2024-08-24T14:30:00.000Z'),
-      endTime: new Date('2024-08-24T16:30:00.000Z'),
+      startTime: new Date('2024-08-30T14:30:00.000Z'),
+      endTime: new Date('2024-08-30T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -52,8 +49,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2204f87f9ac38c4ba6462',
       userId: 'placeholder ID',
       room: 'H204A',
-      startTime: new Date('2024-08-24T14:30:00.000Z'),
-      endTime: new Date('2024-08-24T16:30:00.000Z'),
+      startTime: new Date('2024-08-30T14:30:00.000Z'),
+      endTime: new Date('2024-08-30T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -62,8 +59,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2204f87f9ac38c4ba6463',
       userId: 'placeholder ID',
       room: 'H204B',
-      startTime: new Date('2024-08-24T14:30:00.000Z'),
-      endTime: new Date('2024-08-24T16:30:00.000Z'),
+      startTime: new Date('2024-08-30T14:30:00.000Z'),
+      endTime: new Date('2024-08-30T16:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:47.038Z'),
@@ -72,8 +69,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2205187f9ac38c4ba6462',
       userId: 'placeholder ID',
       room: 'H205',
-      startTime: new Date('2024-08-25T14:00:00.000Z'),
-      endTime: new Date('2024-08-25T15:30:00.000Z'),
+      startTime: new Date('2024-08-31T14:00:00.000Z'),
+      endTime: new Date('2024-08-31T15:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:49.131Z'),
@@ -82,8 +79,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2205387f9ac38c4ba6463',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-25T16:30:00.000Z'),
-      endTime: new Date('2024-08-25T17:00:00.000Z'),
+      startTime: new Date('2024-08-31T16:30:00.000Z'),
+      endTime: new Date('2024-08-31T17:00:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:51.461Z'),
@@ -92,8 +89,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2205887f9ac38c4ba6464',
       userId: 'placeholder ID',
       room: 'H201',
-      startTime: new Date('2024-08-26T16:00:00.000Z'),
-      endTime: new Date('2024-08-26T16:00:00.000Z'),
+      startTime: new Date('2024-09-01T16:00:00.000Z'),
+      endTime: new Date('2024-09-01T16:00:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:24:56.580Z'),
@@ -102,8 +99,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2205c87f9ac38c4ba6465',
       userId: 'placeholder ID',
       room: 'H204A',
-      startTime: new Date('2024-08-25T17:00:00.000Z'),
-      endTime: new Date('2024-08-25T17:30:00.000Z'),
+      startTime: new Date('2024-08-31T17:00:00.000Z'),
+      endTime: new Date('2024-08-31T17:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:25:00.799Z'),
@@ -112,8 +109,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2206587f9ac38c4ba6466',
       userId: 'placeholder ID',
       room: 'H204B',
-      startTime: new Date('2024-08-25T18:00:00.000Z'),
-      endTime: new Date('2024-08-25T18:30:00.000Z'),
+      startTime: new Date('2024-08-31T18:00:00.000Z'),
+      endTime: new Date('2024-08-31T18:30:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:25:09.076Z'),
@@ -122,8 +119,8 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
       _id: '66c2206787f9ac38c4ba6467',
       userId: 'placeholder ID',
       room: 'H204B',
-      startTime: new Date('2024-08-27T21:00:00.000Z'),
-      endTime: new Date('2024-08-27T22:00:00.000Z'),
+      startTime: new Date('2024-09-02T21:00:00.000Z'),
+      endTime: new Date('2024-09-02T22:00:00.000Z'),
       hasConfirmed: false,
       email: 'placeholder email',
       createdDate: new Date('2024-08-18T16:25:11.231Z'),
@@ -133,43 +130,30 @@ async function fetchAllBookings(): Promise<TBookingDb[]> {
   return mockBookings;
 }
 
-type Booking = {
-  room: string;
-  startTime: Date;
-  endTime: Date;
-};
-
 /**
  * @param isAdmin if true, display all existing bookings. if false, display only user's existing bookings
- * @param userBookings array of user's existing bookings
  * @param daysToShow array containing the first dates of each time picker column
  * @param timeslotCount number of timeslots to show on the time picker; determines rows
  * @param firstTimeslot eg. "11:00:00.000Z"
- * @param roomVisibilities boolean array to determine which rooms should have bookings shown
  */
 type TimePickerBookingsProps = {
   isAdmin: boolean;
-  userBookings: TBooking[] | undefined;
   daysToShow: Date[];
   timeslotCount: number;
   firstTimeslot: string;
-  roomVisibilities: {
-    [room: string]: boolean;
-  };
 };
 
 const TimePickerBookings = ({
   isAdmin,
-  userBookings,
   daysToShow,
   timeslotCount,
   firstTimeslot,
-  roomVisibilities,
 }: TimePickerBookingsProps) => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings, setBookings] = useState<TBooking[]>([]);
+  const { userBookings, roomVisibilities } = useTimePickerContext();
 
   useEffect(() => {
-    const visibleBookings: Booking[] = [];
+    const visibleBookings: TBooking[] = [];
     if (isAdmin) {
       fetchAllBookings().then((data) => {
         data.forEach((booking) => {
@@ -179,11 +163,7 @@ const TimePickerBookings = ({
           );
 
           if (timeslotDiv) {
-            visibleBookings.push({
-              room: booking.room,
-              startTime: new Date(booking.startTime),
-              endTime: new Date(booking.endTime),
-            });
+            visibleBookings.push(booking);
           }
         });
 
@@ -197,11 +177,7 @@ const TimePickerBookings = ({
         );
 
         if (timeslotDiv) {
-          visibleBookings.push({
-            room: booking.room,
-            startTime: new Date(booking.startTime),
-            endTime: new Date(booking.endTime),
-          });
+          visibleBookings.push(booking);
         }
       });
 
@@ -212,53 +188,23 @@ const TimePickerBookings = ({
   const TimePickerCell = ({ time }: { time: string }) => {
     // finds all the bookings at a certain time
     const bookingsAtTime = bookings.filter((booking) => {
-      return booking.startTime.toISOString() == time;
+      return new Date(booking.startTime).toISOString() == time;
     });
 
-    const getRoomIndicatorHeight = (start: Date, end: Date) => {
-      return `${((end.getTime() - start.getTime()) / 1800000) * 16 + 8}px`;
-    };
-
     return (
-      <div id={time} className='relative h-4 flex justify-evenly w-full'>
+      <div id={time} className='relative flex w-full flex-1 justify-evenly'>
         {bookingsAtTime.length != 0
           ? bookingsAtTime.map((booking) => {
               if (!roomVisibilities[`${booking.room}`]) {
                 return null;
               }
 
-              // substract 4 hours worth of milliseconds for EST
-              const formattedStartTime = new Date(
-                booking.startTime.getTime() - 14400000,
-              );
-              // substract 4 hours worth of milliseconds for EST
-              // add 30 minutes worth of milliseconds to make range include last timeslot
-              const formattedEndTime = new Date(
-                booking.endTime.getTime() - 14400000 + 1800000,
-              );
-              const bookingTooltipContent = `${booking.room}, ${formattedStartTime.toISOString().split('T')[1].substring(0, 5)}-${formattedEndTime.toISOString().split('T')[1].substring(0, 5)}`;
-
               return (
-                <div
+                <BookingIndicator
                   key={`${time}-${booking.room}`}
-                  className={`absolute top-1/3 flex justify-center items-center text-xs ${BookingIndicatorPositions[booking.room] || ''}`}
-                >
-                  <Tooltip
-                    showArrow
-                    content={bookingTooltipContent}
-                    placement='bottom'
-                  >
-                    <div
-                      style={{
-                        height: getRoomIndicatorHeight(
-                          booking.startTime,
-                          booking.endTime,
-                        ),
-                      }}
-                      className={`w-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours[booking.room] : UserBookingIndicatorColours[booking.room]) || 'bg-gray-500/70'} pointer-events-auto`}
-                    />
-                  </Tooltip>
-                </div>
+                  booking={booking}
+                  isAdmin={isAdmin}
+                />
               );
             })
           : null}
@@ -268,7 +214,7 @@ const TimePickerBookings = ({
 
   return (
     <div
-      className={`grid grid-cols-${daysToShow.length} absolute top-0 w-full h-full pointer-events-none`}
+      className={`grid grid-cols-${daysToShow.length} pointer-events-none absolute top-0 h-full w-full`}
     >
       {[...Array(daysToShow.length)].map((_, i) => {
         // initializes the starting date & time for each column
@@ -284,7 +230,7 @@ const TimePickerBookings = ({
           <div
             key={firstTimeOfColumn.toISOString().split('T')[0]}
             id={firstTimeOfColumn.toISOString().split('T')[0]}
-            className='flex flex-col justify-start items-center opacity-100'
+            className='flex flex-col items-center justify-start opacity-100'
           >
             {[...Array(timeslotCount)].map((_, j) => {
               // creates a shallow copy of firstTimeOfColumn

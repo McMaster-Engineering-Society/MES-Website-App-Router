@@ -70,3 +70,14 @@ export const handleEmailSignIn = async (email: string) => {
     redirect('/auth/error');
   }
 };
+
+export const getSessionUser = async () => {
+  const session = await auth();
+  // eslint-disable-next-line no-console
+  console.log(session);
+  if (session?.user) {
+    return session.user ?? null;
+  } else {
+    return null;
+  }
+};
