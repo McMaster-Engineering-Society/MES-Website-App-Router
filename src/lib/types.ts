@@ -19,6 +19,21 @@ export type TBooking = {
   createdDate?: Date;
 };
 
+export type TRole = 'admin' | 'hatch-user' | 'club' | 'super-admin';
+
+export type TProfile = {
+  _id: string | ObjectId;
+  // primary key email
+  email: string;
+  roles: TRole[];
+  firstName?: string;
+  lastName?: string;
+  program?: string;
+  year?: string;
+  hatchNumber?: string;
+  phoneNumber?: string;
+};
+
 export type TBatchBookingRequest = { bookingList: TBooking[] };
 export type TBatchDeleteBookingRequest = { bookingIdList: string[] };
 
