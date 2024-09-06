@@ -172,7 +172,7 @@ export default function ElectionsPage() {
       <main className='layout'>
         <section>
           <PageHeading
-            preTitle='MES 2023-24 ELECTIONS'
+            preTitle='MES 2024-25 ELECTIONS'
             title='Shoot Your Shot!'
             variant='pink'
           />

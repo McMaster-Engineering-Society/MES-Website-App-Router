@@ -53,7 +53,55 @@ export const electionInfo: ElectionInfo = {
   ],
   positions: [
     {
-      title: 'First Year Representative',
+      title: 'Engineering 1 MES Liaison',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'iBioMed Representative',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'Computer Science Representative',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'B.Tech Representative',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'First Year Council Chair',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'Outreach Team Leader',
+      nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
+      nomineePackageSubmission:
+        'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
+      //   candidates: vpStudentLife,
+      eligibilityRequirements: 'Candidates must be in Level 1 to apply',
+    },
+    {
+      title: 'Events Team Leader',
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
