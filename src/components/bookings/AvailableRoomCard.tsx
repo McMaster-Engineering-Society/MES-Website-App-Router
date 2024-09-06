@@ -21,11 +21,11 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
   const { handleAddBookRoom } = useTimePickerContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const resourceKeys = Object.keys(roomInfo.resources);
-  const { userEmail } = useSessionContext();
+  const { user } = useSessionContext();
 
   function handleConfirmBookingWithMessage() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    handleAddBookRoom(roomInfo.roomName, userEmail!).then(
+    handleAddBookRoom(roomInfo.roomName, user!.email!).then(
       (response: string) => {
         toast(response);
       },

@@ -15,9 +15,11 @@ import {
 } from 'react';
 
 import { getUserEmail } from '@/lib/auth/emailSignInHelper';
+import { useFetchUserbyEmailHook } from '@/lib/hooks/userHooks';
+import { TUser } from '@/lib/types';
 
 type TSessionContext = {
-  userEmail: string | null;
+  user: TUser | null;
 };
 
 export const SessionContext = createContext<TSessionContext | undefined>(
@@ -29,21 +31,23 @@ type Props = {
 };
 
 export const SessionProvider = ({ children }: Props) => {
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserEmail = async () => {
-      const email = await getUserEmail();
-      setUserEmail(email);
+      const fetchedEmail = await getUserEmail();
+      setEmail(fetchedEmail);
     };
 
     fetchUserEmail();
   }, []);
 
+  const { data: user } = useFetchUserbyEmailHook(email);
+
   return (
     <SessionContext.Provider
       value={{
-        userEmail,
+        user: user ?? null,
       }}
     >
       {children}

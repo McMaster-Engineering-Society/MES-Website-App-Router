@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { TBooking, TUser } from '@/lib/types';
+import { useSessionContext } from '@/lib/context/SessionContext';
+import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
@@ -27,9 +28,7 @@ const queryClient = new QueryClient();
 
 // todo: add routing protection, only logged in users should be able to access this page
 const UserDashboard = () => {
-  const [userId, setUserId] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userData, setUserData] = useState<TUser | null>(null);
+  const { user } = useSessionContext();
   const [nextBookingsData, setNextBookingsData] = useState<TBooking[]>([]);
   const [pastBookingsData, setPastBookingsData] = useState<TBooking[]>([]);
   const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
@@ -44,20 +43,6 @@ const UserDashboard = () => {
   // todo: ask if we should we only display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
   // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
-
-  const fetchUserInfo = async (userId: string) => {
-    const response = await fetch(`/api/users/get-user?userId=${userId}`, {
-      method: 'GET',
-    });
-    const jsonResponse = await response.json();
-    setUserData({
-      _id: jsonResponse.data._id,
-      firstName: jsonResponse.data.firstName,
-      lastName: jsonResponse.data.lastName,
-      email: jsonResponse.data.email,
-      hatchNumber: jsonResponse.data.hatchNumber,
-    });
-  };
 
   const fetchPastBookingsByEmail = async (email: string) => {
     // To get the past bookings, use the range where start date is a year before today's date and end date is today
@@ -112,7 +97,7 @@ const UserDashboard = () => {
 
     setNextBooking(jsonResponse.data.shift());
 
-    setNextBookingsData((oldNextBookingsData) => {
+    setNextBookingsData(() => {
       const newBookings: TBooking[] = jsonResponse.data.map(
         (booking: TBooking) => ({
           _id: booking._id,
@@ -126,29 +111,14 @@ const UserDashboard = () => {
         }),
       );
 
-      return [...oldNextBookingsData, ...newBookings];
+      return newBookings;
     });
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      // const sessionUser = await getSessionUser();
-      // sessionUser?.id ? setUserId(sessionUser.id) : null;
-      // sessionUser?.email? setUserEmail(sessionUser.email) : null;
-
-      // hard coded for testing purposes:
-      setUserEmail('email@email.com');
-      setUserId('66d3cb524cace04fac19f4b6');
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    userId ? fetchUserInfo(userId) : null;
-    userEmail ? fetchNextBookingsByEmail(userEmail) : null;
-    userEmail ? fetchPastBookingsByEmail(userEmail) : null;
-  }, [userId, userEmail]);
+    user ? fetchNextBookingsByEmail(user.email) : null;
+    user ? fetchPastBookingsByEmail(user.email) : null;
+  }, [user]);
 
   function handleExpand(
     startTime: Date,
@@ -178,21 +148,20 @@ const UserDashboard = () => {
               leftIcon={UserRoundCogIcon}
               className='rounded-lg max-h-[350px]'
             >
-              {userData && (
+              {user && (
                 <div className='flex flex-row items-center justify-center gap-6 min-h-[75px]'>
                   <ProfilePicture />
                   <div className='flex flex-col'>
                     <div className='flex flex-row place-items-center space-x-2'>
                       <p className='text-2xl font-bold'>
-                        {userData.firstName} {userData.lastName}
+                        {user.firstName} {user.lastName}
                       </p>
                       <p className='text-gray-500 font-light'>
-                        {userData.hatchNumber &&
-                          'hatch ' + userData.hatchNumber}
+                        {user.hatchNumber && 'hatch ' + user.hatchNumber}
                       </p>
                     </div>
                     <p className='text-gray-500 font-light underline'>
-                      {userData.email}
+                      {user.email}
                     </p>
                     {/* todo: add account edit button, right now we don't have an update user endpoint or screen*/}
                   </div>

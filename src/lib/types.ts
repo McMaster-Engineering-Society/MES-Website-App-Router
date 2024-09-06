@@ -2,10 +2,15 @@ import { ObjectId } from 'mongodb';
 
 export type TUser = {
   _id: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  // primary key email
   email: string;
-  hatchNumber: string;
+  phoneNumber?: string;
+  hatchNumber?: string;
+  roles?: TRole[];
+  program?: string;
+  year?: number;
 };
 
 export type TBooking = {

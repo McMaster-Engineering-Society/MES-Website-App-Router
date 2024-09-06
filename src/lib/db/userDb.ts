@@ -48,6 +48,24 @@ const getUserByIdDb = async (userId: string): Promise<TUserDb | null> => {
   }
 };
 
+const getUserByEmailDb = async (userEmail: string): Promise<TUserDb | null> => {
+  try {
+    const usersCollection = await getUsersCollection();
+    const user: WithId<TUserDb> | null = await usersCollection.findOne({
+      email: userEmail,
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error fetching user by id from database:', error);
+    throw new Error('Database error');
+  }
+};
+
 const deleteUserByIdDb = async (userId: string): Promise<TUserDb | null> => {
   try {
     const usersCollection = await getUsersCollection();
@@ -92,4 +110,10 @@ const createUserDb = async (newUser: TUserDb): Promise<TUserDb | null> => {
   }
 };
 
-export { createUserDb, deleteUserByIdDb, getAllUsersDb, getUserByIdDb };
+export {
+  createUserDb,
+  deleteUserByIdDb,
+  getAllUsersDb,
+  getUserByEmailDb,
+  getUserByIdDb,
+};
