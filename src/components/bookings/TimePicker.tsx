@@ -73,6 +73,7 @@ export default function TimePicker({
    * @todo integrate with date picker arrows
    */
   const {
+    availableRoomIds,
     setAvailableRoomIds,
     setStartTimeDate,
     setEndTimeDate,
@@ -257,6 +258,7 @@ export default function TimePicker({
         timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
         timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
         maxBlockLengths={maxBlockLengths}
+        availableRoomIds={availableRoomIds}
         setAvailableRoomIds={setAvailableRoomIds}
         setStartTimeDate={setStartTimeDate}
         setEndTimeDate={setEndTimeDate}
@@ -276,6 +278,7 @@ type TimePickerTableProps = {
   timeSlotIndexToTimeISO: (i: number) => string;
   timeSlotIndexToTimeISODate: (i: number) => Date;
   maxBlockLengths: number[];
+  availableRoomIds: string[];
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
@@ -292,6 +295,7 @@ function TimePickerTable({
   timeSlotIndexToTimeISO,
   timeSlotIndexToTimeISODate,
   maxBlockLengths,
+  availableRoomIds,
   setAvailableRoomIds,
   setStartTimeDate,
   setEndTimeDate,
@@ -333,7 +337,11 @@ function TimePickerTable({
       });
 
       // Convert intersectionRooms to an array and set state
-      setAvailableRoomIds(intersectionRooms);
+      if (
+        JSON.stringify(availableRoomIds) !== JSON.stringify(intersectionRooms)
+      ) {
+        setAvailableRoomIds(intersectionRooms);
+      }
     };
 
     handleSetAvailableRoomIds();
@@ -343,6 +351,7 @@ function TimePickerTable({
     roomsAvailableByTime,
     setAvailableRoomIds,
     timeSlotIndexToTimeISO,
+    availableRoomIds,
   ]);
 
   const slotIsSelected = (slotIndex: number) =>

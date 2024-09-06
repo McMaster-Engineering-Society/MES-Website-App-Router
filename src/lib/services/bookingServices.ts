@@ -5,7 +5,7 @@ import {
   createBookingDb,
   deleteBatchBookingDb,
   deleteBookingByIdDb,
-  getBookingsByUserDb,
+  getBookingsByEmailDb,
   getBookingsInDateRangeAndEmailDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
@@ -239,18 +239,18 @@ export const updateBookingByIdService = async (
   }
 };
 
-export const getBookingsByUserIdService = async (
-  userId: string,
+export const getBookingsByUserEmailService = async (
+  userEmail: string,
 ): Promise<TBooking[] | null> => {
   try {
-    const bookings = await getBookingsByUserDb(userId);
+    const bookings = await getBookingsByEmailDb(userEmail);
 
     const adaptedBookings = bookings.map(adaptTBookingToTBookingDb);
 
     return adaptedBookings;
   } catch (error) {
     /* eslint-disable no-console */
-    console.error('Error in get booking by userId services:', error);
+    console.error('Error in get booking by userEmail services:', error);
     return null;
   }
 };

@@ -326,7 +326,7 @@ export const updateBookingByIdDb = async (
   }
 };
 
-export const getBookingsByUserDb = async (userId: string) => {
+export const getBookingsByEmailDb = async (userEmail: string) => {
   try {
     const bookingsCollection = await getBookingsCollection();
     const currentDate = new Date();
@@ -337,14 +337,17 @@ export const getBookingsByUserDb = async (userId: string) => {
       currentDate.getTime() + 14 * 24 * 60 * 60 * 1000,
     );
     const cursor = await bookingsCollection.find({
-      userId,
+      email: userEmail,
       startTime: { $lt: twoWeeksAfter },
       endTime: { $gt: twoWeeksBefore },
     });
     const bookings = await cursor.toArray();
     return bookings;
   } catch (error) {
-    console.error('Error retrieving bookings by user from database:', error);
+    console.error(
+      'Error retrieving bookings by user email from database:',
+      error,
+    );
     throw new Error('Database error');
   }
 };

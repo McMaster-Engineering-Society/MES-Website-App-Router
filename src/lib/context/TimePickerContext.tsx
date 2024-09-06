@@ -3,6 +3,7 @@
 import { addWeeks } from 'date-fns';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
+import { useSessionContext } from '@/lib/context/SessionContext';
 import {
   useAddRoomBookingHook,
   useFetchUserBookingsHook,
@@ -20,8 +21,6 @@ type TTimePickerContext = {
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   handleAddBookRoom: (room: string, email: string) => Promise<string>;
   handlePickerStartDateShiftByDay: (shift: number) => void;
-  userId: string;
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
   startIndex: number;
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -79,11 +78,10 @@ export const TimePickerProvider = ({ children }: Props) => {
     undefined,
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
-  const [userId, setUserId] = useState<string>('placeholderID'); // TODO: replace with real ID or just get rid of ID.
-
+  const { user } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
 
-  const { data: userBookings } = useFetchUserBookingsHook(userId);
+  const { data: userBookings } = useFetchUserBookingsHook(user?.email ?? '');
 
   function checkBookingWithinTwoWeeks() {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
@@ -115,7 +113,7 @@ export const TimePickerProvider = ({ children }: Props) => {
 
     return new Promise((resolve) => {
       const newBooking: TBooking = {
-        userId: userId,
+        userId: user?._id ?? '',
         room: room,
         startTime: startTimeDate || new Date(),
         endTime: endTimeDate || new Date(),
@@ -170,8 +168,6 @@ export const TimePickerProvider = ({ children }: Props) => {
         setEndTimeDate,
         handleAddBookRoom,
         handlePickerStartDateShiftByDay,
-        userId,
-        setUserId,
         userBookings,
         startIndex,
         setStartIndex,
