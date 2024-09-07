@@ -119,19 +119,6 @@ const UserDashboard = () => {
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      // const sessionUser = await getSessionUser();
-      // sessionUser?.id ? setUserId(sessionUser.id) : null;
-      // sessionUser?.email? setUserEmail(sessionUser.email) : null;
-
-      // hard coded for testing purposes:
-      setUserId('66d3cb524cace04fac19f4b6');
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
     profile ? fetchNextBookingsByEmail(profile?.email) : null;
     profile ? fetchPastBookingsByEmail(profile?.email) : null;
   }, [profile]);
