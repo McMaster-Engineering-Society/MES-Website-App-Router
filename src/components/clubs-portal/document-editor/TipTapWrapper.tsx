@@ -104,6 +104,7 @@ export const TipTapWrapper = ({ docId }: { docId: string }) => {
     }
 
     const document: TDocument = {
+      _id: docId,
       title: 'temp',
       content: editor.document,
       // content: "test"

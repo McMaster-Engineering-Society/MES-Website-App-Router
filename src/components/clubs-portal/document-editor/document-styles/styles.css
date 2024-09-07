@@ -185,6 +185,25 @@
   position: relative;
 }
 
+.rounded-border {
+  color: black;
+  border: 2px solid;
+  border-color: rgb(166 25 46);
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  display: inline-block;
+  text-align: left;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.rounded-border:hover {
+  border-color: black;
+  cursor: pointer;
+}
+
 @media (max-width: 540px) {
   .col-group {
     flex-direction: column-reverse;
