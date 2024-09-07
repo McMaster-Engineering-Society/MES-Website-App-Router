@@ -31,8 +31,7 @@ const queryClient = new QueryClient();
 
 // todo: add routing protection, only logged in users should be able to access this page
 const UserDashboard = () => {
-  const [userId, setUserId] = useState('');
-  const { user } = useSessionContext();
+  const { profile } = useSessionContext();
   const [nextBookingsData, setNextBookingsData] = useState<TBooking[]>([]);
   const [pastBookingsData, setPastBookingsData] = useState<TBooking[]>([]);
   const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
@@ -133,9 +132,9 @@ const UserDashboard = () => {
   }, []);
 
   useEffect(() => {
-    user ? fetchNextBookingsByEmail(user?.email) : null;
-    user ? fetchPastBookingsByEmail(user?.email) : null;
-  }, [userId, user]);
+    profile ? fetchNextBookingsByEmail(profile?.email) : null;
+    profile ? fetchPastBookingsByEmail(profile?.email) : null;
+  }, [profile]);
 
   function handleExpand(
     startTime: Date,
@@ -184,20 +183,21 @@ const UserDashboard = () => {
                   leftIcon={UserRoundCogIcon}
                   className='rounded-lg max-h-[350px]'
                 >
-                  {user && (
+                  {profile && (
                     <div className='flex flex-row items-center justify-center gap-6 min-h-[75px]'>
                       <ProfilePicture />
                       <div className='flex flex-col'>
                         <div className='flex flex-row place-items-center space-x-2'>
                           <p className='text-2xl font-bold'>
-                            {user.firstName} {user.lastName}
+                            {profile.firstName} {profile.lastName}
                           </p>
                           <p className='text-gray-500 font-light'>
-                            {user.hatchNumber && 'hatch ' + user.hatchNumber}
+                            {profile.hatchNumber &&
+                              'hatch ' + profile.hatchNumber}
                           </p>
                         </div>
                         <p className='text-gray-500 font-light underline'>
-                          {user.email}
+                          {profile.email}
                         </p>
                         {/* todo: add account edit button, right now we don't have an update user endpoint or screen*/}
                       </div>

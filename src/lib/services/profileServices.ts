@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 import {
   createProfileDb,
   deleteProfileByIdDb,
@@ -31,11 +33,22 @@ export const getProfileByIdService = async (
   }
 };
 
-export const getProfileByEmailService = async (
+export const getProfileByEmailAndCreateIfNullService = async (
   email: string,
 ): Promise<TProfile | null> => {
   try {
     const profile = await getProfileByEmailDb(email);
+
+    if (!profile) {
+      const newProfile = await createProfileDb({
+        _id: new ObjectId(),
+        email,
+        roles: ['hatch-user'],
+      });
+
+      return newProfile;
+    }
+
     return profile;
   } catch (error) {
     /* eslint-disable no-console */

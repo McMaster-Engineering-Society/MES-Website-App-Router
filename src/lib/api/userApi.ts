@@ -1,10 +1,10 @@
-export const fetchUserByEmail = async (email: string) => {
+export const fetchProfileByEmail = async (email: string) => {
   if (process.env.NEXT_PUBLIC_URL === undefined) {
     throw new Error('NEXT_PUBLIC_URL is not defined');
   }
 
   const response = await fetch(
-    process.env.NEXT_PUBLIC_URL + '/api/users/get-user-by-email?email=' + email,
+    process.env.NEXT_PUBLIC_URL + '/api/profiles/email/' + email,
   );
 
   if (!response.ok) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getProfileByEmailService } from '@/lib/services/profileServices';
+import { getProfileByEmailAndCreateIfNullService } from '@/lib/services/profileServices';
 import { TProfile } from '@/lib/types';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
@@ -20,7 +20,7 @@ export async function GET(req: Request, context: { params: getEmailParams }) {
   }
 
   try {
-    const profile = await getProfileByEmailService(profileEmail);
+    const profile = await getProfileByEmailAndCreateIfNullService(profileEmail);
     if (!profile) {
       return NextResponse.json<TMessageResponse>(
         { message: 'Profile not found' },

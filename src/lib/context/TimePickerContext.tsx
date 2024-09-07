@@ -78,10 +78,10 @@ export const TimePickerProvider = ({ children }: Props) => {
     undefined,
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
-  const { user } = useSessionContext();
+  const { profile } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
 
-  const { data: userBookings } = useFetchUserBookingsHook(user?.email ?? '');
+  const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
 
   function checkBookingWithinTwoWeeks() {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
@@ -113,7 +113,7 @@ export const TimePickerProvider = ({ children }: Props) => {
 
     return new Promise((resolve) => {
       const newBooking: TBooking = {
-        userId: user?._id ?? '',
+        userId: profile?._id.toString() ?? '',
         room: room,
         startTime: startTimeDate || new Date(),
         endTime: endTimeDate || new Date(),

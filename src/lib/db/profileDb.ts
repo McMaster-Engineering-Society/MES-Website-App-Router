@@ -77,8 +77,6 @@ export const deleteProfileByIdDb = async (
     const userObjectId = new ObjectId(userId);
     const user: WithId<TProfile> | null =
       await usersCollection.findOneAndDelete({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore: ObjectId type mismatch
         _id: userObjectId,
       });
 
