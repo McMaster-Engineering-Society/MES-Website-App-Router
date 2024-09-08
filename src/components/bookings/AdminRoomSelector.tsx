@@ -30,7 +30,7 @@ const AdminRoomSelector = () => {
 
   const handleTimeslotAction = () => {
     toast(
-      `Performed "${Array.from(selectedAction)[0]}" on bookings in timeslot _ on room(s) ${selectedRooms.map((room) => ` ${room}`)}`,
+      `Performed "${Array.from(selectedAction)[0]}" on bookings in timeslot _ on room(s) ${selectedRooms.map((room) => ` ${room}`)}`, // TODO: mention timeslot that was used
     );
     setSelectedRooms([]);
     setSelectedAction(new Set([]));
