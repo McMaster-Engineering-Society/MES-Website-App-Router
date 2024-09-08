@@ -1,17 +1,13 @@
-import { redirect } from 'next/navigation';
-
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
+import SignInGatePage from '@/components/auth/SignInGatePage';
 
 import BookingPage from '@/app/hatch-booking/new-booking/NewBookingPage';
 
-const NewBookingPage = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
-
-  if (!isAuthenticated) {
-    redirect('/auth/sign-in');
-  } else {
-    return <BookingPage />;
-  }
+const NewBookingPage = () => {
+  return (
+    <SignInGatePage requireSignIn={true} href='/auth/sign-in'>
+      <BookingPage />
+    </SignInGatePage>
+  );
 };
 
 export default NewBookingPage;

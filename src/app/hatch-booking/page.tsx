@@ -1,11 +1,12 @@
+'use client';
 import { redirect } from 'next/navigation';
 
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
+import { useSessionContext } from '@/lib/context/SessionContext';
 
-const HatchBookingPage = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
+const HatchBookingPage = () => {
+  const { profile } = useSessionContext();
 
-  if (!isAuthenticated) {
+  if (!profile) {
     redirect('/auth/sign-in');
   } else {
     redirect('/hatch-booking/new-booking');

@@ -1,22 +1,17 @@
-import { redirect } from 'next/navigation';
-
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
-import { useSessionContext } from '@/lib/context/SessionContext';
+import SignInGatePage from '@/components/auth/SignInGatePage';
 
 import AdminDashboardPage from '@/app/hatch-admin-dashboard/AdminDashboardPage';
 
-const AdminPage = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
-  const { isAdmin } = useSessionContext();
-
-  if (!isAuthenticated) {
-    redirect('/auth/sign-in');
-  } else if (!isAdmin) {
-    // Redirects user to regular booking page if they are not an admin.
-    redirect('/hatch-booking/new-booking');
-  } else {
-    return <AdminDashboardPage />;
-  }
+const AdminPage = () => {
+  return (
+    <SignInGatePage
+      requireSignIn={true}
+      href='/auth/sign-in'
+      adminRequired={true}
+    >
+      <AdminDashboardPage />
+    </SignInGatePage>
+  );
 };
 
 export default AdminPage;

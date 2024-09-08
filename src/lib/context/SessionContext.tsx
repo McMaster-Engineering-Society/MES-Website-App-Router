@@ -19,7 +19,7 @@ import { useFetchProfileByEmailHook } from '@/lib/hooks/profileHooks';
 import { TProfile } from '@/lib/types';
 
 type TSessionContext = {
-  profile: TProfile | null;
+  profile?: TProfile;
   isAdmin: boolean;
 };
 
@@ -50,12 +50,7 @@ export const SessionProvider = ({ children }: Props) => {
     roles !== undefined && roles.includes('hatch-admin') ? true : false;
 
   return (
-    <SessionContext.Provider
-      value={{
-        profile: profile ?? null,
-        isAdmin: isAdmin,
-      }}
-    >
+    <SessionContext.Provider value={{ profile: profile, isAdmin: isAdmin }}>
       {children}
     </SessionContext.Provider>
   );

@@ -28,6 +28,7 @@ const queryClient = new QueryClient();
 
 const UserDashboard = () => {
   const { profile } = useSessionContext();
+
   const [nextBookingsData, setNextBookingsData] = useState<TBooking[]>([]);
   const [pastBookingsData, setPastBookingsData] = useState<TBooking[]>([]);
   const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
