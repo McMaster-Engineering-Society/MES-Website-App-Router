@@ -26,7 +26,6 @@ import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 
 const queryClient = new QueryClient();
 
-// todo: add routing protection, only logged in users should be able to access this page
 const UserDashboard = () => {
   const { profile } = useSessionContext();
   const [nextBookingsData, setNextBookingsData] = useState<TBooking[]>([]);
@@ -39,8 +38,6 @@ const UserDashboard = () => {
   const [displayRoom, setDisplayRoom] = useState<string>('');
   const [displayUserId, setDisplayUserId] = useState<string>('');
   const [displayEmail, setDisplayEmail] = useState<string>('');
-
-  // todo: ask if we should we only display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
   // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
