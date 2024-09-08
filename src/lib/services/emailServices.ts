@@ -25,7 +25,7 @@ export async function sendEmailService(
     });
 
     const mailOptions = {
-      from: EMAIL_FROM,
+      from: 'Hatch Booking System',
       to,
       subject,
       text,
