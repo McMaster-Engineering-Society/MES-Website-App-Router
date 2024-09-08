@@ -1,21 +1,25 @@
 'use client';
 
 import {
+  Input,
   Popover,
   PopoverContent,
   PopoverTrigger,
   Tooltip,
 } from '@nextui-org/react';
+import Fuse from 'fuse.js';
 import Link from 'next/link';
 import Papa, { ParseResult } from 'papaparse';
 import * as path from 'path';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { IconType } from 'react-icons';
 import { BsMicrosoftTeams } from 'react-icons/bs';
 import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaSearch,
   FaTwitter,
 } from 'react-icons/fa';
 import {
@@ -71,6 +75,20 @@ type ClubTeam = {
 
 const ClubsAndTeams = () => {
   const [clubsAndTeams, setClubsAndTeams] = useState<ClubTeam[]>([]);
+  const [filteredResults, setFilteredResults] = useState<ClubTeam[]>([]);
+  const [query, updateQuery] = useState('');
+
+ const fuseOptions = {
+  keys: ['Organization Name'],
+  isCaseSensitive: false,
+  threshold: 0.3,
+  includeScore: true,
+  shouldSort: true,
+  distance: 100,
+ }
+
+ const fuse = new Fuse(clubsAndTeams, fuseOptions);
+
 
   const fetchData = async () => {
     const filePath = path.resolve(
@@ -117,21 +135,45 @@ const ClubsAndTeams = () => {
       return clubTeam;
     });
 
-    return parsedData;
+    setClubsAndTeams(parsedData);
+    setFilteredResults(parsedData);
   };
 
+
   useEffect(() => {
-    fetchData().then((data) => {
-      setClubsAndTeams(data);
-    });
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    let results = clubsAndTeams;
+  
+    if (query.trim()) {
+      results = fuse.search(query).map(({ item }) => item);
+    }
+  
+    setFilteredResults(results);
+  }, [query, fuse, clubsAndTeams]);
+
 
   return (
     <PageLayout>
       <main className='layout'>
+      <div className="search-box" >
+      <Input 
+      type="String" 
+      label="Search" 
+      className='search-bar'
+      classNames={{
+        inputWrapper: 'shadow-xl'
+      }}
+      value={query}
+      onChange={(e) => updateQuery(e.target.value)}
+      />
+      <FaSearch className='search-icon'/>
+      </div>
         <section id='clubs-and-teams-list'>
           <ul className='grid grid-cols-1 gap-x-12 gap-y-4 lg:grid-cols-2'>
-            {clubsAndTeams.map((clubTeam) => (
+            {filteredResults.map((clubTeam) => (
               <li key={clubTeam.Acronym}>
                 <div className='flex flex-row items-center justify-between'>
                   <div className='flex flex-row items-center gap-x-4'>
