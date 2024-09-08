@@ -45,7 +45,7 @@ export const handleEmailSignIn = async (email: string) => {
     // await signOut({redirect: false});
 
     // Perform the sign-in using nodemailer to send a magic link.
-    await signIn('nodemailer', { email, callbackUrl: '/booking-system' });
+    await signIn('nodemailer', { email, callbackUrl: '/hatch-booking' });
     errorThrown = false;
   } catch (error) {
     // We need to catch errors because of how auth errors work, but wrapping signIn in a try catch block seems to throw redirect errors (pretty sure it also sends it without the try catch)

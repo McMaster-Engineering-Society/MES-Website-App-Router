@@ -4,7 +4,10 @@ import NodeMailer from 'next-auth/providers/nodemailer';
 import { createTransport } from 'nodemailer';
 
 import clientPromise from '@/lib/db';
-import { html, text } from '@/lib/emailHelper';
+import {
+  generateLoginEmailHtml,
+  generateLoginEmailText,
+} from '@/lib/emailHelper';
 
 // Checks if the domain name is mcmaster
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -41,19 +44,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         domain = domain.split(',')[0];
         return `${local}@${domain}`;
       },
-      async sendVerificationRequest({
-        identifier,
-        url,
-        provider: { server, from },
-      }) {
-        const { host } = new URL(url);
+      async sendVerificationRequest({ identifier, url, provider: { server } }) {
         const transport = createTransport(server);
         const result = await transport.sendMail({
           to: identifier,
-          from: from,
-          subject: `Sign in to ${host}`,
-          text: text({ url, host }),
-          html: html({ url, host }),
+          from: 'Hatch Booking System',
+          subject: `Verify your hatch login`,
+          text: generateLoginEmailText({ url }),
+          html: generateLoginEmailHtml({ url }),
         });
         const failed = result.rejected.concat(result.pending).filter(Boolean);
         if (failed.length) {

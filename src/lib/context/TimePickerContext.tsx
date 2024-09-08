@@ -3,6 +3,7 @@
 import { addWeeks } from 'date-fns';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
+import { useSessionContext } from '@/lib/context/SessionContext';
 import {
   useAddRoomBookingHook,
   useFetchUserBookingsHook,
@@ -18,10 +19,8 @@ type TTimePickerContext = {
   setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   endTimeDate: Date | undefined;
   setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  handleAddBookRoom: (room: string) => Promise<string>;
+  handleAddBookRoom: (room: string, email: string) => Promise<string>;
   handlePickerStartDateShiftByDay: (shift: number) => void;
-  userId: string;
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
   userBookings: TBooking[] | undefined;
   startIndex: number;
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -79,11 +78,10 @@ export const TimePickerProvider = ({ children }: Props) => {
     undefined,
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
-  const [userId, setUserId] = useState<string>('placeholderID');
-
+  const { profile } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
 
-  const { data: userBookings } = useFetchUserBookingsHook(userId);
+  const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
 
   function checkBookingWithinTwoWeeks() {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
@@ -107,7 +105,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     return true;
   }
 
-  function handleAddBookRoom(room: string): Promise<string> {
+  function handleAddBookRoom(room: string, email: string): Promise<string> {
     setStartIndex(-1);
     setEndIndex(-1);
     setStartTimeDate(undefined);
@@ -115,12 +113,12 @@ export const TimePickerProvider = ({ children }: Props) => {
 
     return new Promise((resolve) => {
       const newBooking: TBooking = {
-        userId: userId,
+        userId: profile?._id.toString() ?? '',
         room: room,
         startTime: startTimeDate || new Date(),
         endTime: endTimeDate || new Date(),
         hasConfirmed: false,
-        email: 'placeholder email',
+        email: email,
       };
 
       addRoomBooking.mutate(newBooking, {
@@ -170,8 +168,6 @@ export const TimePickerProvider = ({ children }: Props) => {
         setEndTimeDate,
         handleAddBookRoom,
         handlePickerStartDateShiftByDay,
-        userId,
-        setUserId,
         userBookings,
         startIndex,
         setStartIndex,

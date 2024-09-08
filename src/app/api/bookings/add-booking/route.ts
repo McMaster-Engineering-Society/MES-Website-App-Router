@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   if (!booking) {
     return NextResponse.json<TMessageResponse>(
-      { message: 'Booking information is required' },
+      { message: 'Booking information is required.' },
       { status: 400 },
     );
   }

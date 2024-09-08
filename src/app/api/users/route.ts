@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getAllUsersService } from '@/lib/services/userServices';
 
-import { TApiResponse, TMessageResponse, TUser } from '@/app/api/types';
+import { TApiResponse, TMessageResponse, TUserDb } from '@/app/api/types';
 
 export async function GET() {
   const allUsersList = await getAllUsersService();
@@ -11,5 +11,5 @@ export async function GET() {
     return NextResponse.json<TMessageResponse>({
       message: 'list of all users not found',
     });
-  return NextResponse.json<TApiResponse<TUser[]>>({ data: allUsersList });
+  return NextResponse.json<TApiResponse<TUserDb[]>>({ data: allUsersList });
 }

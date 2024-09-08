@@ -9,7 +9,7 @@ const SignIn = async () => {
   const isAuthenticated = await checkIsAuthenticated();
 
   if (isAuthenticated) {
-    redirect('/booking-system');
+    redirect('/hatch-booking');
   } else {
     return <SignInPage />;
   }

@@ -2,20 +2,22 @@ import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
 
-import { TUser } from '@/app/api/types';
+import { TUserDb } from '@/app/api/types';
 
 const getUsersCollection = async () => {
   const client = await clientPromise;
 
   const db = client.db();
-  const usersCollection = db.collection<TUser>('users');
+  const usersCollection = db.collection<TUserDb>('users');
   return usersCollection;
 };
 
-const getAllUsersDb = async (): Promise<TUser[]> => {
+const getAllUsersDb = async (): Promise<TUserDb[]> => {
   try {
     const usersCollection = await getUsersCollection();
-    const userList: WithId<TUser>[] = await usersCollection.find({}).toArray();
+    const userList: WithId<TUserDb>[] = await usersCollection
+      .find({})
+      .toArray();
 
     return userList;
   } catch (error) {
@@ -25,11 +27,11 @@ const getAllUsersDb = async (): Promise<TUser[]> => {
   }
 };
 
-const getUserByIdDb = async (userId: string): Promise<TUser | null> => {
+const getUserByIdDb = async (userId: string): Promise<TUserDb | null> => {
   try {
     const usersCollection = await getUsersCollection();
     const userObjectId = new ObjectId(userId);
-    const user: WithId<TUser> | null = await usersCollection.findOne({
+    const user: WithId<TUserDb> | null = await usersCollection.findOne({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: ObjectId type mismatch
       _id: userObjectId,
@@ -46,14 +48,11 @@ const getUserByIdDb = async (userId: string): Promise<TUser | null> => {
   }
 };
 
-const deleteUserByIdDb = async (userId: string): Promise<TUser | null> => {
+const getUserByEmailDb = async (userEmail: string): Promise<TUserDb | null> => {
   try {
     const usersCollection = await getUsersCollection();
-    const userObjectId = new ObjectId(userId);
-    const user: WithId<TUser> | null = await usersCollection.findOneAndDelete({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: ObjectId type mismatch
-      _id: userObjectId,
+    const user: WithId<TUserDb> | null = await usersCollection.findOne({
+      email: userEmail,
     });
 
     if (!user) {
@@ -67,7 +66,30 @@ const deleteUserByIdDb = async (userId: string): Promise<TUser | null> => {
   }
 };
 
-const createUserDb = async (newUser: TUser): Promise<TUser | null> => {
+const deleteUserByIdDb = async (userId: string): Promise<TUserDb | null> => {
+  try {
+    const usersCollection = await getUsersCollection();
+    const userObjectId = new ObjectId(userId);
+    const user: WithId<TUserDb> | null = await usersCollection.findOneAndDelete(
+      {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: ObjectId type mismatch
+        _id: userObjectId,
+      },
+    );
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error fetching user by id from database:', error);
+    throw new Error('Database error');
+  }
+};
+
+const createUserDb = async (newUser: TUserDb): Promise<TUserDb | null> => {
   try {
     const usersCollection = await getUsersCollection();
     const result: InsertOneResult = await usersCollection.insertOne(newUser);
@@ -76,7 +98,7 @@ const createUserDb = async (newUser: TUser): Promise<TUser | null> => {
       throw new Error('Failed to insert user');
     }
 
-    const createdUser: TUser = {
+    const createdUser: TUserDb = {
       ...newUser,
       _id: result.insertedId.toString(),
     };
@@ -88,4 +110,10 @@ const createUserDb = async (newUser: TUser): Promise<TUser | null> => {
   }
 };
 
-export { createUserDb, deleteUserByIdDb, getAllUsersDb, getUserByIdDb };
+export {
+  createUserDb,
+  deleteUserByIdDb,
+  getAllUsersDb,
+  getUserByEmailDb,
+  getUserByIdDb,
+};
