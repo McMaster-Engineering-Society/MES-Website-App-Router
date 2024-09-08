@@ -122,7 +122,11 @@ export const TimePickerProvider = ({ children }: Props) => {
   const [availableRoomIds, setAvailableRoomIds] = useState<string[]>([]);
   const [startIndex, setStartIndex] = useState<number>(-1);
   const [endIndex, setEndIndex] = useState<number>(-1);
-  const { profile } = useSessionContext();
+  const [startTimeDate, setStartTimeDate] = useState<Date | undefined>(
+    undefined,
+  );
+  const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
+  const { profile, isAdmin } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
   const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
 
@@ -240,7 +244,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     H204B: true,
   });
 
-  const isAdmin = false;
+  const userIsAdmin = isAdmin;
 
   return (
     <TimePickerContext.Provider
@@ -262,7 +266,7 @@ export const TimePickerProvider = ({ children }: Props) => {
         setAreBookingsVisible,
         roomVisibilities,
         setRoomVisibilities,
-        isAdmin,
+        isAdmin: userIsAdmin,
         timeslots,
         timeSlotIndexToTimeISODate,
         timeSlotIndexToTimeISO,
