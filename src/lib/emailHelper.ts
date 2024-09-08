@@ -148,7 +148,7 @@ export function generateSuccessfulBookingEmailHtml(
 
 export function generateSuccessfulBookingEmailText(
   name: string,
-  successfulBooking: TBooking,
+  successfulBooking: TBookingDb,
 ) {
   const { startTime, endTime, createdDate, room } = successfulBooking;
 
