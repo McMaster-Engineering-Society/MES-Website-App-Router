@@ -10,6 +10,12 @@ import {
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/lib/db/bookingDb';
+import {
+  generateSuccessfulBookingEmailHtml,
+  generateSuccessfulBookingEmailText,
+} from '@/lib/emailHelper';
+import { sendEmailService } from '@/lib/services/emailServices';
+import { getProfileByEmailAndCreateIfNullService } from '@/lib/services/profileServices';
 import { getDisabledRoomsService } from '@/lib/services/roomServices';
 import { TBatchBookingResponse, TBooking } from '@/lib/types';
 
@@ -55,6 +61,7 @@ export const createBookingService = async (
         adaptedBooking,
         disabledRooms.disabledRooms,
       );
+      sendBookingConfirmationEmailService(booking);
       return adaptTBookingDbToTBooking(booking);
     }
   } catch (error) {
@@ -63,6 +70,7 @@ export const createBookingService = async (
     return null;
   }
 };
+
 export const deleteBatchBookingService = async (
   bookingIDsToDelete: string[],
 ): Promise<(WithId<TBooking> | null)[] | null> => {
@@ -159,6 +167,7 @@ export const getBookingsInDateRangeAndEmailService = async (
     return null;
   }
 };
+
 /**
  * Approach:
  * Adds all times in the range as available
@@ -253,4 +262,28 @@ export const getBookingsByUserEmailService = async (
     console.error('Error in get booking by userEmail services:', error);
     return null;
   }
+};
+
+export const sendBookingConfirmationEmailService = async (
+  createdBooking: TBookingDb,
+) => {
+  const userProfile = await getProfileByEmailAndCreateIfNullService(
+    createdBooking.email,
+  );
+
+  const emailSubject = 'Hatch Booking Confirmation';
+  const emailTo = createdBooking.email;
+  const emailName = userProfile?.firstName || 'Unnamed Hatch User';
+
+  const emailHtml = generateSuccessfulBookingEmailHtml(
+    emailName,
+    createdBooking,
+  );
+  const emailText = generateSuccessfulBookingEmailText(
+    emailName,
+    createdBooking,
+  );
+
+  // Send the email
+  await sendEmailService(emailTo, emailSubject, emailText, emailHtml);
 };
