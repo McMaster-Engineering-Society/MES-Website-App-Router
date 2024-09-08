@@ -24,7 +24,12 @@ export type TBooking = {
   createdDate?: Date;
 };
 
-export type TRole = 'admin' | 'hatch-user' | 'club' | 'super-admin';
+export type TRole =
+  | 'hatch-admin'
+  | 'clubs-admin'
+  | 'hatch-user'
+  | 'club'
+  | 'super-admin';
 
 export type TProfile = {
   _id: string | ObjectId;
