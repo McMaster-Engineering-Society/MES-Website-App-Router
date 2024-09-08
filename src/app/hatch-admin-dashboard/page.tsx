@@ -7,12 +7,11 @@ import AdminDashboardPage from '@/app/hatch-admin-dashboard/AdminDashboardPage';
 
 const AdminPage = async () => {
   const isAuthenticated = await checkIsAuthenticated();
-  const { profile } = useSessionContext();
-  const roles = profile?.roles;
+  const { isAdmin } = useSessionContext();
 
   if (!isAuthenticated) {
     redirect('/auth/sign-in');
-  } else if (roles !== undefined && !roles.includes('hatch-admin')) {
+  } else if (!isAdmin) {
     // Redirects user to regular booking page if they are not an admin.
     redirect('/hatch-booking/new-booking');
   } else {

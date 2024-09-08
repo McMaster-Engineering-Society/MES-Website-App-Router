@@ -78,7 +78,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     undefined,
   );
   const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
-  const { profile } = useSessionContext();
+  const { profile, isAdmin } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
 
   const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
@@ -153,7 +153,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     H204B: true,
   });
 
-  const isAdmin = false;
+  const userIsAdmin = isAdmin;
 
   return (
     <TimePickerContext.Provider
@@ -179,7 +179,7 @@ export const TimePickerProvider = ({ children }: Props) => {
         setAreBookingsVisible,
         roomVisibilities,
         setRoomVisibilities,
-        isAdmin,
+        isAdmin: userIsAdmin,
       }}
     >
       {children}
