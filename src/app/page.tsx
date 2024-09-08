@@ -7,7 +7,6 @@ import { IconType } from 'react-icons';
 import {
   IoChatbubblesOutline,
   IoDocumentTextOutline,
-  IoGlobeOutline,
   IoNewspaperOutline,
   IoPeopleOutline,
 } from 'react-icons/io5';
@@ -34,6 +33,19 @@ const CALENDAR_IDS: CalendarId[] = [
     id: 'macengsociety.ca_1287bevihgvppm0boumra7eb6c@group.calendar.google.com',
   },
 ];
+
+const WeeklyNews = () => (
+  <div>
+    <iframe
+      src='https://drive.google.com/file/d/1n9nsqtIWQN7F6gt_1al_1bRBxYd7pXm6/preview'
+      width='853'
+      height='480'
+      allow='autoplay'
+      allowFullScreen
+    ></iframe>
+  </div>
+);
+
 const quickLinks: { icon: IconType; label: string; href: string }[] = [
   {
     icon: IoChatbubblesOutline,
@@ -54,11 +66,6 @@ const quickLinks: { icon: IconType; label: string; href: string }[] = [
     icon: IoNewspaperOutline,
     label: 'Advertisement Request',
     href: councilForms[0].forms[0].link,
-  },
-  {
-    icon: IoGlobeOutline,
-    label: 'Web Update Request',
-    href: councilForms[0].forms[1].link,
   },
 ];
 
@@ -265,7 +272,7 @@ export default function HomePage() {
                   <p className='text-xs font-medium md:text-sm'>
                     {electionStatus}
                   </p>
-                  <h1 className='text-2xl md:text-5xl'>Rep & VP</h1>
+                  <h1 className='text-2xl md:text-5xl'>MES</h1>
                   <h1 className='text-2xl md:text-5xl'>Elections</h1>
                 </div>
                 <Button
@@ -312,6 +319,19 @@ export default function HomePage() {
             </Link>
           ))}
         </motion.section>
+        <section
+          style={{
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <h1>Weekly News</h1>
+          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 1</h4>
+          <WeeklyNews />
+        </section>
         <section id='calendar'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} darkMode />
         </section>

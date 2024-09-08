@@ -10,15 +10,17 @@ import {
 
 const ExternalConferencesList = () => {
   return (
-    <div>
+    <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-3'>
       {ExternalConferences.map((conference, index) => (
         <ConferencePageSection
-          key={index} // Add a unique key to each component
+          key={index}
           title={conference.title}
           location={conference.location}
           dates={conference.dates}
           delegates={conference.delegates}
+          links={conference.links}
           body={conference.body}
+          image={conference.image}
         />
       ))}
     </div>
@@ -27,15 +29,17 @@ const ExternalConferencesList = () => {
 
 const InternalConferencesList = () => {
   return (
-    <div>
+    <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-3'>
       {InternalConferences.map((conference, index) => (
         <ConferencePageSection
-          key={index} // Add a unique key to each component
+          key={index}
           title={conference.title}
           location={conference.location}
           dates={conference.dates}
           delegates={conference.delegates}
+          links={conference.links}
           body={conference.body}
+          image={conference.image}
         />
       ))}
     </div>

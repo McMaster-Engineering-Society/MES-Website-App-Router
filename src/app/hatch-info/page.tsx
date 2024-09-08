@@ -1,6 +1,6 @@
 import BookingInstructions from '@/components/bookings/BookingInstructions';
+import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
-import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
@@ -28,12 +28,9 @@ export default function HatchInfoPage() {
                   in these lockers. The MES will provide a lock when the locker
                   is assigned, for a refundable deposit of $10.
                 </div>
-                <ButtonLink
-                  href='https://docs.google.com/forms/d/e/1FAIpQLSfHollv3ZKvkBE2onCFKOvapwbmjUrKH9dlri0_9NrfNtpFWg/viewform'
-                  className='my-4 justify-center'
-                >
-                  Fill Out This Form to Reserve a Locker
-                </ButtonLink>
+                <Button disabled className='my-4 justify-center'>
+                  2024-2025 Locker reservations coming soon!
+                </Button>
                 <div>
                   The Hatch Centre Student Coordinator will then contact you to
                   confirm the details of your reservation. If you have any more

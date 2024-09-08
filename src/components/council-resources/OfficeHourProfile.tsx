@@ -25,13 +25,21 @@ const OfficeHourProfile = ({ officeHour }: OfficeHourProfileProps) => {
       </div>
       <div
         id='details'
-        className='ml-2 flex h-full flex-col justify-between py-2'
+        className='ml-2 flex h-full flex-col justify-center lg:justify-between py-2'
       >
         <div id='heading' className='flex flex-col'>
-          <h3 className={cn(['pr-12 text-xl uppercase text-gray-800'])}>
+          <h3
+            className={cn([
+              'pr-12 text-xl md:max-lg:text-lg uppercase text-gray-800',
+            ])}
+          >
             {officeHour.name}
           </h3>
-          <div className={cn(['text-primary-700 text-md font-bold uppercase'])}>
+          <div
+            className={cn([
+              'text-primary-700 text-sm lg:text-base font-bold uppercase',
+            ])}
+          >
             {officeHour.position}
           </div>
         </div>
@@ -40,7 +48,7 @@ const OfficeHourProfile = ({ officeHour }: OfficeHourProfileProps) => {
           {officeHour.officeHours.map((timing) => (
             <div
               key={timing.day}
-              className='text-sm text-black'
+              className='text-xs lg:text-sm text-black'
             >{`${timing.day} @ ${timing.time}`}</div>
           ))}
           {officeHour.officeHours.length === 0 && (
