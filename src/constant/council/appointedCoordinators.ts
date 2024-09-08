@@ -111,7 +111,7 @@ export const CommunicationsPortfolioCoordinators: CoordinatorDetails[] = [
   {
     name: 'Lina ElGheriany',
     role: 'Photographer/Videographer',
-    image: '/images/default-picture.jpeg',
+    image: '/images/council-24-25/lina-elgheriany.jpg',
   },
   {
     name: 'Abdul Mannan Mohammed',
@@ -126,7 +126,7 @@ export const CommunicationsPortfolioCoordinators: CoordinatorDetails[] = [
   {
     name: 'Lina ElGheriany',
     role: 'Social Media Coordinator',
-    image: '/images/default-picture.jpeg',
+    image: '/images/council-24-25/lina-elgheriany.jpg',
   },
   {
     name: 'Maryam Khatib',
