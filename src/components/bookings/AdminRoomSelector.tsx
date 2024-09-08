@@ -8,7 +8,7 @@ import { RoomButton } from '@/components/bookings/RoomButton';
 import RoomToggleSwitch from '@/components/bookings/RoomToggleSwitch';
 
 const AdminRoomSelector = () => {
-  const { startTimeDate } = useTimePickerContext();
+  const { startIndex } = useTimePickerContext();
 
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [selectedAction, setSelectedAction] = useState<Set<string>>(
@@ -18,7 +18,7 @@ const AdminRoomSelector = () => {
   useEffect(() => {
     setSelectedRooms([]);
     setSelectedAction(new Set([]));
-  }, [startTimeDate]);
+  }, [startIndex]);
 
   const handleRoomAction = () => {
     toast(
@@ -39,7 +39,7 @@ const AdminRoomSelector = () => {
   return (
     <div className='flex flex-col h-[600px] w-[350px] gap-2'>
       <div className='flex-none h-[70px] w-full p-2 bg-[#CACDD1] font-bold text-center rounded-xl items-center justify-center'>
-        {!startTimeDate ? (
+        {!startIndex ? (
           selectedRooms.length ? (
             <div className='flex gap-1'>
               <Select

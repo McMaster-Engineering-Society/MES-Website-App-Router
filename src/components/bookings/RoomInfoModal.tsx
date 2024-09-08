@@ -30,7 +30,8 @@ function RoomInfoModal({
   handleConfirmBookingWithMessage,
 }: Props) {
   const resourceKeys = Object.keys(roomInfo.resources);
-  const { startTimeDate, endTimeDate } = useTimePickerContext();
+  const { startIndex, endIndex, timeSlotIndexToTimeISODate } =
+    useTimePickerContext();
   return (
     <Modal
       size='md'
@@ -80,12 +81,15 @@ function RoomInfoModal({
                 onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
                 className='flex-1'
               >
-                {startTimeDate &&
-                  endTimeDate &&
+                {startIndex &&
+                  endIndex &&
                   'Book for ' +
-                    format(startTimeDate, 'MMMM do h:mm') +
+                    format(
+                      timeSlotIndexToTimeISODate(startIndex),
+                      'MMMM do h:mm',
+                    ) +
                     ' to ' +
-                    format(endTimeDate, 'h:mm')}
+                    format(timeSlotIndexToTimeISODate(endIndex), 'h:mm')}
               </Button>
             </ModalFooter>
           </>

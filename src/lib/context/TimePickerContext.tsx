@@ -1,7 +1,14 @@
 'use client';
 
 import { addWeeks } from 'date-fns';
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 import { useSessionContext } from '@/lib/context/SessionContext';
 import {
@@ -10,15 +17,49 @@ import {
 } from '@/lib/hooks/bookingHooks';
 import { TBooking } from '@/lib/types';
 
+/**
+ * human readable time slots (local time)
+ */
+const timeslots = [
+  '7 AM',
+  '7:30 AM',
+  '8 AM',
+  '8:30 AM',
+  '9 AM',
+  '9:30 AM',
+  '10 AM',
+  '10:30 AM',
+  '11 AM',
+  '11:30 AM',
+  '12 PM',
+  '12:30 PM',
+  '1 PM',
+  '1:30 PM',
+  '2 PM',
+  '2:30 PM',
+  '3 PM',
+  '3:30 PM',
+  '4 PM',
+  '4:30 PM',
+  '5 PM',
+  '5:30 PM',
+  '6 PM',
+  '6:30 PM',
+  '7 PM',
+  '7:30 PM',
+  '8 PM',
+  '8:30 PM',
+  '9 PM',
+  '9:30 PM',
+  '10 PM',
+  '10:30 PM',
+];
+
 type TTimePickerContext = {
   pickerStartDate: Date;
   setPickerStartDate: (date: Date) => void;
   availableRoomIds: string[];
   setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
-  startTimeDate: Date | undefined;
-  setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  endTimeDate: Date | undefined;
-  setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   handleAddBookRoom: (room: string, email: string) => Promise<string>;
   handlePickerStartDateShiftByDay: (shift: number) => void;
   userBookings: TBooking[] | undefined;
@@ -35,6 +76,9 @@ type TTimePickerContext = {
     React.SetStateAction<Record<string, boolean>>
   >;
   isAdmin: boolean;
+  timeslots: string[];
+  timeSlotIndexToTimeISODate: (timeSlotIndex: number) => Date;
+  timeSlotIndexToTimeISO: (timeSlotIndex: number) => string;
 };
 
 type Props = {
@@ -74,10 +118,6 @@ export const TimePickerProvider = ({ children }: Props) => {
   const [availableRoomIds, setAvailableRoomIds] = useState<string[]>([]);
   const [startIndex, setStartIndex] = useState<number>(-1);
   const [endIndex, setEndIndex] = useState<number>(-1);
-  const [startTimeDate, setStartTimeDate] = useState<Date | undefined>(
-    undefined,
-  );
-  const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
   const { profile } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
 
@@ -87,7 +127,7 @@ export const TimePickerProvider = ({ children }: Props) => {
     const twoWeeksFromNow = addWeeks(new Date(), 2);
     if (
       (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
-      (endTimeDate && endTimeDate > twoWeeksFromNow)
+      (endIndex && timeSlotIndexToTimeISODate(endIndex) > twoWeeksFromNow)
     ) {
       return false;
     }
@@ -97,7 +137,7 @@ export const TimePickerProvider = ({ children }: Props) => {
   function checkBookingNotInPast() {
     pickerEndDate.setDate(pickerStartDate.getDate() + 6);
     if (
-      (startTimeDate && startTimeDate < new Date()) ||
+      (startIndex && timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
       (pickerEndDate && pickerEndDate < new Date())
     ) {
       return false;
@@ -108,15 +148,13 @@ export const TimePickerProvider = ({ children }: Props) => {
   function handleAddBookRoom(room: string, email: string): Promise<string> {
     setStartIndex(-1);
     setEndIndex(-1);
-    setStartTimeDate(undefined);
-    setEndTimeDate(undefined);
 
     return new Promise((resolve) => {
       const newBooking: TBooking = {
         userId: profile?._id.toString() ?? '',
         room: room,
-        startTime: startTimeDate || new Date(),
-        endTime: endTimeDate || new Date(),
+        startTime: timeSlotIndexToTimeISODate(startIndex) || new Date(),
+        endTime: timeSlotIndexToTimeISODate(endIndex) || new Date(),
         hasConfirmed: false,
         email: email,
       };
@@ -138,8 +176,6 @@ export const TimePickerProvider = ({ children }: Props) => {
     setPickerStartDate(newDate);
     setStartIndex(-1);
     setEndIndex(-1);
-    setStartTimeDate(undefined);
-    setEndTimeDate(undefined);
   }
 
   const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
@@ -155,6 +191,40 @@ export const TimePickerProvider = ({ children }: Props) => {
 
   const isAdmin = false;
 
+  /**
+   * convert time slot index to Date for indexing into availabilities
+   * ex. 0 -> "2024-08-11T11:00:00.000Z"
+   */
+  const timeSlotIndexToTimeISODate = useCallback(
+    (timeSlotIndex: number) => {
+      const time = new Date(pickerStartDate);
+      // slot at index timeslots.length+1 is the first slot of the next day
+      const daysOffset = Math.floor(timeSlotIndex / timeslots.length);
+      // i.e. first slot of every day should have an offset of 0
+      const hoursOffset = timeSlotIndex % timeslots.length;
+      time.setDate(time.getDate() + daysOffset);
+      time.setUTCHours(
+        firstTimeSlotOfTheDayUTC + Math.floor(hoursOffset / 2),
+        (hoursOffset % 2) * 30,
+        0,
+        0,
+      );
+      return time;
+    },
+    [pickerStartDate],
+  );
+
+  /**
+   * convert time slot index to ISO string for indexing into availabilities
+   * ex. 0 -> "2024-08-11T11:00:00.000Z"
+   */
+  const timeSlotIndexToTimeISO = useCallback(
+    (timeSlotIndex: number) => {
+      return timeSlotIndexToTimeISODate(timeSlotIndex).toISOString();
+    },
+    [timeSlotIndexToTimeISODate],
+  );
+
   return (
     <TimePickerContext.Provider
       value={{
@@ -162,10 +232,6 @@ export const TimePickerProvider = ({ children }: Props) => {
         setPickerStartDate,
         availableRoomIds,
         setAvailableRoomIds,
-        startTimeDate,
-        setStartTimeDate,
-        endTimeDate,
-        setEndTimeDate,
         handleAddBookRoom,
         handlePickerStartDateShiftByDay,
         userBookings,
@@ -180,6 +246,9 @@ export const TimePickerProvider = ({ children }: Props) => {
         roomVisibilities,
         setRoomVisibilities,
         isAdmin,
+        timeslots,
+        timeSlotIndexToTimeISODate,
+        timeSlotIndexToTimeISO,
       }}
     >
       {children}

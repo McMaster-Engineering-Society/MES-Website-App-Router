@@ -11,9 +11,9 @@ import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 export default function AvailableRooms({ className }: { className?: string }) {
   const {
     availableRoomIds,
-    startTimeDate,
     checkBookingNotInPast,
     checkBookingWithinTwoWeeks,
+    startIndex,
   } = useTimePickerContext();
 
   const numAvailRooms = availableRoomIds.length;
@@ -33,9 +33,9 @@ export default function AvailableRooms({ className }: { className?: string }) {
           <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             Booking can only be made within two weeks
           </div>
-        ) : !startTimeDate || (startTimeDate && numAvailRooms === 0) ? (
+        ) : !startIndex || (startIndex && numAvailRooms === 0) ? (
           <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
-            {startTimeDate
+            {startIndex
               ? numAvailRooms === 0
                 ? 'No Rooms Available'
                 : null
