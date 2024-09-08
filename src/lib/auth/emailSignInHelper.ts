@@ -18,21 +18,6 @@ export const getUserEmail = async () => {
 };
 
 /**
- * Returns a boolean value detailing if a user is authenticated (has a valid and active session in the database).
- * @returns True if user is authenticated already, false if not.
- */
-export const checkIsAuthenticated = async () => {
-  const session = await auth();
-  // eslint-disable-next-line no-console
-  console.log(session);
-  if (session) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-/**
  * Sends a magic link for sign in to the input email.
  * @param email email that is attemping to sign in using nodemailer. Assumes it has already been checked for validity.
  */
