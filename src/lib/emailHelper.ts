@@ -69,10 +69,10 @@ export function generateLoginEmailText({ url }: { url: string }) {
   return `Thanks for logging in to the Hatch Booking System! We're excited to have you on board.\n\nFollow this link to log in: ${url}\n\nIf you did not request this email you can safely ignore it.\n\nMcMaster Engineering Society`;
 }
 
-// Used backend type for TBooking because this will be called from the backend.
+// Used backend type for TBookingDb because this will be called from the backend.
 export function generateSuccessfulBookingEmailHtml(
   name: string,
-  successfulBooking: TBooking,
+  successfulBooking: TBookingDb,
 ) {
   const { startTime, endTime, createdDate, room } = successfulBooking;
 
