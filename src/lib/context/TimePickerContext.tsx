@@ -93,7 +93,7 @@ const firstTimeSlotOfTheDayUTC = 11;
 
 export const TimePickerProvider = ({ children }: Props) => {
   // Gets the current date in EST and sets the time to the first time slot of the day
-  const [pickerStartDate, setPickerStartDate] = useState<Date>(() => {
+  const initialPickerStartDate = useMemo(() => {
     const estDate = new Date(
       new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
     );
@@ -108,7 +108,11 @@ export const TimePickerProvider = ({ children }: Props) => {
         0,
       ),
     );
-  });
+  }, []);
+
+  const [pickerStartDate, setPickerStartDate] = useState<Date>(
+    initialPickerStartDate,
+  );
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
@@ -120,76 +124,7 @@ export const TimePickerProvider = ({ children }: Props) => {
   const [endIndex, setEndIndex] = useState<number>(-1);
   const { profile } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
-
   const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
-
-  function checkBookingWithinTwoWeeks() {
-    const twoWeeksFromNow = addWeeks(new Date(), 2);
-    if (
-      (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
-      (endIndex && timeSlotIndexToTimeISODate(endIndex) > twoWeeksFromNow)
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  function checkBookingNotInPast() {
-    pickerEndDate.setDate(pickerStartDate.getDate() + 6);
-    if (
-      (startIndex && timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
-      (pickerEndDate && pickerEndDate < new Date())
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  function handleAddBookRoom(room: string, email: string): Promise<string> {
-    setStartIndex(-1);
-    setEndIndex(-1);
-
-    return new Promise((resolve) => {
-      const newBooking: TBooking = {
-        userId: profile?._id.toString() ?? '',
-        room: room,
-        startTime: timeSlotIndexToTimeISODate(startIndex) || new Date(),
-        endTime: timeSlotIndexToTimeISODate(endIndex) || new Date(),
-        hasConfirmed: false,
-        email: email,
-      };
-
-      addRoomBooking.mutate(newBooking, {
-        onSuccess: () => {
-          resolve('Room has been successfully booked.');
-        },
-        onError: () => {
-          resolve('Room booking was unsuccessful.');
-        },
-      });
-    });
-  }
-
-  function handlePickerStartDateShiftByDay(shift: number) {
-    const newDate = new Date(pickerStartDate);
-    newDate.setUTCDate(newDate.getUTCDate() + shift);
-    setPickerStartDate(newDate);
-    setStartIndex(-1);
-    setEndIndex(-1);
-  }
-
-  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
-  const [roomVisibilities, setRoomVisibilities] = useState<
-    Record<string, boolean>
-  >({
-    H201: true,
-    H203: true,
-    H205: true,
-    H204A: true,
-    H204B: true,
-  });
-
-  const isAdmin = false;
 
   /**
    * convert time slot index to Date for indexing into availabilities
@@ -224,6 +159,88 @@ export const TimePickerProvider = ({ children }: Props) => {
     },
     [timeSlotIndexToTimeISODate],
   );
+
+  const checkBookingWithinTwoWeeks = useCallback(() => {
+    const twoWeeksFromNow = addWeeks(new Date(), 2);
+    if (
+      (pickerStartDate && pickerStartDate > twoWeeksFromNow) ||
+      (endIndex && timeSlotIndexToTimeISODate(endIndex) > twoWeeksFromNow)
+    ) {
+      return false;
+    }
+    return true;
+  }, [pickerStartDate, endIndex, timeSlotIndexToTimeISODate]);
+
+  const checkBookingNotInPast = useCallback(() => {
+    pickerEndDate.setDate(pickerStartDate.getDate() + 6);
+    if (
+      (startIndex && timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
+      (pickerEndDate && pickerEndDate < new Date())
+    ) {
+      return false;
+    }
+    return true;
+  }, [pickerStartDate, pickerEndDate, startIndex, timeSlotIndexToTimeISODate]);
+
+  const handleAddBookRoom = useCallback(
+    (room: string, email: string): Promise<string> => {
+      setStartIndex(-1);
+      setEndIndex(-1);
+
+      return new Promise((resolve) => {
+        const newBooking: TBooking = {
+          userId: profile?._id.toString() ?? '',
+          room: room,
+          startTime: timeSlotIndexToTimeISODate(startIndex) || new Date(),
+          endTime: timeSlotIndexToTimeISODate(endIndex) || new Date(),
+          hasConfirmed: false,
+          email: email,
+        };
+
+        addRoomBooking.mutate(newBooking, {
+          onSuccess: () => {
+            resolve('Room has been successfully booked.');
+          },
+          onError: () => {
+            resolve('Room booking was unsuccessful.');
+          },
+        });
+      });
+    },
+    [
+      profile,
+      setStartIndex,
+      setEndIndex,
+      timeSlotIndexToTimeISODate,
+      startIndex,
+      endIndex,
+      addRoomBooking,
+    ],
+  );
+
+  const handlePickerStartDateShiftByDay = useCallback(
+    (shift: number) => {
+      const newDate = new Date(pickerStartDate);
+      newDate.setUTCDate(newDate.getUTCDate() + shift);
+      setPickerStartDate(newDate);
+      setStartIndex(-1);
+      setEndIndex(-1);
+    },
+    [pickerStartDate, setPickerStartDate, setStartIndex, setEndIndex],
+  );
+
+  const [areBookingsVisible, setAreBookingsVisible] = useState<boolean>(true);
+  const [roomVisibilities, setRoomVisibilities] = useState<
+    Record<string, boolean>
+  >({
+    H201: true,
+    H203: true,
+    H205: true,
+    H204A: true,
+    H204B: true,
+  });
+
+  const isAdmin = false;
 
   return (
     <TimePickerContext.Provider

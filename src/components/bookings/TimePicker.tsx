@@ -1,7 +1,7 @@
 'use client';
 
 import { differenceInCalendarDays } from 'date-fns';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
@@ -32,17 +32,8 @@ export default function TimePicker({
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const {
-    availableRoomIds,
-    setAvailableRoomIds,
-    userBookings,
-    pickerStartDate,
-    areBookingsVisible,
-    roomVisibilities,
-    isAdmin,
-    timeslots,
-    timeSlotIndexToTimeISO,
-  } = useTimePickerContext();
+  const { userBookings, pickerStartDate, timeslots, timeSlotIndexToTimeISO } =
+    useTimePickerContext();
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
@@ -188,12 +179,7 @@ export default function TimePicker({
         daysToShow={daysToShow}
         roomsAvailableByTime={roomsAvailableByTime}
         maxBlockLengths={maxBlockLengths}
-        availableRoomIds={availableRoomIds}
-        setAvailableRoomIds={setAvailableRoomIds}
         userBookings={userBookings}
-        areBookingsVisible={areBookingsVisible}
-        roomVisibilities={roomVisibilities}
-        isAdmin={isAdmin}
       />
     </div>
   );
@@ -204,12 +190,7 @@ type TimePickerTableProps = {
   daysToShow: Date[];
   roomsAvailableByTime: Record<string, string[]>;
   maxBlockLengths: number[];
-  availableRoomIds: string[];
-  setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
   userBookings: TBooking[] | undefined;
-  areBookingsVisible: boolean;
-  roomVisibilities: Record<string, boolean>;
-  isAdmin: boolean;
 };
 
 function TimePickerTable({
@@ -217,10 +198,6 @@ function TimePickerTable({
   daysToShow,
   roomsAvailableByTime,
   maxBlockLengths,
-  availableRoomIds,
-  setAvailableRoomIds,
-  areBookingsVisible,
-  isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const {
@@ -230,6 +207,10 @@ function TimePickerTable({
     setEndIndex,
     timeslots,
     timeSlotIndexToTimeISO,
+    isAdmin,
+    availableRoomIds,
+    setAvailableRoomIds,
+    areBookingsVisible,
   } = useTimePickerContext();
 
   const timeslotsPerDay = timeslots.length;
@@ -424,10 +405,8 @@ function TimePickerTable({
     e.preventDefault();
   };
 
-  const TimeIndicators = () => {
-    {
-      /* time indicators along the side */
-    }
+  const TimeIndicators = memo(() => {
+    /* time indicators along the side */
     return (
       <div className='mr-1 mt-14 flex flex-col justify-stretch'>
         {timeslots.map((slot: string, i) => {
@@ -444,7 +423,7 @@ function TimePickerTable({
         })}
       </div>
     );
-  };
+  });
 
   const gridColClass: Record<NumDaysToShow, string> = {
     1: 'grid-cols-1',
