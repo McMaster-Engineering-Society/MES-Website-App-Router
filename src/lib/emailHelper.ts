@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { TBooking } from '@/app/api/types';
+import { TBookingDb } from '@/app/api/types';
 
 export function generateLoginEmailHtml(params: { url: string }) {
   const { url } = params;
@@ -133,13 +133,6 @@ export function generateSuccessfulBookingEmailHtml(
                         </tr>
                       </tbody>
                     </table>
-                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px;padding-top:0">
-                      <tbody style="width:100%">
-                        <tr style="width:100%">
-                          <td colSpan="2" data-id="__react-email-column" style="display:flex;justify-content:center;width:100%"><a style="line-height:100%;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;background-color:#e00707;border-radius:3px;color:#FFF;font-weight:bold;border:1px solid rgb(0,0,0, 0.1);cursor:pointer;padding:12px 30px 12px 30px" target="_blank"><span><!--[if mso]><i style="mso-font-width:500%;mso-text-raise:18" hidden>&#8202;&#8202;&#8202;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Edit or Cancel Booking</span><span><!--[if mso]><i style="mso-font-width:500%" hidden>&#8202;&#8202;&#8202;&#8203;</i><![endif]--></span></a></td>
-                        </tr>
-                      </tbody>
-                    </table>
                   </td>
                 </tr>
               </tbody>
@@ -185,8 +178,6 @@ Created at: ${formattedCreatedDate}
 
 If you have any questions or need further assistance, please don't hesitate to
 contact us.
-
-Edit or Cancel Booking
 
 McMaster Engineering Society`;
 }
