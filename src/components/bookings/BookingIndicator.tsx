@@ -11,8 +11,8 @@ import {
 import { toast } from 'sonner';
 
 import { useDeleteBookingHook } from '@/lib/hooks/bookingHooks';
+import { TBooking } from '@/lib/types';
 
-import { TBooking } from '@/app/api/types';
 import {
   AdminBookingIndicatorColours,
   BookingIndicatorPositions,

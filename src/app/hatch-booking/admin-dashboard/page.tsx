@@ -1,39 +1,17 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import AdminRoomSelector from '@/components/bookings/AdminRoomSelector';
-import TimePicker from '@/components/bookings/TimePicker';
-import TimePickerChanger from '@/components/bookings/TimePickerChanger';
-import { useScreenSize } from '@/components/bookings/useScreenSize';
+import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
 
-export default function AdminDashboard() {
-  const screenSize = useScreenSize();
+import AdminDashboardPage from '@/app/hatch-booking/admin-dashboard/AdminDashboardPage';
 
-  return (
-    <div className='mb-8 flex w-full flex-col gap-8'>
-      <div className='flex flex-col gap-4 md:hidden'>
-        <TimePickerChanger />
-        <div className='grid h-[600px] grid-cols-2 gap-4'>
-          <TimePicker
-            numDaysToShow={
-              screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
-            }
-          />
-          <AdminRoomSelector />
-        </div>
-      </div>
+const AdminPage = async () => {
+  const isAuthenticated = await checkIsAuthenticated();
 
-      <div className='hidden gap-4 md:flex'>
-        <div className='flex flex-col gap-2'>
-          <TimePickerChanger />
-          <TimePicker
-            numDaysToShow={
-              screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
-            }
-            className='h-full'
-          />
-        </div>
-        <AdminRoomSelector />
-      </div>
-    </div>
-  );
-}
+  if (!isAuthenticated) {
+    redirect('/auth/sign-in');
+  } else {
+    return <AdminDashboardPage />;
+  }
+};
+
+export default AdminPage;

@@ -1,15 +1,18 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { startOfDay } from 'date-fns';
 
 import {
   fetchAddBooking,
+  fetchAvailabilities,
   fetchDeleteBooking,
   fetchUserBookings,
 } from '@/lib/api/bookingApi';
-import { fetchAvailabilities } from '@/lib/api/bookingApi';
 import { TBooking } from '@/lib/types';
 
 import { RoomAvailabilities } from '@/components/bookings/TimePicker';
+
+const formatDateForKey = (date: Date) =>
+  startOfDay(date).toISOString().split('T')[0];
 
 export const useAddRoomBookingHook = () => {
   const queryClient = useQueryClient();
@@ -30,17 +33,21 @@ export const useFetchAvailabilitiesHook = (
   return useQuery<RoomAvailabilities, Error>({
     queryKey: [
       'roomAvailabilities',
-      pickerStartDate.toISOString(),
-      pickerEndDate.toISOString(),
+      formatDateForKey(pickerStartDate),
+      formatDateForKey(pickerEndDate),
     ],
     queryFn: () => fetchAvailabilities(pickerStartDate, pickerEndDate),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 };
 
-export const useFetchUserBookingsHook = (userId: string) => {
+export const useFetchUserBookingsHook = (userEmail: string) => {
   return useQuery<TBooking[], Error>({
     queryKey: ['userBookings'],
-    queryFn: () => fetchUserBookings(userId),
+    queryFn: () => fetchUserBookings(userEmail),
+    enabled: !!userEmail,
   });
 };
 

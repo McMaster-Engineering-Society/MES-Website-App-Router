@@ -5,7 +5,7 @@ import {
   createBookingDb,
   deleteBatchBookingDb,
   deleteBookingByIdDb,
-  getBookingsByUserDb,
+  getBookingsByEmailDb,
   getBookingsInDateRangeAndEmailDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
@@ -13,21 +13,49 @@ import {
 import { getDisabledRoomsService } from '@/lib/services/roomServices';
 import { TBatchBookingResponse, TBooking } from '@/lib/types';
 
+import { TBookingDb } from '@/app/api/types';
+
 const availableRooms = ['H201', 'H203', 'H204A', 'H204B', 'H205'];
+
+function adaptTBookingToTBookingDb(booking: TBooking): TBookingDb {
+  if (booking.email == null) {
+    throw new Error('Email must be passed in to create a booking.');
+  }
+
+  // Adapt the type of booking.
+  const adaptedBooking: TBookingDb = {
+    ...booking,
+    email: booking.email,
+    startTime: new Date(booking.startTime),
+    endTime: new Date(booking.endTime),
+  };
+  return adaptedBooking;
+}
+
+function adaptTBookingDbToTBooking(booking: TBookingDb): TBooking {
+  // Adapt the type of booking.
+  const adaptedBooking: TBooking = {
+    ...booking,
+  };
+  return adaptedBooking;
+}
 
 export const createBookingService = async (
   newBooking: TBooking,
 ): Promise<TBooking | null> => {
   try {
+    // Adapt booking type.
+    const adaptedBooking = adaptTBookingToTBookingDb(newBooking);
+
     const disabledRooms = await getDisabledRoomsService();
     if (disabledRooms === null) {
       throw new Error('Error in fetching disabled rooms');
     } else {
       const booking = await createBookingDb(
-        newBooking,
+        adaptedBooking,
         disabledRooms.disabledRooms,
       );
-      return booking;
+      return adaptTBookingDbToTBooking(booking);
     }
   } catch (error) {
     /* eslint-disable no-console */
@@ -51,12 +79,15 @@ export const createBatchBookingService = async (
   newBookings: TBooking[],
 ): Promise<TBatchBookingResponse | null> => {
   try {
+    // Adapt booking type.
+    const adaptedBookings = newBookings.map(adaptTBookingToTBookingDb);
+
     const disabledRooms = await getDisabledRoomsService();
     if (disabledRooms === null) {
       throw new Error('Error in fetching disabled rooms');
     } else {
       const bookings = await createBatchBookingDb(
-        newBookings,
+        adaptedBookings,
         disabledRooms.disabledRooms,
       );
       return bookings;
@@ -187,11 +218,20 @@ export const getAvailabilityInDateRangeForOneRoomService = async (
 
 export const updateBookingByIdService = async (
   bookingId: string,
-  bookingInfo: TBooking,
+  booking: TBooking,
 ): Promise<TBooking | null> => {
   try {
-    const booking = await updateBookingByIdDb(bookingId, bookingInfo);
-    return booking;
+    const adaptedBooking = adaptTBookingToTBookingDb(booking);
+
+    const returnBooking = await updateBookingByIdDb(bookingId, adaptedBooking);
+
+    if (!returnBooking) {
+      throw new Error('Could not update booking by id');
+    }
+
+    const adaptedReturnBooking = adaptTBookingDbToTBooking(returnBooking);
+
+    return adaptedReturnBooking;
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Error in booking services:', error);
@@ -199,15 +239,18 @@ export const updateBookingByIdService = async (
   }
 };
 
-export const getBookingsByUserIdService = async (
-  userId: string,
+export const getBookingsByUserEmailService = async (
+  userEmail: string,
 ): Promise<TBooking[] | null> => {
   try {
-    const booking = await getBookingsByUserDb(userId);
-    return booking;
+    const bookings = await getBookingsByEmailDb(userEmail);
+
+    const adaptedBookings = bookings.map(adaptTBookingToTBookingDb);
+
+    return adaptedBookings;
   } catch (error) {
     /* eslint-disable no-console */
-    console.error('Error in get booking by userId services:', error);
+    console.error('Error in get booking by userEmail services:', error);
     return null;
   }
 };

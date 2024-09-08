@@ -1,14 +1,21 @@
 import { ObjectId } from 'mongodb';
 
-export type TUser = {
+export type TRoleDb = 'admin' | 'hatch-user' | 'club' | 'super-admin';
+
+export type TUserDb = {
   _id: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  // primary key email
   email: string;
-  hatchNumber: string;
+  phoneNumber?: string;
+  hatchNumber?: string;
+  roles?: TRoleDb[];
+  program?: string;
+  year?: number;
 };
 
-export type TBooking = {
+export type TBookingDb = {
   _id?: ObjectId | string;
   userId: string;
   room: string;

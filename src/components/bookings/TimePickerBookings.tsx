@@ -3,17 +3,18 @@
 import { useEffect, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
+import { TBooking } from '@/lib/types';
 
 import BookingIndicator from '@/components/bookings/BookingIndicator';
 
-import { TBooking } from '@/app/api/types';
+import { TBookingDb } from '@/app/api/types';
 
 /**
  * mock API call to fetch bookings
  * @todo replace with actual API call
  */
-async function fetchAllBookings(): Promise<TBooking[]> {
-  const mockBookings: TBooking[] = [
+async function fetchAllBookings(): Promise<TBookingDb[]> {
+  const mockBookings: TBookingDb[] = [
     {
       _id: '66c2204b87f9ac38c4ba645f',
       userId: 'placeholder ID',

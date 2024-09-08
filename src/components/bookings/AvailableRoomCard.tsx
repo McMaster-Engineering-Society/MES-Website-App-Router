@@ -4,6 +4,7 @@ import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 
+import { useSessionContext } from '@/lib/context/SessionContext';
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
 import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
@@ -20,11 +21,15 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
   const { handleAddBookRoom } = useTimePickerContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const resourceKeys = Object.keys(roomInfo.resources);
+  const { profile } = useSessionContext();
 
   function handleConfirmBookingWithMessage() {
-    handleAddBookRoom(roomInfo.roomName).then((response: string) => {
-      toast(response);
-    });
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    handleAddBookRoom(roomInfo.roomName, profile!.email!).then(
+      (response: string) => {
+        toast(response);
+      },
+    );
   }
 
   return (

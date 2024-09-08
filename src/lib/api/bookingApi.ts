@@ -1,5 +1,6 @@
 'use server';
 
+import { getUserEmail } from '@/lib/auth/emailSignInHelper';
 import { TBooking } from '@/lib/types';
 
 import { RoomAvailabilities } from '@/components/bookings/TimePicker';
@@ -41,6 +42,15 @@ export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
     throw new Error('NEXT_PUBLIC_URL is not defined');
   }
 
+  // Checks if an email was passed in. If not, uses the email of the currently signed in user.
+  const email = newBooking.email ?? (await getUserEmail());
+  if (email == null) {
+    throw new Error(
+      'No email was passed in for a new booking, nor is the user signed in to retrieve one from the current session.',
+    );
+  }
+  newBooking.email = email;
+
   const response = await fetch(
     process.env.NEXT_PUBLIC_URL + '/api/bookings/add-booking',
     {
@@ -61,15 +71,17 @@ export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
   return result.data;
 }
 
-export async function fetchUserBookings(userId: string): Promise<TBooking[]> {
+export async function fetchUserBookings(
+  userEmail: string,
+): Promise<TBooking[]> {
   if (process.env.NEXT_PUBLIC_URL === undefined) {
     throw new Error('NEXT_PUBLIC_URL is not defined');
   }
 
   const response = await fetch(
     process.env.NEXT_PUBLIC_URL +
-      '/api/bookings/get-user-bookings?userId=' +
-      userId,
+      '/api/bookings/get-user-bookings?email=' +
+      userEmail,
   );
 
   if (!response.ok) {
