@@ -297,18 +297,24 @@ function TimePickerTable({
   /**
    * used for greying out cells that are not available
    */
-  const atLeastOneRoomAvailable = (slotIndex: number) => {
-    const time = timeSlotIndexToTimeISO(slotIndex);
-    return roomsAvailableByTime[time]?.length > 0;
-  };
+  const atLeastOneRoomAvailable = useCallback(
+    (slotIndex: number) => {
+      const time = timeSlotIndexToTimeISO(slotIndex);
+      return roomsAvailableByTime[time]?.length > 0;
+    },
+    [roomsAvailableByTime, timeSlotIndexToTimeISO],
+  );
   /**
    * used to prevent selecting unavailable cells by dragging past them
    */
-  const allSlotsBetweenIndexesAreAvailable = (index1: number, index2: number) =>
-    Array.from(
-      { length: Math.max(index1, index2) - Math.min(index1, index2) + 1 },
-      (_, i) => Math.min(index1, index2) + i,
-    ).every(atLeastOneRoomAvailable);
+  const allSlotsBetweenIndexesAreAvailable = useCallback(
+    (index1: number, index2: number) =>
+      Array.from(
+        { length: Math.max(index1, index2) - Math.min(index1, index2) + 1 },
+        (_, i) => Math.min(index1, index2) + i,
+      ).every(atLeastOneRoomAvailable),
+    [atLeastOneRoomAvailable],
+  );
 
   const handleMouseDown = (slotIndex: number) => {
     if (slotIsOnEdgeOfSelected(slotIndex)) {
