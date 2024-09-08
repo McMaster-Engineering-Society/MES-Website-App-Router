@@ -45,7 +45,7 @@ export function generateLoginEmailHtml(params: { url: string }) {
                       </g>
                     </svg>
                     <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#e6ebf1;margin:20px 0" />
-                    <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">Thanks for logging in to the Hatch Booking System! We&#x27;re excited to have you on board.</p><a href="${url}" style="line-height:100%;text-decoration:none;display:block;max-width:100%;mso-padding-alt:0px;background-color:#400c1c;border-radius:5px;color:#fff;font-size:16px;font-weight:bold;text-align:center;width:100%;padding:10px 10px 10px 10px" target="_blank"><span><!--[if mso]><i style="mso-font-width:500%;mso-text-raise:15" hidden>&#8202;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:7.5px">Verify and redirect your login</span><span><!--[if mso]><i style="mso-font-width:500%" hidden>&#8202;&#8203;</i><![endif]--></span></a>
+                    <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">Thanks for logging in to the Hatch Booking System! We&#x27;re excited to have you on board.</p><a href="${url}" style="line-height:100%;text-decoration:none;display:block;max-width:100%;mso-padding-alt:0px;background-color:#400c1c;border-radius:5px;color:#fff;font-size:16px;font-weight:bold;text-align:center;width:100%;padding:10px 10px 10px 10px" target="_blank"><span><!--[if mso]><i style="mso-font-width:500%;mso-text-raise:15" hidden>&#8202;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:7.5px">Click here to log in</span><span><!--[if mso]><i style="mso-font-width:500%" hidden>&#8202;&#8203;</i><![endif]--></span></a>
                     <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">If you did not request this email you can safely ignore it.</p>
                     <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#e6ebf1;margin:20px 0" />
                     <p style="font-size:12px;line-height:16px;margin:16px 0;color:#8898aa">McMaster Engineering Society</p>
@@ -62,5 +62,5 @@ export function generateLoginEmailHtml(params: { url: string }) {
 
 // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
 export function generateLoginEmailText({ url }: { url: string }) {
-  return `Thanks for logging in to the Hatch Booking System! We're excited to have you on board.\n\nVerify and redirect your login: ${url}\n\nIf you did not request this email you can safely ignore it.\n\nMcMaster Engineering Society`;
+  return `Thanks for logging in to the Hatch Booking System! We're excited to have you on board.\n\nFollow this link to log in: ${url}\n\nIf you did not request this email you can safely ignore it.\n\nMcMaster Engineering Society`;
 }
