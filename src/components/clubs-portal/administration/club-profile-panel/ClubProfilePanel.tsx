@@ -14,7 +14,7 @@ const ClubProfilePanel = () => {
   const { status, handleSave, hasChanges } = useClubProfileContext();
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSave();
+    handleSave().then((message) => alert(message));
   };
   if (status === 'pending') {
     return <></>;

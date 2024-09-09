@@ -13,7 +13,7 @@ export type TClubProfileContext = {
   setClubId: React.Dispatch<React.SetStateAction<string>>;
   setProfileData: React.Dispatch<React.SetStateAction<TClubProfile>>;
   handleChange: (fields: Partial<TClubProfile>) => void;
-  handleSave: () => void;
+  handleSave: () => Promise<string>;
   hasChanges: boolean;
   status: string;
 };

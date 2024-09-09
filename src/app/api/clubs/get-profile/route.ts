@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getProfileByClubId } from '@/lib/db/clubProfileDb';
+import { getProfileByClubIdService } from '@/lib/services/clubProfileServices';
 import { TApiResponse, TMessageResponse } from '@/lib/types';
 
 import { TClubProfile } from '@/types/clubProfile';
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const clubProfile = await getProfileByClubId(clubId);
+  const clubProfile = await getProfileByClubIdService(clubId);
 
   if (!clubProfile) {
     return NextResponse.json<TMessageResponse>({
