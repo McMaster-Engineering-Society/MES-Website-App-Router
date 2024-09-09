@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { updateProfileByClubId } from '@/lib/db/clubProfileDb';
+import { updateProfileByClubIdService } from '@/lib/services/clubProfileServices';
 import { TApiResponse, TMessageResponse } from '@/lib/types';
 
 import { TClubProfile } from '@/types/clubProfile';
@@ -13,7 +13,7 @@ export async function PATCH(req: NextRequest) {
     });
   }
   const clubId = profileUpdates.clubId;
-  const result = await updateProfileByClubId(clubId, profileUpdates);
+  const result = await updateProfileByClubIdService(clubId, profileUpdates);
 
   if (!result) {
     return NextResponse.json<TMessageResponse>({

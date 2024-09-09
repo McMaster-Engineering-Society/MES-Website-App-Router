@@ -17,7 +17,7 @@ const getClubProfileCollection = async () => {
   }
 };
 
-export const getProfileByClubId = async (
+export const getProfileByClubIdDb = async (
   clubId: string,
 ): Promise<TClubProfile | null> => {
   try {
@@ -38,7 +38,7 @@ export const getProfileByClubId = async (
   }
 };
 
-export const updateProfileByClubId = async (
+export const updateProfileByClubIdDb = async (
   clubId: string,
   profileUpdates: Partial<TClubProfile>,
 ): Promise<TClubProfile | null> => {
