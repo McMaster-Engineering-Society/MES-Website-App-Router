@@ -37,7 +37,7 @@ const CALENDAR_IDS: CalendarId[] = [
 const WeeklyNews = () => (
   <div>
     <iframe
-      src='https://drive.google.com/file/d/1n9nsqtIWQN7F6gt_1al_1bRBxYd7pXm6/preview'
+      src='https://drive.google.com/file/d/1f3hQlvGygMZ3109KstAXLDg0Me1t5hz2/preview'
       width='853'
       height='480'
       allow='autoplay'
@@ -329,7 +329,7 @@ export default function HomePage() {
           }}
         >
           <h1>Weekly News</h1>
-          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 1</h4>
+          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 2</h4>
           <WeeklyNews />
         </section>
         <section id='calendar'>
