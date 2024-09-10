@@ -31,6 +31,11 @@ type Props = {
   children: ReactNode;
 };
 
+/**
+ * NOTE: this provider must be wrapped with TanStackQueryProvider as it uses a hook that is dependent on it.
+ * @param param0 all children who wish to use this provider.
+ * @returns
+ */
 export const SessionProvider = ({ children }: Props) => {
   const [email, setEmail] = useState<string | null>(null);
 
