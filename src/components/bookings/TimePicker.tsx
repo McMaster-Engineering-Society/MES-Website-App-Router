@@ -1,53 +1,13 @@
 'use client';
 
 import { differenceInCalendarDays } from 'date-fns';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/lib/hooks/bookingHooks';
 import { TBooking } from '@/lib/types';
 
 import TimePickerBookings from '@/components/bookings/TimePickerBookings';
-
-/**
- * human readable time slots (local time)
- */
-const timeslots = [
-  '7 AM',
-  '7:30 AM',
-  '8 AM',
-  '8:30 AM',
-  '9 AM',
-  '9:30 AM',
-  '10 AM',
-  '10:30 AM',
-  '11 AM',
-  '11:30 AM',
-  '12 PM',
-  '12:30 PM',
-  '1 PM',
-  '1:30 PM',
-  '2 PM',
-  '2:30 PM',
-  '3 PM',
-  '3:30 PM',
-  '4 PM',
-  '4:30 PM',
-  '5 PM',
-  '5:30 PM',
-  '6 PM',
-  '6:30 PM',
-  '7 PM',
-  '7:30 PM',
-  '8 PM',
-  '8:30 PM',
-  '9 PM',
-  '9:30 PM',
-  '10 PM',
-  '10:30 PM',
-];
-const firstTimeSlotOfTheDayUTC = 11; // 7 AM EST
-const timeslotsPerDay = timeslots.length;
 
 export type RoomAvailabilities = {
   H201: string[];
@@ -72,17 +32,8 @@ export default function TimePicker({
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const {
-    availableRoomIds,
-    setAvailableRoomIds,
-    setStartTimeDate,
-    setEndTimeDate,
-    userBookings,
-    pickerStartDate,
-    areBookingsVisible,
-    roomVisibilities,
-    isAdmin,
-  } = useTimePickerContext();
+  const { userBookings, pickerStartDate, timeslots, timeSlotIndexToTimeISO } =
+    useTimePickerContext();
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
@@ -185,40 +136,6 @@ export default function TimePicker({
   }, [calculatedDailyMaxBlockLength, maxBlockLengths]);
 
   /**
-   * convert time slot index to Date for indexing into availabilities
-   * ex. 0 -> "2024-08-11T11:00:00.000Z"
-   */
-  const timeSlotIndexToTimeISODate = useCallback(
-    (timeSlotIndex: number) => {
-      const time = new Date(pickerStartDate);
-      // slot at index timeslots.length+1 is the first slot of the next day
-      const daysOffset = Math.floor(timeSlotIndex / timeslots.length);
-      // i.e. first slot of every day should have an offset of 0
-      const hoursOffset = timeSlotIndex % timeslots.length;
-      time.setDate(time.getDate() + daysOffset);
-      time.setUTCHours(
-        firstTimeSlotOfTheDayUTC + Math.floor(hoursOffset / 2),
-        (hoursOffset % 2) * 30,
-        0,
-        0,
-      );
-      return time;
-    },
-    [pickerStartDate],
-  );
-
-  /**
-   * convert time slot index to ISO string for indexing into availabilities
-   * ex. 0 -> "2024-08-11T11:00:00.000Z"
-   */
-  const timeSlotIndexToTimeISO = useCallback(
-    (timeSlotIndex: number) => {
-      return timeSlotIndexToTimeISODate(timeSlotIndex).toISOString();
-    },
-    [timeSlotIndexToTimeISODate],
-  );
-
-  /**
    * list what rooms are available at each time slot,
    * this will be used to check what cells should be greyed out
    * and what rooms to display as available
@@ -240,7 +157,13 @@ export default function TimePicker({
       }
     }
     setRoomsAvailableByTime(_roomsAvailableByTime);
-  }, [availabilities, daysToShow, numDaysToShow, timeSlotIndexToTimeISO]);
+  }, [
+    availabilities,
+    daysToShow,
+    numDaysToShow,
+    timeSlotIndexToTimeISO,
+    timeslots.length,
+  ]);
 
   /**
    * @todo add proper loading indicator (render table but make everything greyed out?)
@@ -255,17 +178,8 @@ export default function TimePicker({
         numDaysToShow={numDaysToShow}
         daysToShow={daysToShow}
         roomsAvailableByTime={roomsAvailableByTime}
-        timeSlotIndexToTimeISO={timeSlotIndexToTimeISO}
-        timeSlotIndexToTimeISODate={timeSlotIndexToTimeISODate}
         maxBlockLengths={maxBlockLengths}
-        availableRoomIds={availableRoomIds}
-        setAvailableRoomIds={setAvailableRoomIds}
-        setStartTimeDate={setStartTimeDate}
-        setEndTimeDate={setEndTimeDate}
         userBookings={userBookings}
-        areBookingsVisible={areBookingsVisible}
-        roomVisibilities={roomVisibilities}
-        isAdmin={isAdmin}
       />
     </div>
   );
@@ -275,38 +189,33 @@ type TimePickerTableProps = {
   numDaysToShow: NumDaysToShow;
   daysToShow: Date[];
   roomsAvailableByTime: Record<string, string[]>;
-  timeSlotIndexToTimeISO: (i: number) => string;
-  timeSlotIndexToTimeISODate: (i: number) => Date;
   maxBlockLengths: number[];
-  availableRoomIds: string[];
-  setAvailableRoomIds: React.Dispatch<React.SetStateAction<string[]>>;
-  setStartTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setEndTimeDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   userBookings: TBooking[] | undefined;
-  areBookingsVisible: boolean;
-  roomVisibilities: Record<string, boolean>;
-  isAdmin: boolean;
 };
 
 function TimePickerTable({
   numDaysToShow,
   daysToShow,
   roomsAvailableByTime,
-  timeSlotIndexToTimeISO,
-  timeSlotIndexToTimeISODate,
   maxBlockLengths,
-  availableRoomIds,
-  setAvailableRoomIds,
-  setStartTimeDate,
-  setEndTimeDate,
-  areBookingsVisible,
-  isAdmin,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
-  const { startIndex, setStartIndex, endIndex, setEndIndex } =
-    useTimePickerContext();
+  const {
+    startIndex,
+    setStartIndex,
+    endIndex,
+    setEndIndex,
+    timeslots,
+    timeSlotIndexToTimeISO,
+    isAdmin,
+    availableRoomIds,
+    setAvailableRoomIds,
+    areBookingsVisible,
+  } = useTimePickerContext();
 
-  const [dragOperation, setDragOperation] = useState<
+  const timeslotsPerDay = timeslots.length;
+
+  const dragOperationRef = useRef<
     'Selecting' | 'DeselectingFromStart' | 'DeselectingFromEnd' | 'None'
   >('None');
 
@@ -369,18 +278,24 @@ function TimePickerTable({
   /**
    * used for greying out cells that are not available
    */
-  const atLeastOneRoomAvailable = (slotIndex: number) => {
-    const time = timeSlotIndexToTimeISO(slotIndex);
-    return roomsAvailableByTime[time]?.length > 0;
-  };
+  const atLeastOneRoomAvailable = useCallback(
+    (slotIndex: number) => {
+      const time = timeSlotIndexToTimeISO(slotIndex);
+      return roomsAvailableByTime[time]?.length > 0;
+    },
+    [roomsAvailableByTime, timeSlotIndexToTimeISO],
+  );
   /**
    * used to prevent selecting unavailable cells by dragging past them
    */
-  const allSlotsBetweenIndexesAreAvailable = (index1: number, index2: number) =>
-    Array.from(
-      { length: Math.max(index1, index2) - Math.min(index1, index2) + 1 },
-      (_, i) => Math.min(index1, index2) + i,
-    ).every(atLeastOneRoomAvailable);
+  const allSlotsBetweenIndexesAreAvailable = useCallback(
+    (index1: number, index2: number) =>
+      Array.from(
+        { length: Math.max(index1, index2) - Math.min(index1, index2) + 1 },
+        (_, i) => Math.min(index1, index2) + i,
+      ).every(atLeastOneRoomAvailable),
+    [atLeastOneRoomAvailable],
+  );
 
   const handleMouseDown = (slotIndex: number) => {
     if (slotIsOnEdgeOfSelected(slotIndex)) {
@@ -389,18 +304,14 @@ function TimePickerTable({
         // only 1 slot selected and we are unselecting it
         setStartIndex(-1);
         setEndIndex(-1);
-        setStartTimeDate(undefined);
-        setEndTimeDate(undefined);
       } else if (slotIndex === startIndex) {
         // clicked first selected slot in block
         setStartIndex(slotIndex + 1);
-        setStartTimeDate(timeSlotIndexToTimeISODate(slotIndex + 1));
-        setDragOperation('DeselectingFromStart');
+        dragOperationRef.current = 'DeselectingFromStart';
       } else if (slotIndex === endIndex) {
         // clicked last selected slot in block
         setEndIndex(slotIndex - 1);
-        setEndTimeDate(timeSlotIndexToTimeISODate(slotIndex - 1));
-        setDragOperation('DeselectingFromEnd');
+        dragOperationRef.current = 'DeselectingFromEnd';
       }
     } else if (
       slotIsAdjacentToSelected(slotIndex) &&
@@ -409,23 +320,19 @@ function TimePickerTable({
       atLeastOneRoomAvailable(slotIndex)
     ) {
       // add to selected block
-      setDragOperation('Selecting');
+      dragOperationRef.current = 'Selecting';
       const newStartIndex = Math.min(startIndex, slotIndex);
       const newEndIndex = Math.max(endIndex, slotIndex);
       setStartIndex(newStartIndex);
       setEndIndex(newEndIndex);
-      setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
-      setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
     } else if (
       atLeastOneRoomAvailable(slotIndex) &&
       maxBlockLengths[Math.floor(slotIndex / timeslotsPerDay)] >= 1
     ) {
       // starting to select a new block
-      setDragOperation('Selecting');
+      dragOperationRef.current = 'Selecting';
       setStartIndex(slotIndex);
       setEndIndex(slotIndex);
-      setStartTimeDate(timeSlotIndexToTimeISODate(slotIndex));
-      setEndTimeDate(timeSlotIndexToTimeISODate(slotIndex));
     }
   };
 
@@ -434,7 +341,7 @@ function TimePickerTable({
    * because when dragging quickly, the drag handler will not be called for every cell
    */
   const handleDrag = (slotIndex: number) => {
-    if (dragOperation === 'Selecting') {
+    if (dragOperationRef.current === 'Selecting') {
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
@@ -449,7 +356,6 @@ function TimePickerTable({
             1,
         );
         setStartIndex(newStartIndex);
-        setStartTimeDate(timeSlotIndexToTimeISODate(newStartIndex));
       } else if (
         slotIndex > endIndex &&
         allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
@@ -462,19 +368,19 @@ function TimePickerTable({
             1,
         );
         setEndIndex(newEndIndex);
-        setEndTimeDate(timeSlotIndexToTimeISODate(newEndIndex));
       }
     } else if (
-      dragOperation === 'DeselectingFromStart' &&
+      dragOperationRef.current === 'DeselectingFromStart' &&
       slotIndex > startIndex
     ) {
       // new slots to remove
       setStartIndex(slotIndex);
-      setStartTimeDate(timeSlotIndexToTimeISODate(slotIndex));
-    } else if (dragOperation === 'DeselectingFromEnd' && slotIndex < endIndex) {
+    } else if (
+      dragOperationRef.current === 'DeselectingFromEnd' &&
+      slotIndex < endIndex
+    ) {
       // new slots to remove
       setEndIndex(slotIndex);
-      setEndTimeDate(timeSlotIndexToTimeISODate(slotIndex));
     }
   };
 
@@ -483,14 +389,14 @@ function TimePickerTable({
    */
   const onMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    setDragOperation('None');
+    dragOperationRef.current = 'None';
   };
   /**
    * stop dragging when the mouse leaves the div
    */
   const onMouseLeave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    setDragOperation('None');
+    dragOperationRef.current = 'None';
   };
   /**
    * if we don't include this, the browser will select text and everything will get messed up
@@ -499,10 +405,8 @@ function TimePickerTable({
     e.preventDefault();
   };
 
-  const TimeIndicators = () => {
-    {
-      /* time indicators along the side */
-    }
+  const TimeIndicators = memo(() => {
+    /* time indicators along the side */
     return (
       <div className='mr-1 mt-14 flex flex-col justify-stretch'>
         {timeslots.map((slot: string, i) => {
@@ -519,7 +423,7 @@ function TimePickerTable({
         })}
       </div>
     );
-  };
+  });
 
   const gridColClass: Record<NumDaysToShow, string> = {
     1: 'grid-cols-1',

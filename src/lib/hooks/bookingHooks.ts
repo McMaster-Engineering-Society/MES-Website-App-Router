@@ -58,6 +58,7 @@ export const useDeleteBookingHook = () => {
     mutationFn: fetchDeleteBooking,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });
     },
   });
 };

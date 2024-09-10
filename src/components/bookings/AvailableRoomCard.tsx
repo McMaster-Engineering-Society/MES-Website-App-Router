@@ -13,11 +13,11 @@ import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 
-type AvailableRoomType = {
+type AvailableRoomCardProps = {
   roomInfo: THatchRoom;
 };
 
-export const AvailableRoomCard = ({ roomInfo }: AvailableRoomType) => {
+export const AvailableRoomCard = ({ roomInfo }: AvailableRoomCardProps) => {
   const { handleAddBookRoom } = useTimePickerContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const resourceKeys = Object.keys(roomInfo.resources);
