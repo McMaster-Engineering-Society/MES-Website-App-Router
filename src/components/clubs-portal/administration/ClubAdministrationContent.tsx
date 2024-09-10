@@ -20,28 +20,28 @@ const ClubAdministrationContent = () => {
   };
 
   return (
-    <ClubProfileProvider>
-      <TabContext value={tabIndex}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange}>
-            <Tab label='Club Profile' value='1' />
-            <Tab label='Exec Team' value='2' />
-            <Tab label='Hatch Access Card' value='3' />
-            <Tab label='Governing Docs' value='4' />
-            <Tab label='Recruitment Notice' value='5' />
-          </TabList>
-        </Box>
+    <TabContext value={tabIndex}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <TabList onChange={handleChange}>
+          <Tab label='Club Profile' value='1' />
+          <Tab label='Exec Team' value='2' />
+          <Tab label='Hatch Access Card' value='3' />
+          <Tab label='Governing Docs' value='4' />
+          <Tab label='Recruitment Notice' value='5' />
+        </TabList>
+      </Box>
+      <ClubProfileProvider>
         <TabPanel value='1' sx={{ flexBasis: '100%' }}>
           <ClubProfilePanel />
         </TabPanel>
-        <TabPanel value='2'>
-          <ExecTeamPanel />
-        </TabPanel>
-        <TabPanel value='3'>Item Three</TabPanel>
-        <TabPanel value='4'>Item Four</TabPanel>
-        <TabPanel value='5'>Item Five</TabPanel>
-      </TabContext>
-    </ClubProfileProvider>
+      </ClubProfileProvider>
+      <TabPanel value='2'>
+        <ExecTeamPanel />
+      </TabPanel>
+      <TabPanel value='3'>Item Three</TabPanel>
+      <TabPanel value='4'>Item Four</TabPanel>
+      <TabPanel value='5'>Item Five</TabPanel>
+    </TabContext>
   );
 };
 
