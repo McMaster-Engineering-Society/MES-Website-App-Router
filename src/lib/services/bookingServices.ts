@@ -254,3 +254,28 @@ export const getBookingsByUserEmailService = async (
     return null;
   }
 };
+
+/**
+ * Approach: A db function exists to get all bookings for a given room. Loop through all rooms to get all bookings.
+ * @param startDate
+ * @param endDate
+ * @returns
+ */
+export const getAllBookingsInDateRangeService = async (
+  startDate: Date,
+  endDate: Date,
+): Promise<TBooking[]> => {
+  // Go through all rooms and add their bookings to a list of all bookings.
+  const allBookings: TBookingDb[] = [];
+  for (const room of availableRooms) {
+    const bookingsForRoom = await getBookingsInDateRangeForOneRoomDb(
+      startDate,
+      endDate,
+      room,
+    );
+    allBookings.push(...bookingsForRoom);
+  }
+
+  // Return all bookings as TBooking.
+  return allBookings.map(adaptTBookingDbToTBooking);
+};

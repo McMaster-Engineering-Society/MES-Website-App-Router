@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-type Sizes = 'lg' | 'md' | 'sm' | 'xs';
+import { Sizes } from '@/constant/hatch-bookings/booking-screen-size';
 
 export function useScreenSize(): Sizes {
   const [screenSize, setScreenSize] = useState<Sizes>('sm');
