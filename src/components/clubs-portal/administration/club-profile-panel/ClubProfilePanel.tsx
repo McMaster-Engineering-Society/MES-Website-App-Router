@@ -1,5 +1,6 @@
 'use client';
 
+import { CircularProgress } from '@mui/material';
 import React from 'react';
 import { FaSave } from 'react-icons/fa';
 
@@ -11,13 +12,13 @@ import ClubProfilePicture from '@/components/clubs-portal/administration/club-pr
 import SocialsList from '@/components/clubs-portal/administration/club-profile-panel/SocialsList';
 
 const ClubProfilePanel = () => {
-  const { status, handleSave, hasChanges } = useClubProfileContext();
+  const { isLoading, handleSave, hasChanges } = useClubProfileContext();
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSave().then((message) => alert(message));
   };
-  if (status === 'pending') {
-    return <></>;
+  if (isLoading) {
+    return <CircularProgress className='m-auto' />;
   }
   return (
     <form

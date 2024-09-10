@@ -10,12 +10,12 @@ import { SocialMedia, TClubProfile } from '@/types/clubProfile';
 export type TClubProfileContext = {
   profileData: TClubProfile;
   clubId: string;
-  setClubId: React.Dispatch<React.SetStateAction<string>>;
   setProfileData: React.Dispatch<React.SetStateAction<TClubProfile>>;
   handleChange: (fields: Partial<TClubProfile>) => void;
   handleSave: () => Promise<string>;
   hasChanges: boolean;
-  status: string;
+  isLoading: boolean;
+  isError: boolean;
 };
 type Props = {
   children: React.ReactNode;
@@ -25,8 +25,12 @@ export const ClubProfileContext = createContext<
 >(undefined);
 
 export const ClubProfileProvider = ({ children }: Props) => {
-  const [clubId, setClubId] = React.useState<string>('1');
-  const { data: persistedProfile, status } = useFetchClubProfile(clubId);
+  const clubId = '1';
+  const {
+    data: persistedProfile,
+    isLoading: queryLoading,
+    isError,
+  } = useFetchClubProfile(clubId);
   const [profileData, setProfileData] = React.useState<TClubProfile>({
     _id: '',
     name: '',
@@ -36,6 +40,7 @@ export const ClubProfileProvider = ({ children }: Props) => {
     description: '',
     socials: {} as Record<SocialMedia, string>,
   });
+  const [isLoading, setIsLoading] = React.useState(true);
   const [profileUpdates, setProfileUpdates] = React.useState<
     Partial<TClubProfile>
   >({});
@@ -43,10 +48,11 @@ export const ClubProfileProvider = ({ children }: Props) => {
   const hasChanges = Object.keys(profileUpdates).length > 0;
 
   useEffect(() => {
-    if (persistedProfile) {
+    if (persistedProfile && !queryLoading) {
       setProfileData(persistedProfile);
+      setIsLoading(false);
     }
-  }, [persistedProfile]);
+  }, [persistedProfile, queryLoading]);
 
   const handleChange = (fields: Partial<TClubProfile>) => {
     setProfileData((prevData) => ({
@@ -80,12 +86,12 @@ export const ClubProfileProvider = ({ children }: Props) => {
       value={{
         profileData,
         clubId,
-        setClubId,
         setProfileData,
         handleChange,
         handleSave,
         hasChanges,
-        status,
+        isLoading,
+        isError,
       }}
     >
       {children}
