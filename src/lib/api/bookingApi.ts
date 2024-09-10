@@ -119,3 +119,35 @@ export async function fetchDeleteBooking(bookingId: string): Promise<TBooking> {
 
   return data;
 }
+
+export async function fetchAllBookings(
+  pickerStartDate: Date,
+  pickerEndDate: Date,
+): Promise<TBooking[]> {
+  if (process.env.NEXT_PUBLIC_URL === undefined) {
+    throw new Error('NEXT_PUBLIC_URL is not defined');
+  }
+
+  const pickerStartDateISO = pickerStartDate
+    .toISOString()
+    .replace('.000Z', '+00:00');
+  const pickerEndDateISO = pickerEndDate
+    .toISOString()
+    .replace('.000Z', '+00:00');
+
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL +
+      '/api/bookings/get-all-bookings-in-date-range?startdate=' +
+      encodeURIComponent(pickerStartDateISO) +
+      '&enddate=' +
+      encodeURIComponent(pickerEndDateISO),
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.statusText}`);
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}

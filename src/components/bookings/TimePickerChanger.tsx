@@ -6,20 +6,20 @@ import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 import { useScreenSize } from '@/components/bookings/useScreenSize';
 import Button from '@/components/buttons/Button';
 
+import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
+
 const TimePickerChanger = () => {
   const { handlePickerStartDateShiftByDay, pickerStartDate } =
     useTimePickerContext();
   const screenSize = useScreenSize();
 
   function handleShiftForward() {
-    handlePickerStartDateShiftByDay(
-      screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1,
-    );
+    handlePickerStartDateShiftByDay(BookingDayLengthFromScreenSize[screenSize]);
   }
 
   function handleShiftBackward() {
     handlePickerStartDateShiftByDay(
-      screenSize === 'lg' ? -7 : screenSize === 'md' ? -3 : -1,
+      -BookingDayLengthFromScreenSize[screenSize],
     );
   }
 

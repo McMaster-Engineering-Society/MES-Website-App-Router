@@ -5,6 +5,8 @@ import TimePicker from '@/components/bookings/TimePicker';
 import TimePickerChanger from '@/components/bookings/TimePickerChanger';
 import { useScreenSize } from '@/components/bookings/useScreenSize';
 
+import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
+
 export default function AdminDashboard() {
   const screenSize = useScreenSize();
 
@@ -14,9 +16,7 @@ export default function AdminDashboard() {
         <TimePickerChanger />
         <div className='grid h-[600px] grid-cols-2 gap-4'>
           <TimePicker
-            numDaysToShow={
-              screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
-            }
+            numDaysToShow={BookingDayLengthFromScreenSize[screenSize]}
           />
           <AdminRoomSelector />
         </div>
@@ -26,9 +26,7 @@ export default function AdminDashboard() {
         <div className='flex flex-col gap-2'>
           <TimePickerChanger />
           <TimePicker
-            numDaysToShow={
-              screenSize === 'lg' ? 7 : screenSize === 'md' ? 3 : 1
-            }
+            numDaysToShow={BookingDayLengthFromScreenSize[screenSize]}
             className='h-full'
           />
         </div>
