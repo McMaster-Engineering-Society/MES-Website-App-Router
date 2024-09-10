@@ -108,7 +108,7 @@ export function generateSuccessfulBookingEmailHtml(
                       <tbody style="width:100%">
                         <tr style="width:100%">
                           <td data-id="__react-email-column">
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi <!-- -->${name}}<!-- -->,</h1>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi <!-- -->${name}<!-- -->,</h1>
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">Thank you for booking a room with the Hatch Booking System. Below are your booking details.</h2>
                             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px">
                               <tbody>
