@@ -23,7 +23,12 @@ const SignInGatePage = ({
   href = '/auth/sign-in',
   adminRequired = false,
 }: SignInGatePageProps) => {
-  const { profile, isAdmin } = useSessionContext();
+  const { profile, isAdmin, isFetched } = useSessionContext();
+
+  // If the profile is still loading, show a loading message
+  if (!isFetched) {
+    return <div>Loading user profile...</div>;
+  }
 
   // If we want to block the user if they are signed out, redirect them if there is no profile. Else, we redirect them if there is a profile because we block the page when they're signed in.
   if (requireSignIn ? !profile : profile) {

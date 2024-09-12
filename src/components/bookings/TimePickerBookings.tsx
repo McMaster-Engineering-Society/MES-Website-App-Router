@@ -146,16 +146,6 @@ type TimePickerBookingsProps = {
   firstTimeslot: string;
 };
 
-// Created because React doesn't like hooks called conditionally within useEffect, so we call it here.
-const AdminAllBookings = (startDate: Date, endDate: Date) => {
-  const {
-    data: allBookings,
-    isLoading,
-    error,
-  } = useFetchAllBookingsHook(startDate, endDate);
-  return { allBookings, isLoading, error };
-};
-
 const TimePickerBookings = ({
   isAdmin,
   daysToShow,
@@ -171,16 +161,16 @@ const TimePickerBookings = ({
     BookingDayLengthFromScreenSize[screenSize],
   );
 
+  const { data: allBookings, isFetched } = useFetchAllBookingsHook(
+    pickerStartDate,
+    pickerEndDate,
+    isAdmin,
+  );
+
   useEffect(() => {
     const visibleBookings: TBooking[] = [];
     if (isAdmin) {
-      // TODO: move all admin stuff to new page. We need the components related to getting all bookings separate so we dont have issues with hooks.
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      const { allBookings, isLoading, error } = AdminAllBookings(
-        pickerStartDate,
-        pickerEndDate,
-      );
-      if (allBookings) {
+      if (allBookings && isFetched) {
         allBookings.forEach((booking) => {
           // checking if the time slots for a booking are currently visible on the time picker
           const timeslotDiv = document.getElementById(
@@ -208,7 +198,7 @@ const TimePickerBookings = ({
 
       setBookings(visibleBookings);
     }
-  }, [isAdmin, userBookings, pickerStartDate, pickerEndDate]);
+  }, [isAdmin, userBookings, allBookings, isFetched]);
 
   const TimePickerCell = ({ time }: { time: string }) => {
     // finds all the bookings at a certain time

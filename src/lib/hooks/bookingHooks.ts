@@ -63,7 +63,11 @@ export const useDeleteBookingHook = () => {
   });
 };
 
-export const useFetchAllBookingsHook = (startDate: Date, endDate: Date) => {
+export const useFetchAllBookingsHook = (
+  startDate: Date,
+  endDate: Date,
+  enabled: boolean,
+) => {
   return useQuery<TBooking[], Error>({
     queryKey: [
       'allBookings',
@@ -74,5 +78,6 @@ export const useFetchAllBookingsHook = (startDate: Date, endDate: Date) => {
     staleTime: 1000 * 60 * 5, // 5 minutes
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled: enabled,
   });
 };
