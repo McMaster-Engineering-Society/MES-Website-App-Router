@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 
 import PageLayout from '@/components/layout/PageLayout';
@@ -47,6 +48,14 @@ const GetMoneyArray = () => {
           href={item.link}
           variant='primary'
           className={`${item.colour} flex-grow p-1 px-3 text-black hover:text-black`}
+          onClick={(e) => {
+            if (item.link === '') {
+              e.preventDefault();
+              alert(
+                'We are not accepting applications for the Special Projects Funding at this time.',
+              );
+            }
+          }}
         >
           {item.title}
         </ButtonLink>
