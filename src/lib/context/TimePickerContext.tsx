@@ -122,10 +122,6 @@ export const TimePickerProvider = ({ children }: Props) => {
   const [availableRoomIds, setAvailableRoomIds] = useState<string[]>([]);
   const [startIndex, setStartIndex] = useState<number>(-1);
   const [endIndex, setEndIndex] = useState<number>(-1);
-  const [startTimeDate, setStartTimeDate] = useState<Date | undefined>(
-    undefined,
-  );
-  const [endTimeDate, setEndTimeDate] = useState<Date | undefined>(undefined);
   const { profile, isAdmin } = useSessionContext();
   const addRoomBooking = useAddRoomBookingHook();
   const { data: userBookings } = useFetchUserBookingsHook(profile?.email ?? '');
