@@ -172,6 +172,10 @@ const TimePickerBookings = ({
     if (isAdmin) {
       if (allBookings && isFetched) {
         allBookings.forEach((booking) => {
+          // For some reason, start time isn't returned as a date object. Must convert it (but checks if we need to first).
+          if (!(booking.startTime instanceof Date)) {
+            booking.startTime = new Date(booking.startTime);
+          }
           // checking if the time slots for a booking are currently visible on the time picker
           const timeslotDiv = document.getElementById(
             `${booking.startTime.toISOString()}`,
@@ -186,6 +190,10 @@ const TimePickerBookings = ({
       }
     } else {
       (userBookings || []).forEach((booking) => {
+        // For some reason, start time isn't returned as a date object. Must convert it (but checks if we need to first).
+        if (!(booking.startTime instanceof Date)) {
+          booking.startTime = new Date(booking.startTime);
+        }
         // checking if the time slots for a booking are currently visible on the time picker
         const timeslotDiv = document.getElementById(
           `${new Date(booking.startTime).toISOString()}`,

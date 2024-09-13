@@ -17,6 +17,7 @@ export default function AdminDashboard() {
         <div className='grid h-[600px] grid-cols-2 gap-4'>
           <TimePicker
             numDaysToShow={BookingDayLengthFromScreenSize[screenSize]}
+            adminView={true}
           />
           <AdminRoomSelector />
         </div>
@@ -28,6 +29,7 @@ export default function AdminDashboard() {
           <TimePicker
             numDaysToShow={BookingDayLengthFromScreenSize[screenSize]}
             className='h-full'
+            adminView={true}
           />
         </div>
         <AdminRoomSelector />
