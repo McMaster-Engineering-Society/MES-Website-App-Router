@@ -62,11 +62,13 @@ type NumDaysToShow = 1 | 3 | 7;
 type TimePickerProps = {
   className?: string;
   numDaysToShow: NumDaysToShow;
+  adminView?: boolean;
 };
 
 export default function TimePicker({
   numDaysToShow,
   className,
+  adminView = false,
 }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
@@ -243,7 +245,7 @@ export default function TimePicker({
   }, [availabilities, daysToShow, numDaysToShow, timeSlotIndexToTimeISO]);
 
   /**
-   * @todo add proper loading indicator (render table but make everything greyed out?)
+   * @todo add proper loading indicator (render table but make everything greyed out?) AND ADD SAME LOADING INDICATOR TO SignInGatePage.tsx
    */
   if (Object.keys(roomsAvailableByTime).length === 0) {
     return <div>Loading...</div>;
@@ -265,7 +267,7 @@ export default function TimePicker({
         userBookings={userBookings}
         areBookingsVisible={areBookingsVisible}
         roomVisibilities={roomVisibilities}
-        isAdmin={isAdmin}
+        adminView={adminView && isAdmin} // Only shows admin view if passed into time picker AND the user is actually an admin.
       />
     </div>
   );
@@ -285,7 +287,7 @@ type TimePickerTableProps = {
   userBookings: TBooking[] | undefined;
   areBookingsVisible: boolean;
   roomVisibilities: Record<string, boolean>;
-  isAdmin: boolean;
+  adminView: boolean;
 };
 
 function TimePickerTable({
@@ -300,7 +302,7 @@ function TimePickerTable({
   setStartTimeDate,
   setEndTimeDate,
   areBookingsVisible,
-  isAdmin,
+  adminView,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const { startIndex, setStartIndex, endIndex, setEndIndex } =
@@ -597,7 +599,7 @@ function TimePickerTable({
             <TimePickerBody />
             {areBookingsVisible ? (
               <TimePickerBookings
-                isAdmin={isAdmin}
+                isAdmin={adminView}
                 daysToShow={daysToShow}
                 timeslotCount={32}
                 firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
