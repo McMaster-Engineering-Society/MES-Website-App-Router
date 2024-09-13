@@ -27,6 +27,7 @@ const SignInGatePage = ({
 
   // If the profile is still loading, show a loading message
   if (!isFetched) {
+    // TODO: make prettier
     return <div>Loading user profile...</div>;
   }
 
