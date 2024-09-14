@@ -1,11 +1,9 @@
 'use server';
 import { redirect } from 'next/navigation';
-import React from 'react';
 
 import { getUserEmail } from '@/lib/auth/emailSignInHelper';
 
 type ServerSignInGatePageProps = {
-  children: React.ReactNode;
   requireSignIn?: boolean;
   href?: string;
   adminRequired?: boolean;
@@ -17,7 +15,6 @@ type ServerSignInGatePageProps = {
  * @returns
  */
 const ServerSignInGatePage = async ({
-  children,
   requireSignIn = true,
   href = '/auth/sign-in',
 }: ServerSignInGatePageProps) => {
@@ -26,8 +23,6 @@ const ServerSignInGatePage = async ({
   // If we want to block the user if they are signed out, redirect them if there is no email. Else, we redirect them if there is a email because we block the page when they're signed in.
   if (requireSignIn ? !email : email) {
     redirect(href);
-  } else {
-    return <>{children}</>;
   }
 };
 

@@ -8,13 +8,12 @@ import { ErrorPage } from '@/app/auth/error/ErrorPage';
 const requireSignIn = false;
 const href = '/';
 
-const Error = () => {
+const Error = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
   return (
-    <ServerSignInGatePage requireSignIn={requireSignIn} href={href}>
-      <SignInGatePage requireSignIn={requireSignIn} href={href}>
-        <ErrorPage />
-      </SignInGatePage>
-    </ServerSignInGatePage>
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <ErrorPage />
+    </SignInGatePage>
   );
 };
 

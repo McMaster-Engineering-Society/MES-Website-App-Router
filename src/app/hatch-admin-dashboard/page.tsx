@@ -6,17 +6,16 @@ import AdminDashboardPage from '@/app/hatch-admin-dashboard/AdminDashboardPage';
 const requireSignIn = true;
 const href = '/auth/sign-in';
 
-const AdminPage = () => {
+const AdminPage = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
   return (
-    <ServerSignInGatePage requireSignIn={requireSignIn} href={href}>
-      <SignInGatePage
-        requireSignIn={requireSignIn}
-        href={href}
-        adminRequired={true}
-      >
-        <AdminDashboardPage />
-      </SignInGatePage>
-    </ServerSignInGatePage>
+    <SignInGatePage
+      requireSignIn={requireSignIn}
+      href={href}
+      adminRequired={true}
+    >
+      <AdminDashboardPage />
+    </SignInGatePage>
   );
 };
 

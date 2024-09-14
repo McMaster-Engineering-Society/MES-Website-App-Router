@@ -6,13 +6,12 @@ import BookingPage from '@/app/hatch-booking/new-booking/NewBookingPage';
 const requireSignIn = true;
 const href = '/auth/sign-in';
 
-const NewBookingPage = () => {
+const NewBookingPage = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
   return (
-    <ServerSignInGatePage requireSignIn={requireSignIn} href={href}>
-      <SignInGatePage requireSignIn={requireSignIn} href={href}>
-        <BookingPage />
-      </SignInGatePage>
-    </ServerSignInGatePage>
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <BookingPage />
+    </SignInGatePage>
   );
 };
 

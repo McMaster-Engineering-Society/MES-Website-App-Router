@@ -8,13 +8,12 @@ import { SignInPage } from '@/app/auth/sign-in/signin';
 const requireSignIn = false;
 const href = '/hatch-booking/new-booking';
 
-const SignIn = () => {
+const SignIn = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
   return (
-    <ServerSignInGatePage requireSignIn={requireSignIn} href={href}>
-      <SignInGatePage requireSignIn={requireSignIn} href={href}>
-        <SignInPage />
-      </SignInGatePage>
-    </ServerSignInGatePage>
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <SignInPage />
+    </SignInGatePage>
   );
 };
 

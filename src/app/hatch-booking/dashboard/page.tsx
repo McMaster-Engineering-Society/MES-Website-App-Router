@@ -6,13 +6,12 @@ import BookingDashboardPage from '@/app/hatch-booking/dashboard/BookingDashboard
 const requireSignIn = true;
 const href = '/auth/sign-in';
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
   return (
-    <ServerSignInGatePage requireSignIn={requireSignIn} href={href}>
-      <SignInGatePage requireSignIn={requireSignIn} href={href}>
-        <BookingDashboardPage />
-      </SignInGatePage>
-    </ServerSignInGatePage>
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <BookingDashboardPage />
+    </SignInGatePage>
   );
 };
 
