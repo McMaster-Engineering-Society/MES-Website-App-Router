@@ -1,5 +1,6 @@
-import SignOutComponent from '@/components/auth/sign-out-func';
 import Button from '@/components/buttons/Button';
+
+import SignOutComponent from '@/slices/auth/components/SignOut';
 
 // Maybe add more props later if we want to let them style it differently.
 interface SignOutProps {

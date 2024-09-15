@@ -1,13 +1,12 @@
-import { TProfile } from '@slices/auth/types';
-import { ObjectId } from 'mongodb';
-
 import {
   createProfileDb,
   deleteProfileByIdDb,
   getAllProfilesDb,
   getProfileByEmailDb,
   getProfileByIdDb,
-} from '@/lib/db/profileDb';
+} from '@slices/auth/db/profileDb';
+import { TProfile } from '@slices/auth/types';
+import { ObjectId } from 'mongodb';
 
 export const getAllProfilesService = async (): Promise<TProfile[]> => {
   try {

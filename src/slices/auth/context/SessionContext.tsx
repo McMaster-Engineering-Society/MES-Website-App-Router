@@ -7,6 +7,7 @@
  */
 
 import { TProfile } from '@slices/auth/types';
+import { getUserEmail } from '@slices/auth/utils';
 import {
   createContext,
   ReactNode,
@@ -14,8 +15,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-
-import { getUserEmail } from '@/lib/auth/emailSignInHelper';
 
 import { useFetchProfileByEmailHook } from '@/slices/auth/hooks/profileHooks';
 

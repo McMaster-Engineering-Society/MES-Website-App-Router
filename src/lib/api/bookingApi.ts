@@ -1,6 +1,7 @@
 'use server';
 
-import { getUserEmail } from '@/lib/auth/emailSignInHelper';
+import { getUserEmail } from '@slices/auth/utils';
+
 import { TBooking } from '@/lib/types';
 
 import { RoomAvailabilities } from '@/components/bookings/TimePicker';

@@ -1,9 +1,8 @@
 'use client';
 
+import { handleEmailSignIn } from '@slices/auth/utils';
 import { LoaderCircle } from 'lucide-react';
 import { useState, useTransition } from 'react';
-
-import { handleEmailSignIn } from '@/lib/auth/emailSignInHelper';
 
 import Button from '@/components/buttons/Button';
 

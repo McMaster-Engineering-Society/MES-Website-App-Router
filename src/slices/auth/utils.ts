@@ -69,3 +69,13 @@ export const getSessionUser = async () => {
     return null;
   }
 };
+
+// Checks if the domain name is mcmaster
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function isMacEmail(email: string) {
+  /**
+   * Checks if the given email is from a mcmaster domain
+   */
+  const [_, domain] = email.toLowerCase().trim().split('@');
+  return domain == 'mcmaster.ca';
+}
