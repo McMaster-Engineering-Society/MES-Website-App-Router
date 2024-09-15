@@ -3,14 +3,13 @@ import * as React from 'react';
 
 import '@/styles/colors.css';
 
-import TanStackQueryProvider from '@/lib/context/TanStackQueryProvider';
-import { TimePickerProvider } from '@/lib/context/TimePickerContext';
-
-import TabNavigation from '@/components/bookings/TabNavigation';
+import TanStackQueryProvider from '@/components/context/TanStackQueryProvider';
 import PageLayout from '@/components/layout/PageLayout';
 import { Toaster } from '@/components/ui/sonner';
 
 import { SessionProvider } from '@/slices/auth/context/SessionContext';
+import TabNavigation from '@/slices/hatch/booking-page/components/TabNavigation';
+import { TimePickerProvider } from '@/slices/hatch/booking-page/context/TimePickerContext';
 
 export const metadata: Metadata = {
   title: 'Hatch Booking System',

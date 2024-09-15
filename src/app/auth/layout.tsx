@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import '@/styles/colors.css';
 
-import TanStackQueryProvider from '@/lib/context/TanStackQueryProvider';
+import TanStackQueryProvider from '@/components/context/TanStackQueryProvider';
 
 import { SessionProvider } from '@/slices/auth/context/SessionContext';
 

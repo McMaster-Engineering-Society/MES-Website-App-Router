@@ -1,11 +1,12 @@
 'use client';
 
+import { TimePicker } from '@mui/lab';
 import React from 'react';
 
-import AvailableRooms from '@/components/bookings/AvailableRooms';
-import TimePicker from '@/components/bookings/TimePicker';
-import TimePickerChanger from '@/components/bookings/TimePickerChanger';
-import { useScreenSize } from '@/components/bookings/useScreenSize';
+import { useScreenSize } from '@/components/hooks/useScreenSize';
+
+import AvailableRooms from '@/slices/hatch/booking-page/components/AvailableRooms';
+import TimePickerChanger from '@/slices/hatch/booking-page/components/TimePickerChanger';
 
 export default function BookingPage() {
   const screenSize = useScreenSize();

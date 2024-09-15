@@ -1,14 +1,13 @@
 import { UpdateResult } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-import { updateRoomService } from '@/lib/services/roomServices';
 import {
   TApiResponse,
   TMessageResponse,
   TRoomEnableRequest,
-} from '@/lib/types';
-
+} from '@/app/api/types';
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+import { updateRoomService } from '@/slices/hatch/admin/services/roomServices';
 
 export async function POST(req: Request) {
   const request: TRoomEnableRequest = await req.json();
