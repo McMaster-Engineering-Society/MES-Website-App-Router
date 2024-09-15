@@ -6,8 +6,8 @@ import { TProfile } from '@/lib/types';
 export const useFetchProfileByEmailHook = (email: string | null) => {
   return useQuery<TProfile, Error>({
     queryKey: ['profile', email],
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    queryFn: () => fetchProfileByEmail(email!),
+    queryFn: () => fetchProfileByEmail(email),
     enabled: !!email, // Only run the query if email is truthy
+    retry: false, // Don't want to retry if there is an error, just return a non-existent profile. Default behaviour will have useQuery returned undefined if an error is thrown.
   });
 };

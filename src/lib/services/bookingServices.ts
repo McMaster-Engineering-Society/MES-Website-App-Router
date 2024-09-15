@@ -7,6 +7,7 @@ import {
   deleteBookingByIdDb,
   getBookingsByEmailDb,
   getBookingsInDateRangeAndEmailDb,
+  getBookingsInDateRangeDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/lib/db/bookingDb';
@@ -286,4 +287,19 @@ export const sendBookingConfirmationEmailService = async (
 
   // Send the email
   await sendEmailService(emailTo, emailSubject, emailText, emailHtml);
+};
+
+/**
+ * Approach: A db function exists to get all bookings for a given room. Loop through all rooms to get all bookings.
+ * @param startDate
+ * @param endDate
+ * @returns
+ */
+export const getAllBookingsInDateRangeService = async (
+  startDate: Date,
+  endDate: Date,
+): Promise<TBooking[]> => {
+  // Go through all rooms and add their bookings to a list of all bookings.
+  const bookings = await getBookingsInDateRangeDb(startDate, endDate);
+  return bookings.map(adaptTBookingDbToTBooking);
 };

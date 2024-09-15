@@ -1,8 +1,9 @@
-import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getBookingsInDateRangeDb } from '@/lib/db/bookingDb';
-import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
+import { getAllBookingsInDateRangeService } from '@/lib/services/bookingServices';
+import { TBooking } from '@/lib/types';
+
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
 /**
  * Guide to querying this route:
@@ -15,14 +16,15 @@ import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
  * Example of a date: 2014-10-13T00:00:00.000+00:00
  *
  *
- * * GET /api/bookings/get-bookings-in-date-range
+ *
+ * * GET /api/bookings/get-all-bookings-in-date-range
  * Format we'll use for query date input is ISO (append Z at the end)
  * 2011-04-11T10:20:30Z
  *
  *
  *
  * Example of a query:
- * http://localhost:3000/api/bookings/get-bookings-in-date-range?startdate=2014-10-13t00%3a00%3a00.000%2b00%3a00&enddate=2014-10-13t15%3a00%3a00.000%2b00%3a00
+ * http://localhost:3000/api/bookings/get-all-bookings-in-date-range?startdate=2014-10-13t00%3a00%3a00.000%2b00%3a00&enddate=2014-10-13t15%3a00%3a00.000%2b00%3a00
  */
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
@@ -40,13 +42,16 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const allBookingsList = await getBookingsInDateRangeDb(startDate, endDate);
+  const allBookingsList = await getAllBookingsInDateRangeService(
+    startDate,
+    endDate,
+  );
 
   if (!allBookingsList)
     return NextResponse.json<TMessageResponse>({
       message: 'List of all bookings not found',
     });
-  return NextResponse.json<TApiResponse<WithId<TBooking>[]>>({
+  return NextResponse.json<TApiResponse<TBooking[]>>({
     data: allBookingsList,
   });
 }

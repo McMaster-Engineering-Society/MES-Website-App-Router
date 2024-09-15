@@ -19,7 +19,9 @@ import { useFetchProfileByEmailHook } from '@/lib/hooks/profileHooks';
 import { TProfile } from '@/lib/types';
 
 type TSessionContext = {
-  profile: TProfile | null;
+  profile?: TProfile;
+  isAdmin: boolean;
+  isFetched: boolean;
 };
 
 export const SessionContext = createContext<TSessionContext | undefined>(
@@ -30,6 +32,11 @@ type Props = {
   children: ReactNode;
 };
 
+/**
+ * NOTE: this provider must be wrapped with TanStackQueryProvider as it uses a hook that is dependent on it.
+ * @param param0 all children who wish to use this provider.
+ * @returns
+ */
 export const SessionProvider = ({ children }: Props) => {
   const [email, setEmail] = useState<string | null>(null);
 
@@ -42,12 +49,18 @@ export const SessionProvider = ({ children }: Props) => {
     fetchUserEmail();
   }, []);
 
-  const { data: profile } = useFetchProfileByEmailHook(email);
+  const { data: profile, isFetched } = useFetchProfileByEmailHook(email);
+
+  const roles = profile?.roles;
+  const isAdmin =
+    roles !== undefined && roles.includes('hatch-admin') ? true : false;
 
   return (
     <SessionContext.Provider
       value={{
-        profile: profile ?? null,
+        profile: profile,
+        isAdmin: isAdmin,
+        isFetched: isFetched,
       }}
     >
       {children}

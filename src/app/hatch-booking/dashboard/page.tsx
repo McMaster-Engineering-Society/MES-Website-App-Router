@@ -1,17 +1,18 @@
-import { redirect } from 'next/navigation';
-
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
+import ServerSignInGatePage from '@/components/auth/ServerSignInGatePage';
+import SignInGatePage from '@/components/auth/SignInGatePage';
 
 import BookingDashboardPage from '@/app/hatch-booking/dashboard/BookingDashboardPage';
 
-const DashboardPage = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
+const requireSignIn = true;
+const href = '/auth/sign-in';
 
-  if (!isAuthenticated) {
-    redirect('/auth/sign-in');
-  } else {
-    return <BookingDashboardPage />;
-  }
+const DashboardPage = async () => {
+  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
+  return (
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <BookingDashboardPage />
+    </SignInGatePage>
+  );
 };
 
 export default DashboardPage;

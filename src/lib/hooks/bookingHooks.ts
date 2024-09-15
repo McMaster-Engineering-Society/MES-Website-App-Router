@@ -3,6 +3,7 @@ import { startOfDay } from 'date-fns';
 
 import {
   fetchAddBooking,
+  fetchAllBookings,
   fetchAvailabilities,
   fetchDeleteBooking,
   fetchUserBookings,
@@ -60,5 +61,24 @@ export const useDeleteBookingHook = () => {
       queryClient.invalidateQueries({ queryKey: ['userBookings'] });
       queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });
     },
+  });
+};
+
+export const useFetchAllBookingsHook = (
+  startDate: Date,
+  endDate: Date,
+  enabled: boolean,
+) => {
+  return useQuery<TBooking[], Error>({
+    queryKey: [
+      'allBookings',
+      formatDateForKey(startDate),
+      formatDateForKey(endDate),
+    ],
+    queryFn: () => fetchAllBookings(startDate, endDate),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    enabled: enabled,
   });
 };

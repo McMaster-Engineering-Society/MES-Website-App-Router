@@ -1,6 +1,11 @@
 import { ObjectId } from 'mongodb';
 
-export type TRoleDb = 'admin' | 'hatch-user' | 'club' | 'super-admin';
+export type TRoleDb =
+  | 'hatch-admin'
+  | 'clubs-admin'
+  | 'hatch-user'
+  | 'club'
+  | 'super-admin';
 
 export type TUserDb = {
   _id: string;

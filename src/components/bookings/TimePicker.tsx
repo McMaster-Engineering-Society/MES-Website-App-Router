@@ -22,18 +22,25 @@ type NumDaysToShow = 1 | 3 | 7;
 type TimePickerProps = {
   className?: string;
   numDaysToShow: NumDaysToShow;
+  adminView?: boolean;
 };
 
 export default function TimePicker({
   numDaysToShow,
   className,
+  adminView = false,
 }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
    * @todo integrate with date picker arrows
    */
-  const { userBookings, pickerStartDate, timeslots, timeSlotIndexToTimeISO } =
-    useTimePickerContext();
+  const {
+    userBookings,
+    pickerStartDate,
+    timeslots,
+    timeSlotIndexToTimeISO,
+    isAdmin,
+  } = useTimePickerContext();
 
   const pickerEndDate = useMemo(
     () => new Date(pickerStartDate),
@@ -166,7 +173,7 @@ export default function TimePicker({
   ]);
 
   /**
-   * @todo add proper loading indicator (render table but make everything greyed out?)
+   * @todo add proper loading indicator (render table but make everything greyed out?) AND ADD SAME LOADING INDICATOR TO SignInGatePage.tsx
    */
   if (Object.keys(roomsAvailableByTime).length === 0) {
     return <div>Loading...</div>;
@@ -180,6 +187,7 @@ export default function TimePicker({
         roomsAvailableByTime={roomsAvailableByTime}
         maxBlockLengths={maxBlockLengths}
         userBookings={userBookings}
+        adminView={adminView && isAdmin} // Only shows admin view if passed into time picker AND the user is actually an admin.
       />
     </div>
   );
@@ -191,6 +199,7 @@ type TimePickerTableProps = {
   roomsAvailableByTime: Record<string, string[]>;
   maxBlockLengths: number[];
   userBookings: TBooking[] | undefined;
+  adminView: boolean;
 };
 
 function TimePickerTable({
@@ -198,6 +207,7 @@ function TimePickerTable({
   daysToShow,
   roomsAvailableByTime,
   maxBlockLengths,
+  adminView,
 }: TimePickerTableProps) {
   // start and end indexes of the currently selected block
   const {
@@ -207,7 +217,6 @@ function TimePickerTable({
     setEndIndex,
     timeslots,
     timeSlotIndexToTimeISO,
-    isAdmin,
     availableRoomIds,
     setAvailableRoomIds,
     areBookingsVisible,
@@ -501,7 +510,7 @@ function TimePickerTable({
             <TimePickerBody />
             {areBookingsVisible ? (
               <TimePickerBookings
-                isAdmin={isAdmin}
+                isAdmin={adminView}
                 daysToShow={daysToShow}
                 timeslotCount={32}
                 firstTimeslot={daysToShow[0].toISOString().split('T')[1]}
