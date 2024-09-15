@@ -1,13 +1,13 @@
-import ServerSignInGatePage from '@/components/auth/ServerSignInGatePage';
-import SignInGatePage from '@/components/auth/SignInGatePage';
+import ServerSignInGate from '@slices/auth/components/ServerSignInGate';
 
 import BookingPage from '@/app/hatch-booking/new-booking/NewBookingPage';
+import SignInGatePage from '@/slices/auth/components/SignInGatePage';
 
 const requireSignIn = true;
 const href = '/auth/sign-in';
 
 const NewBookingPage = async () => {
-  await ServerSignInGatePage({ requireSignIn: requireSignIn, href: href });
+  await ServerSignInGate({ requireSignIn: requireSignIn, href: href });
   return (
     <SignInGatePage requireSignIn={requireSignIn} href={href}>
       <BookingPage />

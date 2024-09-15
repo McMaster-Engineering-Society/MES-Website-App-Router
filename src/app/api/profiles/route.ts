@@ -1,10 +1,9 @@
-import { NextResponse } from 'next/server';
-
 import {
   createProfileService,
   getAllProfilesService,
-} from '@/lib/services/profileServices';
-import { TProfile } from '@/lib/types';
+} from '@slices/auth/services/profileServices';
+import { TProfile } from '@slices/auth/types';
+import { NextResponse } from 'next/server';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
 

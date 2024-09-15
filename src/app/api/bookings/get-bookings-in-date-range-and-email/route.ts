@@ -1,8 +1,9 @@
+import { TBooking } from '@slices/hatch/booking-page/types';
 import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getBookingsInDateRangeAndEmailService } from '@/lib/services/bookingServices';
-import { TApiResponse, TBooking, TMessageResponse } from '@/lib/types';
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
+import { getBookingsInDateRangeAndEmailService } from '@/slices/hatch/booking-page/services/bookingServices';
 
 /**
  * Guide to querying this route:

@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getBookingsByUserEmailService } from '@/lib/services/bookingServices';
-import { TBooking } from '@/lib/types';
-
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
+import { getBookingsByUserEmailService } from '@/slices/hatch/booking-page/services/bookingServices';
+import { TBooking } from '@/slices/hatch/booking-page/types';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

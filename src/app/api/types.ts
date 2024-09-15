@@ -39,3 +39,24 @@ export type TApiResponse<T> = {
   data: T | null;
   message?: string;
 };
+
+export type TRoomEnableRequest = {
+  enabled: boolean;
+  room: string;
+};
+
+export type TAvailabilityResponse = {
+  [room: string]: Date[];
+};
+
+export type TBatchBookingRequest = { bookingList: TBookingDb[] };
+export type TBatchDeleteBookingRequest = { bookingIdList: string[] };
+
+export type TBatchBookingResponse = {
+  bookingsAdded: TBookingDb[];
+  conflictExists: boolean;
+  conflictingBookings: {
+    booking: TBookingDb;
+    conflicts: TBookingDb[];
+  }[];
+};

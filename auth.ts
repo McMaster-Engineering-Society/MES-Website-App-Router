@@ -1,4 +1,5 @@
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import { isMacEmail } from '@slices/auth/utils';
 import NextAuth from 'next-auth';
 import NodeMailer from 'next-auth/providers/nodemailer';
 import { createTransport } from 'nodemailer';
@@ -8,16 +9,6 @@ import {
   generateLoginEmailHtml,
   generateLoginEmailText,
 } from '@/lib/emailHelper';
-
-// Checks if the domain name is mcmaster
-// eslint-disable-next-line unused-imports/no-unused-vars
-function isMacEmail(email: string) {
-  /**
-   * Checks if the given email is from a mcmaster domain
-   */
-  const [_, domain] = email.toLowerCase().trim().split('@');
-  return domain == 'mcmaster.ca';
-}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [

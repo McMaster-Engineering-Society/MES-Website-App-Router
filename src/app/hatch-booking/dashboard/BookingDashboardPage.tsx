@@ -1,5 +1,6 @@
 'use client';
 
+import { TBooking } from '@slices/hatch/booking-page/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import {
@@ -13,16 +14,15 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
-import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
-import { BookingTimeslot } from '@/components/bookings/BookingTimeslot';
 import ButtonLink from '@/components/links/ButtonLink';
-import RebookModal from '@/components/modals/RebookModal';
 import PageSection from '@/components/PageSection';
 
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
+import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
+import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
 
 const queryClient = new QueryClient();
 

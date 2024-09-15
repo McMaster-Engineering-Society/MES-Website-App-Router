@@ -1,11 +1,11 @@
 'use client';
 
-import AdminRoomSelector from '@/components/bookings/AdminRoomSelector';
-import TimePicker from '@/components/bookings/TimePicker';
-import TimePickerChanger from '@/components/bookings/TimePickerChanger';
-import { useScreenSize } from '@/components/bookings/useScreenSize';
+import { useScreenSize } from '@/components/hooks/useScreenSize';
 
 import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
+import AdminRoomSelector from '@/slices/hatch/admin/components/AdminRoomSelector';
+import TimePicker from '@/slices/hatch/booking-page/components/TimePicker';
+import TimePickerChanger from '@/slices/hatch/booking-page/components/TimePickerChanger';
 
 export default function AdminDashboard() {
   const screenSize = useScreenSize();

@@ -1,7 +1,7 @@
 'use client';
 import { redirect } from 'next/navigation';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 const HatchBookingPage = () => {
   const { profile } = useSessionContext();

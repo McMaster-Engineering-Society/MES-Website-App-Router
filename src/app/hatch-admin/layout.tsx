@@ -3,12 +3,12 @@ import * as React from 'react';
 
 import '@/styles/colors.css';
 
-import { SessionProvider } from '@/lib/context/SessionContext';
-import TanStackQueryProvider from '@/lib/context/TanStackQueryProvider';
-import { TimePickerProvider } from '@/lib/context/TimePickerContext';
-
+import TanStackQueryProvider from '@/components/context/TanStackQueryProvider';
 import PageLayout from '@/components/layout/PageLayout';
 import { Toaster } from '@/components/ui/sonner';
+
+import { SessionProvider } from '@/slices/auth/context/SessionContext';
+import { TimePickerProvider } from '@/slices/hatch/booking-page/context/TimePickerContext';
 
 export const metadata: Metadata = {
   title: 'Hatch Admin Portal',

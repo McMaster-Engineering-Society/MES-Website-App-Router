@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
-import { deleteBookingByIdService } from '@/lib/services/bookingServices';
-import { TApiResponse, TBooking } from '@/lib/types';
-
+import { TApiResponse } from '@/app/api/types';
 import { TMessageResponse } from '@/app/api/types';
+import { deleteBookingByIdService } from '@/slices/hatch/booking-page/services/bookingServices';
+import { TBooking } from '@/slices/hatch/booking-page/types';
 
 export async function DELETE(
   req: Request,

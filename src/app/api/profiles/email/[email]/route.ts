@@ -1,7 +1,6 @@
+import { getProfileByEmailAndCreateIfNullService } from '@slices/auth/services/profileServices';
+import { TProfile } from '@slices/auth/types';
 import { NextResponse } from 'next/server';
-
-import { getProfileByEmailAndCreateIfNullService } from '@/lib/services/profileServices';
-import { TProfile } from '@/lib/types';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
