@@ -7,6 +7,7 @@ import {
   deleteBookingByIdDb,
   getBookingsByEmailDb,
   getBookingsInDateRangeAndEmailDb,
+  getBookingsInDateRangeDb,
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/lib/db/bookingDb';
@@ -299,16 +300,6 @@ export const getAllBookingsInDateRangeService = async (
   endDate: Date,
 ): Promise<TBooking[]> => {
   // Go through all rooms and add their bookings to a list of all bookings.
-  const allBookings: TBookingDb[] = [];
-  for (const room of availableRooms) {
-    const bookingsForRoom = await getBookingsInDateRangeForOneRoomDb(
-      startDate,
-      endDate,
-      room,
-    );
-    allBookings.push(...bookingsForRoom);
-  }
-
-  // Return all bookings as TBooking.
-  return allBookings.map(adaptTBookingDbToTBooking);
+  const bookings = await getBookingsInDateRangeDb(startDate, endDate);
+  return bookings.map(adaptTBookingDbToTBooking);
 };
