@@ -40,7 +40,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomCardProps) => {
       >
         {roomInfo.roomName}
       </Button>
-      <div className='box-border hidden h-auto w-full flex-col items-center justify-between rounded-xl border-4 bg-[#373A36] p-4 text-center text-white md:flex'>
+      <div className='box-border hidden h-auto w-full flex-col items-center justify-between rounded-xl  border-2 bg-[#676767] p-4 text-center text-white md:flex'>
         <div className='relative inline-block w-full items-center justify-center text-center'>
           <div className='inline-block items-center font-bold'>
             {roomInfo.roomName}

@@ -20,11 +20,11 @@ export default function AvailableRooms({ className }: { className?: string }) {
 
   return (
     <div className={cn(className, 'flex flex-col gap-2 md:w-[250px]')}>
-      <div className='w-full items-center rounded-xl bg-[#CACDD1] p-2 text-center font-bold md:h-[42px]'>
+      <div className='border-2 border-[#A6192E] w-full items-center rounded-xl bg-white p-2 text-center font-bold md:h-[42px]'>
         Available Rooms
         <div className='font-normal md:hidden'>Click to Book</div>
       </div>
-      <div className='h-0 w-full flex-1 rounded-xl bg-[#CACDD1] py-4'>
+      <div className='h-0 w-full flex-1 rounded-xl bg-white  border-[#A6192E] border-2 py-4'>
         {!checkBookingNotInPast() ? (
           <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             Booking cannot be made in the past

@@ -79,7 +79,7 @@ function RoomInfoModal({
                 color='warning'
                 onPress={onClose}
                 onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
-                className='flex-1'
+                className='flex-1 bg-[#28a745]'
               >
                 {startIndex &&
                   endIndex &&
