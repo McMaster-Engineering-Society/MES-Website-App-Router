@@ -10,12 +10,13 @@ import {
   useState,
 } from 'react';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
 import {
   useAddRoomBookingHook,
   useFetchUserBookingsHook,
 } from '@/lib/hooks/bookingHooks';
 import { TBooking } from '@/lib/types';
+
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 /**
  * human readable time slots (local time)

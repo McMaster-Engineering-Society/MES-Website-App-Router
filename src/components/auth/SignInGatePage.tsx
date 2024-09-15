@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 type SignInGatePageProps = {
   children: React.ReactNode;

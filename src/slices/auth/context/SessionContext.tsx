@@ -6,6 +6,7 @@
  * The context contains all user information such as their email address.
  */
 
+import { TProfile } from '@slices/auth/types';
 import {
   createContext,
   ReactNode,
@@ -15,8 +16,8 @@ import {
 } from 'react';
 
 import { getUserEmail } from '@/lib/auth/emailSignInHelper';
-import { useFetchProfileByEmailHook } from '@/lib/hooks/profileHooks';
-import { TProfile } from '@/lib/types';
+
+import { useFetchProfileByEmailHook } from '@/slices/auth/hooks/profileHooks';
 
 type TSessionContext = {
   profile?: TProfile;

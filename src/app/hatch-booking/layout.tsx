@@ -3,13 +3,14 @@ import * as React from 'react';
 
 import '@/styles/colors.css';
 
-import { SessionProvider } from '@/lib/context/SessionContext';
 import TanStackQueryProvider from '@/lib/context/TanStackQueryProvider';
 import { TimePickerProvider } from '@/lib/context/TimePickerContext';
 
 import TabNavigation from '@/components/bookings/TabNavigation';
 import PageLayout from '@/components/layout/PageLayout';
 import { Toaster } from '@/components/ui/sonner';
+
+import { SessionProvider } from '@/slices/auth/context/SessionContext';
 
 export const metadata: Metadata = {
   title: 'Hatch Booking System',

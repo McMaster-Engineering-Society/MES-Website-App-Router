@@ -1,3 +1,4 @@
+import { getProfileByEmailAndCreateIfNullService } from '@slices/auth/services/profileServices';
 import { WithId } from 'mongodb';
 
 import {
@@ -16,7 +17,6 @@ import {
   generateSuccessfulBookingEmailText,
 } from '@/lib/emailHelper';
 import { sendEmailService } from '@/lib/services/emailServices';
-import { getProfileByEmailAndCreateIfNullService } from '@/lib/services/profileServices';
 import { getDisabledRoomsService } from '@/lib/services/roomServices';
 import { TBatchBookingResponse, TBooking } from '@/lib/types';
 

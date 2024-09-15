@@ -1,7 +1,7 @@
+import { TProfile } from '@slices/auth/types';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchProfileByEmail } from '@/lib/api/userApi';
-import { TProfile } from '@/lib/types';
 
 export const useFetchProfileByEmailHook = (email: string | null) => {
   return useQuery<TProfile, Error>({

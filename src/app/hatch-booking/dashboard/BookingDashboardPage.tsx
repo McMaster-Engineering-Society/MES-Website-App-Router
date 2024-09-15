@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
 import { TBooking } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +22,7 @@ import RebookModal from '@/components/modals/RebookModal';
 import PageSection from '@/components/PageSection';
 
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 const queryClient = new QueryClient();
 

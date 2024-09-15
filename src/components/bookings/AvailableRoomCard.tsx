@@ -4,7 +4,6 @@ import { Check, InfoIcon, Plug, User, X } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 
-import { useSessionContext } from '@/lib/context/SessionContext';
 import { useTimePickerContext } from '@/lib/context/TimePickerContext';
 
 import ConfirmationPopover from '@/components/bookings/ConfirmationPopover';
@@ -12,6 +11,7 @@ import ResourcesIcon from '@/components/bookings/ResourcesIcon';
 import RoomInfoModal from '@/components/bookings/RoomInfoModal';
 
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 type AvailableRoomCardProps = {
   roomInfo: THatchRoom;

@@ -1,7 +1,7 @@
+import { TProfile } from '@slices/auth/types';
 import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
-import { TProfile } from '@/lib/types';
 
 const getProfileCollection = async () => {
   const client = await clientPromise;
