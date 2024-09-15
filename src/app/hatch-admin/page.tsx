@@ -1,7 +1,7 @@
 import ServerSignInGatePage from '@/components/auth/ServerSignInGatePage';
 import SignInGatePage from '@/components/auth/SignInGatePage';
 
-import AdminDashboardPage from '@/app/hatch-admin-dashboard/AdminDashboardPage';
+import AdminDashboardPage from '@/app/hatch-admin/AdminDashboardPage';
 
 const requireSignIn = true;
 const href = '/auth/sign-in';
