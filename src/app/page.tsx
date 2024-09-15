@@ -37,7 +37,7 @@ const CALENDAR_IDS: CalendarId[] = [
 const WeeklyNews = () => (
   <div>
     <iframe
-      src='https://drive.google.com/file/d/1338HdqYeoGFTftNfxdk_0DoWo9chO1Wn/preview'
+      src='https://drive.google.com/file/d/1kHJH9IrDpOn9R8D3eSAsG_fV5xPYNPDo/preview'
       width='853'
       height='480'
       allow='autoplay'
