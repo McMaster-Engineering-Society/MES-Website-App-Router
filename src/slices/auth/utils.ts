@@ -72,7 +72,7 @@ export const getSessionUser = async () => {
 
 // Checks if the domain name is mcmaster
 // eslint-disable-next-line unused-imports/no-unused-vars
-export function isMacEmail(email: string) {
+export async function isMacEmail(email: string) {
   /**
    * Checks if the given email is from a mcmaster domain
    */

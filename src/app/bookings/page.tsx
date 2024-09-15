@@ -4,7 +4,6 @@ import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
 
-import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
 import BookingInstructions from '@/slices/hatch/info/components/BookingInstructions';
 
 const Bookings = () => {
@@ -76,26 +75,6 @@ const Bookings = () => {
         <ButtonLink href='/booking-system' className='mt-8'>
           Click Here to Start Booking
         </ButtonLink>
-        <BookingTimeslot
-          room='H203'
-          startTime={new Date()}
-          endTime={new Date()}
-          variant='next'
-        />
-        <BookingTimeslot
-          room='H203'
-          startTime={new Date()}
-          endTime={new Date()}
-          variant='previous'
-        />
-        <BookingTimeslot
-          room='H204A'
-          startTime={new Date()}
-          endTime={new Date()}
-          variant='next'
-          // can't pass this rn from a server component into a client component
-          // handleEdit={() => console.log('Edit')}
-        />
       </main>
     </PageLayout>
   );

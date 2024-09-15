@@ -1,3 +1,5 @@
+'use client';
+
 import { Accordion, AccordionItem } from '@nextui-org/accordion';
 
 export default function BookingInstructions() {
