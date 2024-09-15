@@ -13,6 +13,7 @@ import React from 'react';
 
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 type Props = {
   isOpen: boolean;
@@ -88,7 +89,10 @@ function RoomInfoModal({
                       'MMMM do h:mm',
                     ) +
                     ' to ' +
-                    format(timeSlotIndexToTimeISODate(endIndex), 'h:mm')}
+                    format(
+                      add30Minutes(timeSlotIndexToTimeISODate(endIndex)),
+                      'h:mm',
+                    )}
               </Button>
             </ModalFooter>
           </>
