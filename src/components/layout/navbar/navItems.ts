@@ -32,7 +32,7 @@ export const navItems: NavItem[] = [
       { title: 'Wellness', link: '/wellness' },
       // Temporary removal of MES Card page
       // { title: 'MES Card', link: '/mes-card' },
-      { title: 'Hatch Lockers', link: '/hatch-lockers' },
+      { title: 'Hatch Info', link: '/hatch-info' },
     ],
   },
   {

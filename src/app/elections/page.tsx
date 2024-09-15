@@ -28,7 +28,7 @@ import { CalendarId } from '@/types/calendar';
 
 const debug = false;
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Elections',
