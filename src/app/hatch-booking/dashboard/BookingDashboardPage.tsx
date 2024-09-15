@@ -23,6 +23,7 @@ import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
 import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 const queryClient = new QueryClient();
 
@@ -67,7 +68,7 @@ const UserDashboard = () => {
           room: booking.room,
           email: booking.email,
           startTime: booking.startTime,
-          endTime: booking.endTime,
+          endTime: add30Minutes(booking.endTime),
           hasConfirmed: booking.hasConfirmed,
           createdDate: booking.createdDate,
         }),
@@ -103,7 +104,7 @@ const UserDashboard = () => {
           room: booking.room,
           email: booking.email,
           startTime: booking.startTime,
-          endTime: booking.endTime,
+          endTime: add30Minutes(booking.endTime),
           hasConfirmed: booking.hasConfirmed,
           createdDate: booking.createdDate,
         }),
@@ -235,7 +236,7 @@ const UserDashboard = () => {
                       />
                       <span className='font-light text-gray-700 text-nowrap ml-2'>
                         {format(nextBooking.startTime, 'h:mm a')} –{' '}
-                        {format(nextBooking.endTime, 'h:mm a')}
+                        {format(add30Minutes(nextBooking.endTime), 'h:mm a')}
                       </span>
                     </div>
 
