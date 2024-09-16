@@ -34,18 +34,6 @@ const CALENDAR_IDS: CalendarId[] = [
   },
 ];
 
-const WeeklyNews = () => (
-  <div>
-    <iframe
-      src='https://drive.google.com/file/d/1kHJH9IrDpOn9R8D3eSAsG_fV5xPYNPDo/preview'
-      width='853'
-      height='480'
-      allow='autoplay'
-      allowFullScreen
-    ></iframe>
-  </div>
-);
-
 const quickLinks: { icon: IconType; label: string; href: string }[] = [
   {
     icon: IoChatbubblesOutline,
@@ -319,18 +307,15 @@ export default function HomePage() {
             </Link>
           ))}
         </motion.section>
-        <section
-          style={{
-            color: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <section className='flex flex-col text-white items-center justify-center w-full'>
           <h1>The Volcano</h1>
           <h4 style={{ paddingBottom: '35px' }}>Weekly News</h4>
-          <WeeklyNews />
+          <iframe
+            src='https://drive.google.com/file/d/1kHJH9IrDpOn9R8D3eSAsG_fV5xPYNPDo/preview'
+            className='w-auto h-auto lg:w-[853px] lg:h-[480px] max-w-full'
+            allow='autoplay'
+            allowFullScreen
+          ></iframe>
         </section>
         <section id='calendar'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} darkMode />
