@@ -1,4 +1,13 @@
-import { CandidateInfo } from '@/constant/elections/candidates';
+import {
+  btechRep,
+  CandidateInfo,
+  compSciRep,
+  eng1MESLiaison,
+  eventsTeamLeader,
+  firstYearCouncilChair,
+  iBioMedRep,
+  outreachTeamLeader,
+} from '@/constant/elections/candidates';
 
 export type InfoSession = {
   dateTimeStart: Date;
@@ -57,7 +66,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: eng1MESLiaison,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -65,7 +74,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: iBioMedRep,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -73,7 +82,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: compSciRep,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -81,7 +90,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: btechRep,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -89,7 +98,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: firstYearCouncilChair,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -97,7 +106,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: outreachTeamLeader,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
     {
@@ -105,7 +114,7 @@ export const electionInfo: ElectionInfo = {
       nominationForm: '/pdfs/elections/first_year_rep_nomination_form.pdf',
       nomineePackageSubmission:
         'https://docs.google.com/forms/d/e/1FAIpQLSc6BLq0q0iAKmcpxcYGP4QVD3SPCW4epEd8sxgVoqyG0fdajA/viewform?usp=sf_link',
-      //   candidates: vpStudentLife,
+      candidates: eventsTeamLeader,
       eligibilityRequirements: 'Candidates must be in Level 1 to apply',
     },
   ],
