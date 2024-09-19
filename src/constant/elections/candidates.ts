@@ -2,7 +2,20 @@ import CandidateDetails from '@/types/candidateDetails';
 
 export type CandidateInfo = Omit<CandidateDetails, 'positionSeeking'>;
 
-export const firstYearCouncilChair: CandidateInfo[] = [];
+export const firstYearCouncilChair: CandidateInfo[] = [
+  {
+    name: `Rian Sen Majumder`,
+    picture: '/images/elections/candidates/rian-senmajumder.jpg',
+    programLevel: 'Engineering, Level 1',
+    introduction: `Hello! My name is Rian Sen Majumder, and I'm in my first year of Engineering 1 at McMaster. I’m excited to run for First Year Council Chair because I believe I can foster collaboration and amplify the voices of our cohort.
+
+Throughout my time in high school, I’ve had the privilege of being on the student council for multiple years and serving as the Grade 12 representative, where I learned to navigate the responsibilities of communicating effectively between students and the administration. This experience sharpened my ability to listen to my peers and ensure their concerns were addressed. I organized student-led events, collaborated with teachers and other representatives, and worked hard to keep everyone informed about important updates. I was also lucky enough to be involved in many community service and leadership roles throughout my life, such as volunteering and working as a fundraising executive with 5n2 Soup Kitchens among other organizations. These experiences taught me valuable lessons in teamwork, communication, and dedication to a cause.
+
+As a first-year student with a collaborative mindset and a passion connecting our community, I am confident I can contribute to making this year rewarding for all of us!`,
+    platform: ``,
+    anythingElseFunFact: ``,
+  },
+];
 
 export const iBioMedRep: CandidateInfo[] = [
   {
