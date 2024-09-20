@@ -15,6 +15,20 @@ As a first-year student with a collaborative mindset and a passion connecting ou
     platform: ``,
     anythingElseFunFact: ``,
   },
+  {
+    name: `Ifeyinwa Mbielu`,
+    picture: '/images/elections/candidates/ifeyinwa-mbielu.jpeg',
+    programLevel: 'Engineering, Level 1',
+    introduction: `I am excited to apply for the Engineering 1 MES Liaison position, as my background in leadership and advocacy qualifies me for this role. Throughout high school, I was very involved within my school community. I engaged in leadership roles, serving as the co-president of the Black Student Union and as a Leader-in- Black. In these roles, I planned and executed many events along with others while fostering a sense of community. In addition, I was involved in volunteering and peer tutoring, particularly in math, where I was able to carry out my desire to help others succeed. These experiences strengthened my skills in communication, organization, and representing diverse groups. I am dedicated to ensuring first years feel heard and supported by leveraging my leadership experience and passion for student success.`,
+    platform: `Student Engagement:  I aim to foster a more inclusive environment by hosting regular forums where students can voice their concerns and suggestions.
+Sustainability Initiatives: Promote eco-friendly practices on campus, such as recycling programs, energy conservation measures, and partnerships with local sustainability organizations.
+Mental Health Resources: Advocate for increased access to mental health services, including awareness campaigns and peer support programs, to prioritize student well-being.
+Diversity and Inclusion: Create initiatives that celebrate cultural diversity, promote equity, and ensure all voices are heard in council discussions.
+Academic Support: Work on programs that provide academic resources, such as tutoring services or workshops on study skills and time management.
+Campus Safety: Collaborate with campus security to address safety concerns, enhancing lighting in areas that need it and promoting awareness of safety resources.
+Feedback Mechanisms: Implement transparent channels for students to provide ongoing feedback on council initiatives and campus life.`,
+    anythingElseFunFact: `I love sports and I’m very outgoing`,
+  },
 ];
 
 export const iBioMedRep: CandidateInfo[] = [
