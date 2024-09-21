@@ -4,6 +4,7 @@ import {
   getAllProfilesDb,
   getProfileByEmailDb,
   getProfileByIdDb,
+  updateProfileByIdDb,
 } from '@slices/auth/db/profileDb';
 import { TProfile } from '@slices/auth/types';
 import { ObjectId } from 'mongodb';
@@ -74,6 +75,20 @@ export const createProfileService = async (
 ): Promise<TProfile | null> => {
   try {
     const profile = await createProfileDb(newProfile);
+    return profile;
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error('Error in profile services:', error);
+    return null;
+  }
+};
+
+export const updateProfileByIdService = async (
+  profileId: string,
+  profileInfo: TProfile,
+): Promise<TProfile | null> => {
+  try {
+    const profile = await updateProfileByIdDb(profileId, profileInfo);
     return profile;
   } catch (error) {
     /* eslint-disable no-console */
