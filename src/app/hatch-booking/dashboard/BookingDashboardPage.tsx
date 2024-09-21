@@ -167,8 +167,8 @@ const UserDashboard = () => {
                     <p className='text-gray-500 font-light underline'>
                       {profile.email}
                     </p>
-                    {/* todo: add account edit button, right now we don't have an update user endpoint or screen*/}
                   </div>
+
                 </div>
               )}
             </PageSection>
@@ -253,6 +253,7 @@ const UserDashboard = () => {
                       </span>
                     </div>
                   </div>
+  
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>

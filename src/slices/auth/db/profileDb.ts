@@ -114,7 +114,7 @@ export const createProfileDb = async (
   }
 };
 
-export const updateProfileByIdDb = async (
+export const  updateProfileByIdDb = async (
   profileId: string,
   profileInfo: TProfile,
 ): Promise<TProfile | null> => {
