@@ -22,6 +22,7 @@ import PageSection from '@/components/PageSection';
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
+import EditButtonLink from '@/slices/hatch/booking-page/components/buttons/EditButtonLink';
 import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
@@ -164,8 +165,12 @@ const UserDashboard = () => {
                     <p className='text-gray-500 font-light underline'>
                       {profile.email}
                     </p>
-                    {/* todo: add account edit button, right now we don't have an update user endpoint or screen*/}
                   </div>
+                  <EditButtonLink
+                    href='notareallink'
+                    variant='lavendar'
+                    size='sm'
+                  />
                 </div>
               )}
             </PageSection>
@@ -249,6 +254,11 @@ const UserDashboard = () => {
                       </span>
                     </div>
                   </div>
+                  <EditButtonLink
+                    href='notareallink'
+                    variant='light-green'
+                    size='sm'
+                  />
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>
