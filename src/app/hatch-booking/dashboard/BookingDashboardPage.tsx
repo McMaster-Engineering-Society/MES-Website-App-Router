@@ -223,7 +223,7 @@ const UserDashboard = () => {
               className='rounded-lg'
             >
               {nextBooking ? (
-                <div className='flex flex-col sm:grid sm:grid-cols-2 justify-center items-center min-h-[75px]'>
+                <div className='flex flex-row justify-evenly items-center min-h-[75px]'>
                   <div className='flex flex-row items-center justify-center bg-[#CAFFB1] max-h-[24px] max-w-[200px] border-1 border-[#81BD71] rounded-xl px-8 py-4'>
                     <span className='text-nowrap'>
                       {format(nextBooking.startTime, 'MMM. d, yyyy')}
