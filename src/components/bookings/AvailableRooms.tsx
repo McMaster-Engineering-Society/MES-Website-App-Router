@@ -19,7 +19,7 @@ export default function AvailableRooms({ className }: { className?: string }) {
   const numAvailRooms = availableRoomIds.length;
 
   return (
-    <div className={cn(className, 'flex flex-col gap-2 md:w-[250px]')}>
+    <div className={cn(className, 'flex flex-col gap-2 md:w-[340px]')}>
       <div className='border-2 border-[#A6192E] w-full items-center rounded-xl bg-white p-2 text-center font-bold md:h-[42px]'>
         Available Rooms
         <div className='font-normal md:hidden'>Click to Book</div>

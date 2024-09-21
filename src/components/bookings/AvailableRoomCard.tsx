@@ -40,7 +40,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomCardProps) => {
       >
         {roomInfo.roomName}
       </Button>
-      <div className='box-border hidden h-auto w-full flex-col items-center justify-between rounded-xl  border-2 bg-[#676767] p-4 text-center text-white md:flex'>
+      <div className='box-border hidden h-auto w-full flex-col items-center justify-between rounded-xl  border-2 bg-primary-800 p-4 text-center text-white md:flex'>
         <div className='relative inline-block w-full items-center justify-center text-center'>
           <div className='inline-block items-center font-bold'>
             {roomInfo.roomName}
@@ -53,26 +53,25 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomCardProps) => {
           </button>
         </div>
 
-        <div className='gap-x-auto my-2 mb-4 grid w-full grid-cols-2 gap-y-4 text-left'>
+        <div className='gap-x-4 my-2 mb-4 flex flex-row text-left'>
           <div className='flex items-center justify-center'>
-            <User className='mr-1' />
-            {/* width set to 25px for row alignment */}
-            <p className='w-[25px]'>{roomInfo.capacity}</p>
+            <User className='mr-1 w-[20px]' />
+
+            <p>{roomInfo.capacity}</p>
           </div>
 
           <div className='flex items-center justify-center'>
-            <Plug className='mr-1' />
-            {/* width set to 25px for row alignment */}
-            <p className='w-[25px]'>{roomInfo.outlets}</p>
+            <Plug className='mr-1 w-[20px]' />
+            <p>{roomInfo.outlets}</p>
           </div>
 
           {resourceKeys.map((resource, index) => (
             <div className='flex items-center justify-center' key={index}>
               <ResourcesIcon resource={resource} />
               {roomInfo.resources[resource] ? (
-                <Check className='w-[25px]' />
+                <Check className='w-[20px]' />
               ) : (
-                <X className='w-[25px]' />
+                <X className='w-[20px]' />
               )}
             </div>
           ))}
@@ -81,7 +80,7 @@ export const AvailableRoomCard = ({ roomInfo }: AvailableRoomCardProps) => {
           handleConfirmBookingWithMessage={handleConfirmBookingWithMessage}
         >
           <Button
-            className='m-1 w-[130px] bg-white font-semibold hover:bg-primary-700'
+            className='m-1 w-[130px] bg-white font-semibold hover:bg-gray'
             size='sm'
           >
             Book Now
