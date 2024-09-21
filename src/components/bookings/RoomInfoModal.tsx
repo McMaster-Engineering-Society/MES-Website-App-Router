@@ -25,7 +25,6 @@ type Props = {
   handleConfirmBookingWithMessage: () => void;
 };
 
-// TODO: Fix date not outputting to modal
 function RoomInfoModal({
   isOpen,
   onOpenChange,
