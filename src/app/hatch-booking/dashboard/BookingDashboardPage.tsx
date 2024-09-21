@@ -22,7 +22,7 @@ import PageSection from '@/components/PageSection';
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
-import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
+import ExpandModal from '@/slices/hatch/booking-page/components/modals/ExpandModal';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 const queryClient = new QueryClient();
@@ -326,7 +326,7 @@ const UserDashboard = () => {
             Report Issue
           </ButtonLink>
         </div>
-        <RebookModal
+        {/* <RebookModal
           open={open}
           onClose={() => setOpen(false)}
           startTime={displayStartTime}
@@ -334,7 +334,16 @@ const UserDashboard = () => {
           userRoom={displayRoom}
           userId={displayUserId}
           email={displayEmail}
-        ></RebookModal>
+        ></RebookModal> */}
+        <ExpandModal
+          open={open}
+          onClose={() => setOpen(false)}
+          startTime={displayStartTime}
+          endTime={displayEndTime}
+          userRoom={displayRoom}
+          userId={displayUserId}
+          email={displayEmail}
+        ></ExpandModal>
       </section>
     </QueryClientProvider>
   );
