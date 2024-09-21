@@ -1,9 +1,9 @@
-import { addDays, differenceInMinutes, format, startOfDay } from 'date-fns';
-import { Bookmark } from 'lucide-react';
+import { differenceInMinutes, format, startOfDay } from 'date-fns';
+import { CircleX } from 'lucide-react';
 
 import { useAddRoomBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
-type SameRoomModalProps = {
+type CancelModalProps = {
   open: boolean;
   onClose: () => void;
   startTime: Date;
@@ -23,7 +23,7 @@ export type RoomAvailabilities = {
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-const SameRoomModal: React.FC<SameRoomModalProps> = ({
+const CancelModal: React.FC<CancelModalProps> = ({
   open,
   startTime,
   endTime,
@@ -43,8 +43,6 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
   // const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
   const addRoomBooking = useAddRoomBookingHook();
-  const startWeek = addDays(startTime, 7);
-  const endWeek = addDays(endTime, 7);
 
   // const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(startWeek, endWeek);
 
@@ -139,62 +137,37 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
           X
         </button>
         {/* {children} */}
-        <h1 className='text-center mx mb-5'>Same Time Tomorrow</h1>
-
+        <h1 className='text-center mx mb-5'>Confirm Cancellation</h1>
         <div className='flex'>
-          <button className='border-solid border-2 border-green-600 rounded-lg px-5 py-5 m-3 bg-green-100 text-green-600'>
-            <div>
-              <b className='text-lg'>
-                Same time
-                <br />
-                next week:
-                <br />
+          <p className='text-small px-3'>
+            <b> {userRoom}</b>, {format(startTime, 'MMMM do')},{' '}
+            {format(startTime, 'p')} ({getDuration(startTime, endTime)}H):
+          </p>
+          <button
+            className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
+            onClick={() => {
+              handleBooking(
+                userId,
+                userRoom,
+                startTime,
+                endTime,
+                false,
+                email,
+                startOfDay(new Date()),
+              );
+            }}
+          >
+            <div className='flex'>
+              <CircleX className='w-4 h-4 text-red-700 pt-1 pr-1' />
+              <b>
+                <i>CANCEL BOOKING</i>
               </b>
-              <i>
-                {format(startWeek.toString(), 'p')} (
-                {getDuration(startWeek, endWeek)}H)
-                <br />
-              </i>
-              <i>
-                {format(startWeek, 'MMMM do')}
-                <br />
-              </i>
             </div>
           </button>
-          <div className='ml-5 py-8'>
-            <div className=''>
-              <h4 className='mt-3'>Confirm Booking:</h4>
-              <p className='text-small mb-1.5'>
-                <b> {userRoom}</b>, {format(startWeek, 'MMMM do')},{' '}
-                {format(startWeek, 'p')} ({getDuration(startWeek, endWeek)}H).
-              </p>
-              <button
-                className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
-                onClick={() => {
-                  handleBooking(
-                    userId,
-                    userRoom,
-                    startWeek,
-                    endWeek,
-                    false,
-                    email,
-                    startOfDay(new Date()),
-                  );
-                }}
-              >
-                <div className='flex'>
-                  <Bookmark className='w-4 h-4 text-red-700 pt-1 pr-1' />
-                  <b>
-                    <i>BOOK NOW</i>
-                  </b>
-                </div>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default SameRoomModal;
+export default CancelModal;
