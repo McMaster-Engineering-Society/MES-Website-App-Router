@@ -31,9 +31,9 @@ const PendingPage = () => {
       {/* filter */}
       <div className='flex flex-col w-[25rem] px-[2.5rem] mt-5'>
         <div className='flex flex-row w-[20rem] justify-between'>
-          <div className='text-[#4b4b4b] text-2xl font-medium p-2'>Filter</div>
+          <div className='text-[#4b4b4b] text-lg font-medium p-2'>Filter</div>
           <div
-            className='text-[#a6192e] text-2xl font-medium p-2 cursor-pointer'
+            className='text-[#a6192e] text-lg font-medium p-2 cursor-pointer'
             onClick={reset}
           >
             Reset
