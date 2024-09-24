@@ -7,7 +7,6 @@ import PageSection from '@/components/PageSection';
 
 import budgetArray from '@/constant/finances/budget';
 import getMoneyArray from '@/constant/finances/getMoney';
-import howToGetMoneyArray from '@/constant/finances/howToGetMoney';
 
 const BudgetArray = () => {
   return (
@@ -58,7 +57,7 @@ const GetMoneyArray = () => {
 const HowToGetMoneyArray = () => {
   return (
     <div className='mt-4 flex flex-wrap justify-center gap-x-3 gap-y-3'>
-      {howToGetMoneyArray.map((item, index) => (
+      {/* {howToGetMoneyArray.map((item, index) => (
         <ButtonLink
           key={index}
           href={item.link}
@@ -68,7 +67,7 @@ const HowToGetMoneyArray = () => {
         >
           {item.title}
         </ButtonLink>
-      ))}
+      ))} */}
     </div>
   );
 };
@@ -96,6 +95,10 @@ export default function FinancesPage() {
             <div>
               The following documents detail the differing processes for
               deparment clubs, clubs and teams, etc.
+              <h5 className='flex flex-col items-center'>
+                {' '}
+                <i>None for now!</i>
+              </h5>
             </div>
             <HowToGetMoneyArray />
           </PageSection>

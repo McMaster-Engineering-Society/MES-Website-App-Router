@@ -7,6 +7,10 @@ type Budget = {
 
 const budgetArray: Budget[] = [
   {
+    year: '2024-2025',
+    link: 'https://docs.google.com/spreadsheets/d/1-lvljFqqNoYsGaJHlPBux3BGER0IRegecU7U3RitihI/edit?gid=0#gid=0',
+  },
+  {
     year: '2023-2024',
     link: 'https://docs.google.com/spreadsheets/d/1KC1SSjpi8ab-5a2IMMuqoIU6sp2gr7j8/edit#gid=732387861',
   },
