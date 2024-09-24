@@ -1,10 +1,9 @@
 import { WithId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getRoomService } from '@/lib/services/roomServices';
-import { TApiResponse, TMessageResponse } from '@/lib/types';
-
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+import { getRoomService } from '@/slices/hatch/admin/services/roomServices';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

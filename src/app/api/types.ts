@@ -1,6 +1,11 @@
 import { ObjectId } from 'mongodb';
 
-export type TRoleDb = 'admin' | 'hatch-user' | 'club' | 'super-admin';
+export type TRoleDb =
+  | 'hatch-admin'
+  | 'clubs-admin'
+  | 'hatch-user'
+  | 'club'
+  | 'super-admin';
 
 export type TUserDb = {
   _id: string;
@@ -33,4 +38,25 @@ export type TMessageResponse = {
 export type TApiResponse<T> = {
   data: T | null;
   message?: string;
+};
+
+export type TRoomEnableRequest = {
+  enabled: boolean;
+  room: string;
+};
+
+export type TAvailabilityResponse = {
+  [room: string]: Date[];
+};
+
+export type TBatchBookingRequest = { bookingList: TBookingDb[] };
+export type TBatchDeleteBookingRequest = { bookingIdList: string[] };
+
+export type TBatchBookingResponse = {
+  bookingsAdded: TBookingDb[];
+  conflictExists: boolean;
+  conflictingBookings: {
+    booking: TBookingDb;
+    conflicts: TBookingDb[];
+  }[];
 };

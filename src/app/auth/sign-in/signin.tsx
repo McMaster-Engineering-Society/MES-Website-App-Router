@@ -1,7 +1,7 @@
-import SignInCard from '@/components/auth/SignInCard';
 import PageLayout from '@/components/layout/PageLayout';
 
 import HatchLoginSvg from '@/constant/user-dashboard/HatchLoginSvg';
+import SignInCard from '@/slices/auth/components/SignInCard';
 
 export const SignInPage = () => {
   return (

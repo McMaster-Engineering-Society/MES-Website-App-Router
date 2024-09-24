@@ -52,6 +52,13 @@ export default function FrequencyPage() {
           >
             Read The December 2023 Edition Here!
           </ButtonLink>
+          <ButtonLink
+            href='/pdfs/frequency/Frequency_winter_2024.pdf'
+            target='_blank'
+            className='justify-center'
+          >
+            Read The Winter 2024 Edition Here!
+          </ButtonLink>
         </div>
       </main>
     </PageLayout>

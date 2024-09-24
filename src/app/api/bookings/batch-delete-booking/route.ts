@@ -1,14 +1,10 @@
+import { TBooking } from '@slices/hatch/booking-page/types';
 import { WithId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-import { deleteBatchBookingService } from '@/lib/services/bookingServices';
-import {
-  TApiResponse,
-  TBatchDeleteBookingRequest,
-  TBooking,
-} from '@/lib/types';
-
+import { TApiResponse, TBatchDeleteBookingRequest } from '@/app/api/types';
 import { TMessageResponse } from '@/app/api/types';
+import { deleteBatchBookingService } from '@/slices/hatch/booking-page/services/bookingServices';
 
 export async function POST(req: Request) {
   const reqObject: TBatchDeleteBookingRequest = await req.json();

@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
 import { TBookingDb } from '@/app/api/types';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 export function generateLoginEmailHtml(params: { url: string }) {
   const { url } = params;
@@ -77,7 +78,10 @@ export function generateSuccessfulBookingEmailHtml(
   const { startTime, endTime, createdDate, room } = successfulBooking;
 
   const formattedStartTime = format(startTime, "MMMM d, yyyy 'at' h:mm a");
-  const formattedEndTime = format(endTime, "MMMM d, yyyy 'at' h:mm a");
+  const formattedEndTime = format(
+    add30Minutes(endTime),
+    "MMMM d, yyyy 'at' h:mm a",
+  );
   const formattedCreatedDate = createdDate
     ? format(createdDate, "MMMM d, yyyy 'at' h:mm a")
     : 'Unknown';
@@ -153,7 +157,10 @@ export function generateSuccessfulBookingEmailText(
   const { startTime, endTime, createdDate, room } = successfulBooking;
 
   const formattedStartTime = format(startTime, "MMMM d, yyyy 'at' h:mm a");
-  const formattedEndTime = format(endTime, "MMMM d, yyyy 'at' h:mm a");
+  const formattedEndTime = format(
+    add30Minutes(endTime),
+    "MMMM d, yyyy 'at' h:mm a",
+  );
   const formattedCreatedDate = createdDate
     ? format(createdDate, "MMMM d, yyyy 'at' h:mm a")
     : 'Unknown';

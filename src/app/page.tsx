@@ -26,7 +26,7 @@ import {
 
 import { CalendarId } from '@/types/calendar';
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Events',
@@ -37,7 +37,7 @@ const CALENDAR_IDS: CalendarId[] = [
 const WeeklyNews = () => (
   <div>
     <iframe
-      src='https://drive.google.com/file/d/1n9nsqtIWQN7F6gt_1al_1bRBxYd7pXm6/preview'
+      src='https://drive.google.com/file/d/1338HdqYeoGFTftNfxdk_0DoWo9chO1Wn/preview'
       width='853'
       height='480'
       allow='autoplay'
@@ -328,8 +328,8 @@ export default function HomePage() {
             justifyContent: 'center',
           }}
         >
-          <h1>Weekly News</h1>
-          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 1</h4>
+          <h1>The Volcano</h1>
+          <h4 style={{ paddingBottom: '35px' }}>Weekly News</h4>
           <WeeklyNews />
         </section>
         <section id='calendar'>
