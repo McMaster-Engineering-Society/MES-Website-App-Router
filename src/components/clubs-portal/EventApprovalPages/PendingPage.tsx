@@ -25,7 +25,36 @@ const PendingPage = () => {
     setSort('');
     setStartDate('');
     setEndDate('');
+    setUHSForm(true);
+    setRoomBooking(true);
   }
+
+  // Filter forms based on filterName, booked date, and tags
+  const filteredForms = forms.filter((form) => {
+    const matchesName = form.name
+      .toLowerCase()
+      .includes(filterName.toLowerCase());
+    const formDate = new Date(form.year, form.month - 1, form.day);
+    const matchesStartDate = startDate ? formDate >= new Date(startDate) : true;
+    const matchesEndDate = endDate ? formDate <= new Date(endDate) : true;
+    const matchesTag =
+      (uhsForm && form.type === 'UHS Form') ||
+      (roomBooking && form.type === 'Room Booking');
+    return matchesName && matchesStartDate && matchesEndDate && matchesTag;
+  });
+
+  // Sort forms based on the selected sort criteria
+  const sortedForms = [...filteredForms].sort((a, b) => {
+    if (sort === 'date') {
+      const dateA = new Date(a.year, a.month - 1, a.day);
+      const dateB = new Date(b.year, b.month - 1, b.day);
+      return dateA.getTime() - dateB.getTime();
+    } else if (sort === 'name') {
+      return a.name.localeCompare(b.name);
+    }
+    return 0;
+  });
+
   return (
     <div className='h-full w-full flex flex-row '>
       {/* filter */}
@@ -63,7 +92,6 @@ const PendingPage = () => {
             <option value=''>Sort...</option>
             <option value='date'>Date</option>
             <option value='name'>Name</option>
-            <option value='size'>Size</option>
           </select>
 
           <div className='text-[#777777] text-base font-medium'>
@@ -141,7 +169,7 @@ const PendingPage = () => {
           <span className='basis-1/4'></span>
         </div>
         <div>
-          {forms.map((form) => (
+          {sortedForms.map((form) => (
             <FormEvent key={form.id} form={form} />
           ))}
         </div>
