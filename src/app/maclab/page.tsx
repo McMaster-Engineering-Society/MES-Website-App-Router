@@ -160,8 +160,8 @@ export default function MacLABPage() {
                 departments.
               </b>{' '}
               The amount of requested project funding for 2022-2023 totalled
-              $357,798.47. The full list of last year's project funding can be
-              seen below.
+              $357,798.47. The full list of last year's (2023-2024) project
+              funding can be seen below.
             </span>
             <div className='mt-4 flex flex-col gap-4 md:flex-row'>
               <ButtonLink
@@ -170,7 +170,7 @@ export default function MacLABPage() {
               >
                 Receive macLAB Funding Application
               </ButtonLink>
-              <ButtonLink href='/excels/department-maclab-funding.xlsx'>
+              <ButtonLink href='/excels/2024_macLAB_ALLOCATIONS.xlsx'>
                 View past funding breakdown
               </ButtonLink>
             </div>
