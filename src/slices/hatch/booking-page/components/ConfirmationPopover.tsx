@@ -32,7 +32,7 @@ function ConfirmationPopover({
       <PopoverContent>
         <div className='mx-0.5 my-1 '>
           <Button
-            className='m-1 font-semibold bg-green-400 w-[130px]'
+            className='m-1 font-semibold bg-[#28a745] w-[130px]'
             size='sm'
             color='success'
             onClick={handleConfirmBookingWithMessage}
