@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
 import { useScreenSize } from '@/components/hooks/useScreenSize';
 
 import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
+import { useFetchAllBookingsHook } from '@/slices/hatch/admin/hooks/bookingHooks';
 import BookingIndicator from '@/slices/hatch/booking-page/components/BookingIndicator';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
-import { useFetchAllBookingsHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
 /**
  * @param isAdmin if true, display all existing bookings. if false, display only user's existing bookings
