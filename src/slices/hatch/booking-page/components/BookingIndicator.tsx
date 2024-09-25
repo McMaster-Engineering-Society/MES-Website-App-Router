@@ -162,11 +162,7 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
                 onClose();
               }}
             >
-              {`Cancel Booking ${
-                format(booking.startTime, 'h:mm a') +
-                ' to ' +
-                format(booking.endTime, 'h:mm a')
-              }`}
+              Cancel Booking
             </Button>
           )}
           customDate={booking.startTime}
