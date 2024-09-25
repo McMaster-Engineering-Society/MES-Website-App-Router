@@ -21,6 +21,7 @@ import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
 import { useFetchProfileByEmailHook } from '@/slices/auth/hooks/profileHooks';
 import RoomInfoModal from '@/slices/hatch/booking-page/components/RoomInfoModal';
 import { useDeleteBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 type BookingIndicatorProps = {
   booking: TBooking;
@@ -86,22 +87,23 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
             {(onClose) => (
               <>
                 <ModalHeader className='flex flex-col gap-1'>
-                  Booking in Room {bookingTooltipContent}
+                  Booking Details
                 </ModalHeader>
                 <ModalBody>
-                  <div className='flex flex-col gap-4'>
-                    <div className=''>
-                      <p className='mb-2'>User Profile</p>
-                      {userProfileIsPending && <p>Loading user profile...</p>}
-                      {userProfileError && <p>Error loading user profile.</p>}
-                      {userProfileData && (
-                        <pre className='text-sm bg-gray-200 p-2 rounded-md overflow-auto'>
-                          {JSON.stringify(userProfileData, null, 2)}
-                        </pre>
-                      )}
-                    </div>
+                  <div className='flex flex-col gap-1'>
+                    <p className=''>Room: {booking.room}</p>
+                    <p className=''>
+                      Start Time: {format(booking.startTime, 'h:mm a')}
+                    </p>
+                    <p className=''>
+                      End Time:{' '}
+                      {format(add30Minutes(booking.endTime), 'h:mm a')}
+                    </p>
+                    <p className=''>
+                      Has Confirmed: {booking.hasConfirmed ? 'Yes' : 'No'}
+                    </p>
                     <p>
-                      Booking created{' '}
+                      Booking Created:{' '}
                       {booking.createdDate
                         ? new Date(booking.createdDate).toLocaleString(
                             'en-US',
@@ -116,6 +118,14 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
                           )
                         : 'Invalid Date'}
                     </p>
+                    <p className=''>User Profile:</p>
+                    {userProfileIsPending && <p>Loading user profile...</p>}
+                    {userProfileError && <p>Error loading user profile.</p>}
+                    {userProfileData && (
+                      <pre className='text-sm bg-gray-200 p-2 rounded-md overflow-auto'>
+                        {JSON.stringify(userProfileData, null, 2)}
+                      </pre>
+                    )}
                   </div>
                 </ModalBody>
                 <ModalFooter>
@@ -153,13 +163,13 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
               }}
             >
               {`Cancel Booking ${
-                format(formattedStartTime, 'h:mm a') +
+                format(booking.startTime, 'h:mm a') +
                 ' to ' +
-                format(formattedEndTime, 'h:mm a')
+                format(booking.endTime, 'h:mm a')
               }`}
             </Button>
           )}
-          customDate={formattedStartTime}
+          customDate={booking.startTime}
         />
       )}
     </div>
