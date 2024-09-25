@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { TBooking } from '@slices/hatch/booking-page/types';
+import { format } from 'date-fns';
 import { toast } from 'sonner';
 
 import {
@@ -16,6 +17,9 @@ import {
   BookingIndicatorPositions,
   UserBookingIndicatorColours,
 } from '@/constant/hatch-bookings/booking-indicator-data';
+import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
+import { useFetchProfileByEmailHook } from '@/slices/auth/hooks/profileHooks';
+import RoomInfoModal from '@/slices/hatch/booking-page/components/RoomInfoModal';
 import { useDeleteBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
 type BookingIndicatorProps = {
@@ -54,6 +58,12 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
     });
   };
 
+  const {
+    data: userProfileData,
+    isPending: userProfileIsPending,
+    error: userProfileError,
+  } = useFetchProfileByEmailHook(booking.email);
+
   return (
     <div
       onClick={onOpen}
@@ -70,35 +80,88 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
           className={`w-2 rounded-full ${(isAdmin ? AdminBookingIndicatorColours[booking.room] : UserBookingIndicatorColours[booking.room]) || 'bg-gray-500/70'} pointer-events-auto`}
         />
       </Tooltip>
-      <Modal size='md' isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className='flex flex-col gap-1'>
-                Booking in Room {bookingTooltipContent}
-              </ModalHeader>
-              <ModalBody>
-                <p>User ID: {booking.userId}</p>
-                <p>User email: {booking.email}</p>
-                <p>
-                  Created on: {new Date(booking.createdDate || 0).toISOString()}
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  color='danger'
-                  onPress={() => {
-                    handleDeleteBooking((booking._id || '').toString());
-                    onClose();
-                  }}
-                >
-                  Cancel Booking
-                </Button>
-              </ModalFooter>
-            </>
+      {isAdmin ? (
+        <Modal size='md' isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className='flex flex-col gap-1'>
+                  Booking in Room {bookingTooltipContent}
+                </ModalHeader>
+                <ModalBody>
+                  <div className='flex flex-col gap-4'>
+                    <div className=''>
+                      <p className='mb-2'>User Profile</p>
+                      {userProfileIsPending && <p>Loading user profile...</p>}
+                      {userProfileError && <p>Error loading user profile.</p>}
+                      {userProfileData && (
+                        <pre className='text-sm bg-gray-200 p-2 rounded-md overflow-auto'>
+                          {JSON.stringify(userProfileData, null, 2)}
+                        </pre>
+                      )}
+                    </div>
+                    <p>
+                      Booking created{' '}
+                      {booking.createdDate
+                        ? new Date(booking.createdDate).toLocaleString(
+                            'en-US',
+                            {
+                              weekday: 'short',
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            },
+                          )
+                        : 'Invalid Date'}
+                    </p>
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color='danger'
+                    onPress={() => {
+                      handleDeleteBooking((booking._id || '').toString());
+                      onClose();
+                    }}
+                  >
+                    Cancel Booking
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      ) : (
+        <RoomInfoModal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          roomInfo={
+            HatchRoomsData.find((room) => room.roomName === booking.room) ||
+            HatchRoomsData[0]
+          }
+          handleConfirmBookingWithMessage={() => {
+            // will not be used
+          }}
+          CustomFooter={({ onClose }) => (
+            <Button
+              color='danger'
+              onPress={() => {
+                handleDeleteBooking((booking._id || '').toString());
+                onClose();
+              }}
+            >
+              {`Cancel Booking ${
+                format(formattedStartTime, 'h:mm a') +
+                ' to ' +
+                format(formattedEndTime, 'h:mm a')
+              }`}
+            </Button>
           )}
-        </ModalContent>
-      </Modal>
+          customDate={formattedStartTime}
+        />
+      )}
     </div>
   );
 };
