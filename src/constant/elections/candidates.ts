@@ -12,8 +12,24 @@ export const firstYearCouncilChair: CandidateInfo[] = [
 Throughout my time in high school, I’ve had the privilege of being on the student council for multiple years and serving as the Grade 12 representative, where I learned to navigate the responsibilities of communicating effectively between students and the administration. This experience sharpened my ability to listen to my peers and ensure their concerns were addressed. I organized student-led events, collaborated with teachers and other representatives, and worked hard to keep everyone informed about important updates. I was also lucky enough to be involved in many community service and leadership roles throughout my life, such as volunteering and working as a fundraising executive with 5n2 Soup Kitchens among other organizations. These experiences taught me valuable lessons in teamwork, communication, and dedication to a cause.
 
 As a first-year student with a collaborative mindset and a passion connecting our community, I am confident I can contribute to making this year rewarding for all of us!`,
-    platform: ``,
-    anythingElseFunFact: ``,
+    platform: `Inclusive Engagement: As First-Year Council Chair, I’ll organize regular student forums where your ideas, concerns, and feedback are actively heard. Together, we’ll create a community where your voice shapes our campus experience, and everyone feels welcome.
+
+    Prioritizing Mental Health: University life is exciting, but it can also be stressful. I’ll advocate for more mental health resources, including peer support groups, therapy dog visits, and campus-wide stress-relief events to make sure everyone stays balanced and supported.
+
+    First-Year Mixer & Socials: Let’s kick off the year with exciting mixers, themed socials, and icebreaker events so we can meet new friends and make memories from day one.
+
+    Game Nights & Movie Marathons: Whether it’s late-night board games, Mario Kart tournaments, or movie nights, I’ll make sure there’s always something fun going on!
+
+    First-Year Cup: Let’s start a little friendly competition with the “First-Year Cup”—residence versus residence in everything from sports to trivia to the best costume parties. Bragging rights included!
+
+    Diversity & Inclusion: Let’s celebrate what makes us unique! From cultural festivals to themed residence events, I’ll make sure our first-year community is a place where all backgrounds are celebrated, and everyone has a seat at the table.
+
+    Academic Success for All: We’ll succeed together, but not without having fun! In addition to academic support services, I’ll organize chill study breaks, late-night study jams with snacks, and stress-busting activities to help us stay on top of things while enjoying the ride.
+
+    Campus Safety: Your safety is key to enjoying campus life. I’ll work with campus security to improve lighting, run night walk programs, and host safety workshops—so you can focus on having fun and making memories.
+
+    Continuous Feedback: I’m all about transparency. With polls and interactive feedback apps, I’ll make it easy for you to share your ideas, so together we can keep improving our first-year experience."`,
+    anythingElseFunFact: `One fun fact about me is that I love playing sports, staying active, and meeting new people`,
   },
   {
     name: `Ifeyinwa Mbielu`,
