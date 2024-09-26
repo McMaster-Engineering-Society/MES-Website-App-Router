@@ -98,15 +98,14 @@ export const TipTapWrapper = ({ docId }: { docId: string }) => {
     return null;
   }
 
-  const handleSave = async () => {
+  const handleSave = async (title: string) => {
     if (!editor) {
       return;
     }
 
     const document: TDocument = {
-      title: 'temp',
+      title: title,
       content: editor.document,
-      // content: "test"
     };
 
     await saveDocument.mutateAsync(document);

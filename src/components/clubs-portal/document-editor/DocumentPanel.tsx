@@ -8,10 +8,11 @@ import {
 import React from 'react';
 
 import Button from '@/components/buttons/Button';
+import { DocumentSaveModal } from '@/components/clubs-portal/document-editor/DocumentSaveModal';
 
 type DocumentPanelProps = {
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSave?: () => Promise<void>;
+  handleSave?: (title: string) => Promise<void>;
   handleUpload?: () => Promise<void>;
   handleDownload?: () => Promise<void>;
   handleProceed?: () => void;
@@ -59,10 +60,16 @@ export const DocumentPanel = ({
             </Button>
           )}
           {handleSave && (
-            <Button variant='ghost' onClick={() => handleSave()}>
-              <Save />
-            </Button>
+            <DocumentSaveModal
+              trigger={
+                <Button variant='ghost'>
+                  <Save />
+                </Button>
+              }
+              handleSave={handleSave}
+            />
           )}
+
           {handleProceed && (
             <Button variant='ghost' onClick={() => handleProceed()}>
               <ArrowBigRightDash />

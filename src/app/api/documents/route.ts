@@ -1,7 +1,10 @@
-import {NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
-import { createDocumentService, getAllDocumentsService } from '@/lib/services/documentServices';
+import {
+  createDocumentService,
+  getAllDocumentsService,
+} from '@/lib/services/documentServices';
 import { TDocument } from '@/lib/types';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
@@ -13,13 +16,13 @@ export async function GET() {
     return NextResponse.json<TMessageResponse>({
       message: 'list of all documents not found',
     });
-  return NextResponse.json<TApiResponse<TDocument[]>>({ data: allDocumentsList });
+  return NextResponse.json<TApiResponse<TDocument[]>>({
+    data: allDocumentsList,
+  });
 }
 
 export async function POST(request: NextRequest) {
-  console.log('API CALL', request);
-  const body  = await request.json();
-  console.log('API CALLWED', JSON.stringify(body));
+  const body = await request.json();
   const newDocument = await createDocumentService(body);
 
   if (!newDocument)
