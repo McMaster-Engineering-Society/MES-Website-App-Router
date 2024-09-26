@@ -98,13 +98,16 @@ export const TipTapWrapper = ({ docId }: { docId: string }) => {
     return null;
   }
 
-  const handleSave = async (title: string) => {
+  const handleSave = async () => {
     if (!editor) {
       return;
     }
 
+    const firstDocument = documents.find((doc: TDocument) => doc._id === docId);
+
     const document: TDocument = {
-      title: title,
+      _id: firstDocument._id,
+      title: firstDocument.title,
       content: editor.document,
     };
 

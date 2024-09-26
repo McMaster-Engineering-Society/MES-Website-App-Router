@@ -17,7 +17,7 @@ export type TApiResponse<T> = {
 };
 
 export type TDocument = {
-  _id?: string;
+  _id?: string | ObjectId;
   title: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: Record<string, any>;

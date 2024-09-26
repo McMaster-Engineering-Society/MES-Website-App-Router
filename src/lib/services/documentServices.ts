@@ -1,4 +1,8 @@
-import { createDocumentDb, getAllDocumentsDb } from '@/lib/db/documentDb';
+import {
+  createDocumentDb,
+  getAllDocumentsDb,
+  updateDocumentDb,
+} from '@/lib/db/documentDb';
 import { TDocument } from '@/lib/types';
 
 export const getAllDocumentsService = async (): Promise<TDocument[]> => {
@@ -13,14 +17,20 @@ export const getAllDocumentsService = async (): Promise<TDocument[]> => {
 };
 
 export const createDocumentService = async (
-  newUser: TDocument,
+  newDocument: TDocument,
 ): Promise<TDocument | null> => {
   try {
-    const user = await createDocumentDb(newUser);
+    const user = await createDocumentDb(newDocument);
     return user;
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Error in user services:', error);
     return null;
   }
+};
+
+export const updateDocumentService = async (
+  updatedDocument: TDocument,
+): Promise<TDocument | null> => {
+  return await updateDocumentDb(updatedDocument);
 };

@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server';
 import {
   createDocumentService,
   getAllDocumentsService,
+  updateDocumentService,
 } from '@/lib/services/documentServices';
 import { TDocument } from '@/lib/types';
 
@@ -30,4 +31,15 @@ export async function POST(request: NextRequest) {
       message: 'new document not created',
     });
   return NextResponse.json<TApiResponse<TDocument>>({ data: newDocument });
+}
+
+export async function PATCH(request: NextRequest) {
+  const newDocument = await request.json();
+  const updatedDoc = await updateDocumentService(newDocument);
+
+  if (!updatedDoc)
+    return NextResponse.json<TMessageResponse>({
+      message: 'document not updated',
+    });
+  return NextResponse.json<TApiResponse<TDocument>>({ data: updatedDoc });
 }

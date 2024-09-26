@@ -1,4 +1,4 @@
-import { UpdateResult, WithId } from 'mongodb';
+import { InsertOneResult, ObjectId, WithId } from 'mongodb';
 
 import clientPromise from '@/lib/db';
 import { TDocument } from '@/lib/types';
@@ -28,44 +28,56 @@ export const getAllDocumentsDb = async (): Promise<TDocument[]> => {
 export const createDocumentDb = async (
   newDocument: TDocument,
 ): Promise<TDocument | null> => {
-  console.log(newDocument);
-
   try {
     const documentsCollection = await getDocumentsCollection();
-    const result: UpdateResult = await documentsCollection.updateOne(
-      { title: newDocument.title },
-      { $set: newDocument }, // Use $set to update only specified fields
-      { upsert: true },
-    );
+    const result: InsertOneResult =
+      await documentsCollection.insertOne(newDocument);
 
     if (!result.acknowledged) {
-      throw new Error('Failed to insert or update user');
+      throw new Error('Failed to insert document');
     }
 
-    let createdDocument: TDocument;
+    const createdUser: TDocument = {
+      ...newDocument,
+      _id: result.insertedId.toString(),
+    };
 
-    if (result.upsertedId) {
-      createdDocument = {
-        ...newDocument,
-        _id: result.upsertedId.toString(), // Ensure upsertedId is converted to string
-      };
-    } else {
-      // If no upsertedId, fetch the updated document
-      const updatedDocument = await documentsCollection.findOne({
-        title: newDocument.title,
-      });
-      if (!updatedDocument) {
-        throw new Error('Failed to retrieve updated user');
-      }
-      createdDocument = {
-        ...updatedDocument,
-        _id: updatedDocument._id.toString(), // Ensure _id is a string
-      } as TDocument;
-    }
-
-    return createdDocument;
+    return createdUser;
   } catch (error) {
-    console.error('Error fetching user by id from database:', error);
+    console.error('Error inserting new document into database:', error);
+    throw new Error('Database error');
+  }
+};
+
+export const updateDocumentDb = async (
+  updatedDocument: TDocument,
+): Promise<TDocument | null> => {
+  try {
+    const documentsCollection = await getDocumentsCollection();
+
+    if (!updatedDocument._id) {
+      throw new Error('Document must have an _id for an update');
+    }
+
+    const documentObjectId = new ObjectId(updatedDocument._id);
+
+    // Create a shallow copy of updatedDocument and remove the _id field
+    const { _id, ...documentWithoutId } = updatedDocument;
+
+    const result = await documentsCollection.findOneAndReplace(
+      { _id: documentObjectId },
+      documentWithoutId, // Use the document without _id for replacement
+      { returnDocument: 'after' }, // Return the updated document
+    );
+
+    if (!result) {
+      throw new Error('Failed to update document');
+    }
+
+    // Add back the _id to the updated document before returning
+    return result;
+  } catch (error) {
+    console.error('Error updating document in database:', error);
     throw new Error('Database error');
   }
 };
