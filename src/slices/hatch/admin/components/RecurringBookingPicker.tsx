@@ -29,11 +29,13 @@ import { Key } from 'react-stately';
 import { toast } from 'sonner';
 
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
+import { useBatchAddRoomBookingHook } from '@/slices/hatch/admin/hooks/bookingHooks';
 import { TBooking } from '@/slices/hatch/booking-page/types';
 
 const RecurringBookingPicker = () => {
   const { profile } = useSessionContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const batchAddBookings = useBatchAddRoomBookingHook();
 
   const [dateRange, setDateRange] = useState<RangeValue<DateValue>>({
     start: today(getLocalTimeZone()),
@@ -45,6 +47,19 @@ const RecurringBookingPicker = () => {
   const [selectedWeekdays, setSelectedWeekdays] = useState<Set<Key>>(
     new Set([]),
   );
+
+  const handleBatchAdd = (bookings: TBooking[]) => {
+    batchAddBookings.mutate(bookings, {
+      onSuccess: () => {
+        toast(
+          `Recurring booking made from ${dateRange.start} to ${dateRange.end} for ${startTime} to ${endTime}, in room(s) ${selectedRooms}, every ${Array.from(selectedWeekdays).map((weekday) => intToWeekday(weekday))}`,
+        );
+      },
+      onError: () => {
+        toast('Recurring booking unsuccessful.');
+      },
+    });
+  };
 
   const intToWeekday = (day: Key): string | null => {
     switch (day) {
@@ -154,7 +169,7 @@ const RecurringBookingPicker = () => {
     return firstWeekOfBookings;
   };
 
-  const determineAllBookings = (): TBooking[] | null => {
+  const determineAllBookings = (): TBooking[] => {
     const allBookings: TBooking[] = [];
 
     const endDate = new ZonedDateTime(
@@ -202,8 +217,10 @@ const RecurringBookingPicker = () => {
             hasConfirmed: false,
             createdDate: new Date(),
           });
-          bookingStartTime = bookingStartTime.add({ weeks: 1 });
-          bookingEndTime = bookingEndTime.add({ weeks: 1 });
+
+          // 168 hours in a week. incrementing by hours here to avoid weird interactions with daylight savings
+          bookingStartTime = bookingStartTime.add({ hours: 168 });
+          bookingEndTime = bookingEndTime.add({ hours: 168 });
         }
       });
     });
@@ -211,7 +228,7 @@ const RecurringBookingPicker = () => {
     return allBookings;
   };
 
-  const selectedValue = useMemo(() => {
+  const weekdayDisplay = useMemo(() => {
     return selectedWeekdays.size > 2
       ? `${intToWeekday(Array.from(selectedWeekdays)[0])}, ${intToWeekday(Array.from(selectedWeekdays)[1])}, ...`
       : Array.from(selectedWeekdays)
@@ -302,7 +319,7 @@ const RecurringBookingPicker = () => {
                   <p className='pr-2'>Repeat booking every</p>
                   <Dropdown>
                     <DropdownTrigger>
-                      <Button variant='bordered'>{selectedValue}</Button>
+                      <Button variant='bordered'>{weekdayDisplay}</Button>
                     </DropdownTrigger>
                     <DropdownMenu
                       variant='flat'
@@ -337,14 +354,12 @@ const RecurringBookingPicker = () => {
                     }
                     color='secondary'
                     onPress={() => {
-                      determineAllBookings();
+                      const bookings = determineAllBookings();
+                      handleBatchAdd(bookings);
                       onClose();
-                      toast(
-                        `Recurring booking made from ${dateRange.start} to ${dateRange.end} for ${startTime} to ${endTime}, in room(s) ${selectedRooms}, every ${Array.from(selectedWeekdays)}`,
-                      );
                     }}
                   >
-                    Confirm
+                    Create Recurring Booking
                   </Button>
                 </div>
               </ModalFooter>
