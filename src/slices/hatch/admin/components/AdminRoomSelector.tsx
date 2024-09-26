@@ -1,14 +1,20 @@
 import { Button, CheckboxGroup, Select, SelectItem } from '@nextui-org/react';
+import { startOfDay } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import RoomToggleSwitch from '@/slices/hatch/admin/components/RoomToggleSwitch';
+import { useBatchAddRoomBookingHook } from '@/slices/hatch/admin/hooks/bookingHooks';
 import { RoomButton } from '@/slices/hatch/booking-page/components/RoomButton';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
+import { TBooking } from '@/slices/hatch/booking-page/types';
 
 const AdminRoomSelector = () => {
-  const { startIndex } = useTimePickerContext();
-
+  const { startIndex, endIndex, timeSlotIndexToTimeISODate } =
+    useTimePickerContext();
+  const { profile } = useSessionContext();
+  const batchAddRoomBooking = useBatchAddRoomBookingHook();
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [selectedAction, setSelectedAction] = useState<Set<string>>(
     new Set([]),
@@ -19,18 +25,56 @@ const AdminRoomSelector = () => {
     setSelectedAction(new Set([]));
   }, [startIndex]);
 
+  async function handleBatchBooking(rooms: string[]) {
+    const bookingsToAdd: TBooking[] = [];
+
+    const startTime = timeSlotIndexToTimeISODate(startIndex);
+    const endTime = timeSlotIndexToTimeISODate(endIndex);
+    const userId = profile?._id.toString();
+    const email = profile?.email;
+    if (userId && email) {
+      for (const room of rooms) {
+        const newBooking: TBooking = {
+          userId: userId,
+          room: room,
+          startTime: startTime,
+          endTime: endTime,
+          hasConfirmed: false,
+          email: email,
+          createdDate: startOfDay(new Date()),
+        };
+        bookingsToAdd.push(newBooking);
+      }
+
+      await batchAddRoomBooking.mutateAsync(bookingsToAdd);
+    }
+  }
   const handleRoomAction = () => {
+    const action: string = Array.from(selectedAction)[0];
     toast(
-      `Performed "${Array.from(selectedAction)[0]}" on room(s) ${selectedRooms.map((room) => ` ${room}`)}`,
+      `Performed "${action}" on room(ssdf) ${selectedRooms.map((room) => ` ${room}`)}`,
     );
+
     setSelectedRooms([]);
     setSelectedAction(new Set([]));
   };
 
   const handleTimeslotAction = () => {
+    const action: string = Array.from(selectedAction)[0];
     toast(
-      `Performed "${Array.from(selectedAction)[0]}" on bookings in timeslot _ on room(s) ${selectedRooms.map((room) => ` ${room}`)}`, // TODO: mention timeslot that was used
+      `Performed "${action}" on bookings in timeslot _ on room(s) ${selectedRooms.map((room) => ` ${room}`)}`, // TODO: mention timeslot that was used
     );
+
+    switch (action) {
+      case 'cancel':
+        break;
+
+      case 'book':
+        handleBatchBooking(selectedRooms);
+
+        break;
+    }
+
     setSelectedRooms([]);
     setSelectedAction(new Set([]));
   };
@@ -88,6 +132,7 @@ const AdminRoomSelector = () => {
             >
               <SelectItem key='cancel'>Cancel</SelectItem>
               <SelectItem key='email'>Email</SelectItem>
+              <SelectItem key='book'>Book</SelectItem>
             </Select>
             <div className='flex-1 px-0 flex flex-col justify-end'>
               <Button
