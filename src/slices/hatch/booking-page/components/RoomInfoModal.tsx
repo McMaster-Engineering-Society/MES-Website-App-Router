@@ -108,7 +108,7 @@ function RoomInfoModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className={`${!CustomFooter && 'justify-center'}`}>
+            <ModalFooter className='justify-center'>
               {CustomFooter ? (
                 <CustomFooter onClose={onClose} />
               ) : (
