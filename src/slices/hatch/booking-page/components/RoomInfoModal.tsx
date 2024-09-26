@@ -22,6 +22,8 @@ type Props = {
   onOpenChange: (isOpen: boolean) => void;
   roomInfo: THatchRoom;
   handleConfirmBookingWithMessage: () => void;
+  CustomFooter?: React.FC<{ onClose: () => void }>;
+  customDate?: Date;
 };
 
 function RoomInfoModal({
@@ -29,6 +31,8 @@ function RoomInfoModal({
   onOpenChange,
   roomInfo,
   handleConfirmBookingWithMessage,
+  CustomFooter,
+  customDate,
 }: Props) {
   // filters out only available resources in the room
   // had to add key as a condition bc eslint was giving me warning :(
@@ -37,6 +41,8 @@ function RoomInfoModal({
     .map(([key]) => key);
   const { startIndex, endIndex, timeSlotIndexToTimeISODate } =
     useTimePickerContext();
+  const date = customDate || timeSlotIndexToTimeISODate(startIndex);
+
   return (
     <Modal
       size='sm'
@@ -63,13 +69,9 @@ function RoomInfoModal({
               </p>
               <div className='flex justify-between mx-2'>
                 <div className='w-fit h-auto border border-black text-3xl px-3 mr-4 flex flex-col text-center items-center justify-center rounded-xl'>
-                  {startIndex &&
-                    endIndex &&
-                    format(timeSlotIndexToTimeISODate(startIndex), 'MMM')}
-                  <p className='text-5xl'>
-                    {format(timeSlotIndexToTimeISODate(startIndex), 'd')}
-                  </p>
-                  {format(timeSlotIndexToTimeISODate(startIndex), 'yyyy')}
+                  {startIndex && endIndex && format(date, 'MMM')}
+                  <p className='text-5xl'>{format(date, 'd')}</p>
+                  {format(date, 'yyyy')}
                 </div>
 
                 <div className='flex justify-between w-fit p-3 bg-gray-200 rounded-xl'>
@@ -107,31 +109,40 @@ function RoomInfoModal({
               </div>
             </ModalBody>
             <ModalFooter className='justify-center'>
-              <Button
-                color='danger'
-                variant='light'
-                onPress={onClose}
-                className='hidden md:block'
-              >
-                Close
-              </Button>
+              {CustomFooter ? (
+                <CustomFooter onClose={onClose} />
+              ) : (
+                <>
+                  <Button
+                    color='danger'
+                    variant='light'
+                    onPress={onClose}
+                    className='hidden md:block'
+                  >
+                    Close
+                  </Button>
 
-              <Button
-                color='warning'
-                onPress={onClose}
-                onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
-                className='flex-1 bg-[#28a745]'
-              >
-                {startIndex &&
-                  endIndex &&
-                  'Book from ' +
-                    format(timeSlotIndexToTimeISODate(startIndex), 'h:mm a') +
-                    ' to ' +
-                    format(
-                      add30Minutes(timeSlotIndexToTimeISODate(endIndex)),
-                      'h:mm a',
-                    )}
-              </Button>
+                  <Button
+                    color='warning'
+                    onPress={onClose}
+                    onClick={handleConfirmBookingWithMessage} //displays room confirmation sonner
+                    className='flex-1 bg-[#28a745]'
+                  >
+                    {startIndex &&
+                      endIndex &&
+                      'Book from ' +
+                        format(
+                          timeSlotIndexToTimeISODate(startIndex),
+                          'h:mm a',
+                        ) +
+                        ' to ' +
+                        format(
+                          add30Minutes(timeSlotIndexToTimeISODate(endIndex)),
+                          'h:mm a',
+                        )}
+                  </Button>
+                </>
+              )}
             </ModalFooter>
           </>
         )}
