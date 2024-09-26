@@ -33,7 +33,7 @@ const BookingIndicator = ({ booking, isAdmin }: BookingIndicatorProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const getRoomIndicatorHeight = (start: Date, end: Date) => {
-    return `${((end.getTime() - start.getTime()) / 1800000) * 16 + 8}px`;
+    return `${((end.getTime() - start.getTime()) / 1800000) * 15.5 + 8}px`;
   };
 
   // substract 4 hours worth of milliseconds for EST

@@ -86,7 +86,7 @@ const TimePickerBookings = ({
 
         setBookings(visibleBookings);
       }
-    }, 10);
+    }, 20);
 
     return () => clearTimeout(findBookingsInDOM);
   }, [isAdmin, userBookings, allBookings, isFetched]);
