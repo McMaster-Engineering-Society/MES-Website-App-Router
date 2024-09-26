@@ -4,6 +4,7 @@ import { useScreenSize } from '@/components/hooks/useScreenSize';
 
 import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
 import AdminRoomSelector from '@/slices/hatch/admin/components/AdminRoomSelector';
+import RecurringBookingPicker from '@/slices/hatch/admin/components/RecurringBookingPicker';
 import TimePicker from '@/slices/hatch/booking-page/components/TimePicker';
 import TimePickerChanger from '@/slices/hatch/booking-page/components/TimePickerChanger';
 
@@ -33,6 +34,7 @@ export default function AdminDashboard() {
           />
         </div>
         <AdminRoomSelector />
+        <RecurringBookingPicker />
       </div>
     </div>
   );

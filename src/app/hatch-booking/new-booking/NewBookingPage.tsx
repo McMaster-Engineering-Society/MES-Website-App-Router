@@ -4,7 +4,6 @@ import React from 'react';
 
 import { useScreenSize } from '@/components/hooks/useScreenSize';
 
-import RecurringBookingPicker from '@/slices/hatch/admin/components/RecurringBookingPicker';
 import AvailableRooms from '@/slices/hatch/booking-page/components/AvailableRooms';
 import TimePicker from '@/slices/hatch/booking-page/components/TimePicker';
 import TimePickerChanger from '@/slices/hatch/booking-page/components/TimePickerChanger';
@@ -37,7 +36,6 @@ export default function BookingPage() {
           />
         </div>
         <AvailableRooms className='h-[600px]' />
-        <RecurringBookingPicker />
       </div>
     </div>
   );
