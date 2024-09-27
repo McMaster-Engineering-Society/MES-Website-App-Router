@@ -22,3 +22,21 @@ export type SocialMedia =
   | 'tiktok'
   | 'discord'
   | 'mailingList';
+
+export type TExecMember = {
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+  program: string;
+  year: string;
+  contactFor: TContactFor;
+};
+
+export type TContactFor =
+  | ''
+  | 'General Inquiries'
+  | 'Finances'
+  | 'Admin'
+  | 'Event Details'
+  | 'Member Details';
