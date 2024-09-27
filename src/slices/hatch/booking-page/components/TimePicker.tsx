@@ -31,7 +31,6 @@ export default function TimePicker({
 }: TimePickerProps) {
   /**
    * changes when users clicks arrows to change the date range
-   * @todo integrate with date picker arrows
    */
   const {
     userBookings,
@@ -484,12 +483,6 @@ function TimePickerTable({
     e.preventDefault();
     dragOperationRef.current = 'None';
   };
-  /**
-   * if we don't include this, the browser will select text and everything will get messed up
-   */
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-  };
 
   const TimeIndicators = memo(() => {
     /* time indicators along the side */
@@ -577,7 +570,6 @@ function TimePickerTable({
         <TimeIndicators />
         <div
           className='flex flex-1 flex-col rounded-lg bg-white shadow-lg shadow-black/25'
-          onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
           onMouseLeave={onMouseLeave}
         >
