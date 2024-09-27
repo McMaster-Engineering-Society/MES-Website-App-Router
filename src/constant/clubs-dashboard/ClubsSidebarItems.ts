@@ -1,3 +1,4 @@
+'use client';
 import { FaHouse } from 'react-icons/fa6';
 import { FaMoneyBill } from 'react-icons/fa6';
 import { FaSquareCheck } from 'react-icons/fa6';
@@ -5,9 +6,11 @@ import { FaDoorOpen } from 'react-icons/fa6';
 import { FaScrewdriverWrench } from 'react-icons/fa6';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import { FaUserLarge } from 'react-icons/fa6';
-import { IconType } from 'react-icons/lib';
+
+import SidebarItem from '@/types/clubs-dashboard/SidebarItemType';
+
 const url = '/clubs-portal';
-export const sidebarItems: SidebarItem[] = [
+const sidebarItems: SidebarItem[] = [
   {
     name: 'Main Dashboard',
     icon: FaHouse,
@@ -45,8 +48,4 @@ export const sidebarItems: SidebarItem[] = [
   },
 ];
 
-type SidebarItem = {
-  name: string;
-  icon: IconType;
-  link: string;
-};
+export default sidebarItems;

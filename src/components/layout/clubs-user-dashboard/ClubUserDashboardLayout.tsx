@@ -1,7 +1,9 @@
 import * as React from 'react';
 
-import Sidebar from './Sidebar';
-import TaskBanner from './TaskBanner';
+import { ClubsSidebar } from '@/components/layout/clubs-user-dashboard/ClubsSidebar';
+import TaskBanner from '@/components/layout/clubs-user-dashboard/TaskBanner';
+
+import ClubsSidebarItems from '@/constant/clubs-dashboard/ClubsSidebarItems';
 
 type dashboardLayoutProps = {
   pageName?: string;
@@ -14,7 +16,7 @@ const ClubUserDashboardLayout = ({
 }: dashboardLayoutProps) => {
   return (
     <div className='flex h-screen w-screen'>
-      <Sidebar />
+      <ClubsSidebar items={ClubsSidebarItems} clubName='Team Name' />
       <div className='flex flex-col w-full p-12'>
         <h1>{pageName}</h1>
         <TaskBanner />
