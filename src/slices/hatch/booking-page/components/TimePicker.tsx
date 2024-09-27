@@ -305,7 +305,7 @@ function TimePickerTable({
     [atLeastOneRoomAvailable],
   );
 
-  const handleMouseDown = (slotIndex: number) => {
+  const handleMouseDownUser = (slotIndex: number) => {
     if (slotIsOnEdgeOfSelected(slotIndex)) {
       // deselect
       if (startIndex == slotIndex && endIndex == slotIndex) {
@@ -344,11 +344,45 @@ function TimePickerTable({
     }
   };
 
-  /**
-   * note: cannot treat drag the same as click
-   * because when dragging quickly, the drag handler will not be called for every cell
-   */
-  const handleDrag = (slotIndex: number) => {
+  const handleMouseDownAdmin = (slotIndex: number) => {
+    if (slotIsOnEdgeOfSelected(slotIndex)) {
+      // deselect
+      if (startIndex == slotIndex && endIndex == slotIndex) {
+        // only 1 slot selected and we are unselecting it
+        setStartIndex(-1);
+        setEndIndex(-1);
+      } else if (slotIndex === startIndex) {
+        // clicked first selected slot in block
+        setStartIndex(slotIndex + 1);
+        dragOperationRef.current = 'DeselectingFromStart';
+      } else if (slotIndex === endIndex) {
+        // clicked last selected slot in block
+        setEndIndex(slotIndex - 1);
+        dragOperationRef.current = 'DeselectingFromEnd';
+      }
+    } else if (slotIsAdjacentToSelected(slotIndex)) {
+      // add to selected block
+      dragOperationRef.current = 'Selecting';
+      const newStartIndex = Math.min(startIndex, slotIndex);
+      const newEndIndex = Math.max(endIndex, slotIndex);
+      setStartIndex(newStartIndex);
+      setEndIndex(newEndIndex);
+    } else if (atLeastOneRoomAvailable(slotIndex)) {
+      // starting to select a new block
+      dragOperationRef.current = 'Selecting';
+      setStartIndex(slotIndex);
+      setEndIndex(slotIndex);
+    }
+  };
+  const handleMouseDown = (slotIndex: number) => {
+    if (!adminView) {
+      handleMouseDownUser(slotIndex);
+    } else if (adminView) {
+      handleMouseDownAdmin(slotIndex);
+    }
+  };
+
+  const handleDragUser = (slotIndex: number) => {
     if (dragOperationRef.current === 'Selecting') {
       // new slots to add to selection
       if (
@@ -389,6 +423,50 @@ function TimePickerTable({
     ) {
       // new slots to remove
       setEndIndex(slotIndex);
+    }
+  };
+  const handleDragAdmin = (slotIndex: number) => {
+    if (dragOperationRef.current === 'Selecting') {
+      // new slots to add to selection
+      if (
+        slotIndex < startIndex &&
+        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
+        // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
+      ) {
+        const newStartIndex = slotIndex;
+        setStartIndex(newStartIndex);
+      } else if (
+        slotIndex > endIndex &&
+        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
+        ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
+      ) {
+        const newEndIndex = slotIndex;
+        setEndIndex(newEndIndex);
+      }
+    } else if (
+      dragOperationRef.current === 'DeselectingFromStart' &&
+      slotIndex > startIndex
+    ) {
+      // new slots to remove
+      setStartIndex(slotIndex);
+    } else if (
+      dragOperationRef.current === 'DeselectingFromEnd' &&
+      slotIndex < endIndex
+    ) {
+      // new slots to remove
+      setEndIndex(slotIndex);
+    }
+  };
+  /**
+   * note: cannot treat drag the same as click
+   * because when dragging quickly, the drag handler will not be called for every cell
+   */
+  const handleDrag = (slotIndex: number) => {
+    if (!adminView) {
+      handleDragUser(slotIndex);
+    } else if (adminView) {
+      handleDragAdmin(slotIndex);
     }
   };
 

@@ -5,7 +5,11 @@ import { toast } from 'sonner';
 
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import RoomToggleSwitch from '@/slices/hatch/admin/components/RoomToggleSwitch';
-import { useBatchAddRoomBookingHook } from '@/slices/hatch/admin/hooks/bookingHooks';
+import {
+  useBatchAddRoomBookingHook,
+  useBatchDeleteRoomBookingHook,
+} from '@/slices/hatch/admin/hooks/bookingHooks';
+import { fetchAllBookings } from '@/slices/hatch/booking-page/apiCalls/bookingApiCalls';
 import { RoomButton } from '@/slices/hatch/booking-page/components/RoomButton';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
 import { TBooking } from '@/slices/hatch/booking-page/types';
@@ -15,6 +19,7 @@ const AdminRoomSelector = () => {
     useTimePickerContext();
   const { profile } = useSessionContext();
   const batchAddRoomBooking = useBatchAddRoomBookingHook();
+  const batchDeleteRoomBooking = useBatchDeleteRoomBookingHook();
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [selectedAction, setSelectedAction] = useState<Set<string>>(
     new Set([]),
@@ -25,6 +30,24 @@ const AdminRoomSelector = () => {
     setSelectedAction(new Set([]));
   }, [startIndex]);
 
+  async function handleDeleteAllBookingsInSelectedRange() {
+    try {
+      const startTime = timeSlotIndexToTimeISODate(startIndex);
+      const endTime = timeSlotIndexToTimeISODate(endIndex);
+      const data = await fetchAllBookings(startTime, endTime);
+      const idsToDelete = data.flatMap((booking) => {
+        if (selectedRooms.includes(booking.room)) {
+          return booking._id ? [booking._id.toString()] : [];
+        } else {
+          return [];
+        }
+      });
+      await batchDeleteRoomBooking.mutateAsync(idsToDelete);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error fetching data:', error);
+    }
+  }
   async function handleBatchBooking(rooms: string[]) {
     const bookingsToAdd: TBooking[] = [];
 
@@ -66,12 +89,11 @@ const AdminRoomSelector = () => {
     );
 
     switch (action) {
-      case 'cancel':
+      case 'cancel all in selected range':
+        handleDeleteAllBookingsInSelectedRange();
         break;
-
       case 'book':
         handleBatchBooking(selectedRooms);
-
         break;
     }
 
@@ -130,7 +152,9 @@ const AdminRoomSelector = () => {
               labelPlacement='outside'
               className='flex-1'
             >
-              <SelectItem key='cancel'>Cancel</SelectItem>
+              <SelectItem key='cancel all in selected range'>
+                Cancel all in selected range
+              </SelectItem>
               <SelectItem key='email'>Email</SelectItem>
               <SelectItem key='book'>Book</SelectItem>
             </Select>
