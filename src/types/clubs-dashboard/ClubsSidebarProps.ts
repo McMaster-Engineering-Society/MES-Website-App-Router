@@ -1,7 +1,6 @@
 import SidebarItem from '@/types/clubs-dashboard/SidebarItemType';
 
-type SidebarProps = {
+export type ClubsSidebarProps = {
   items: SidebarItem[];
+  clubName: string;
 };
-
-export default SidebarProps;

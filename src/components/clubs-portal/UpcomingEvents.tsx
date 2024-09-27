@@ -17,7 +17,7 @@ const UpcomingEvents = () => {
         {Object.entries(bookingsGroupedByMonth).map(([month, bookings]) => {
           const date = new Date(parseInt(month));
           return (
-            <>
+            <div key={month}>
               <div className='flex flex-row w-full items-center gap-3 mb-3 sticky top-0 bg-white z-10 shadow-sm'>
                 <h3 className='font-normal shrink-0'>
                   {date.toLocaleDateString('en-US', {
@@ -27,12 +27,12 @@ const UpcomingEvents = () => {
                 </h3>
                 <Divider className='shrink bg-black' />
               </div>
-              <div key={month}>
+              <div>
                 {bookings.map((booking) => (
                   <ClubEvent key={booking.id} booking={booking} />
                 ))}
               </div>
-            </>
+            </div>
           );
         })}
       </div>

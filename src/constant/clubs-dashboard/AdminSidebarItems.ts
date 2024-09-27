@@ -9,8 +9,8 @@ import { FaPeopleGroup } from 'react-icons/fa6';
 
 import SidebarItem from '@/types/clubs-dashboard/SidebarItemType';
 
-const url = '/admin-dashboard';
-export const sidebarItems: SidebarItem[] = [
+const url = '/clubs-portal/admin';
+const sidebarItems: SidebarItem[] = [
   {
     name: 'Admin Dashboard',
     icon: FaHouse,
@@ -47,3 +47,5 @@ export const sidebarItems: SidebarItem[] = [
     link: `${url}/club-administration`,
   },
 ];
+
+export default sidebarItems;

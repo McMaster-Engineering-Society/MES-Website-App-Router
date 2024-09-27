@@ -1,6 +1,5 @@
 'use client';
 
-import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
 import { FaRightFromBracket } from 'react-icons/fa6';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -11,37 +10,7 @@ import { cn } from '@/lib/utils';
 import IconButton from '@/components/buttons/IconButton';
 import { MESLogo } from '@/components/layout/navbar/MESLogo';
 
-import SidebarProps from '@/types/clubs-dashboard/SidebarProps';
-
-type ClubProfileProps = {
-  open: boolean;
-};
-
-const ClubProfile = ({ open }: ClubProfileProps) => {
-  const height = open ? 100 : 50;
-  const width = open ? 100 : 50;
-  return (
-    <div className='flex flex-col items-center justify-center text-nowrap min-h-40'>
-      <div className='flex min-h-28'>
-        <Avatar
-          sx={{ height: height, width: width }}
-          className='transition-all m-auto'
-        >
-          MES
-        </Avatar>
-      </div>
-
-      <span
-        className={cn([
-          'flex justify-center mt-3 overflow-hidden transition-all',
-          open ? 'w-full h-6' : 'w-0 h-0',
-        ])}
-      >
-        Team name
-      </span>
-    </div>
-  );
-};
+import SidebarProps from '@/types/SidebarProps';
 
 const Sidebar = (sidebarProps: SidebarProps) => {
   const [open, setOpen] = React.useState(false);
@@ -69,7 +38,7 @@ const Sidebar = (sidebarProps: SidebarProps) => {
           onClick={() => setOpen(!open)}
           icon={open ? IoIosArrowBack : GiHamburgerMenu}
         />
-        <ClubProfile open={open} />
+        <sidebarProps.profile open={open} {...sidebarProps.profileProps} />
         <div className='flex-col mt-4'>
           {sidebarProps.items.map((item) => (
             <div

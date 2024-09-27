@@ -4,7 +4,7 @@ import * as React from 'react';
 import '@/styles/colors.css';
 
 export const metadata: Metadata = {
-  title: 'Admin Portal',
+  title: 'Clubs Admin Portal',
   description: 'A web portal where the club administrator can manage clubs.',
 };
 
