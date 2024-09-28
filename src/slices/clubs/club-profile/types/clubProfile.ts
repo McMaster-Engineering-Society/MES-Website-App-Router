@@ -10,18 +10,20 @@ export type TClubProfile = {
   socials: Record<SocialMedia, string>;
 };
 
-export type SocialMedia =
-  | 'website'
-  | 'instagram'
-  | 'facebook'
-  | 'linkedin'
-  | 'twitter'
-  | 'youtube'
-  | 'linktree'
-  | 'github'
-  | 'tiktok'
-  | 'discord'
-  | 'mailingList';
+export const socialMediaOptions = [
+  'website',
+  'instagram',
+  'facebook',
+  'linkedin',
+  'twitter',
+  'youtube',
+  'linktree',
+  'github',
+  'tiktok',
+  'discord',
+  'mailingList',
+] as const;
+export type SocialMedia = (typeof socialMediaOptions)[number];
 
 export type TExecMember = {
   firstName: string;
@@ -33,10 +35,13 @@ export type TExecMember = {
   contactFor: TContactFor;
 };
 
-export type TContactFor =
-  | ''
-  | 'General Inquiries'
-  | 'Finances'
-  | 'Admin'
-  | 'Event Details'
-  | 'Member Details';
+export const contactForOptions = [
+  '',
+  'General Inquiries',
+  'Finances',
+  'Admin',
+  'Event Details',
+  'Member Details',
+] as const;
+
+export type TContactFor = (typeof contactForOptions)[number];

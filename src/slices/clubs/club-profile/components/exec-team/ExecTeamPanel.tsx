@@ -53,38 +53,23 @@ const ExecTeamPanel = () => {
   };
 
   return (
-    <div className='relative h-full overflow-scroll'>
-      <table className='table-fixed w-full border-separate border-spacing-x-10 mt-5'>
-        <thead>
-          <tr>
-            <th className='text-left'>First Name</th>
-            <th className='text-left'>Last Name</th>
-            <th className='text-left'>Role</th>
-            <th className='text-left'>Email</th>
-            <th className='text-left'>Program</th>
-            <th className='text-left w-1/12'>Year</th>
-            <th className='text-left'>Contact For</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ExecMember
-            president
-            member={president}
-            updateMemberList={updateMemberList}
-          />
-          {execMembers.map((member) => {
-            if (member.role !== 'President') {
-              return (
-                <ExecMember
-                  key={member.id}
-                  member={member}
-                  updateMemberList={updateMemberList}
-                />
-              );
-            }
-          })}
-        </tbody>
-      </table>
+    <div className='relative h-full w-full overflow-scroll'>
+      <ExecMember
+        president
+        member={president}
+        updateMemberList={updateMemberList}
+      />
+      {execMembers.map((member) => {
+        if (member.role !== 'President') {
+          return (
+            <ExecMember
+              key={member.id}
+              member={member}
+              updateMemberList={updateMemberList}
+            />
+          );
+        }
+      })}
       <button className='absolute right-0 top-0' onClick={createMember}>
         Add Member
       </button>
