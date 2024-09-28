@@ -1,5 +1,6 @@
 import { addDays, differenceInMinutes, format, startOfDay } from 'date-fns';
 import { Bookmark } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useAddRoomBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
@@ -83,14 +84,14 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
       createdDate: created,
     };
 
-    try {
-      await addRoomBooking.mutateAsync(newBooking);
-      // eslint-disable-next-line no-console
-      console.log('Room booked successfully!');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to book room:', error);
-    }
+    addRoomBooking.mutate(newBooking, {
+      onSuccess: () => {
+        toast('Booking success. Refresh to see updated list.');
+      },
+      onError: () => {
+        toast('Room booking was unsuccessful.');
+      },
+    });
     onClose();
   }
 

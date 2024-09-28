@@ -1,7 +1,8 @@
-import { differenceInMinutes, format, startOfDay } from 'date-fns';
+import { differenceInMinutes, format } from 'date-fns';
 import { CircleX } from 'lucide-react';
+import { toast } from 'sonner';
 
-import { useAddRoomBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { useDeleteBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
 type CancelModalProps = {
   open: boolean;
@@ -11,6 +12,7 @@ type CancelModalProps = {
   userId: string;
   userRoom: string;
   email: string;
+  id: string;
 };
 
 export type RoomAvailabilities = {
@@ -28,9 +30,8 @@ const CancelModal: React.FC<CancelModalProps> = ({
   startTime,
   endTime,
   onClose,
-  userId,
   userRoom,
-  email,
+  id,
 }) => {
   // const [availabilities, setAvailabilities] = useState<RoomAvailabilities>({
   //   H201: [],
@@ -41,8 +42,7 @@ const CancelModal: React.FC<CancelModalProps> = ({
   // });
 
   // const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-
-  const addRoomBooking = useAddRoomBookingHook();
+  const deleteRoomBooking = useDeleteBookingHook();
 
   // const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(startWeek, endWeek);
 
@@ -62,35 +62,37 @@ const CancelModal: React.FC<CancelModalProps> = ({
 
   // const roomString = selectedRoom ?? "No Room Selected"
 
-  async function handleBooking(
-    userIdx: string,
-    roomx: string,
-    startx: Date,
-    endx: Date,
-    hasConfirmedx: boolean,
-    emailx: string,
-    created: Date,
-  ) {
-    const newBooking = {
-      userId: userIdx,
-      room: roomx,
-      startTime: startx,
-      endTime: endx,
-      hasConfirmed: hasConfirmedx,
-      email: emailx,
-      createdDate: created,
-    };
+  // async function handleBooking(
+  //   idx: string,
+  // ) {
+  //   const newBooking = {
+  //     userId: userIdx,
+  //     room: roomx,
+  //     startTime: startx,
+  //     endTime: endx,
+  //     hasConfirmed: hasConfirmedx,
+  //     email: emailx,
+  //     createdDate: created,
+  //   };
 
-    try {
-      await addRoomBooking.mutateAsync(newBooking);
-      // eslint-disable-next-line no-console
-      console.log('Room booked successfully!');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to book room:', error);
-    }
-    onClose();
-  }
+  //   const cancel = {
+  //     booking_id: idx,
+  //   }
+
+  // const bookingTooltipContent = `${booking.room}, ${formattedStartTime.toISOString().split('T')[1].substring(0, 5)}-${formattedEndTime.toISOString().split('T')[1].substring(0, 5)}`;
+
+  const handleDeleteBooking = (bookingId: string) => {
+    deleteRoomBooking.mutate(bookingId, {
+      onSuccess: () => {
+        toast(
+          `Successfully deleted booking in room ${userRoom}. Refresh to see updated list.`,
+        );
+      },
+      onError: () => {
+        toast(`Error: booking in room ${userRoom} not deleted`);
+      },
+    });
+  };
 
   function getDuration(startTime: Date, endTime: Date) {
     const timeMin = differenceInMinutes(endTime, startTime);
@@ -146,15 +148,8 @@ const CancelModal: React.FC<CancelModalProps> = ({
           <button
             className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
             onClick={() => {
-              handleBooking(
-                userId,
-                userRoom,
-                startTime,
-                endTime,
-                false,
-                email,
-                startOfDay(new Date()),
-              );
+              handleDeleteBooking((id || '').toString());
+              onClose();
             }}
           >
             <div className='flex'>
