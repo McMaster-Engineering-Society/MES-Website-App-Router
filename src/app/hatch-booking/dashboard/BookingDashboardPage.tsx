@@ -40,6 +40,7 @@ const UserDashboard = () => {
   const [displayRoom, setDisplayRoom] = useState<string>('');
   const [displayUserId, setDisplayUserId] = useState<string>('');
   const [displayEmail, setDisplayEmail] = useState<string>('');
+  const [displayId, setDisplayId] = useState<string>('');
 
   // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
@@ -127,6 +128,7 @@ const UserDashboard = () => {
     room: string,
     userId: string,
     email: string,
+    id: string,
   ) {
     setOpen(true);
     setDisplayStartTime(startTime);
@@ -134,6 +136,7 @@ const UserDashboard = () => {
     setDisplayRoom(room);
     setDisplayUserId(userId);
     setDisplayEmail(email);
+    setDisplayId(id);
   }
 
   return (
@@ -195,6 +198,7 @@ const UserDashboard = () => {
                             booking.room,
                             booking.userId,
                             booking.email,
+                            booking._id?.toString() ?? '',
                           )
                         }
                       ></BookingTimeslot>
@@ -282,6 +286,7 @@ const UserDashboard = () => {
                             booking.room,
                             booking.userId,
                             booking.email,
+                            booking._id?.toString() ?? '',
                           )
                         }
                       ></BookingTimeslot>
@@ -343,6 +348,7 @@ const UserDashboard = () => {
           userRoom={displayRoom}
           userId={displayUserId}
           email={displayEmail}
+          id={displayId}
         ></ExpandModal>
       </section>
     </QueryClientProvider>

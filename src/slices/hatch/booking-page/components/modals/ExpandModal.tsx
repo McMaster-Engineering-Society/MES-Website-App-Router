@@ -11,6 +11,7 @@ type ExpandModalProps = {
   userRoom: string;
   userId: string;
   email: string;
+  id: string;
 };
 
 export type RoomAvailabilities = {
@@ -28,6 +29,7 @@ const ExpandModal: React.FC<ExpandModalProps> = ({
   userRoom,
   userId,
   email,
+  id,
   open,
   onClose,
 }) => {
@@ -62,14 +64,14 @@ const ExpandModal: React.FC<ExpandModalProps> = ({
         >
           X
         </button>
-        <h1 className='text-center mx mb-5'>More</h1>
+        <h1 className='text-center mx mb-5'>More Options</h1>
 
         <button
           className='border-solid border-2 rounded-lg px-5 py-5 m-3 bg-white border-black hover:bg-green-100 hover:text-green-600 hover:border-green-600'
           onClick={() => handleRebook()}
         >
           <div>
-            <b className='text-lg'>Rebook</b>
+            <b className='text-lg'>Rebook Booking</b>
           </div>
         </button>
 
@@ -78,7 +80,7 @@ const ExpandModal: React.FC<ExpandModalProps> = ({
           onClick={() => handleCancel()}
         >
           <div>
-            <b className='text-lg'>Cancel</b>
+            <b className='text-lg'>Cancel Booking</b>
           </div>
         </button>
       </div>
@@ -99,6 +101,7 @@ const ExpandModal: React.FC<ExpandModalProps> = ({
         userRoom={userRoom}
         userId={userId}
         email={email}
+        id={id}
       ></CancelModal>
     </div>
   );
