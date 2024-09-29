@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Question from '@/components/form/Question';
+import Question from '@/components/form/FormQuestion';
 
-interface PolicyQuestionProps {
+interface PolicyAgreementFormProps {
   title: string;
   policyContent?: React.ReactNode;
   isChecked: boolean;
@@ -11,14 +11,14 @@ interface PolicyQuestionProps {
   required?: boolean;
 }
 
-const PolicyQuestion = ({
+const PolicyAgreementForm = ({
   title,
   policyContent,
   isChecked,
   onChangeHandler,
   htmlFor,
   required = true,
-}: PolicyQuestionProps) => (
+}: PolicyAgreementFormProps) => (
   <Question title={title} required={required}>
     {policyContent && (
       <div className="max-h-[20rem] overflow-scroll overflow-x-hidden opacity-50 whitespace-normal border-spacing-1 bg-[#ececec] rounded border-2 border-black/40 focus:border-[#a8b3c9] focus:outline-none focus:ring-0 text-[#4b4b4b] h-fit text-lg font-medium font-['Inter']">
@@ -44,4 +44,4 @@ const PolicyQuestion = ({
   </Question>
 );
 
-export default PolicyQuestion;
+export default PolicyAgreementForm;

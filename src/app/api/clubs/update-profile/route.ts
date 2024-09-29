@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { updateProfileByClubIdService } from '@/lib/services/clubProfileServices';
-
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
-
-import { TClubProfile } from '@/types/clubProfile';
+import { updateProfileByClubIdService } from '@/slices/clubs/club-profile/services/clubProfileServices';
+import { TClubProfile } from '@/slices/clubs/club-profile/types/clubProfile';
 
 export async function PATCH(req: NextRequest) {
   const profileUpdates: Partial<TClubProfile> = await req.json();

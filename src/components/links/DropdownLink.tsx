@@ -10,11 +10,11 @@ import { GoTriangleDown } from 'react-icons/go';
 
 import Button from '@/components/buttons/Button';
 
-import DropdownLinkItem from '@/types/dropdownLinkItem';
+import TDropdownLinkItem from '@/types/dropdownLinkItem';
 
 type DropdownLinkProps = {
   title: string;
-  dropdownItems: DropdownLinkItem[];
+  dropdownItems: TDropdownLinkItem[];
   className?: string;
 };
 

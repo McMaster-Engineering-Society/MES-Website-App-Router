@@ -7,7 +7,7 @@ import { FaScrewdriverWrench } from 'react-icons/fa6';
 import { FaCircleQuestion } from 'react-icons/fa6';
 import { FaUserLarge } from 'react-icons/fa6';
 
-import SidebarItem from '@/types/clubs-dashboard/SidebarItemType';
+import { SidebarItem } from '@/types/sidebarTypes';
 
 const url = '/clubs-portal';
 const sidebarItems: SidebarItem[] = [

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getProfileByClubIdService } from '@/lib/services/clubProfileServices';
-
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
-
-import { TClubProfile } from '@/types/clubProfile';
+import { getProfileByClubIdService } from '@/slices/clubs/club-profile/services/clubProfileServices';
+import { TClubProfile } from '@/slices/clubs/club-profile/types/clubProfile';
 
 export async function GET(req: NextRequest) {
   const clubId = req.headers.get('club-id');

@@ -7,7 +7,7 @@ import { FaNewspaper } from 'react-icons/fa6';
 import { FaCalendarDays } from 'react-icons/fa6';
 import { FaPeopleGroup } from 'react-icons/fa6';
 
-import SidebarItem from '@/types/clubs-dashboard/SidebarItemType';
+import { SidebarItem } from '@/types/sidebarTypes';
 
 const url = '/clubs-portal/admin';
 const sidebarItems: SidebarItem[] = [

@@ -1,7 +1,7 @@
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 
-import CouncilDetails from '@/types/CouncilDetails';
+import CouncilDetails from '@/types/councilDetails';
 
 type CouncilProfileProps = {
   profile: CouncilDetails;

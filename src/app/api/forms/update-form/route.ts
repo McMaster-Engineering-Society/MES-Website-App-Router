@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { updateFormByIdService } from '@/lib/services/formServices';
-
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
-
-import { UHSForm } from '@/types/uhsForm';
+import { updateFormByIdService } from '@/slices/clubs/uhs-forms/services/uhsFormServices';
+import { TUHSForm } from '@/slices/clubs/uhs-forms/types/uhsForm';
 
 export async function PATCH(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -34,7 +32,7 @@ export async function PATCH(req: Request) {
         { status: 404 },
       );
     }
-    return NextResponse.json<TApiResponse<UHSForm>>(
+    return NextResponse.json<TApiResponse<TUHSForm>>(
       { data: updatedForm, message: 'Successfully updated form' },
       { status: 200 },
     );

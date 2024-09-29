@@ -1,4 +1,4 @@
-import CouncilDetails from '@/types/CouncilDetails';
+import CouncilDetails from '@/types/councilDetails';
 
 const executives: CouncilDetails[] = [
   {
