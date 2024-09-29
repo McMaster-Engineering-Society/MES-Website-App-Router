@@ -15,9 +15,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@slices/*": ["./src/slices/*"],
       "@/*": ["./src/*"],
-      "~/*": ["./public/*"],
-      "@slices/*": ["./src/slices/*"]
+      "~/*": ["./public/*"]
     },
     "incremental": true,
     "plugins": [
