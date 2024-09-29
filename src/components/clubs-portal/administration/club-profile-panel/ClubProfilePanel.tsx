@@ -12,11 +12,19 @@ import ClubProfilePicture from '@/components/clubs-portal/administration/club-pr
 import SocialsList from '@/components/clubs-portal/administration/club-profile-panel/SocialsList';
 
 const ClubProfilePanel = () => {
-  const { isLoading, handleSave, hasChanges } = useClubProfileContext();
+  const { isError, isLoading, handleSave, hasChanges } =
+    useClubProfileContext();
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSave().then((message) => alert(message));
   };
+  if (isError) {
+    return (
+      <div className='m-auto font-bold text-lg'>
+        There was an error loading your club's profile. Contact support
+      </div>
+    );
+  }
   if (isLoading) {
     return <CircularProgress className='m-auto' />;
   }
