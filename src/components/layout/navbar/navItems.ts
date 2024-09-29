@@ -10,7 +10,6 @@ export const navItems: NavItem[] = [
       { title: 'Directors', link: '/directors' },
       { title: 'Dept. & Program Reps', link: '/dept-and-program-reps' },
       { title: 'Appointed Coordinators', link: '/appointed-coordinators' },
-      { title: 'First Year Society', link: '/first-year-society' },
     ],
   },
   {
