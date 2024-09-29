@@ -2,9 +2,9 @@ import CouncilProfile from '@/components/council/CouncilProfile';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
 
-import avps from '@/constant/council/associateVicePresidents';
+import directors from '@/constant/council/associateVicePresidents';
 
-export default function AVPsPage() {
+export default function DirectorsPage() {
   return (
     <PageLayout>
       <main className='layout'>
@@ -15,7 +15,7 @@ export default function AVPsPage() {
             variant='red'
           />
           <div id='executives-list' className='mt-8 space-y-8'>
-            {avps.map((avp) => (
+            {directors.map((avp) => (
               <CouncilProfile
                 key={`${avp.firstName}-${avp.lastName}`}
                 profile={avp}
