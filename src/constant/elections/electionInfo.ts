@@ -120,10 +120,35 @@ export const electionInfo: ElectionInfo = {
   ],
   previousWinners: [
     // {
+    //   position: 'Eng 1 Representative',
     //   name: 'John Doe',
-    //   position: 'Eng 1 Rep',
-    //   picture: '/images/elections/john-doe.jpg',
+    //   picture: '/images/elections/candidates/john-doe.jpg',
     // },
     // ...
+    {
+      position: 'iBioMed Representative',
+      name: 'Agnes Kung',
+      picture: '/images/elections/candidates/agnes-kung.jpg',
+    },
+    {
+      position: 'Computer Science Representative',
+      name: 'Grady Rueffer',
+      picture: '/images/elections/candidates/grady-rueffer.png',
+    },
+    {
+      position: 'B.Tech Representative',
+      name: 'Faith Law',
+      picture: '/images/elections/candidates/faith-law.jpeg',
+    },
+    {
+      position: 'Outreach Team Leader',
+      name: 'Nicolas Tran',
+      picture: '/images/elections/candidates/nicolas-tran.jpg',
+    },
+    {
+      position: 'Events Team Leader',
+      name: 'Mitchell Fong',
+      picture: '/images/elections/candidates/mitchell-fong.jpeg',
+    },
   ],
 };
