@@ -8,7 +8,7 @@ import { googleLinks, outlookLinks } from '@/constant/events/CalendarLinks';
 
 import { CalendarId } from '@/types/calendar';
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Events',
@@ -25,18 +25,13 @@ export default function EventsPage() {
           preTitle='Check out the'
           variant='blue'
         />
-        <PageSection variant='white'>
-          <div className='flex flex-col items-center justify-around gap-y-4 text-center sm:flex-row'>
-            <DropdownLink
-              title='Subscribe on Google Calendar'
-              dropdownItems={googleLinks}
-            />
-            <DropdownLink
-              title='Subscribe on Outlook'
-              dropdownItems={outlookLinks}
-            />
-          </div>
-        </PageSection>
+
+        <DropdownLink
+          title='Subscribe to Calendar'
+          dropdownItems={[...googleLinks, ...outlookLinks]}
+          className='mt-8'
+        />
+
         <PageSection variant='white' heading='Click an event for more info'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} />
         </PageSection>

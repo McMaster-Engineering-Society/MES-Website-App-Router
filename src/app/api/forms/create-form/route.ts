@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { createFormService } from '@/lib/services/formServices';
-import { TApiResponse } from '@/lib/types';
-
-import { TMessageResponse } from '@/app/api/types';
-
-import { UHSForm } from '@/types/uhsForm';
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
+import { createFormService } from '@/slices/clubs/uhs-forms/services/uhsFormServices';
+import { TUHSForm } from '@/slices/clubs/uhs-forms/types/uhsForm';
 
 export async function POST(req: Request) {
   const form = await req.json();
@@ -25,7 +22,7 @@ export async function POST(req: Request) {
         { status: 404 },
       );
     }
-    return NextResponse.json<TApiResponse<UHSForm>>(
+    return NextResponse.json<TApiResponse<TUHSForm>>(
       { data: newForm, message: 'Successfully created form' },
       { status: 200 },
     );

@@ -1,9 +1,10 @@
 'use client';
 // TODO: delete page. just for testing auth.
-import { SignIn } from '@/components/auth/sign-in';
-import { SignOut } from '@/components/auth/sign-out';
+import { SignOut } from '@slices/auth/components/SignOutButton';
+
 import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
+import ButtonLink from '@/components/links/ButtonLink';
 import PageHeading from '@/components/PageHeading';
 
 // Example function to send an email
@@ -33,8 +34,8 @@ export default function AuthPage() {
             variant='green'
           />
           <Button onClick={sendEmail}>Send mail</Button>
-          <SignIn />
           <SignOut />
+          <ButtonLink href='/auth/sign-in'>Sign in</ButtonLink>
         </section>
       </main>
     </PageLayout>

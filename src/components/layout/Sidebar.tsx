@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import IconButton from '@/components/buttons/IconButton';
 import { MESLogo } from '@/components/layout/navbar/MESLogo';
 
-import SidebarProps from '@/types/SidebarProps';
+import SidebarProps from '@/types/sidebarTypes';
 
 const Sidebar = (sidebarProps: SidebarProps) => {
   const [open, setOpen] = React.useState(false);

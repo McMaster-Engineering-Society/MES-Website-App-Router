@@ -1,5 +1,5 @@
-import UpcomingEvents from '@/components/clubs-portal/UpcomingEvents';
-import ClubUserDashboardLayout from '@/components/layout/clubs-user-dashboard/ClubUserDashboardLayout';
+import ClubUserDashboardLayout from '@/slices/clubs/user-dashboard/components/layout/ClubUserDashboardLayout';
+import UpcomingEvents from '@/slices/clubs/user-dashboard/components/UpcomingEvents';
 
 export default function ClubsPortal() {
   return (

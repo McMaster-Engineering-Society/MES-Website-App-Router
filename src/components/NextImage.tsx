@@ -37,6 +37,7 @@ export default function NextImage({
     useSkeleton ? 'loading' : 'complete',
   );
   const widthIsSet = className?.includes('w-') ?? false;
+  const [imgSrc, setImgSrc] = React.useState(src);
 
   return (
     <figure
@@ -48,7 +49,10 @@ export default function NextImage({
           classNames?.image,
           status === 'loading' && cn('animate-pulse', classNames?.blur),
         )}
-        src={src}
+        src={imgSrc}
+        onError={() => {
+          setImgSrc('/images/default-picture.jpeg');
+        }}
         width={width}
         height={height}
         alt={alt}

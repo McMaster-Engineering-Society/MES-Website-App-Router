@@ -1,18 +1,19 @@
-import { redirect } from 'next/navigation';
+import ServerSignInGate from '@slices/auth/components/ServerSignInGate';
 import React from 'react';
 
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
-
 import { SignInPage } from '@/app/auth/sign-in/signin';
+import SignInGatePage from '@/slices/auth/components/SignInGatePage';
+
+const requireSignIn = false;
+const href = '/hatch-booking/new-booking';
 
 const SignIn = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
-
-  if (isAuthenticated) {
-    redirect('/booking-system');
-  } else {
-    return <SignInPage />;
-  }
+  await ServerSignInGate({ requireSignIn: requireSignIn, href: href });
+  return (
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <SignInPage />
+    </SignInGatePage>
+  );
 };
 
 export default SignIn;

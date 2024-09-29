@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
   {
     title: 'Publications',
     dropdownItems: [
-      { title: 'The Plumbline', link: '/plumbline' },
+      // { title: 'The Plumbline', link: '/plumbline' },
       { title: 'The Frequency', link: '/frequency' },
     ],
   },
@@ -27,11 +27,12 @@ export const navItems: NavItem[] = [
     title: 'Services',
     dropdownItems: [
       { title: 'Tutoring', link: '/tutoring' },
-      { title: 'Special Projects', link: '/special-projects' },
+      // Temporary removal of Special Projects page
+      // { title: 'Special Projects', link: '/special-projects' },
       { title: 'Wellness', link: '/wellness' },
       // Temporary removal of MES Card page
       // { title: 'MES Card', link: '/mes-card' },
-      { title: 'Hatch Lockers', link: '/hatch-lockers' },
+      { title: 'Hatch Info', link: '/hatch-info' },
     ],
   },
   {

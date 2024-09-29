@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { getAllFormsService } from '@/lib/services/formServices';
-
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
-
-import { UHSForm } from '@/types/uhsForm';
+import { getAllFormsService } from '@/slices/clubs/uhs-forms/services/uhsFormServices';
+import { TUHSForm } from '@/slices/clubs/uhs-forms/types/uhsForm';
 
 export async function GET() {
   const allFormsList = await getAllFormsService();
@@ -15,5 +13,5 @@ export async function GET() {
     });
   }
 
-  return NextResponse.json<TApiResponse<UHSForm[]>>({ data: allFormsList });
+  return NextResponse.json<TApiResponse<TUHSForm[]>>({ data: allFormsList });
 }

@@ -1,11 +1,11 @@
 'use client';
 
+import { SignOut } from '@slices/auth/components/SignOutButton';
 import { useSearchParams } from 'next/navigation';
 // import { redirect } from 'next/navigation';
 import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import { SignOut } from '@/components/auth/sign-out';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 

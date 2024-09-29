@@ -2,36 +2,34 @@
 import { FormEvent, useState } from 'react';
 import React from 'react';
 
-import { submitUHSForm } from '@/lib/services/uhsFormService';
-
 import Button from '@/components/buttons/Button';
 import { useMultistepForm } from '@/components/form/useMultistepForm';
 import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
 
-import AlcoholEvent from '@/constant/uhs-form/AlcoholEvent';
-import BestPractices from '@/constant/uhs-form/BestPractices';
-import Danger from '@/constant/uhs-form/Danger';
-import Event from '@/constant/uhs-form/Event';
-import FoodAlcohol from '@/constant/uhs-form/FoodAlcohol';
-import HazardEvents from '@/constant/uhs-form/HazardEvents';
-import Intro from '@/constant/uhs-form/Intro';
-import Policy from '@/constant/uhs-form/Policy';
-import SafetyHazards from '@/constant/uhs-form/SafetyHazards';
-import Travel from '@/constant/uhs-form/Travel';
-import TravelEvents from '@/constant/uhs-form/TravelEvents';
-import { INITIAL_UHS_DATA } from '@/constant/uhs-form/UHSPageData';
-import Understanding from '@/constant/uhs-form/Understanding';
-
-import { UHSFormData } from '@/types/uhsForm';
+import { submitUHSForm } from '@/slices/clubs/uhs-forms/apiCalls/uhsFormApiCalls';
+import AlcoholEvent from '@/slices/clubs/uhs-forms/components/AlcoholEvent';
+import BestPractices from '@/slices/clubs/uhs-forms/components/BestPractices';
+import Danger from '@/slices/clubs/uhs-forms/components/Danger';
+import Event from '@/slices/clubs/uhs-forms/components/Event';
+import FoodAlcohol from '@/slices/clubs/uhs-forms/components/FoodAlcohol';
+import HazardEvents from '@/slices/clubs/uhs-forms/components/HazardEvents';
+import Intro from '@/slices/clubs/uhs-forms/components/Intro';
+import Policy from '@/slices/clubs/uhs-forms/components/Policy';
+import SafetyHazards from '@/slices/clubs/uhs-forms/components/SafetyHazards';
+import Travel from '@/slices/clubs/uhs-forms/components/Travel';
+import TravelEvents from '@/slices/clubs/uhs-forms/components/TravelEvents';
+import { INITIAL_UHS_DATA } from '@/slices/clubs/uhs-forms/components/UHSPageData';
+import Understanding from '@/slices/clubs/uhs-forms/components/Understanding';
+import { TUHSFormData } from '@/slices/clubs/uhs-forms/types/uhsForm';
 
 export default function UHSFormPage() {
   const [isSubmitted, setSubmit] = useState(false);
   const [data, setData] = useState(INITIAL_UHS_DATA);
 
   //updates the values in the state from outside this file
-  function updateFields(fields: Partial<UHSFormData>) {
+  function updateFields(fields: Partial<TUHSFormData>) {
     setData((prev) => {
       return { ...prev, ...fields };
     });

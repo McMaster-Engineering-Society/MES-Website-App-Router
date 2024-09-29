@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@slices/*": ["./src/slices/*"],
       "@/*": ["./src/*"],
       "~/*": ["./public/*"]
     },

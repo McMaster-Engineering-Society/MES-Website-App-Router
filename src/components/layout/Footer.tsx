@@ -2,13 +2,7 @@
 
 import * as React from 'react';
 import { IconType } from 'react-icons';
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaSnapchatGhost,
-  FaTwitter,
-} from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 import { cn } from '@/lib/utils';
 
@@ -32,16 +26,8 @@ const socialMedia: SocialMedia = [
     href: 'https://www.instagram.com/macengsociety/',
   },
   {
-    icon: FaTwitter,
-    href: 'https://twitter.com/macengsociety/',
-  },
-  {
     icon: FaFacebookF,
     href: 'https://www.facebook.com/MacEngSociety/',
-  },
-  {
-    icon: FaSnapchatGhost,
-    href: 'https://www.snapchat.com/add/macengsociety/',
   },
 ];
 
@@ -57,14 +43,6 @@ const links = [
       {
         href: '/hatch-lockers',
         label: 'Hatch Lockers',
-      },
-      {
-        href: '/mes-card',
-        label: 'MES Card',
-      },
-      {
-        href: '/special-projects',
-        label: 'Special Projects',
       },
       {
         href: '/wellness',
@@ -134,7 +112,10 @@ export default function Footer({ darkMode = false }: FooterProps) {
             and the Anishinaabe Nations, which is recognized by the "Dish With
             One Spoon" wampum agreement.
           </span>
-          <div id='contact-us' className='flex flex-col pt-4'>
+          <div
+            id='contact-us'
+            className='flex flex-col pt-4 items-center lg:items-start'
+          >
             <span className='font-bold'>Questions/Feedback?</span>
             <UnderlineLink href='/executives' className='w-fit'>
               Contact our Executive team
