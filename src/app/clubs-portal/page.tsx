@@ -3,7 +3,7 @@ import ClubUserDashboardLayout from '@/components/layout/clubs-user-dashboard/Cl
 
 export default function ClubsPortal() {
   return (
-    <ClubUserDashboardLayout>
+    <ClubUserDashboardLayout showTask>
       <UpcomingEvents />
     </ClubUserDashboardLayout>
   );
