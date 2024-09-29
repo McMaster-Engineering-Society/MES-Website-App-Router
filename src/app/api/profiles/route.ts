@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
 
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 import {
   createProfileService,
   getAllProfilesService,
-} from '@/lib/services/profileServices';
-import { TProfile } from '@/lib/types';
-
-import { TApiResponse, TMessageResponse } from '@/app/api/types';
+} from '@/slices/auth/services/profileServices';
+import { TProfile } from '@/slices/auth/types';
 
 export async function GET() {
   const allProfilesList = await getAllProfilesService();

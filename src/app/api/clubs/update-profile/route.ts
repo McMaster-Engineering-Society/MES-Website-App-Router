@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { updateProfileByClubIdService } from '@/lib/services/clubProfileServices';
-import { TApiResponse, TMessageResponse } from '@/lib/types';
+
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 
 import { TClubProfile } from '@/types/clubProfile';
 
