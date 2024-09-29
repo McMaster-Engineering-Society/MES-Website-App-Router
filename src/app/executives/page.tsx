@@ -10,7 +10,7 @@ export default function ExecutivesPage() {
       <main className='layout'>
         <section>
           <PageHeading
-            preTitle='2023-2024 Team'
+            preTitle='2024-2025 Team'
             title='Executives'
             variant='red'
           />

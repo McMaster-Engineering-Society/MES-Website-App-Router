@@ -4,12 +4,13 @@ import PageLayout from '@/components/layout/PageLayout';
 import PageHeading from '@/components/PageHeading';
 
 import {
-  AcademicResourcesCoordinators,
-  AdministrationCoordinators,
-  AdvertisingCoordinators,
-  PublicationsCoordinators,
-  StudentOutreachCoordinators,
-  StudentSpaceCoordinators,
+  AcademicPortfolioCoordinators,
+  CommunicationsPortfolioCoordinators,
+  ExternalPortfolioCoordinators,
+  FinancePortfolioCoordinators,
+  InternalPortfolioCoordinators,
+  PresidentPortfolioCoordinators,
+  StudentLifePortfolioCoordinators,
 } from '@/constant/council/appointedCoordinators';
 
 import CoordinatorDetails from '@/types/coordinatorDetails';
@@ -46,33 +47,45 @@ export default function AppointedCoordinatorsPage() {
         <section className='flex flex-col justify-between'>
           <PageHeading
             title='Appointed Coordinators'
-            preTitle='2023-2024 Team'
+            preTitle='2024-2025 Team'
             variant='red'
           />
           <div className='my-5' />
-          <SmallHeading title='Administration' variant='red' />
+          <SmallHeading title='Academic Portfolio' variant='red' />
           <CoordinatorProfileRenders
-            coordinators={AdministrationCoordinators}
+            coordinators={AcademicPortfolioCoordinators}
           />
           <Spacing />
-          <SmallHeading title='Student Outreach & Engagement' variant='red' />
+          <SmallHeading title='Communications Portfolio' variant='red' />
           <CoordinatorProfileRenders
-            coordinators={StudentOutreachCoordinators}
+            coordinators={CommunicationsPortfolioCoordinators}
           />
           <Spacing />
-          {/* <SmallHeading title='Student Space' variant='red' /> */}
-          <CoordinatorProfileRenders coordinators={StudentSpaceCoordinators} />
-          <Spacing />
-          {/* <SmallHeading title='Academic Resources' variant='red' /> */}
+          <SmallHeading title='External Portfolio' variant='red' />
           <CoordinatorProfileRenders
-            coordinators={AcademicResourcesCoordinators}
+            coordinators={ExternalPortfolioCoordinators}
           />
           <Spacing />
-          <SmallHeading title='Advertising' variant='red' />
-          <CoordinatorProfileRenders coordinators={AdvertisingCoordinators} />
+          <SmallHeading title='Finance Portfolio' variant='red' />
+          <CoordinatorProfileRenders
+            coordinators={FinancePortfolioCoordinators}
+          />
           <Spacing />
-          <SmallHeading title='Publications' variant='red' />
-          <CoordinatorProfileRenders coordinators={PublicationsCoordinators} />
+          <SmallHeading title='Internal Portfolio' variant='red' />
+          <CoordinatorProfileRenders
+            coordinators={InternalPortfolioCoordinators}
+          />
+          <Spacing />
+          <SmallHeading title='Student Life Portfolio' variant='red' />
+          <CoordinatorProfileRenders
+            coordinators={StudentLifePortfolioCoordinators}
+          />
+          <Spacing />
+          <SmallHeading title='President Portfolio' variant='red' />
+          <CoordinatorProfileRenders
+            coordinators={PresidentPortfolioCoordinators}
+          />
+          <Spacing />
         </section>
       </main>
     </PageLayout>

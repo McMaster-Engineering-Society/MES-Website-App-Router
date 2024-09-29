@@ -28,7 +28,7 @@ import { CalendarId } from '@/types/calendar';
 
 const debug = false;
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Elections',
@@ -172,7 +172,7 @@ export default function ElectionsPage() {
       <main className='layout'>
         <section>
           <PageHeading
-            preTitle='MES 2023-24 ELECTIONS'
+            preTitle='MES 2024-25 ELECTIONS'
             title='Shoot Your Shot!'
             variant='pink'
           />
@@ -215,7 +215,7 @@ export default function ElectionsPage() {
             </div>
           )}
           {/* Engineering & Management Rep and Chemical Engineering Rep Announcement */}
-          <div
+          {/* <div
             id='election-info-session'
             className='border-mesRed mt-8 flex flex-row rounded-xl border-2 bg-white p-2 text-center'
           >
@@ -232,7 +232,7 @@ export default function ElectionsPage() {
               <span className='bg-mesRed absolute inline-flex h-full w-full animate-ping rounded-full opacity-75'></span>
               <span className='bg-mesRed relative inline-flex h-3 w-3 rounded-full'></span>
             </span>
-          </div>
+          </div> */}
           {/* ============ */}
           {(today <= electionInfo.campaignsOpen || debug) && (
             <PageSection
