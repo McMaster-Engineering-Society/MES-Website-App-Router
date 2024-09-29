@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
 
 import ExecMember from './ExecMember';
 
@@ -11,7 +12,27 @@ export type TExecMemberWithId = TExecMember & { id: number };
 const ExecTeamPanel = () => {
   const clubId = '1';
   const [execMembers, setExecMembers] = useState(getExecMembers(clubId));
-  const president = getPresident(execMembers);
+  const president = execMembers[0];
+
+  const dragPerson = useRef<number>(0);
+  const draggedOverPerson = useRef<number>(0);
+
+  const handleDragStart = (index: number) => {
+    dragPerson.current = index;
+  };
+  const handleDragEnter = (index: number) => {
+    draggedOverPerson.current = index;
+  };
+
+  const handleSort = () => {
+    const dragPersonIndex = dragPerson.current;
+    const draggedOverPersonIndex = draggedOverPerson.current;
+    const newMembers = [...execMembers];
+    newMembers.splice(dragPersonIndex, 1);
+    newMembers.splice(draggedOverPersonIndex, 0, execMembers[dragPersonIndex]);
+    setExecMembers(newMembers);
+  };
+
   const updateMemberList = (member: TExecMemberWithId, delMember = false) => {
     delMember ? deleteMember(member) : updateMember(member);
   };
@@ -53,25 +74,35 @@ const ExecTeamPanel = () => {
   };
 
   return (
-    <div className='relative h-full w-full overflow-scroll'>
-      <ExecMember
-        president
-        member={president}
-        updateMemberList={updateMemberList}
-      />
-      {execMembers.map((member) => {
-        if (member.role !== 'President') {
-          return (
-            <ExecMember
-              key={member.id}
-              member={member}
-              updateMemberList={updateMemberList}
-            />
-          );
-        }
-      })}
-      <button className='absolute right-0 top-0' onClick={createMember}>
-        Add Member
+    <div className='w-full h-full relative'>
+      <div className='flex flex-col gap-2 h-full w-full overflow-scroll pt-2'>
+        <ExecMember
+          index={0}
+          president
+          member={president}
+          updateMemberList={updateMemberList}
+          onDragStart={handleDragStart}
+          onDragEnter={handleDragEnter}
+          handleSort={handleSort}
+        />
+        {execMembers.map((member, index) => {
+          if (member.role !== 'President') {
+            return (
+              <ExecMember
+                index={index}
+                key={member.id}
+                member={member}
+                updateMemberList={updateMemberList}
+                onDragStart={handleDragStart}
+                onDragEnter={handleDragEnter}
+                handleSort={handleSort}
+              />
+            );
+          }
+        })}
+      </div>
+      <button className='absolute right-2 top-3' onClick={createMember}>
+        <FaPlusCircle size={30} color='red' />
       </button>
     </div>
   );
@@ -80,6 +111,30 @@ const ExecTeamPanel = () => {
 export default ExecTeamPanel;
 
 function getExecMembers(_clubId: string) {
+  const members = sampleMembers();
+  const membersWithId = [];
+  for (const member of members) {
+    const memberWithId = { ...member } as TExecMemberWithId;
+    memberWithId.id = nextId++;
+    membersWithId.push(memberWithId);
+  }
+  const sortedMembers = setPresidentFirst(membersWithId);
+  return sortedMembers;
+}
+
+function setPresidentFirst(members: TExecMemberWithId[]) {
+  const membersCopy = [...members];
+  membersCopy.forEach((member, index) => {
+    if (member.role === 'President') {
+      const temp = members[0];
+      members[0] = member;
+      members[index] = temp;
+    }
+  });
+  return membersCopy;
+}
+
+function sampleMembers() {
   const member1: TExecMember = {
     firstName: 'John',
     lastName: 'Doe',
@@ -116,28 +171,5 @@ function getExecMembers(_clubId: string) {
     year: '3',
     contactFor: 'Member Details',
   };
-  const members = [];
-  for (const member of [member1, member2, member3, member4]) {
-    const memberWithId = { ...member } as TExecMemberWithId;
-    memberWithId.id = nextId++;
-    members.push(memberWithId);
-  }
-  return members;
-}
-
-function getPresident(members: TExecMemberWithId[]) {
-  let president = members.find((member) => member.role === 'President');
-  if (!president) {
-    president = {
-      firstName: '',
-      lastName: '',
-      role: 'President',
-      email: '',
-      program: '',
-      year: '',
-      contactFor: '',
-      id: nextId++,
-    };
-  }
-  return president;
+  return [member1, member2, member3, member4];
 }

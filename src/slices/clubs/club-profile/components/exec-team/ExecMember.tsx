@@ -7,14 +7,22 @@ import { TExecMemberWithId } from './ExecTeamPanel';
 import TextField from './TextField';
 
 type ExecMemberProps = {
+  index: number;
   member: TExecMemberWithId;
   updateMemberList: (member: TExecMemberWithId, deleteMember?: boolean) => void;
   president?: boolean;
+  onDragStart: (index: number) => void;
+  onDragEnter: (index: number) => void;
+  handleSort: () => void;
 };
 const ExecMember = ({
+  index,
   member,
   updateMemberList,
   president,
+  onDragStart,
+  onDragEnter,
+  handleSort,
 }: ExecMemberProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -27,8 +35,20 @@ const ExecMember = ({
     updateMemberList(updatedMember);
   };
   return (
-    <div className='min-w-full border border-r-4 rounded-lg border-gray-400 shrink-0'>
-      <div className='w-full h-20 flex flex-row gap-2 items-center'>
+    <div
+      className='w-full border-medium rounded-lg border-gray-400'
+      draggable
+      onDragStart={() => onDragStart(index)}
+      onDragEnter={() => onDragEnter(index)}
+      onDragEnd={handleSort}
+      onDragOver={(e) => e.preventDefault()}
+    >
+      <div
+        className='w-full h-20 flex flex-row gap-2 items-center'
+        onClick={() => {
+          if (!isOpen) setIsOpen(true);
+        }}
+      >
         <button
           onClick={() => {
             setIsOpen((prev) => !prev);
