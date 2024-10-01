@@ -1,6 +1,6 @@
 import CouncilDetails from '@/types/CouncilDetails';
 
-const avps: CouncilDetails[] = [
+const directors: CouncilDetails[] = [
   {
     firstName: 'Angel',
     lastName: 'Zou',
@@ -33,4 +33,4 @@ const avps: CouncilDetails[] = [
   },
 ];
 
-export default avps;
+export default directors;
