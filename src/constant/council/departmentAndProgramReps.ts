@@ -131,6 +131,16 @@ const deptAndProgramReps: CouncilDetails[] = [
     image: '/images/council-24-25/bilal-karjikar.jpg',
     description: '',
   },
+  {
+    firstName: 'Ifeyinwa',
+    lastName: 'Mbielu',
+    position: 'Engineering 1 MES Liaison',
+    program: 'Engineering',
+    level: 1,
+    email: 'mbielui@mcmaster.ca',
+    image: '/images/council-24-25/ifeyinwa-mbielu.jpeg',
+    description: '',
+  },
 ];
 
 export default deptAndProgramReps;

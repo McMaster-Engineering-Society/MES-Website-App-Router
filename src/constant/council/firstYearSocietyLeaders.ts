@@ -21,6 +21,26 @@ const firstYearSocietyLeaders: CouncilDetails[] = [
     image: '/images/council-24-25/mitchell-fong.jpeg',
     description: '',
   },
+  {
+    firstName: 'Rian',
+    lastName: 'Sen Majumder',
+    position: 'First Year Council Chair',
+    program: 'Engineering',
+    level: 1,
+    email: 'senmajur@mcmaster.ca',
+    image: '/images/council-24-25/rian-senmajumder.jpg',
+    description: '',
+  },
+  {
+    firstName: 'Ifeyinwa',
+    lastName: 'Mbielu',
+    position: 'Engineering 1 MES Liaison',
+    program: 'Engineering',
+    level: 1,
+    email: 'mbielui@mcmaster.ca',
+    image: '/images/council-24-25/ifeyinwa-mbielu.jpeg',
+    description: '',
+  },
 ];
 
 export default firstYearSocietyLeaders;

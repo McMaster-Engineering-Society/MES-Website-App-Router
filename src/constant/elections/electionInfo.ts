@@ -150,5 +150,15 @@ export const electionInfo: ElectionInfo = {
       name: 'Mitchell Fong',
       picture: '/images/elections/candidates/mitchell-fong.jpeg',
     },
+    {
+      position: 'First Year Council Chair',
+      name: `Rian Sen Majumder`,
+      picture: '/images/elections/candidates/rian-senmajumder.jpg',
+    },
+    {
+      position: 'Engineering 1 MES Liaison',
+      name: `Ifeyinwa Mbielu`,
+      picture: '/images/elections/candidates/ifeyinwa-mbielu.jpeg',
+    },
   ],
 };
