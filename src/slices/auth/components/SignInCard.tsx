@@ -18,26 +18,20 @@ const SignInCard = () => {
   };
 
   return (
-    <div className='flex-row w-full p-8 rounded-lg shadow-md bg-white text-center items-center justify-center content-center m-auto h-full'>
-      <div className='flex flex-col items-center justify-center content-center w-full mb-8'>
-        <div className='font-semibold text-3xl text-gray-700 w-3/4 text-left '>
-          Welcome to the Hatch Booking Dashboard!
+    <div className='flex flex-col gap-6 w-full p-2 md:p-4 lg:p-8 rounded-lg shadow-md bg-white text-center items-center justify-center content-center m-auto h-full'>
+      <div className='flex flex-col justify-center content-center w-full gap-2'>
+        <div className='font-semibold text-xl text-gray-700'>
+          Hatch Booking Sign In
         </div>
-        <div className='text-xl text-gray-500 w-3/4 text-left'>
-          Please enter your McMaster email to continue.
+        <div className='text-gray-500'>
+          Enter your McMaster email to start booking
         </div>
       </div>
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col gap-5 justify-center items-center'
+        className='flex flex-col gap-2 justify-center items-center w-full max-w-96'
       >
-        <div className='flex flex-col items-start justify-start content-start w-3/4'>
-          <label
-            htmlFor='email'
-            className='text-sm font-medium text-gray-700 w-full text-left'
-          >
-            Email
-          </label>
+        <div className='flex w-full flex-col items-start justify-start content-start flex-1'>
           <input
             type='email'
             className='w-full border border-gray-300 rounded-md shadow-sm p-2'
@@ -62,7 +56,7 @@ const SignInCard = () => {
             required
           />
         </div>
-        <Button type='submit' className='mt-2 w-3/4' disabled={isPending}>
+        <Button type='submit' className='w-full' disabled={isPending}>
           {isPending ? <LoaderCircle className='animate-spin' /> : 'Continue'}
         </Button>
       </form>
