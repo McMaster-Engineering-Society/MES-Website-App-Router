@@ -5,7 +5,6 @@ import {
   isBefore,
   startOfDay,
   subDays,
-  subMinutes,
 } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 
@@ -80,25 +79,24 @@ const RebookModal: React.FC<RebookModalProps> = ({
   ): boolean {
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
-    const temp = numTimes;
-    // console.log("ideal", numTimes)
-    // console.log(availabilities.H201, Object.values(availabilities).length)
     if (!isBeforeTd) {
       return Object.values(availabilities).some(
-        (availability) => Number(availability.length) > Number(temp),
+        (availability) => Number(availability.length) === Number(numTimes + 1),
       );
+    } else {
+      return false;
     }
-    return false;
   }
 
   function sameWeekAvail(
     room: keyof RoomAvailabilities,
     startTime: Date,
+    numTimes: number,
   ): boolean {
     const avail = availabilities2[room];
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
-    return !isBeforeTd && Array.isArray(avail) && avail.length !== 0;
+    return !isBeforeTd && Array.isArray(avail) && avail.length === numTimes;
   }
 
   const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
@@ -119,11 +117,10 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
   const minBtwn = differenceInMinutes(startTime, endTime);
   const halfHoursBtwn = Math.abs(minBtwn / 30);
-  const endTimeReal = subMinutes(endTime, 30);
   const startTmrw = addDays(startTime, 1);
-  const endTmrw = addDays(endTimeReal, 1);
+  const endTmrw = addDays(endTime, 1);
   const startWeek = addDays(startTime, 7);
-  const endWeek = addDays(endTimeReal, 7);
+  const endWeek = addDays(endTime, 7);
 
   const { data: roomAvailabilities1, isLoading: isLoading1 } =
     useFetchAvailabilitiesHook(startTmrw, endTmrw);
@@ -221,12 +218,16 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek, halfHoursBtwn) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
           onClick={() =>
             handleButtonClick(
               '3',
-              sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek),
+              sameWeekAvail(
+                userRoom as keyof RoomAvailabilities,
+                startWeek,
+                halfHoursBtwn,
+              ),
             )
           }
         >

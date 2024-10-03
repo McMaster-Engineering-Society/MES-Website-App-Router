@@ -47,6 +47,8 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
   const addRoomBooking = useAddRoomBookingHook();
   const startTmrw = addDays(startTime, 1);
   const endTmrw = addDays(endTime, 1);
+  const minBtwn = differenceInMinutes(startTime, endTime);
+  const halfHoursBtwn = Math.abs(minBtwn / 30);
 
   const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(
     startTmrw,
@@ -114,9 +116,10 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
   function isAvail(
     availabilities: RoomAvailabilities,
     room: keyof RoomAvailabilities,
+    numSlots: number,
   ): boolean {
     const roomTimes = availabilities[room];
-    return roomTimes.length != 0;
+    return roomTimes.length === numSlots + 1;
   }
 
   const roomButtonClass = (room: string, av: boolean) =>
@@ -175,10 +178,13 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <button
                 className={roomButtonClass(
                   'H201',
-                  isAvail(availabilities, 'H201'),
+                  isAvail(availabilities, 'H201', halfHoursBtwn),
                 )}
                 onClick={() => {
-                  handleRoomSelection('H201', isAvail(availabilities, 'H201'));
+                  handleRoomSelection(
+                    'H201',
+                    isAvail(availabilities, 'H201', halfHoursBtwn),
+                  );
                 }}
               >
                 H201
@@ -187,10 +193,13 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <button
                 className={roomButtonClass(
                   'H203',
-                  isAvail(availabilities, 'H203'),
+                  isAvail(availabilities, 'H203', halfHoursBtwn),
                 )}
                 onClick={() => {
-                  handleRoomSelection('H203', isAvail(availabilities, 'H203'));
+                  handleRoomSelection(
+                    'H203',
+                    isAvail(availabilities, 'H203', halfHoursBtwn),
+                  );
                   // eslint-disable-next-line no-console
                   console.log(roomString);
                 }}
@@ -201,10 +210,13 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <button
                 className={roomButtonClass(
                   'H205',
-                  isAvail(availabilities, 'H205'),
+                  isAvail(availabilities, 'H205', halfHoursBtwn),
                 )}
                 onClick={() => {
-                  handleRoomSelection('H205', isAvail(availabilities, 'H205'));
+                  handleRoomSelection(
+                    'H205',
+                    isAvail(availabilities, 'H205', halfHoursBtwn),
+                  );
                   // eslint-disable-next-line no-console
                   console.log(roomString);
                 }}
@@ -214,12 +226,12 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <button
                 className={roomButtonClass(
                   'H204A',
-                  isAvail(availabilities, 'H204A'),
+                  isAvail(availabilities, 'H204A', halfHoursBtwn),
                 )}
                 onClick={() => {
                   handleRoomSelection(
                     'H204A',
-                    isAvail(availabilities, 'H204A'),
+                    isAvail(availabilities, 'H204A', halfHoursBtwn),
                   );
                 }}
               >
@@ -228,12 +240,12 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
               <button
                 className={roomButtonClass(
                   'H204B',
-                  isAvail(availabilities, 'H204B'),
+                  isAvail(availabilities, 'H204B', halfHoursBtwn),
                 )}
                 onClick={() => {
                   handleRoomSelection(
                     'H204B',
-                    isAvail(availabilities, 'H204B'),
+                    isAvail(availabilities, 'H204B', halfHoursBtwn),
                   );
                 }}
               >

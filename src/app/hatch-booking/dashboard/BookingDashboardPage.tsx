@@ -331,15 +331,7 @@ const UserDashboard = () => {
             Report Issue
           </ButtonLink>
         </div>
-        {/* <RebookModal
-          open={open}
-          onClose={() => setOpen(false)}
-          startTime={displayStartTime}
-          endTime={displayEndTime}
-          userRoom={displayRoom}
-          userId={displayUserId}
-          email={displayEmail}
-        ></RebookModal> */}
+
         <ExpandModal
           open={open}
           onClose={() => setOpen(false)}
