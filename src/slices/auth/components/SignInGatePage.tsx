@@ -1,6 +1,7 @@
 'use client';
 
 import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 import React from 'react';
 
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
@@ -23,23 +24,31 @@ const SignInGatePage = ({
   href = '/auth/sign-in',
   adminRequired = false,
 }: SignInGatePageProps) => {
-  const { profile, isAdmin, isFetched } = useSessionContext();
+  const { profile, isAdmin, profileIsLoaded } = useSessionContext();
 
-  // If the profile is still loading, show a loading message
-  if (!isFetched) {
+  // Used to refresh the gate when profile loaded status changes.
+  useEffect(() => {
+    // Run redirection logic only after the profile is loaded.
+    if (profileIsLoaded) {
+      // If we want to block the user if they are signed out, redirect them if there is no profile. Else, we redirect them if there is a profile because we block the page when they're signed in.
+      if (requireSignIn ? !profile : profile) {
+        redirect(href);
+      } else if (adminRequired && !isAdmin) {
+        // Redirects user to regular booking page if they are not an admin and they need to be for this page.
+        redirect('/hatch-booking/new-booking');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileIsLoaded]); // Disabled exhaustive-deps because we don't want it rerunning everytime something changes, especially when profile, isAdmin, and profileIsLoaded may change together.
+
+  // If the profile is still loading, show a loading message.
+  if (!profileIsLoaded) {
     // TODO: make prettier
     return <div>Loading user profile...</div>;
   }
 
-  // If we want to block the user if they are signed out, redirect them if there is no profile. Else, we redirect them if there is a profile because we block the page when they're signed in.
-  if (requireSignIn ? !profile : profile) {
-    redirect(href);
-  } else if (adminRequired && !isAdmin) {
-    // Redirects user to regular booking page if they are not an admin and they need to be for this page.
-    redirect('/hatch-booking/new-booking');
-  } else {
-    return <>{children}</>;
-  }
+  // Once profile is loaded and no redirection is needed, show the content
+  return <>{children}</>;
 };
 
 export default SignInGatePage;

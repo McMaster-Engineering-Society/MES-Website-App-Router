@@ -1,8 +1,8 @@
 import ServerSignInGate from '@slices/auth/components/ServerSignInGate';
-import SignInGatePage from '@slices/auth/components/SignInGatePage';
 import React from 'react';
 
 import { ErrorPage } from '@/app/auth/error/ErrorPage';
+import SignInGatePage from '@/slices/auth/components/SignInGatePage';
 
 const requireSignIn = false;
 const href = '/';

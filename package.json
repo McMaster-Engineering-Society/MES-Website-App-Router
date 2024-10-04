@@ -22,6 +22,7 @@
     "@auth/mongodb-adapter": "^3.2.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@internationalized/date": "^3.5.5",
     "@mui/icons-material": "^5.15.18",
     "@mui/lab": "5.0.0-alpha.170",
     "@mui/material": "^5.15.18",
