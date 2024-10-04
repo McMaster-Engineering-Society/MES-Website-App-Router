@@ -1,10 +1,9 @@
 import { UpdateResult } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-import { updateRoomService } from '@/lib/services/roomServices';
-import { TApiResponse, TMessageResponse } from '@/lib/types';
-
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
 import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
+import { updateRoomService } from '@/slices/hatch/admin/services/roomServices';
 type TRoomUpdateRequest = {
   room: string;
   update: {

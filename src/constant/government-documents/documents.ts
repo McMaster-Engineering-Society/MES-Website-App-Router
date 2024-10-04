@@ -32,7 +32,7 @@ export const documents: DocumentSection[] = [
     description:
       'The Bylaws were developed in 2020 in an effort to solidify the activities and policies of the MES, separate from the Policy Manual. The policies documented here are intended to accompany the Constitution and Policy Manual of the McMaster Engineering Society and are binding terms of reference.',
     buttonLabel: 'Bylaws',
-    buttonLink: '/pdfs/governing-documents/bylaws2023.pdf',
+    buttonLink: '/pdfs/governing-documents/bylaws2024.pdf',
   },
   {
     heading: 'MES Long Term Plan',

@@ -1,9 +1,9 @@
+import { TBooking } from '@slices/hatch/booking-page/types';
 import { NextResponse } from 'next/server';
 
-import { createBookingService } from '@/lib/services/bookingServices';
-import { TApiResponse, TBooking } from '@/lib/types';
-
+import { TApiResponse } from '@/app/api/types';
 import { TMessageResponse } from '@/app/api/types';
+import { createBookingService } from '@/slices/hatch/booking-page/services/bookingServices';
 
 export async function POST(req: Request) {
   const booking: TBooking = await req.json();

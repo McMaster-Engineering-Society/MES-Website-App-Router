@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 
-import { createBatchBookingService } from '@/lib/services/bookingServices';
 import {
   TApiResponse,
   TBatchBookingRequest,
   TBatchBookingResponse,
-} from '@/lib/types';
-
+} from '@/app/api/types';
 import { TMessageResponse } from '@/app/api/types';
+import { createBatchBookingService } from '@/slices/hatch/booking-page/services/bookingServices';
 
 export async function POST(req: Request) {
   const reqObject: TBatchBookingRequest = await req.json();
