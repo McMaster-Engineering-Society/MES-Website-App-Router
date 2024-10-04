@@ -5,6 +5,7 @@ import { IoCalendarClearOutline, IoClose } from 'react-icons/io5';
 import { LuText } from 'react-icons/lu';
 
 import IconButton from '@/components/buttons/IconButton';
+import AddEventToCalendarDropdown from '@/components/calendar/AddEventToCalendarDropdown';
 import MultiDayAllDayPopover from '@/components/calendar/popover-types/MultiDayAllDayPopover';
 import MultiDayWithTimePopover from '@/components/calendar/popover-types/MultiDayWithTimePopover';
 import SingleDayAllDayPopover from '@/components/calendar/popover-types/SingleDayAllDayPopover';
@@ -78,6 +79,7 @@ const CalendarPopoverContent = ({
           <span>{event.description}</span>
         </div>
       )}
+      <AddEventToCalendarDropdown event={event} />
     </div>
   );
 };

@@ -31,7 +31,11 @@ const MoreEvents = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Popover isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+    <Popover
+      isOpen={isOpen}
+      onOpenChange={(open) => setIsOpen(open)}
+      shouldCloseOnInteractOutside={() => false}
+    >
       <PopoverTrigger>
         <div
           id={`calendar-day-${dayIndex}-more-events`}
