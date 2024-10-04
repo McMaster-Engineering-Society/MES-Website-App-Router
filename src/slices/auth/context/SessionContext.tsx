@@ -21,7 +21,7 @@ import { useFetchProfileByEmailHook } from '@/slices/auth/hooks/profileHooks';
 type TSessionContext = {
   profile?: TProfile;
   isAdmin: boolean;
-  isFetched: boolean;
+  profileIsLoaded: boolean;
 };
 
 export const SessionContext = createContext<TSessionContext | undefined>(
@@ -39,10 +39,15 @@ type Props = {
  */
 export const SessionProvider = ({ children }: Props) => {
   const [email, setEmail] = useState<string | null>(null);
+  const [profileHookStatus, setProfileHookStatus] = useState<
+    'unknown' | 'disabled' | 'fetching'
+  >('unknown'); // NOTE: Tried using useRef, something about useState making it rerender is needed for it to work though.
 
   useEffect(() => {
     const fetchUserEmail = async () => {
+      setProfileHookStatus('unknown'); // Sets to unknown so if someone signs out, the status is reverted back.
       const fetchedEmail = await getUserEmail();
+      setProfileHookStatus(fetchedEmail ? 'fetching' : 'disabled');
       setEmail(fetchedEmail);
     };
 
@@ -60,7 +65,7 @@ export const SessionProvider = ({ children }: Props) => {
       value={{
         profile: profile,
         isAdmin: isAdmin,
-        isFetched: isFetched,
+        profileIsLoaded: isFetched || profileHookStatus === 'disabled', // Consider it loaded if it is fetched or if it is disabled.
       }}
     >
       {children}
