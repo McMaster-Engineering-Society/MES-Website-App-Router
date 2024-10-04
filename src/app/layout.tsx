@@ -10,7 +10,6 @@ import Providers from '@/components/Providers';
 
 import { siteConfig } from '@/constant/config';
 
-
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
 export const metadata: Metadata = {
@@ -52,7 +51,6 @@ export const metadata: Metadata = {
   //   },
   // ],
 };
-
 
 export default function RootLayout({
   children,
