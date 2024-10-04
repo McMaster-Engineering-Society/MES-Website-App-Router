@@ -22,7 +22,8 @@ import PageSection from '@/components/PageSection';
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
-import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
+import ExpandModal from '@/slices/hatch/booking-page/components/modals/ExpandModal';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const UserDashboard = () => {
   const [displayRoom, setDisplayRoom] = useState<string>('');
   const [displayUserId, setDisplayUserId] = useState<string>('');
   const [displayEmail, setDisplayEmail] = useState<string>('');
+  const [displayId, setDisplayId] = useState<string>('');
 
   // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
@@ -67,7 +69,7 @@ const UserDashboard = () => {
           room: booking.room,
           email: booking.email,
           startTime: booking.startTime,
-          endTime: booking.endTime,
+          endTime: add30Minutes(booking.endTime),
           hasConfirmed: booking.hasConfirmed,
           createdDate: booking.createdDate,
         }),
@@ -103,7 +105,7 @@ const UserDashboard = () => {
           room: booking.room,
           email: booking.email,
           startTime: booking.startTime,
-          endTime: booking.endTime,
+          endTime: add30Minutes(booking.endTime),
           hasConfirmed: booking.hasConfirmed,
           createdDate: booking.createdDate,
         }),
@@ -126,6 +128,7 @@ const UserDashboard = () => {
     room: string,
     userId: string,
     email: string,
+    id: string,
   ) {
     setOpen(true);
     setDisplayStartTime(startTime);
@@ -133,6 +136,7 @@ const UserDashboard = () => {
     setDisplayRoom(room);
     setDisplayUserId(userId);
     setDisplayEmail(email);
+    setDisplayId(id);
   }
 
   return (
@@ -194,6 +198,7 @@ const UserDashboard = () => {
                             booking.room,
                             booking.userId,
                             booking.email,
+                            booking._id?.toString() ?? '',
                           )
                         }
                       ></BookingTimeslot>
@@ -235,7 +240,7 @@ const UserDashboard = () => {
                       />
                       <span className='font-light text-gray-700 text-nowrap ml-2'>
                         {format(nextBooking.startTime, 'h:mm a')} –{' '}
-                        {format(nextBooking.endTime, 'h:mm a')}
+                        {format(add30Minutes(nextBooking.endTime), 'h:mm a')}
                       </span>
                     </div>
 
@@ -281,6 +286,7 @@ const UserDashboard = () => {
                             booking.room,
                             booking.userId,
                             booking.email,
+                            booking._id?.toString() ?? '',
                           )
                         }
                       ></BookingTimeslot>
@@ -325,7 +331,8 @@ const UserDashboard = () => {
             Report Issue
           </ButtonLink>
         </div>
-        <RebookModal
+
+        <ExpandModal
           open={open}
           onClose={() => setOpen(false)}
           startTime={displayStartTime}
@@ -333,7 +340,8 @@ const UserDashboard = () => {
           userRoom={displayRoom}
           userId={displayUserId}
           email={displayEmail}
-        ></RebookModal>
+          id={displayId}
+        ></ExpandModal>
       </section>
     </QueryClientProvider>
   );

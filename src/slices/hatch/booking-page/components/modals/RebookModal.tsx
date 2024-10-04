@@ -75,25 +75,28 @@ const RebookModal: React.FC<RebookModalProps> = ({
   function isAvail(
     availabilities: RoomAvailabilities,
     startTime: Date,
+    numTimes: number,
   ): boolean {
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
     if (!isBeforeTd) {
       return Object.values(availabilities).some(
-        (availability) => availability.length !== 0,
+        (availability) => Number(availability.length) === Number(numTimes + 1),
       );
+    } else {
+      return false;
     }
-    return false;
   }
 
   function sameWeekAvail(
     room: keyof RoomAvailabilities,
     startTime: Date,
+    numTimes: number,
   ): boolean {
     const avail = availabilities2[room];
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
-    return !isBeforeTd && Array.isArray(avail) && avail.length !== 0;
+    return !isBeforeTd && Array.isArray(avail) && avail.length === numTimes;
   }
 
   const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
@@ -112,6 +115,8 @@ const RebookModal: React.FC<RebookModalProps> = ({
     H204B: [],
   });
 
+  const minBtwn = differenceInMinutes(startTime, endTime);
+  const halfHoursBtwn = Math.abs(minBtwn / 30);
   const startTmrw = addDays(startTime, 1);
   const endTmrw = addDays(endTime, 1);
   const startWeek = addDays(startTime, 7);
@@ -157,10 +162,13 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-              ${isAvail(availabilities1, startTmrw) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+              ${isAvail(availabilities1, startTmrw, halfHoursBtwn) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
               `}
           onClick={() =>
-            handleButtonClick('1', isAvail(availabilities1, startTmrw))
+            handleButtonClick(
+              '1',
+              isAvail(availabilities1, startTmrw, halfHoursBtwn),
+            )
           }
         >
           <div>
@@ -184,10 +192,13 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${isAvail(availabilities2, startWeek) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${isAvail(availabilities2, startWeek, halfHoursBtwn) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
           onClick={() =>
-            handleButtonClick('2', isAvail(availabilities2, startWeek))
+            handleButtonClick(
+              '2',
+              isAvail(availabilities2, startWeek, halfHoursBtwn),
+            )
           }
         >
           <div>
@@ -207,12 +218,16 @@ const RebookModal: React.FC<RebookModalProps> = ({
 
         <button
           className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
+            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek, halfHoursBtwn) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
             `}
           onClick={() =>
             handleButtonClick(
               '3',
-              sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek),
+              sameWeekAvail(
+                userRoom as keyof RoomAvailabilities,
+                startWeek,
+                halfHoursBtwn,
+              ),
             )
           }
         >

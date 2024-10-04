@@ -1,10 +1,10 @@
-import { addDays, differenceInMinutes, format, startOfDay } from 'date-fns';
-import { Bookmark } from 'lucide-react';
+import { differenceInMinutes, format } from 'date-fns';
+import { CircleX } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { useAddRoomBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { useDeleteBookingHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
-type SameRoomModalProps = {
+type CancelModalProps = {
   open: boolean;
   onClose: () => void;
   startTime: Date;
@@ -12,6 +12,7 @@ type SameRoomModalProps = {
   userId: string;
   userRoom: string;
   email: string;
+  id: string;
 };
 
 export type RoomAvailabilities = {
@@ -24,14 +25,13 @@ export type RoomAvailabilities = {
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-const SameRoomModal: React.FC<SameRoomModalProps> = ({
+const CancelModal: React.FC<CancelModalProps> = ({
   open,
   startTime,
   endTime,
   onClose,
-  userId,
   userRoom,
-  email,
+  id,
 }) => {
   // const [availabilities, setAvailabilities] = useState<RoomAvailabilities>({
   //   H201: [],
@@ -42,10 +42,7 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
   // });
 
   // const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
-
-  const addRoomBooking = useAddRoomBookingHook();
-  const startWeek = addDays(startTime, 7);
-  const endWeek = addDays(endTime, 7);
+  const deleteRoomBooking = useDeleteBookingHook();
 
   // const { data: roomAvailabilities, isLoading } = useFetchAvailabilitiesHook(startWeek, endWeek);
 
@@ -65,35 +62,37 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
 
   // const roomString = selectedRoom ?? "No Room Selected"
 
-  async function handleBooking(
-    userIdx: string,
-    roomx: string,
-    startx: Date,
-    endx: Date,
-    hasConfirmedx: boolean,
-    emailx: string,
-    created: Date,
-  ) {
-    const newBooking = {
-      userId: userIdx,
-      room: roomx,
-      startTime: startx,
-      endTime: endx,
-      hasConfirmed: hasConfirmedx,
-      email: emailx,
-      createdDate: created,
-    };
+  // async function handleBooking(
+  //   idx: string,
+  // ) {
+  //   const newBooking = {
+  //     userId: userIdx,
+  //     room: roomx,
+  //     startTime: startx,
+  //     endTime: endx,
+  //     hasConfirmed: hasConfirmedx,
+  //     email: emailx,
+  //     createdDate: created,
+  //   };
 
-    addRoomBooking.mutate(newBooking, {
+  //   const cancel = {
+  //     booking_id: idx,
+  //   }
+
+  // const bookingTooltipContent = `${booking.room}, ${formattedStartTime.toISOString().split('T')[1].substring(0, 5)}-${formattedEndTime.toISOString().split('T')[1].substring(0, 5)}`;
+
+  const handleDeleteBooking = (bookingId: string) => {
+    deleteRoomBooking.mutate(bookingId, {
       onSuccess: () => {
-        toast('Booking success. Refresh to see updated list.');
+        toast(
+          `Successfully deleted booking in room ${userRoom}. Refresh to see updated list.`,
+        );
       },
       onError: () => {
-        toast('Room booking was unsuccessful.');
+        toast(`Error: booking in room ${userRoom} not deleted`);
       },
     });
-    onClose();
-  }
+  };
 
   function getDuration(startTime: Date, endTime: Date) {
     const timeMin = differenceInMinutes(endTime, startTime);
@@ -140,62 +139,30 @@ const SameRoomModal: React.FC<SameRoomModalProps> = ({
           X
         </button>
         {/* {children} */}
-        <h1 className='text-center mx mb-5'>Same Time Tomorrow</h1>
-
+        <h1 className='text-center mx mb-5'>Confirm Cancellation</h1>
         <div className='flex'>
-          <button className='border-solid border-2 border-green-600 rounded-lg px-5 py-5 m-3 bg-green-100 text-green-600'>
-            <div>
-              <b className='text-lg'>
-                Same time
-                <br />
-                next week:
-                <br />
+          <p className='text-small px-3'>
+            <b> {userRoom}</b>, {format(startTime, 'MMMM do')},{' '}
+            {format(startTime, 'p')} ({getDuration(startTime, endTime)}H):
+          </p>
+          <button
+            className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
+            onClick={() => {
+              handleDeleteBooking((id || '').toString());
+              onClose();
+            }}
+          >
+            <div className='flex'>
+              <CircleX className='w-4 h-4 text-red-700 pt-1 pr-1' />
+              <b>
+                <i>CANCEL BOOKING</i>
               </b>
-              <i>
-                {format(startWeek.toString(), 'p')} (
-                {getDuration(startWeek, endWeek)}H)
-                <br />
-              </i>
-              <i>
-                {format(startWeek, 'MMMM do')}
-                <br />
-              </i>
             </div>
           </button>
-          <div className='ml-5 py-8'>
-            <div className=''>
-              <h4 className='mt-3'>Confirm Booking:</h4>
-              <p className='text-small mb-1.5'>
-                <b> {userRoom}</b>, {format(startWeek, 'MMMM do')},{' '}
-                {format(startWeek, 'p')} ({getDuration(startWeek, endWeek)}H).
-              </p>
-              <button
-                className='rounded-full bg-red-50 text-red-700 py-0.1 px-2 border-solid border-1 border-red-700 text-sm'
-                onClick={() => {
-                  handleBooking(
-                    userId,
-                    userRoom,
-                    startWeek,
-                    endWeek,
-                    false,
-                    email,
-                    startOfDay(new Date()),
-                  );
-                }}
-              >
-                <div className='flex'>
-                  <Bookmark className='w-4 h-4 text-red-700 pt-1 pr-1' />
-                  <b>
-                    <i>BOOK NOW</i>
-                  </b>
-                </div>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default SameRoomModal;
+export default CancelModal;

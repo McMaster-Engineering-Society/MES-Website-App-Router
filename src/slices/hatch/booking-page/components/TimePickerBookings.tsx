@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react';
 import { useScreenSize } from '@/components/hooks/useScreenSize';
 
 import { BookingDayLengthFromScreenSize } from '@/constant/hatch-bookings/booking-screen-size';
+import { useFetchAllBookingsHook } from '@/slices/hatch/admin/hooks/bookingHooks';
 import BookingIndicator from '@/slices/hatch/booking-page/components/BookingIndicator';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
-import { useFetchAllBookingsHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
 
 /**
  * @param isAdmin if true, display all existing bookings. if false, display only user's existing bookings
@@ -46,17 +46,37 @@ const TimePickerBookings = ({
   );
 
   useEffect(() => {
-    const visibleBookings: TBooking[] = [];
-    if (isAdmin) {
-      if (allBookings && isFetched) {
-        allBookings.forEach((booking) => {
+    // setTimeout used to buffer document.getElementByID calls, as the useEffect goes off before the browser finishes rendering DOM mutations
+    const findBookingsInDOM = setTimeout(() => {
+      const visibleBookings: TBooking[] = [];
+      if (isAdmin) {
+        if (allBookings && isFetched) {
+          allBookings.forEach((booking) => {
+            // For some reason, start time isn't returned as a date object. Must convert it (but checks if we need to first).
+            if (!(booking.startTime instanceof Date)) {
+              booking.startTime = new Date(booking.startTime);
+            }
+            // checking if the time slots for a booking are currently visible on the time picker
+            const timeslotDiv = document.getElementById(
+              `${booking.startTime.toISOString()}`,
+            );
+
+            if (timeslotDiv) {
+              visibleBookings.push(booking);
+            }
+          });
+
+          setBookings(visibleBookings);
+        }
+      } else {
+        (userBookings || []).forEach((booking) => {
           // For some reason, start time isn't returned as a date object. Must convert it (but checks if we need to first).
           if (!(booking.startTime instanceof Date)) {
             booking.startTime = new Date(booking.startTime);
           }
           // checking if the time slots for a booking are currently visible on the time picker
           const timeslotDiv = document.getElementById(
-            `${booking.startTime.toISOString()}`,
+            `${new Date(booking.startTime).toISOString()}`,
           );
 
           if (timeslotDiv) {
@@ -66,24 +86,9 @@ const TimePickerBookings = ({
 
         setBookings(visibleBookings);
       }
-    } else {
-      (userBookings || []).forEach((booking) => {
-        // For some reason, start time isn't returned as a date object. Must convert it (but checks if we need to first).
-        if (!(booking.startTime instanceof Date)) {
-          booking.startTime = new Date(booking.startTime);
-        }
-        // checking if the time slots for a booking are currently visible on the time picker
-        const timeslotDiv = document.getElementById(
-          `${new Date(booking.startTime).toISOString()}`,
-        );
+    }, 20);
 
-        if (timeslotDiv) {
-          visibleBookings.push(booking);
-        }
-      });
-
-      setBookings(visibleBookings);
-    }
+    return () => clearTimeout(findBookingsInDOM);
   }, [isAdmin, userBookings, allBookings, isFetched]);
 
   const TimePickerCell = ({ time }: { time: string }) => {
