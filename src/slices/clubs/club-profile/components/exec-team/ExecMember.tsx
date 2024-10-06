@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
+import { MdDragIndicator } from 'react-icons/md';
 
 import { cn } from '@/lib/utils';
 
@@ -24,6 +25,7 @@ const ExecMember = ({
   onDragEnter,
   handleSort,
 }: ExecMemberProps) => {
+  const itemDivRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedMember, setUpdatedMember] = useState(member);
@@ -37,18 +39,28 @@ const ExecMember = ({
   return (
     <div
       className='w-full border-medium rounded-lg border-gray-400'
-      draggable
-      onDragStart={() => onDragStart(index)}
+      ref={itemDivRef}
       onDragEnter={() => onDragEnter(index)}
-      onDragEnd={handleSort}
-      onDragOver={(e) => e.preventDefault()}
     >
       <div
         className='w-full h-20 flex flex-row gap-2 items-center'
-        onClick={() => {
-          if (!isOpen) setIsOpen(true);
-        }}
+        // onClick={() => {
+        //   if (!isOpen) setIsOpen(true);
+        // }}
       >
+        <div
+          draggable
+          onDragStart={(e) => {
+            onDragStart(index);
+            if (itemDivRef.current) {
+              e.dataTransfer.setDragImage(itemDivRef.current, 0, 0);
+            }
+          }}
+          onDragEnd={handleSort}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <MdDragIndicator className='cursor-move' />
+        </div>
         <button
           onClick={() => {
             setIsOpen((prev) => !prev);
