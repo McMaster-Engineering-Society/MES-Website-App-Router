@@ -69,7 +69,7 @@ const TutoringService = () => {
                 The Undergrad Peer Tutoring Network (UPTN) makes it easy for you
                 to find a tutor who can help with specific course content. Peer
                 tutors are McMaster undergraduate students who have completed
-                and earned at least an A- (10.0) grade in the course(s) they are
+                and earned at least an B+ (9.0) grade in the course(s) they are
                 tutoring.
               </span>
               <div className='flex flex-row gap-4'>
@@ -118,7 +118,7 @@ const TutoringService = () => {
           />
           <InfoCard
             title='Become a Tutor'
-            description='To provide tutoring services through the (UPTN), you must be a McMaster undergraduate student, and have completed & earned at least an A- (10.0) in the course(s) you want to tutor'
+            description='To provide tutoring services through the (UPTN), you must be a McMaster undergraduate student, and have completed & earned at least an B+ (9.0) in the course(s) you want to tutor'
             icon={<CastForEducationIcon fontSize='large' />}
             className={viewDiscount ? 'opacity-60' : undefined}
             learnMore
@@ -172,21 +172,23 @@ const TutoringService = () => {
               <li>Create a profile that includes codes for the courses</li>
               <li>
                 Click to give our academic skills team access to your grades.
-                We&apos;ll verify that you received at least an A- (10.0) grade
+                We&apos;ll verify that you received at least an B+ (9.0) grade
                 in the course you want to tutor.
               </li>
               <li>
                 Get familiar with the TutorOcean platform and wait to be
-                contacted by students for a tutoring session. Once you&apos;ve
-                connected with a student, you&apos;ll be able to set up an
-                online session that works for both of you.
+                contacted by students for a tutoring session. Please update your
+                availability if this changes during the term and check regularly
+                for messages. Once you&apos;ve connected with a student,
+                you&apos;ll be able to set up an online session that works for
+                both of you.
               </li>
               <li>
-                All tutors associated with the Undergrad Peer Tutoring Network
-                agree to charge $15–$20 per hour. Every two weeks, TutorOcean
-                will deposit the money you&apos;ve earned to your credit card,
-                PayPal or Stripe account. Please note that TutorOcean receives a
-                10% session fee.
+                Engineering student tutors associated with the Undergrad Peer
+                Tutoring Network are now able to set their own rates. Every two
+                weeks, TutorOcean will deposit the money you&apos;ve earned to
+                your credit card, PayPal or Stripe account. Please note that
+                TutorOcean receives a 10% session fee.
               </li>
             </ol>
           </PageSection>
