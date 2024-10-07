@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { FaPlusCircle } from 'react-icons/fa';
+
+import Button from '@/components/buttons/Button';
 
 import ExecMember from './ExecMember';
 
@@ -74,8 +75,12 @@ const ExecTeamPanel = () => {
   };
 
   return (
-    <div className='w-full h-full relative'>
-      <div className='flex flex-col gap-2 h-full w-full overflow-scroll pt-2'>
+    <div className='w-full h-full flex flex-col relative'>
+      <div className='w-full flex flex-row justify-end pr-2 gap-3 mt-2 sticky top-0 z-10'>
+        <Button disabled>Save</Button>
+        <Button onClick={createMember}>Add Member</Button>
+      </div>
+      <div className='flex flex-col gap-2 basis-full w-full overflow-scroll pt-2 pr-2'>
         <ExecMember
           index={0}
           president
@@ -101,9 +106,6 @@ const ExecTeamPanel = () => {
           }
         })}
       </div>
-      <button className='absolute right-2 top-3' onClick={createMember}>
-        <FaPlusCircle size={30} color='red' />
-      </button>
     </div>
   );
 };

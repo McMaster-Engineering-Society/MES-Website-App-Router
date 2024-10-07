@@ -1,11 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
+import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
 
 import { cn } from '@/lib/utils';
 
+import SelectField from '@/components/clubs-portal/administration/exec-team/SelectField';
+
 import { TExecMemberWithId } from './ExecTeamPanel';
 import TextField from './TextField';
+
+import { contactForOptions } from '@/types/clubProfile';
 
 type ExecMemberProps = {
   index: number;
@@ -26,7 +30,6 @@ const ExecMember = ({
   handleSort,
 }: ExecMemberProps) => {
   const itemDivRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedMember, setUpdatedMember] = useState(member);
   const updateMember = (field: string, value: string) => {
@@ -38,52 +41,80 @@ const ExecMember = ({
   };
   return (
     <div
-      className='w-full border-medium rounded-lg border-gray-400'
+      className='w-full flex flex-row border-medium items-center rounded-lg border-gray-400'
       ref={itemDivRef}
       onDragEnter={() => onDragEnter(index)}
+      onDragOver={(e) => e.preventDefault()}
     >
       <div
-        className='w-full h-20 flex flex-row gap-2 items-center'
-        // onClick={() => {
-        //   if (!isOpen) setIsOpen(true);
-        // }}
+        className={cn([president && 'invisible', 'cursor-move mx-3'])}
+        draggable
+        onDragStart={(e) => {
+          onDragStart(index);
+          if (itemDivRef.current) {
+            e.dataTransfer.setDragImage(itemDivRef.current, 0, 0);
+          }
+        }}
+        onDragEnd={handleSort}
       >
-        <div
-          draggable
-          onDragStart={(e) => {
-            onDragStart(index);
-            if (itemDivRef.current) {
-              e.dataTransfer.setDragImage(itemDivRef.current, 0, 0);
-            }
-          }}
-          onDragEnd={handleSort}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          <MdDragIndicator className='cursor-move' />
+        <MdDragIndicator size={30} />
+      </div>
+      <div className='w-full min-h-20 flex flex-row flex-wrap gap-2 items-center'>
+        <div>
+          <TextField
+            title='First Name'
+            value={updatedMember.firstName}
+            editable={isEditing}
+            onChange={(value) => {
+              updateMember('firstName', value);
+            }}
+          />
+          <TextField
+            title='Last Name'
+            value={updatedMember.lastName}
+            editable={isEditing}
+            onChange={(value) => {
+              updateMember('lastName', value);
+            }}
+          />
         </div>
-        <button
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <IoIosArrowDown /> : <IoIosArrowForward />}
-        </button>
-        <TextField
-          title='First Name'
-          value={updatedMember.firstName}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('firstName', value);
-          }}
-        />
-        <TextField
-          title='Last Name'
-          value={updatedMember.lastName}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('lastName', value);
-          }}
-        />
+        <div>
+          <TextField
+            title='Program'
+            value={updatedMember.program}
+            editable={isEditing}
+            onChange={(value) => {
+              updateMember('program', value);
+            }}
+          />
+          <TextField
+            title='Year'
+            value={updatedMember.year}
+            editable={isEditing}
+            onChange={(value) => {
+              updateMember('year', value);
+            }}
+          />
+        </div>
+        <div>
+          <SelectField
+            title='Contact For'
+            value={updatedMember.contactFor}
+            editable={isEditing}
+            options={contactForOptions}
+            onChange={(value) => {
+              updateMember('contactFor', value);
+            }}
+          />
+          <TextField
+            title='Email'
+            value={updatedMember.email}
+            editable={isEditing}
+            onChange={(value) => {
+              updateMember('email', value);
+            }}
+          />
+        </div>
         <TextField
           title='Role'
           value={updatedMember.role}
@@ -92,62 +123,23 @@ const ExecMember = ({
             updateMember('role', value);
           }}
         />
-        <TextField
-          title='Contact For'
-          value={updatedMember.contactFor}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('contactFor', value);
-          }}
-        />
+      </div>
+      <div className='flex flex-row gap-4 mr-4'>
         <button
           onClick={() => {
             setIsEditing((prev) => !prev);
-            setIsOpen(true);
           }}
         >
-          {isEditing ? 'Save' : 'Edit'}
+          {isEditing ? <FaSave size={25} /> : <FaEdit size={25} />}
         </button>
-        {!president && (
-          <button
-            onClick={() => {
-              updateMemberList(updatedMember, true);
-            }}
-          >
-            Delete
-          </button>
-        )}
-      </div>
-      <div
-        className={cn([
-          'w-full flex flex-col overflow-hidden mx-6',
-          isOpen ? 'mb-4' : 'h-0',
-        ])}
-      >
-        <TextField
-          title='Email'
-          value={updatedMember.email}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('email', value);
+        <button
+          className={cn([president && 'invisible'])}
+          onClick={() => {
+            updateMemberList(updatedMember, true);
           }}
-        />
-        <TextField
-          title='Program'
-          value={updatedMember.program}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('program', value);
-          }}
-        />
-        <TextField
-          title='Year'
-          value={updatedMember.year}
-          editable={isEditing}
-          onChange={(value) => {
-            updateMember('year', value);
-          }}
-        />
+        >
+          <FaTrash size={25} />
+        </button>
       </div>
     </div>
   );

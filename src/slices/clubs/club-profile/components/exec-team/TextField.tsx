@@ -6,8 +6,8 @@ type TextFieldProps = {
 };
 const TextField = ({ title, value, editable, onChange }: TextFieldProps) => {
   return (
-    <div className='flex flex-row h-10 items-center gap-1 text-nowrap'>
-      {title && `${title}:`}
+    <div className='flex flex-row h-10 items-center justify-between gap-1 text-nowrap'>
+      {title && <p className='font-bold'>{title}:</p>}
       {editable ? (
         <input
           className='w-52 h-8 rounded-lg'
