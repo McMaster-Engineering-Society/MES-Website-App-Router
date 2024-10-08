@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Button,
   getKeyValue,
   Spinner,
   Table,
@@ -15,7 +16,6 @@ import Papa, { ParseResult } from 'papaparse';
 import * as path from 'path';
 import React, { useEffect, useState } from 'react';
 
-import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import PageHeading from '@/components/PageHeading';
@@ -46,7 +46,7 @@ export default function MacLABPage() {
     setToday(new Date());
   }, []);
 
-  const optOutDueDate = new Date('December 15, 2023 12:00:00');
+  const optOutDueDate = new Date('December 14, 2024 12:00:00');
 
   // Asynchronous fething from the maclab-spending.csv
   const fetchData = async () => {
@@ -155,22 +155,25 @@ export default function MacLABPage() {
             <br />
             <span>
               <b>
-                In the 2022-2023 school year, macLAB disbursed $168,246.14,
-                allocated to 12 different projects across several engineering
-                departments.
+                In the 2023-2024 school year, macLAB disbursed $215,793.83,
+                allocated to 15 different projects across several engineering
+                departments and teams. Donation receipts will be issued by
+                Financial Services by February 28 of the following year, as
+                recommended by the Canada Revenue Agency so that donors can
+                claim their donations on their income tax returns.
               </b>{' '}
-              The amount of requested project funding for 2022-2023 totalled
-              $357,798.47. The full list of last year's (2023-2024) project
-              funding can be seen below.
+              The requested project funding for 2023-2024 totalled $415,410.45.
+              The full list of last year's (2023-2024) project funding can be
+              seen below.
             </span>
             <div className='mt-4 flex flex-col gap-4 md:flex-row'>
               <ButtonLink
                 target='_blank'
-                href='/docs/2023-2024-maclab-funding-application-v2.docx'
+                href='/docs/2024-2025-maclab-funding-application.docx'
               >
                 Receive macLAB Funding Application
               </ButtonLink>
-              <ButtonLink href='/excels/2024_macLAB_ALLOCATIONS.xlsx'>
+              <ButtonLink href='/excels/department-maclab-funding.xlsx'>
                 View past funding breakdown
               </ButtonLink>
             </div>
@@ -186,16 +189,16 @@ export default function MacLABPage() {
                 <br />
                 <br />
                 To opt-out please follow the instructions on the form and note
-                that the opt-out period closes <b>TBD</b>. If you have any
-                questions or concerns, please contact the macLAB Chair, Shar
-                Cai, at{' '}
+                that the opt-out period closes <b>Dec 13th, 2024</b>. If you
+                have any questions or concerns, please contact the macLAB Chair,
+                Shar Cai, at{' '}
                 <a className='underline' href='mailto:macLAB@macengsociety.ca'>
                   macLAB@macengsociety.ca
                 </a>
                 .
               </span>
               {today < optOutDueDate ? (
-                <ButtonLink href='https://forms.gle/gYnMyPZHdKo5i7Hj7'>
+                <ButtonLink href='https://forms.gle/LBJG5kf2zpY8GPSH8'>
                   Opt-Out of macLAB
                 </ButtonLink>
               ) : (
