@@ -46,7 +46,7 @@ export default function MacLABPage() {
     setToday(new Date());
   }, []);
 
-  const optOutDueDate = new Date('December 15, 2023 12:00:00');
+  const optOutDueDate = new Date('December 14, 2024 12:00:00');
 
   // Asynchronous fething from the maclab-spending.csv
   const fetchData = async () => {
@@ -173,7 +173,7 @@ export default function MacLABPage() {
               >
                 Receive macLAB Funding Application
               </ButtonLink>
-              <ButtonLink href='/excels/2024_macLAB_ALLOCATIONS.xlsx'>
+              <ButtonLink href='/excels/department-maclab-funding.xlsx'>
                 View past funding breakdown
               </ButtonLink>
             </div>
