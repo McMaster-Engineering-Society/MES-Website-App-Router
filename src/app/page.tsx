@@ -311,7 +311,7 @@ export default function HomePage() {
           <h1>The Volcano</h1>
           <h4 style={{ paddingBottom: '35px' }}>Weekly News</h4>
           <iframe
-            src='https://drive.google.com/file/d/1p2qmQlDSmRGL_yt_qBBBveMW1oawJLQR/preview'
+            src='https://drive.google.com/file/d/19MUi7QQdiM5SCA4BeAD-YsRBg8Ohweex/preview'
             className='w-auto h-auto lg:w-[853px] lg:h-[480px] max-w-full'
             allow='autoplay'
             allowFullScreen
