@@ -1,9 +1,10 @@
-import BookingInstructions from '@/components/bookings/BookingInstructions';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import NextImage from '@/components/NextImage';
 import PageHeading from '@/components/PageHeading';
 import PageSection from '@/components/PageSection';
+
+import BookingInstructions from '@/slices/hatch/info/components/BookingInstructions';
 
 const Bookings = () => {
   return (

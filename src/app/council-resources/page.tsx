@@ -10,7 +10,7 @@ import { officeHours } from '@/constant/council-resources/officeHours';
 
 import { CalendarId } from '@/types/calendar';
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Office Hours',
@@ -101,10 +101,10 @@ const CouncilResources = () => {
           <PageSection heading='Council Meetings'>
             <div>
               MES Council consists of voting members - all Department & Program
-              Representatives, Associate Vice Presidents, and Executives - and
-              non -voting appointed officials. General MES Council meetings
-              occur periodically throughout the academic year, while the Exec
-              and AVPs meet weekly over the summer and during the year. MES
+              Representatives, Directors, and Executives - and non -voting
+              appointed officials. General MES Council meetings occur
+              periodically throughout the academic year, while the Exec and
+              Directors meet weekly over the summer and during the year. MES
               Council exists to serve students, and our meetings are public for
               general students to attend and provide input from different
               perspectives.

@@ -7,9 +7,10 @@ export const navItems: NavItem[] = [
     title: 'Council',
     dropdownItems: [
       { title: 'Executives', link: '/executives' },
-      { title: 'Associate Vice Presidents', link: '/avps' },
+      { title: 'Directors', link: '/directors' },
       { title: 'Dept. & Program Reps', link: '/dept-and-program-reps' },
       { title: 'Appointed Coordinators', link: '/appointed-coordinators' },
+      { title: 'First Year Society', link: '/first-year-society' },
     ],
   },
   {
@@ -32,7 +33,7 @@ export const navItems: NavItem[] = [
       { title: 'Wellness', link: '/wellness' },
       // Temporary removal of MES Card page
       // { title: 'MES Card', link: '/mes-card' },
-      { title: 'Hatch Lockers', link: '/hatch-lockers' },
+      { title: 'Hatch Info', link: '/hatch-info' },
     ],
   },
   {

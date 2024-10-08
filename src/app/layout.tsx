@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Script from 'next/script';
 import * as React from 'react';
 
 import '@/styles/globals.css';
@@ -58,6 +59,19 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <head>
+        <Script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-RENMBDS13Z'
+        ></Script>
+        <Script id='google-analytics'>
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+   
+          gtag('config', 'G-RENMBDS13Z');`}
+        </Script>
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

@@ -12,6 +12,7 @@ import {
   TimelineSeparator,
 } from '@mui/lab';
 import { Divider, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
@@ -28,7 +29,7 @@ import { CalendarId } from '@/types/calendar';
 
 const debug = false;
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Elections',
@@ -355,52 +356,81 @@ export default function ElectionsPage() {
             </PageSection>
           )}
           <div className='gap-x-8 sm:grid sm:grid-cols-2'>
-            <PageSection variant='white' heading='Important Dates'>
-              <Timeline position='alternate-reverse'>
-                {importantDates.map((event, index) => (
-                  <TimelineItem key={index}>
-                    <TimelineOppositeContent
-                      align='right'
-                      variant='body2'
-                      color='text.secondary'
-                      sx={{ pt: `${event.icon ? '18px' : '7px'}` }}
-                    >
-                      {event.date}
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color={event.color}>
-                        {event.icon}
-                      </TimelineDot>
-                      {index !== importantDates.length - 1 && (
-                        <TimelineConnector />
-                      )}
-                    </TimelineSeparator>
-                    <TimelineContent
-                      sx={{
-                        pt: `${event.icon ? '12px' : '0px'}`,
-                        pb: '24px',
-                        px: 2,
-                      }}
-                    >
-                      <Typography
-                        variant='h6'
-                        component='span'
-                        className='hidden sm:block'
+            {today <= electionInfo.votingClose ? (
+              <PageSection variant='white' heading='Important Dates'>
+                <Timeline position='alternate-reverse'>
+                  {importantDates.map((event, index) => (
+                    <TimelineItem key={index}>
+                      <TimelineOppositeContent
+                        align='right'
+                        variant='body2'
+                        color='text.secondary'
+                        sx={{ pt: `${event.icon ? '18px' : '7px'}` }}
                       >
-                        {event.name}
-                      </Typography>
-                      <Typography
-                        variant='body1'
-                        component='span'
-                        className='block sm:hidden'
+                        {event.date}
+                      </TimelineOppositeContent>
+                      <TimelineSeparator>
+                        <TimelineDot color={event.color}>
+                          {event.icon}
+                        </TimelineDot>
+                        {index !== importantDates.length - 1 && (
+                          <TimelineConnector />
+                        )}
+                      </TimelineSeparator>
+                      <TimelineContent
+                        sx={{
+                          pt: `${event.icon ? '12px' : '0px'}`,
+                          pb: '24px',
+                          px: 2,
+                        }}
                       >
-                        {event.name}
-                      </Typography>
-                    </TimelineContent>
-                  </TimelineItem>
-                ))}
-              </Timeline>
-            </PageSection>
+                        <Typography
+                          variant='h6'
+                          component='span'
+                          className='hidden sm:block'
+                        >
+                          {event.name}
+                        </Typography>
+                        <Typography
+                          variant='body1'
+                          component='span'
+                          className='block sm:hidden'
+                        >
+                          {event.name}
+                        </Typography>
+                      </TimelineContent>
+                    </TimelineItem>
+                  ))}
+                </Timeline>
+              </PageSection>
+            ) : (
+              <PageSection variant='white' heading='Previous Winners'>
+                <div className='flex flex-col gap-4'>
+                  <div className='flex flex-col gap-4'>
+                    {electionInfo.previousWinners?.map((winner, index) => (
+                      <div
+                        key={index}
+                        className='flex flex-col gap-2 sm:flex-row sm:items-center'
+                      >
+                        <Image
+                          src={winner.picture}
+                          alt={winner.name}
+                          width={80}
+                          height={80}
+                          className='h-20 w-20 rounded-full'
+                        />
+                        <div className='flex flex-col ml-4'>
+                          <span className='text-xl font-bold'>
+                            {winner.name}
+                          </span>
+                          <span className='text-lg'>{winner.position}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </PageSection>
+            )}
             <div className='flex flex-col gap-y-4'>
               <PageSection
                 variant='white'
@@ -441,7 +471,7 @@ export default function ElectionsPage() {
                 <div className='flex w-full flex-col justify-around gap-y-4 sm:flex-row'>
                   <ButtonLink
                     target='_blank'
-                    href='/pdfs/governing-documents/bylaws2023.pdf'
+                    href='/pdfs/governing-documents/bylaws2024.pdf'
                   >
                     Bylaws
                   </ButtonLink>
