@@ -13,8 +13,9 @@ import {
 import { useAsyncList } from '@react-stately/data';
 import Papa, { ParseResult } from 'papaparse';
 import * as path from 'path';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import PageHeading from '@/components/PageHeading';
@@ -39,14 +40,14 @@ const columns = [
 ];
 
 export default function MacLABPage() {
-  /*const [today, setToday] = useState<Date>(new Date());
+  const [today, setToday] = useState<Date>(new Date());
 
   useEffect(() => {
     setToday(new Date());
   }, []);
 
   const optOutDueDate = new Date('December 15, 2023 12:00:00');
-  */
+
   // Asynchronous fething from the maclab-spending.csv
   const fetchData = async () => {
     const filePath = path.resolve(__dirname, 'excels/maclab-spending.csv');
@@ -196,9 +197,13 @@ export default function MacLABPage() {
                 </a>
                 .
               </span>
-              <ButtonLink href='https://forms.gle/LBJG5kf2zpY8GPSH8'>
-                Opt-Out of macLAB
-              </ButtonLink>
+              {today < optOutDueDate ? (
+                <ButtonLink href='https://forms.gle/LBJG5kf2zpY8GPSH8'>
+                  Opt-Out of macLAB
+                </ButtonLink>
+              ) : (
+                <Button disabled>macLAB opt-out coming soon</Button>
+              )}
             </div>
           </PageSection>
           <PageSection
