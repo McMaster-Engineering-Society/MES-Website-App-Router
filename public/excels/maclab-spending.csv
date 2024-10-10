@@ -1,127 +1,142 @@
 key,department,description,amount,year
-0,Bachelor of Technology,Oscilloscopes and Integrated Circuit Equipment,29243.4,2022-2023
-1,Chemical Engineering,Calorimetry Teaching Experiment Equipment,19060,2022-2023
-2,Civil Engineering,BOD Incubator and HACH DR3900,12433.46,2022-2023
-3,Civil Engineering,MTS Hydraulic Control System Servo Driver Card,4626.75,2022-2023
-4,Computing and Software (CAS),TurtleBot 4 Mobile Robots,16821.6,2022-2023
-5,Electrical and Computer Engineering (ECE),New laboratories for control system design courses,32833.94,2022-2023
-6,Engineering Physics,Optics and Photonics Equipment upgrade,9163.42,2022-2023
-7,Hatch Workshop,Additional 3D printer,1214.24,2022-2023
-8,IBEHS,Genetic and Tissue Engineering Lab Protein Assay Upgrade,4243.75,2022-2023
-9,IBEHS,Genetic and Tissue Engineering Lab Freezer Upgrade,6505.58,2022-2023
-10,Materials Engineering,Biomaterials Laboratories Upgrade,15100,2022-2023
-11,McMaster Seismic Design Team,Quanser Shake Table II,10000,2022-2023
-12,Mechanical Engineering,3D Scanner,7000,2022-2023
-13,Chemical Engineering,Fluid Friction Experiment + lab upgrades,26183,2021-2022
-14,Civil Engineering,Hardware Upgrade for Design Studio,16305.35,2021-2022
-15,Computing and Software (CAS),Virtual Desktop Cluster Memory,14945,2021-2022
-16,Electrical and Computer Engineering (ECE),Power Supplies and Multimeters ,8020.39,2021-2022
-17,Engineering Physics,Multi-channel Analyzer for Nuclear Measurements,20679,2021-2022
-18,Hatch Centre,Desktop Waterjet,7461.47,2021-2022
-19,IBEHS,Medical Imaging Lab Enhancement,35185.37,2021-2022
-20,IBEHS,Design Studio Enhancement,43737.08,2021-2022
-21,Materials Engineering,Atomic Force Microscope - nGauge,31712.66,2021-2022
-22,Mechanical Engineering,CNC Milling Machine,35000,2021-2022
-23,Bachelor of Technology,Microarray based biotechnology undergraduate laboratory upgrade,23000,2020-2021
-24,Chemical Engineering,Industrial Automation of Chemical Engineering Labs,8845,2020-2021
-25,Civil Engineering,Data Acquisition Equipment,4828.21,2020-2021
-26,Civil Engineering,Milling Machine,3928.43,2020-2021
-27,Civil Engineering,Laboratory upgrade for water analysis,3889.77,2020-2021
-28,Computing and Software (CAS),GPUs for Virtual Desktop Cluster,15600,2020-2021
-29,Computing and Software (CAS),GPUs for virtual desktop cluster,15600,2020-2021
-30,Electrical and Computer Engineering (ECE),System Integration for an RC-scale Autonomous Electrified Vehicle,12135.49,2020-2021
-31,Engineering Physics,Equipment for Improved Nuclear Experiments,15735.4,2020-2021
-32,IBEHS,Laser Cutter/Engraver,13438.5,2020-2021
-33,IBEHS,Desktop CNC/PCB Mill,3080.38,2020-2021
-34,IBEHS,3D Printers,7016.45,2020-2021
-35,Mechanical Engineering,Automated 3D Printing System,23167,2020-2021
-36,Bachelor of Technology,"Flexible Robotic Assembly, testing and packaging system ",23488,2019-2020
-37,Chemical Engineering,Melt Flow Indexer,4483,2019-2020
-38,Chemical Engineering,8 Laptop computers,3269,2019-2020
-39,Chemical Engineering,Densitometer,5257,2019-2020
-40,Civil Engineering,Laboratory Upgrade for water analysis,4744,2019-2020
-41,Civil Engineering,Consolidation Apparatus,5034,2019-2020
-42,Electrical and Computer Engineering (ECE),Antenna Equipment,8062.92,2019-2020
-43,Engineering Physics,Smart Systems Lab: LIDAR and IPS,7500,2019-2020
-44,Engineering Physics,"Optics equipment, Oscilloscopes, Magnetic Forces Lab Upgrade",5403.24,2019-2020
-45,Engineering Physics,Remaining Funds from 19-20 year,5403.24,2019-2020
-46,IBEHS,Imaging Lab,33580,2019-2020
-47,Materials Engineering,Multi-material 3D printer,21000,2019-2020
-48,Mechanical Engineering,Milling Machines For Mech Eng Project Labs,28140,2019-2020
-49,Bachelor of Technology,BioSensor,10000,2018-2019
-50,Bachelor of Technology,Rapid Prototype Lab Equipment,23278,2018-2019
-51,Chemical Engineering,Gas Phase Catalyst Experiment,7980,2018-2019
-52,Civil Engineering,Laboratory Upgrade for Water Analysis,8865,2018-2019
-53,Civil Engineering,ADL Table Saw,5040,2018-2019
-54,Civil Engineering,Soil Crusher,7875,2018-2019
-55,Computing and Software (CAS),QBOT Autonomous Ground Robot,24750,2018-2019
-56,Electrical and Computer Engineering (ECE),Oscilloscopes with Bode Plots,8163.12,2018-2019
-57,Engineering I,Laser Cutter,31894.25,2018-2019
-58,Engineering Physics,Plasma Physics Experiment,5204,2018-2019
-59,Engineering Physics,3D Printer,7513,2018-2019
-60,IBEHS,Adquency on Patient Simulations,4182,2018-2019
-61,Mechanical Engineering,Studio Design Lab Upgrades,7650,2018-2019
-62,Bachelor of Technology,Composite 3D Printer,9000,2017-2018
-63,Chemical Engineering,DMA 500 Density Meter,5123,2017-2018
-64,Chemical Engineering,3D Printer,2401,2017-2018
-65,Civil Engineering,Resilent Odulus Testing Equipment,4576.5,2017-2018
-66,Civil Engineering,Laboratory Upgrade for Water Analysis,6015,2017-2018
-67,Computing and Software (CAS),Ball and Beam Control System,18586,2017-2018
-68,Computing and Software (CAS),Data Center GPU,15353,2017-2018
-69,Electrical and Computer Engineering (ECE),Oscilloscopes,6164.95,2017-2018
-70,Electrical and Computer Engineering (ECE),Waveform Generators,3848.78,2017-2018
-71,Engineering I,EPIC 3D Printer Renewal,17719.46,2017-2018
-72,Engineering Physics,Electronic Lab Upgrades,5000,2017-2018
-73,Materials Engineering,Thermodynamic Lab Equipment,8500,2017-2018
-74,Mechanical Engineering,Milling Machine and Lathe,35000,2017-2018
-75,Bachelor of Technology,Electronics Benchtop Equipment for Prototyping,12295,2016-2017
-76,Bachelor of Technology,Microscope 3D Stereo Imaging,13000,2016-2017
-77,Chemical Engineering,Hydrogen Fuel Cell,13310,2016-2017
-78,Civil Engineering,Laboratory Upgrade for Water Analysis,6317,2016-2017
-79,Electrical and Computer Engineering (ECE),ARM Development Systems,4460.48,2016-2017
-80,Engineering Physics,Desktop CNC Milling Machine,5350,2016-2017
-81,Engineering Physics,3L04 New Experiments,10954.93,2016-2017
-82,Materials Engineering,Electronic Properties of Materials,19865.4,2016-2017
-83,Mechanical Engineering,CNC Lathe,18000,2016-2017
-84,Bachelor of Technology,Sysmac Motion Controller,6000,2015-2016
-85,Bachelor of Technology,Electroporator,2000,2015-2016
-86,Chemical Engineering,Biosafety Cabinets for Bioengineering Lab,9750,2015-2016
-87,Chemical Engineering,Spectrophotometer,7064,2015-2016
-88,Civil Engineering,GPS Surveying Equipment,7761,2015-2016
-89,Electrical and Computer Engineering (ECE),1 Vital Signs Simulator,3524.71,2015-2016
-90,Electrical and Computer Engineering (ECE),PCB Mill,12000,2015-2016
-91,Electrical and Computer Engineering (ECE),14 Oscilloscopes,9621.33,2015-2016
-92,Engineering Physics,Statistical Thermodynamics Lab,8903,2015-2016
-93,Engineering Physics,Silicon-Based Biosensors for BioMedical Applications,17500,2015-2016
-94,Materials Engineering,Extensometer,7365,2015-2016
-95,Bachelor of Technology,Membrane Filtration,17628,2014-2015
-96,Chemical Engineering,Two New Experiments for the WET Specialization Stream,13649,2014-2015
-97,Chemical Engineering,Geotechnology and Highway Materials Lab,5460.72,2014-2015
-98,Computing and Software (CAS),Real-time Interfacing Upgrade,6743.4,2014-2015
-99,Electrical and Computer Engineering (ECE),17 New Oscilloscopes,9715.46,2014-2015
-100,Materials Engineering,2 Mounting Presses,14750,2014-2015
-101,Mechanical Engineering,Project Laboratory Upgrade / HH Roberts Milling Machine,30518.62,2014-2015
-102,Special Funding,Baja Racing,2500,2014-2015
-103,Bachelor of Technology,uPrint Plus 3D Printer - Bernoulli Apparatus,14864.5,2013-2014
-104,Chemical Engineering,Upgrading Enhancing ChemicalEng,6996,2013-2014
-105,Chemical Engineering,Portable Spectrophotometers,7656.31,2013-2014
-106,Electrical and Computer Engineering (ECE),LabVolt Modules,6751.73,2013-2014
-107,Engineering I,"Integrated Digital Design (Tablets, tablet components)",2138.55,2013-2014
-108,Materials Engineering,Profilometer,18400,2013-2014
-109,Bachelor of Technology,3D Robots,2305.59,2012-2013
-110,Chemical Engineering,Enhancing Problem-Based Learning & Troubleshooting Experiment,4386,2012-2013
-111,Chemical Engineering,Hydraulics Bench for Undergraduate Fluids Mechanical Lab,11897,2012-2013
-112,Computing and Software (CAS),Ball and Beam Control System,14151.71,2012-2013
-113,Electrical and Computer Engineering (ECE),20 new PCs,9958,2012-2013
-114,Engineering I,Experiential Education Tools,3081,2012-2013
-115,Engineering Physics,Magnetic Plasma Confinement Lab,4700,2012-2013
-116,Materials Engineering,Center for Enhanced Learning in Materials Science,5800,2012-2013
-117,Mechanical Engineering,Laser Cutter,10000,2012-2013
-118,Bachelor of Technology,In-Lab Top Loading Autoclave,6000,2011-2012
-119,Chemical Engineering,Undergraduate Laboratory for Enhancing Excellence in Design,13647,2011-2012
-120,Chemical Engineering,Developing Troubleshooting/PBL Elements,7997,2011-2012
-121,Computing and Software (CAS),Embedded Systems & Software Development Lab,5280,2011-2012
-122,Electrical and Computer Engineering (ECE),Labvolt Modules 1,2291.51,2011-2012
-123,Engineering Physics,3G03 Design Project,5000,2011-2012
-124,Materials Engineering,Tensile Testing Machine for Materials 3M03,29750,2011-2012
-125,Mechanical Engineering,Hybrid Power Train Lab,25000,2011-2012
+0,IBEHS,Medical Instrumentation Lab - EEG Simulators,2327.8,2023-2024
+1,Materials Engineering,MATLS 4LF2: Thin Film/Electron Microscopy Lab Course,19500.0,2023-2024
+2,Chemical Engineering,Activated Carbon Adsorption Experiment,19665.74,2023-2024
+3,Chemical Engineering,Electrochemical Engineering – 6EC3,7343.12,2023-2024
+4,Civil Engineering,GE Max Zenith 06 Global Positioning System/Global Navigating Satellite System (GPS/GNSS),39625.0,2023-2024
+5,Computing and Software (CAS),ARM64 based servers for low powered computing instructional material,20631.0,2023-2024
+6,Electrical and Computer Engineering (ECE),Computer Server for VLSI CAD Tools,6505.51,2023-2024
+7,Engineering Physics,Equipment for teaching Applications of Quantum Physics to Computing and Communication,14909.99,2023-2024
+8,Mechanical Engineering,6-Axis Force Transducer,5750.0,2023-2024
+9,Bachelor of Technology,AI-based Drug Discovery Cross-program Experiential Learning Platform,25000.0,2023-2024
+10,Bachelor of Technology,Automotive -- Battery and Energy Storage Lab,15000.0,2023-2024
+11,Hatch,Workshop Laser Cutter,27462.59,2023-2024
+12,Hatch,2nd Floor A/V Upgrades,5000.0,2023-2024
+13,EcoCAR,Electrical Workstation,4933.08,2023-2024
+14,IEEE,New Oscilloscopes,2140.0,2023-2024
+15,Bachelor of Technology,Oscilloscopes and Integrated Circuit Equipment,29243.4,2022-2023
+16,Chemical Engineering,Calorimetry Teaching Experiment Equipment,19060.0,2022-2023
+17,Civil Engineering,BOD Incubator and HACH DR3900,12433.46,2022-2023
+18,Civil Engineering,MTS Hydraulic Control System Servo Driver Card,4626.75,2022-2023
+19,Computing and Software (CAS),TurtleBot 4 Mobile Robots,16821.6,2022-2023
+20,Electrical and Computer Engineering (ECE),New laboratories for control system design courses,32833.94,2022-2023
+21,Engineering Physics,Optics and Photonics Equipment upgrade,9163.42,2022-2023
+22,Hatch Workshop,Additional 3D printer,1214.24,2022-2023
+23,IBEHS,Genetic and Tissue Engineering Lab Protein Assay Upgrade,4243.75,2022-2023
+24,IBEHS,Genetic and Tissue Engineering Lab Freezer Upgrade,6505.58,2022-2023
+25,Materials Engineering,Biomaterials Laboratories Upgrade,15100.0,2022-2023
+26,McMaster Seismic Design Team,Quanser Shake Table II,10000.0,2022-2023
+27,Mechanical Engineering,3D Scanner,7000.0,2022-2023
+28,Chemical Engineering,Fluid Friction Experiment + lab upgrades,26183.0,2021-2022
+29,Civil Engineering,Hardware Upgrade for Design Studio,16305.35,2021-2022
+30,Computing and Software (CAS),Virtual Desktop Cluster Memory,14945.0,2021-2022
+31,Electrical and Computer Engineering (ECE),Power Supplies and Multimeters ,8020.39,2021-2022
+32,Engineering Physics,Multi-channel Analyzer for Nuclear Measurements,20679.0,2021-2022
+33,Hatch Centre,Desktop Waterjet,7461.47,2021-2022
+34,IBEHS,Medical Imaging Lab Enhancement,35185.37,2021-2022
+35,IBEHS,Design Studio Enhancement,43737.08,2021-2022
+36,Materials Engineering,Atomic Force Microscope - nGauge,31712.66,2021-2022
+37,Mechanical Engineering,CNC Milling Machine,35000.0,2021-2022
+38,Bachelor of Technology,Microarray based biotechnology undergraduate laboratory upgrade,23000.0,2020-2021
+39,Chemical Engineering,Industrial Automation of Chemical Engineering Labs,8845.0,2020-2021
+40,Civil Engineering,Data Acquisition Equipment,4828.21,2020-2021
+41,Civil Engineering,Milling Machine,3928.43,2020-2021
+42,Civil Engineering,Laboratory upgrade for water analysis,3889.77,2020-2021
+43,Computing and Software (CAS),GPUs for Virtual Desktop Cluster,15600.0,2020-2021
+44,Computing and Software (CAS),GPUs for virtual desktop cluster,15600.0,2020-2021
+45,Electrical and Computer Engineering (ECE),System Integration for an RC-scale Autonomous Electrified Vehicle,12135.49,2020-2021
+46,Engineering Physics,Equipment for Improved Nuclear Experiments,15735.4,2020-2021
+47,IBEHS,Laser Cutter/Engraver,13438.5,2020-2021
+48,IBEHS,Desktop CNC/PCB Mill,3080.38,2020-2021
+49,IBEHS,3D Printers,7016.45,2020-2021
+50,Mechanical Engineering,Automated 3D Printing System,23167.0,2020-2021
+51,Bachelor of Technology,"Flexible Robotic Assembly, testing and packaging system ",23488.0,2019-2020
+52,Chemical Engineering,Melt Flow Indexer,4483.0,2019-2020
+53,Chemical Engineering,8 Laptop computers,3269.0,2019-2020
+54,Chemical Engineering,Densitometer,5257.0,2019-2020
+55,Civil Engineering,Laboratory Upgrade for water analysis,4744.0,2019-2020
+56,Civil Engineering,Consolidation Apparatus,5034.0,2019-2020
+57,Electrical and Computer Engineering (ECE),Antenna Equipment,8062.92,2019-2020
+58,Engineering Physics,Smart Systems Lab: LIDAR and IPS,7500.0,2019-2020
+59,Engineering Physics,"Optics equipment, Oscilloscopes, Magnetic Forces Lab Upgrade",5403.24,2019-2020
+60,Engineering Physics,Remaining Funds from 19-20 year,5403.24,2019-2020
+61,IBEHS,Imaging Lab,33580.0,2019-2020
+62,Materials Engineering,Multi-material 3D printer,21000.0,2019-2020
+63,Mechanical Engineering,Milling Machines For Mech Eng Project Labs,28140.0,2019-2020
+64,Bachelor of Technology,BioSensor,10000.0,2018-2019
+65,Bachelor of Technology,Rapid Prototype Lab Equipment,23278.0,2018-2019
+66,Chemical Engineering,Gas Phase Catalyst Experiment,7980.0,2018-2019
+67,Civil Engineering,Laboratory Upgrade for Water Analysis,8865.0,2018-2019
+68,Civil Engineering,ADL Table Saw,5040.0,2018-2019
+69,Civil Engineering,Soil Crusher,7875.0,2018-2019
+70,Computing and Software (CAS),QBOT Autonomous Ground Robot,24750.0,2018-2019
+71,Electrical and Computer Engineering (ECE),Oscilloscopes with Bode Plots,8163.12,2018-2019
+72,Engineering I,Laser Cutter,31894.25,2018-2019
+73,Engineering Physics,Plasma Physics Experiment,5204.0,2018-2019
+74,Engineering Physics,3D Printer,7513.0,2018-2019
+75,IBEHS,Adquency on Patient Simulations,4182.0,2018-2019
+76,Mechanical Engineering,Studio Design Lab Upgrades,7650.0,2018-2019
+77,Bachelor of Technology,Composite 3D Printer,9000.0,2017-2018
+78,Chemical Engineering,DMA 500 Density Meter,5123.0,2017-2018
+79,Chemical Engineering,3D Printer,2401.0,2017-2018
+80,Civil Engineering,Resilent Odulus Testing Equipment,4576.5,2017-2018
+81,Civil Engineering,Laboratory Upgrade for Water Analysis,6015.0,2017-2018
+82,Computing and Software (CAS),Ball and Beam Control System,18586.0,2017-2018
+83,Computing and Software (CAS),Data Center GPU,15353.0,2017-2018
+84,Electrical and Computer Engineering (ECE),Oscilloscopes,6164.95,2017-2018
+85,Electrical and Computer Engineering (ECE),Waveform Generators,3848.78,2017-2018
+86,Engineering I,EPIC 3D Printer Renewal,17719.46,2017-2018
+87,Engineering Physics,Electronic Lab Upgrades,5000.0,2017-2018
+88,Materials Engineering,Thermodynamic Lab Equipment,8500.0,2017-2018
+89,Mechanical Engineering,Milling Machine and Lathe,35000.0,2017-2018
+90,Bachelor of Technology,Electronics Benchtop Equipment for Prototyping,12295.0,2016-2017
+91,Bachelor of Technology,Microscope 3D Stereo Imaging,13000.0,2016-2017
+92,Chemical Engineering,Hydrogen Fuel Cell,13310.0,2016-2017
+93,Civil Engineering,Laboratory Upgrade for Water Analysis,6317.0,2016-2017
+94,Electrical and Computer Engineering (ECE),ARM Development Systems,4460.48,2016-2017
+95,Engineering Physics,Desktop CNC Milling Machine,5350.0,2016-2017
+96,Engineering Physics,3L04 New Experiments,10954.93,2016-2017
+97,Materials Engineering,Electronic Properties of Materials,19865.4,2016-2017
+98,Mechanical Engineering,CNC Lathe,18000.0,2016-2017
+99,Bachelor of Technology,Sysmac Motion Controller,6000.0,2015-2016
+100,Bachelor of Technology,Electroporator,2000.0,2015-2016
+101,Chemical Engineering,Biosafety Cabinets for Bioengineering Lab,9750.0,2015-2016
+102,Chemical Engineering,Spectrophotometer,7064.0,2015-2016
+103,Civil Engineering,GPS Surveying Equipment,7761.0,2015-2016
+104,Electrical and Computer Engineering (ECE),1 Vital Signs Simulator,3524.71,2015-2016
+105,Electrical and Computer Engineering (ECE),PCB Mill,12000.0,2015-2016
+106,Electrical and Computer Engineering (ECE),14 Oscilloscopes,9621.33,2015-2016
+107,Engineering Physics,Statistical Thermodynamics Lab,8903.0,2015-2016
+108,Engineering Physics,Silicon-Based Biosensors for BioMedical Applications,17500.0,2015-2016
+109,Materials Engineering,Extensometer,7365.0,2015-2016
+110,Bachelor of Technology,Membrane Filtration,17628.0,2014-2015
+111,Chemical Engineering,Two New Experiments for the WET Specialization Stream,13649.0,2014-2015
+112,Chemical Engineering,Geotechnology and Highway Materials Lab,5460.72,2014-2015
+113,Computing and Software (CAS),Real-time Interfacing Upgrade,6743.4,2014-2015
+114,Electrical and Computer Engineering (ECE),17 New Oscilloscopes,9715.46,2014-2015
+115,Materials Engineering,2 Mounting Presses,14750.0,2014-2015
+116,Mechanical Engineering,Project Laboratory Upgrade / HH Roberts Milling Machine,30518.62,2014-2015
+117,Special Funding,Baja Racing,2500.0,2014-2015
+118,Bachelor of Technology,uPrint Plus 3D Printer - Bernoulli Apparatus,14864.5,2013-2014
+119,Chemical Engineering,Upgrading Enhancing ChemicalEng,6996.0,2013-2014
+120,Chemical Engineering,Portable Spectrophotometers,7656.31,2013-2014
+121,Electrical and Computer Engineering (ECE),LabVolt Modules,6751.73,2013-2014
+122,Engineering I,"Integrated Digital Design (Tablets, tablet components)",2138.55,2013-2014
+123,Materials Engineering,Profilometer,18400.0,2013-2014
+124,Bachelor of Technology,3D Robots,2305.59,2012-2013
+125,Chemical Engineering,Enhancing Problem-Based Learning & Troubleshooting Experiment,4386.0,2012-2013
+126,Chemical Engineering,Hydraulics Bench for Undergraduate Fluids Mechanical Lab,11897.0,2012-2013
+127,Computing and Software (CAS),Ball and Beam Control System,14151.71,2012-2013
+128,Electrical and Computer Engineering (ECE),20 new PCs,9958.0,2012-2013
+129,Engineering I,Experiential Education Tools,3081.0,2012-2013
+130,Engineering Physics,Magnetic Plasma Confinement Lab,4700.0,2012-2013
+131,Materials Engineering,Center for Enhanced Learning in Materials Science,5800.0,2012-2013
+132,Mechanical Engineering,Laser Cutter,10000.0,2012-2013
+133,Bachelor of Technology,In-Lab Top Loading Autoclave,6000.0,2011-2012
+134,Chemical Engineering,Undergraduate Laboratory for Enhancing Excellence in Design,13647.0,2011-2012
+135,Chemical Engineering,Developing Troubleshooting/PBL Elements,7997.0,2011-2012
+136,Computing and Software (CAS),Embedded Systems & Software Development Lab,5280.0,2011-2012
+137,Electrical and Computer Engineering (ECE),Labvolt Modules 1,2291.51,2011-2012
+138,Engineering Physics,3G03 Design Project,5000.0,2011-2012
+139,Materials Engineering,Tensile Testing Machine for Materials 3M03,29750.0,2011-2012
+140,Mechanical Engineering,Hybrid Power Train Lab,25000.0,2011-2012
