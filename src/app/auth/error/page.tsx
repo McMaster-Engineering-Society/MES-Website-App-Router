@@ -1,19 +1,19 @@
-import { redirect } from 'next/navigation';
+import ServerSignInGate from '@slices/auth/components/ServerSignInGate';
 import React from 'react';
 
-import { checkIsAuthenticated } from '@/lib/auth/emailSignInHelper';
-
 import { ErrorPage } from '@/app/auth/error/ErrorPage';
+import SignInGatePage from '@/slices/auth/components/SignInGatePage';
+
+const requireSignIn = false;
+const href = '/';
 
 const Error = async () => {
-  const isAuthenticated = await checkIsAuthenticated();
-
-  // Redirects to home page if for some reason someone tries to access the error page but they're signed in.
-  if (isAuthenticated) {
-    redirect('/');
-  } else {
-    return <ErrorPage />;
-  }
+  await ServerSignInGate({ requireSignIn: requireSignIn, href: href });
+  return (
+    <SignInGatePage requireSignIn={requireSignIn} href={href}>
+      <ErrorPage />
+    </SignInGatePage>
+  );
 };
 
 export default Error;

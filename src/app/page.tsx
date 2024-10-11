@@ -26,25 +26,13 @@ import {
 
 import { CalendarId } from '@/types/calendar';
 
-const API_KEY = 'AIzaSyDg60WsfHReUpNIDTD1KwI0UDDYQP02Yng';
+const API_KEY = process.env.NEXT_PUBLIC_CALENDAR_API_KEY || '';
 const CALENDAR_IDS: CalendarId[] = [
   {
     name: 'MES Events',
     id: 'macengsociety.ca_1287bevihgvppm0boumra7eb6c@group.calendar.google.com',
   },
 ];
-
-const WeeklyNews = () => (
-  <div>
-    <iframe
-      src='https://drive.google.com/file/d/1n9nsqtIWQN7F6gt_1al_1bRBxYd7pXm6/preview'
-      width='853'
-      height='480'
-      allow='autoplay'
-      allowFullScreen
-    ></iframe>
-  </div>
-);
 
 const quickLinks: { icon: IconType; label: string; href: string }[] = [
   {
@@ -319,18 +307,15 @@ export default function HomePage() {
             </Link>
           ))}
         </motion.section>
-        <section
-          style={{
-            color: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <h1>Weekly News</h1>
-          <h4 style={{ paddingBottom: '35px' }}>The Volcano: Episode 1</h4>
-          <WeeklyNews />
+        <section className='flex flex-col text-white items-center justify-center w-full'>
+          <h1>The Volcano</h1>
+          <h4 style={{ paddingBottom: '35px' }}>Weekly News</h4>
+          <iframe
+            src='https://drive.google.com/file/d/1p2qmQlDSmRGL_yt_qBBBveMW1oawJLQR/preview'
+            className='w-auto h-auto lg:w-[853px] lg:h-[480px] max-w-full'
+            allow='autoplay'
+            allowFullScreen
+          ></iframe>
         </section>
         <section id='calendar'>
           <Calendar apiKey={API_KEY} calendarIds={CALENDAR_IDS} darkMode />

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getAvailabilityInDateRangeService } from '@/lib/services/bookingServices';
-import { TApiResponse, TMessageResponse } from '@/lib/types';
+import { TApiResponse, TMessageResponse } from '@/app/api/types';
+import { getAvailabilityInDateRangeService } from '@/slices/hatch/booking-page/services/bookingServices';
 
 /**
  * Guide to querying this route:

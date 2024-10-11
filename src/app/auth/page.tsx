@@ -1,6 +1,7 @@
 'use client';
 // TODO: delete page. just for testing auth.
-import { SignOut } from '@/components/auth/sign-out';
+import { SignOut } from '@slices/auth/components/SignOutButton';
+
 import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
