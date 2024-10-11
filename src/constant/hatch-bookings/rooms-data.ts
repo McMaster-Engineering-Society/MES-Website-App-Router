@@ -1,21 +1,14 @@
-export type THatchRoom = {
-  roomName: string;
-  capacity: number;
-  outlets: number;
-  resources: { [resource: string]: boolean }; //value is true IF resource is available, false IF unavailable. Resources currently includes: TV, Whiteboard
-  img: string;
-  enabled: boolean;
-};
-
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
+import { RoomResource } from '@/slices/hatch/booking-page/types';
 export const HatchRoomsData: THatchRoom[] = [
   {
     roomName: 'H201',
     capacity: 8,
     outlets: 4,
     resources: {
-      TV: true,
-      Whiteboard: false,
-      Projector: false,
+      [RoomResource.TV]: true,
+      [RoomResource.Whiteboard]: false,
+      [RoomResource.Projector]: false,
     },
     img: '/images/bookings/room201.jpg',
     enabled: true,
@@ -25,9 +18,9 @@ export const HatchRoomsData: THatchRoom[] = [
     capacity: 6,
     outlets: 4,
     resources: {
-      TV: true,
-      Whiteboard: true,
-      Projector: false,
+      [RoomResource.TV]: true,
+      [RoomResource.Whiteboard]: true,
+      [RoomResource.Projector]: false,
     },
     img: '/images/bookings/room203.jpg',
     enabled: true,
@@ -37,9 +30,9 @@ export const HatchRoomsData: THatchRoom[] = [
     capacity: 12,
     outlets: 6,
     resources: {
-      TV: false,
-      Whiteboard: true,
-      Projector: true,
+      [RoomResource.TV]: false,
+      [RoomResource.Whiteboard]: true,
+      [RoomResource.Projector]: true,
     },
     img: '/images/bookings/room204a.jpg',
     enabled: true,
@@ -49,9 +42,9 @@ export const HatchRoomsData: THatchRoom[] = [
     capacity: 12,
     outlets: 6,
     resources: {
-      TV: false,
-      Whiteboard: true,
-      Projector: true,
+      [RoomResource.TV]: false,
+      [RoomResource.Whiteboard]: true,
+      [RoomResource.Projector]: true,
     },
     img: '/images/bookings/room204b.jpg',
     enabled: true,
@@ -61,9 +54,9 @@ export const HatchRoomsData: THatchRoom[] = [
     capacity: 6,
     outlets: 4,
     resources: {
-      TV: true,
-      Whiteboard: true,
-      Projector: false,
+      [RoomResource.TV]: true,
+      [RoomResource.Whiteboard]: true,
+      [RoomResource.Projector]: false,
     },
     img: '/images/bookings/room205.jpg',
     enabled: true,
