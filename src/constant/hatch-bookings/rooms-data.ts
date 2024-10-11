@@ -1,5 +1,6 @@
 import { THatchRoom } from '@/slices/hatch/booking-page/types';
 import { RoomResource } from '@/slices/hatch/booking-page/types';
+
 export const HatchRoomsData: THatchRoom[] = [
   {
     roomName: 'H201',
