@@ -49,6 +49,39 @@
       pointer;
   }
 
+
+  .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Align items vertically centered */
+    margin-top: 0px;
+    margin-bottom: 25px;
+    position: relative; /* To position the icon inside */
+  }
+
+  .search-bar input {
+    padding-left: 2px;
+    border-radius: 25px;
+    padding-right: 40px;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+
+    /* box-shadow: 5px 10px #888888; */
+  }
+
+  .search-bar input::placeholder {
+    color: #a4a2a2;
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 15px;
+    color: #a4a2a2; /* Match icon color with the placeholder text */
+    pointer-events: none; /* Prevents icon from being clickable */
+    transition: color 0.3s ease;
+  }
+
   /* #region  /**=========== Typography =========== */
   .h0 {
     @apply font-primary text-3xl font-bold md:text-5xl;
