@@ -1,10 +1,7 @@
 import clientPromise from '@/lib/db';
 
-import {
-  HatchRoomsData,
-  THatchRoom,
-} from '@/constant/hatch-bookings/rooms-data';
-
+import { HatchRoomsData } from '@/constant/hatch-bookings/rooms-data';
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
 const getRoomsCollection = async () => {
   const client = await clientPromise;
 

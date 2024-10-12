@@ -1,12 +1,12 @@
 import { InsertManyResult, UpdateResult, WithId } from 'mongodb';
 
-import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import {
   getDisabledRoomsDb,
   getRoomDb,
   initializeRoomsDb,
   updateRoomDb,
 } from '@/slices/hatch/admin/db/roomsDb';
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
 
 export const initializeRoomsService =
   async (): Promise<InsertManyResult<THatchRoom> | null> => {
