@@ -32,10 +32,11 @@ export default function AvailableRooms({ className }: { className?: string }) {
           <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
             Booking can only be made within two weeks
           </div>
-        ) : !startIndex || (startIndex && numAvailRooms === 0) ? (
+        ) : startIndex == -1 || (startIndex != -1 && numAvailRooms === 0) ? (
           <div className='flex h-full w-full items-center justify-center p-4 text-center font-bold'>
-            {startIndex
-              ? numAvailRooms === 0
+            {startIndex != -1
+              ? // && !checkBookingNotInPast() added here as a band-aid solution to prevent 'No Rooms Available' flashing when selecting a timeslot with rooms available
+                numAvailRooms === 0 && !checkBookingNotInPast()
                 ? 'No Rooms Available'
                 : null
               : 'Click/drag to select a time'}

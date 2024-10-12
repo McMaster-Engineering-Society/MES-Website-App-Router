@@ -174,7 +174,8 @@ export const TimePickerProvider = ({ children }: Props) => {
   const checkBookingNotInPast = useCallback(() => {
     pickerEndDate.setDate(pickerStartDate.getDate() + 6);
     if (
-      (startIndex && timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
+      (startIndex != -1 &&
+        timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
       (pickerEndDate && pickerEndDate < new Date())
     ) {
       return false;
