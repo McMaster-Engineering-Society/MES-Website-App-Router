@@ -44,7 +44,12 @@ const SignInGatePage = ({
   // If the profile is still loading, show a loading message.
   if (!profileIsLoaded) {
     // TODO: make prettier
-    return <div>Loading user profile...</div>;
+    return (
+      <div className=' h-screen flex flex-col items-center justify-center bg-gray-200 '>
+        <div className='border-gray-300 h-10 w-10 animate-spin rounded-full border-8 border-t-red-800' />
+        <div className='mt-5 font-bold'> Loading...</div>
+      </div>
+    );
   }
 
   // Once profile is loaded and no redirection is needed, show the content
