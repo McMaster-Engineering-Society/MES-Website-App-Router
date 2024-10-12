@@ -1,5 +1,4 @@
-import { THatchRoom } from '@/slices/hatch/booking-page/types';
-import { RoomResource } from '@/slices/hatch/booking-page/types';
+import { RoomResource, THatchRoom } from '@/slices/hatch/booking-page/types';
 
 export const HatchRoomsData: THatchRoom[] = [
   {
