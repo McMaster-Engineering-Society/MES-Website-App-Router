@@ -368,7 +368,7 @@ function TimePickerTable({
       const newEndIndex = Math.max(endIndex, slotIndex);
       setStartIndex(newStartIndex);
       setEndIndex(newEndIndex);
-    } else if (atLeastOneRoomAvailable(slotIndex)) {
+    } else {
       // starting to select a new block
       dragOperationRef.current = 'Selecting';
       setStartIndex(slotIndex);
@@ -431,7 +431,6 @@ function TimePickerTable({
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
-        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
         // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
         ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
@@ -439,7 +438,6 @@ function TimePickerTable({
         setStartIndex(newStartIndex);
       } else if (
         slotIndex > endIndex &&
-        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
         ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newEndIndex = slotIndex;
@@ -546,14 +544,15 @@ function TimePickerTable({
         {timeslots.map((slot, i) =>
           daysToShow.map((day, j) => {
             const timeSlotIndex = j * timeslots.length + i;
+
             return (
               <div
                 key={`${day} ${slot}`}
                 id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
                 className={`relative flex-1 touch-none border-1 border-b-0 border-black/20
-                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
-                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
-                      ${i % 2 === 1 && 'border-t-0'} 
+                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'}
+                      ${adminView ? '' : !atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'}
+                      ${i % 2 === 1 && 'border-t-0'}
                       border-l-0
                       ${j === numDaysToShow - 1 && 'border-r-0'}`}
                 onPointerDown={() => handleMouseDown(timeSlotIndex)}
