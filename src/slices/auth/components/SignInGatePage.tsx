@@ -45,7 +45,6 @@ const SignInGatePage = ({
 
   // If the profile is still loading, show a loading message.
   if (!profileIsLoaded) {
-    // TODO: make prettier
     return <LoadingIcon />;
   }
 
