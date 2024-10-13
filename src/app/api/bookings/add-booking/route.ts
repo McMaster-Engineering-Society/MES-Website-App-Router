@@ -22,11 +22,12 @@ export async function POST(req: Request) {
   };
 
   try {
-    const newBooking = await createBookingService(adaptedBooking);
-    if (!newBooking) {
+    const { booking: newBooking, message } =
+      await createBookingService(adaptedBooking);
+    if (!newBooking && message) {
       return NextResponse.json<TMessageResponse>(
-        { message: 'Booking not found (booking error encountered)' },
-        { status: 404 },
+        { message: message },
+        { status: 409 },
       );
     }
     return NextResponse.json<TApiResponse<TBooking>>(
