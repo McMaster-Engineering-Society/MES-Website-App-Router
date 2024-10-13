@@ -6,16 +6,18 @@ import ExecMember from './ExecMember';
 
 import { TExecMember } from '@/types/clubProfile';
 
-type TExecMemberWithId = TExecMember & { id: number };
-
-let nextId = 0;
+type TExecTeam = {
+  president: TExecMember;
+  execMembers: TExecMember[];
+};
 
 const ExecTeamPanel = () => {
   const clubId = '1';
-  const [execMembers, setExecMembers] = useState<TExecMemberWithId[]>(
-    getExecMembers(clubId),
+  const execTeam = getExecTeam(clubId);
+  const [president, setPresident] = useState<TExecMember>(execTeam.president);
+  const [execMembers, setExecMembers] = useState<TExecMember[]>(
+    execTeam.execMembers,
   );
-  const president = execMembers[0];
   const dragPerson = useRef<number>(0);
   const draggedOverPerson = useRef<number>(0);
 
@@ -44,7 +46,7 @@ const ExecTeamPanel = () => {
   };
 
   const createMember = () => {
-    const newMember: TExecMemberWithId = {
+    const newMember: TExecMember = {
       firstName: '',
       lastName: '',
       role: '',
@@ -52,7 +54,6 @@ const ExecTeamPanel = () => {
       program: '',
       year: '',
       contactFor: '',
-      id: nextId++,
     };
     setExecMembers((prevMembers) => {
       const updatedMembers = [...prevMembers, newMember];
@@ -64,7 +65,7 @@ const ExecTeamPanel = () => {
     setExecMembers((prevMembers) => {
       const updatedMembers = prevMembers.map((member, index) => {
         if (index === i) {
-          return { ...updatedMember, id: nextId++ };
+          return { ...updatedMember };
         }
         return member;
       });
@@ -108,12 +109,12 @@ const ExecTeamPanel = () => {
         <ExecMember
           president
           member={president}
-          updateMemberList={(member: TExecMember, delMember = false) =>
-            updateMemberList(member, 0, delMember)
+          updateMemberList={(member: TExecMember, _delMember = false) =>
+            setPresident(member)
           }
-          onDragStart={() => handleDragStart(0)}
-          onDragEnter={() => handleDragEnter(0)}
-          handleSort={handleSort}
+          onDragStart={() => null}
+          onDragEnter={() => null}
+          handleSort={() => null}
         />
         {execMembers.map((member, index) => {
           if (member.role !== 'President') {
@@ -138,28 +139,13 @@ const ExecTeamPanel = () => {
 
 export default ExecTeamPanel;
 
-function getExecMembers(_clubId: string) {
-  const members = sampleMembers();
-  const sortedMembers = setPresidentFirst(members);
-  const membersWithId = sortedMembers.map((member) => {
-    return { ...member, id: nextId++ };
-  });
-  return membersWithId;
+function getExecTeam(_clubId: string) {
+  const president = samplePresident();
+  const execMembers = sampleMembers();
+  return { president, execMembers } as TExecTeam;
 }
 
-function setPresidentFirst(members: TExecMember[]) {
-  const membersCopy = [...members];
-  membersCopy.forEach((member, index) => {
-    if (member.role === 'President') {
-      const temp = members[0];
-      members[0] = member;
-      members[index] = temp;
-    }
-  });
-  return membersCopy;
-}
-
-function sampleMembers() {
+function samplePresident() {
   const member1: TExecMember = {
     firstName: 'John',
     lastName: 'Doe',
@@ -169,6 +155,10 @@ function sampleMembers() {
     year: '3',
     contactFor: 'General Inquiries',
   };
+  return member1;
+}
+
+function sampleMembers() {
   const member2: TExecMember = {
     firstName: 'Jane',
     lastName: 'Doe',
@@ -196,5 +186,5 @@ function sampleMembers() {
     year: '3',
     contactFor: 'Member Details',
   };
-  return [member1, member2, member3, member4];
+  return [member2, member3, member4] as TExecMember[];
 }
