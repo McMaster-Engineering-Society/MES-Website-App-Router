@@ -485,7 +485,7 @@ function TimePickerTable({
   const TimeIndicators = memo(() => {
     /* time indicators along the side */
     return (
-      <div className='mr-1 mt-14 flex flex-col justify-stretch'>
+      <div className='mr-1 mt-14 flex flex-col justify-stretch relative'>
         {timeslots.map((slot: string, i) => {
           if (i % 2 === 1) return null;
           return (
@@ -498,6 +498,13 @@ function TimePickerTable({
             </span>
           );
         })}
+        {/* Manually add 11pm since we don't want it to be in timeslots. */}
+        <span
+          id='time-text-11 PM'
+          className='absolute bottom-0 translate-y-[8px] whitespace-nowrap text-right text-xs italic text-[#373A36]/80'
+        >
+          11 PM
+        </span>
       </div>
     );
   });
