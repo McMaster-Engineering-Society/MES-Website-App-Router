@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useState } from 'react';
-import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
 
 import { cn } from '@/lib/utils';
@@ -30,7 +30,6 @@ const ExecMember = ({
   handleSort = () => {},
 }: ExecMemberProps) => {
   const itemDivRef = useRef<HTMLDivElement>(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [updatedMember, setUpdatedMember] = useState(member);
   const updateMember = (field: string, value: string) => {
     setUpdatedMember({
@@ -64,7 +63,6 @@ const ExecMember = ({
           <TextField
             title='First Name'
             value={updatedMember.firstName}
-            editable={isEditing}
             onChange={(value) => {
               updateMember('firstName', value);
             }}
@@ -72,7 +70,6 @@ const ExecMember = ({
           <TextField
             title='Last Name'
             value={updatedMember.lastName}
-            editable={isEditing}
             onChange={(value) => {
               updateMember('lastName', value);
             }}
@@ -82,7 +79,6 @@ const ExecMember = ({
           <TextField
             title='Program'
             value={updatedMember.program}
-            editable={isEditing}
             onChange={(value) => {
               updateMember('program', value);
             }}
@@ -90,7 +86,6 @@ const ExecMember = ({
           <TextField
             title='Year'
             value={updatedMember.year}
-            editable={isEditing}
             onChange={(value) => {
               updateMember('year', value);
             }}
@@ -100,7 +95,6 @@ const ExecMember = ({
           <SelectField
             title='Contact For'
             value={updatedMember.contactFor}
-            editable={isEditing}
             options={contactForOptions}
             onChange={(value) => {
               updateMember('contactFor', value);
@@ -109,7 +103,6 @@ const ExecMember = ({
           <TextField
             title='Email'
             value={updatedMember.email}
-            editable={isEditing}
             required
             onChange={(value) => {
               updateMember('email', value);
@@ -119,33 +112,17 @@ const ExecMember = ({
         <TextField
           title='Role'
           value={updatedMember.role}
-          editable={isEditing && !president}
           onChange={(value) => {
             updateMember('role', value);
           }}
         />
       </div>
-      <div className='flex flex-row gap-4 mr-4'>
-        {isEditing ? (
-          <button
-            onClick={() => setIsEditing(false)}
-            name='save-member'
-            type='submit'
-          >
-            <FaSave size={25} />
-          </button>
-        ) : (
-          <button onClick={() => setIsEditing(true)}>
-            <FaEdit size={25} />
-          </button>
-        )}
-        <button
-          className={cn([president && 'invisible'])}
-          onClick={deleteMember}
-        >
-          <FaTrash size={25} />
-        </button>
-      </div>
+      <button
+        className={cn(['mr-10', president && 'invisible'])}
+        onClick={deleteMember}
+      >
+        <FaTrash size={25} />
+      </button>
     </div>
   );
 };
