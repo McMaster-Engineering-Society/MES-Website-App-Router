@@ -173,7 +173,7 @@ export default function TimePicker({
   ]);
 
   /**
-   * @todo add proper loading indicator (render table but make everything greyed out?) AND ADD SAME LOADING INDICATOR TO SignInGatePage.tsx
+   * @todo add proper loading indicator (render table but make everything greyed out?)
    */
   if (Object.keys(roomsAvailableByTime).length === 0) {
     return <LoadingIcon />;
