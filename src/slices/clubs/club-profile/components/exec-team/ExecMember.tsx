@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useState } from 'react';
 import { FaEdit, FaSave, FaTrash } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
@@ -12,19 +13,21 @@ import { contactForOptions, TExecMember } from '@/types/clubProfile';
 
 type ExecMemberProps = {
   member: TExecMember;
-  updateMemberList: (member: TExecMember, deleteMember?: boolean) => void;
   president?: boolean;
-  onDragStart: () => void;
-  onDragEnter: () => void;
-  handleSort: () => void;
+  updateMemberList: (member: TExecMember) => void;
+  deleteMember?: () => void;
+  onDragStart?: () => void;
+  onDragEnter?: () => void;
+  handleSort?: () => void;
 };
 const ExecMember = ({
   member,
-  updateMemberList,
   president,
-  onDragStart,
-  onDragEnter,
-  handleSort,
+  updateMemberList,
+  deleteMember = () => {},
+  onDragStart = () => {},
+  onDragEnter = () => {},
+  handleSort = () => {},
 }: ExecMemberProps) => {
   const itemDivRef = useRef<HTMLDivElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -138,9 +141,7 @@ const ExecMember = ({
         )}
         <button
           className={cn([president && 'invisible'])}
-          onClick={() => {
-            updateMemberList(updatedMember, true);
-          }}
+          onClick={deleteMember}
         >
           <FaTrash size={25} />
         </button>

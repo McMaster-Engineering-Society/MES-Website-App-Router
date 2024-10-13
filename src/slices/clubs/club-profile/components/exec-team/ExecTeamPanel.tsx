@@ -37,14 +37,6 @@ const ExecTeamPanel = () => {
     setExecMembers(newMembers);
   };
 
-  const updateMemberList = (
-    member: TExecMember,
-    index: number,
-    delMember = false,
-  ) => {
-    delMember ? deleteMember(member, index) : updateMember(member, index);
-  };
-
   const createMember = () => {
     const newMember: TExecMember = {
       firstName: '',
@@ -73,7 +65,7 @@ const ExecTeamPanel = () => {
     });
   };
 
-  const deleteMember = (member: TExecMember, i: number) => {
+  const deleteMember = (i: number) => {
     setExecMembers((prevMembers) => {
       const updatedMembers = prevMembers.filter((_, index) => index !== i);
       return updatedMembers;
@@ -109,28 +101,22 @@ const ExecTeamPanel = () => {
         <ExecMember
           president
           member={president}
-          updateMemberList={(member: TExecMember, _delMember = false) =>
-            setPresident(member)
-          }
-          onDragStart={() => null}
-          onDragEnter={() => null}
-          handleSort={() => null}
+          updateMemberList={(member: TExecMember) => setPresident(member)}
         />
         {execMembers.map((member, index) => {
-          if (member.role !== 'President') {
-            return (
-              <ExecMember
-                key={member.email}
-                member={member}
-                updateMemberList={(member: TExecMember, delMember = false) => {
-                  updateMemberList(member, index, delMember);
-                }}
-                onDragStart={() => handleDragStart(index)}
-                onDragEnter={() => handleDragEnter(index)}
-                handleSort={handleSort}
-              />
-            );
-          }
+          return (
+            <ExecMember
+              key={member.email}
+              member={member}
+              updateMemberList={(member: TExecMember) => {
+                updateMember(member, index);
+              }}
+              deleteMember={() => deleteMember(index)}
+              onDragStart={() => handleDragStart(index)}
+              onDragEnter={() => handleDragEnter(index)}
+              handleSort={handleSort}
+            />
+          );
         })}
       </div>
     </form>
