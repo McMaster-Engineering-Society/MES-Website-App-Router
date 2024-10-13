@@ -6,15 +6,16 @@ import ExecMember from './ExecMember';
 
 import { TExecMember } from '@/types/clubProfile';
 
-let nextId = 0;
+type TExecMemberWithId = TExecMember & { id: number };
 
-export type TExecMemberWithId = TExecMember & { id: number };
+let nextId = 0;
 
 const ExecTeamPanel = () => {
   const clubId = '1';
-  const [execMembers, setExecMembers] = useState(getExecMembers(clubId));
+  const [execMembers, setExecMembers] = useState<TExecMemberWithId[]>(
+    getExecMembers(clubId),
+  );
   const president = execMembers[0];
-
   const dragPerson = useRef<number>(0);
   const draggedOverPerson = useRef<number>(0);
 
@@ -34,8 +35,12 @@ const ExecTeamPanel = () => {
     setExecMembers(newMembers);
   };
 
-  const updateMemberList = (member: TExecMemberWithId, delMember = false) => {
-    delMember ? deleteMember(member) : updateMember(member);
+  const updateMemberList = (
+    member: TExecMember,
+    index: number,
+    delMember = false,
+  ) => {
+    delMember ? deleteMember(member, index) : updateMember(member, index);
   };
 
   const createMember = () => {
@@ -55,11 +60,11 @@ const ExecTeamPanel = () => {
     });
   };
 
-  const updateMember = (updatedMember: TExecMemberWithId) => {
+  const updateMember = (updatedMember: TExecMember, i: number) => {
     setExecMembers((prevMembers) => {
-      const updatedMembers = prevMembers.map((member) => {
-        if (member.id === updatedMember.id) {
-          return updatedMember;
+      const updatedMembers = prevMembers.map((member, index) => {
+        if (index === i) {
+          return { ...updatedMember, id: nextId++ };
         }
         return member;
       });
@@ -67,46 +72,67 @@ const ExecTeamPanel = () => {
     });
   };
 
-  const deleteMember = (member: TExecMemberWithId) => {
+  const deleteMember = (member: TExecMember, i: number) => {
     setExecMembers((prevMembers) => {
-      const updatedMembers = prevMembers.filter((m) => m.id !== member.id);
+      const updatedMembers = prevMembers.filter((_, index) => index !== i);
       return updatedMembers;
     });
   };
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const submitter = (e.nativeEvent as SubmitEvent).submitter;
+    if (!(submitter instanceof HTMLButtonElement)) return;
+
+    if (submitter.name === 'add-member') {
+      createMember();
+      return;
+    }
+    if (submitter.name === 'save-member') {
+      // save changes
+    }
+  };
+
   return (
-    <div className='w-full h-full flex flex-col relative'>
+    <form className='w-full h-full flex flex-col relative' onSubmit={onSubmit}>
       <div className='w-full flex flex-row justify-end pr-2 gap-3 mt-2 sticky top-0 z-10'>
-        <Button disabled>Save</Button>
-        <Button onClick={createMember}>Add Member</Button>
+        <Button name='save' disabled type='button'>
+          Save
+        </Button>
+        <Button name='add-member' type='submit'>
+          Add Member
+        </Button>
       </div>
       <div className='flex flex-col gap-2 basis-full w-full overflow-scroll pt-2 pr-2'>
         <ExecMember
-          index={0}
           president
           member={president}
-          updateMemberList={updateMemberList}
-          onDragStart={handleDragStart}
-          onDragEnter={handleDragEnter}
+          updateMemberList={(member: TExecMember, delMember = false) =>
+            updateMemberList(member, 0, delMember)
+          }
+          onDragStart={() => handleDragStart(0)}
+          onDragEnter={() => handleDragEnter(0)}
           handleSort={handleSort}
         />
         {execMembers.map((member, index) => {
           if (member.role !== 'President') {
             return (
               <ExecMember
-                index={index}
-                key={member.id}
+                key={member.email}
                 member={member}
-                updateMemberList={updateMemberList}
-                onDragStart={handleDragStart}
-                onDragEnter={handleDragEnter}
+                updateMemberList={(member: TExecMember, delMember = false) => {
+                  updateMemberList(member, index, delMember);
+                }}
+                onDragStart={() => handleDragStart(index)}
+                onDragEnter={() => handleDragEnter(index)}
                 handleSort={handleSort}
               />
             );
           }
         })}
       </div>
-    </div>
+    </form>
   );
 };
 
@@ -114,17 +140,14 @@ export default ExecTeamPanel;
 
 function getExecMembers(_clubId: string) {
   const members = sampleMembers();
-  const membersWithId = [];
-  for (const member of members) {
-    const memberWithId = { ...member } as TExecMemberWithId;
-    memberWithId.id = nextId++;
-    membersWithId.push(memberWithId);
-  }
-  const sortedMembers = setPresidentFirst(membersWithId);
-  return sortedMembers;
+  const sortedMembers = setPresidentFirst(members);
+  const membersWithId = sortedMembers.map((member) => {
+    return { ...member, id: nextId++ };
+  });
+  return membersWithId;
 }
 
-function setPresidentFirst(members: TExecMemberWithId[]) {
+function setPresidentFirst(members: TExecMember[]) {
   const membersCopy = [...members];
   membersCopy.forEach((member, index) => {
     if (member.role === 'President') {

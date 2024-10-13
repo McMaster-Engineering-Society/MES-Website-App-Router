@@ -6,22 +6,19 @@ import { cn } from '@/lib/utils';
 
 import SelectField from '@/components/clubs-portal/administration/exec-team/SelectField';
 
-import { TExecMemberWithId } from './ExecTeamPanel';
 import TextField from './TextField';
 
-import { contactForOptions } from '@/types/clubProfile';
+import { contactForOptions, TExecMember } from '@/types/clubProfile';
 
 type ExecMemberProps = {
-  index: number;
-  member: TExecMemberWithId;
-  updateMemberList: (member: TExecMemberWithId, deleteMember?: boolean) => void;
+  member: TExecMember;
+  updateMemberList: (member: TExecMember, deleteMember?: boolean) => void;
   president?: boolean;
-  onDragStart: (index: number) => void;
-  onDragEnter: (index: number) => void;
+  onDragStart: () => void;
+  onDragEnter: () => void;
   handleSort: () => void;
 };
 const ExecMember = ({
-  index,
   member,
   updateMemberList,
   president,
@@ -43,14 +40,14 @@ const ExecMember = ({
     <div
       className='w-full flex flex-row border-medium items-center rounded-lg border-gray-400'
       ref={itemDivRef}
-      onDragEnter={() => onDragEnter(index)}
+      onDragEnter={() => onDragEnter()}
       onDragOver={(e) => e.preventDefault()}
     >
       <div
         className={cn([president && 'invisible', 'cursor-move mx-3'])}
         draggable
         onDragStart={(e) => {
-          onDragStart(index);
+          onDragStart();
           if (itemDivRef.current) {
             e.dataTransfer.setDragImage(itemDivRef.current, 0, 0);
           }
@@ -110,6 +107,7 @@ const ExecMember = ({
             title='Email'
             value={updatedMember.email}
             editable={isEditing}
+            required
             onChange={(value) => {
               updateMember('email', value);
             }}
@@ -125,13 +123,19 @@ const ExecMember = ({
         />
       </div>
       <div className='flex flex-row gap-4 mr-4'>
-        <button
-          onClick={() => {
-            setIsEditing((prev) => !prev);
-          }}
-        >
-          {isEditing ? <FaSave size={25} /> : <FaEdit size={25} />}
-        </button>
+        {isEditing ? (
+          <button
+            onClick={() => setIsEditing(false)}
+            name='save-member'
+            type='submit'
+          >
+            <FaSave size={25} />
+          </button>
+        ) : (
+          <button onClick={() => setIsEditing(true)}>
+            <FaEdit size={25} />
+          </button>
+        )}
         <button
           className={cn([president && 'invisible'])}
           onClick={() => {
