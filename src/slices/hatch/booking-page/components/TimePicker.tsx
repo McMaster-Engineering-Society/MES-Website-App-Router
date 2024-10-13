@@ -4,6 +4,8 @@ import { TBooking } from '@slices/hatch/booking-page/types';
 import { differenceInCalendarDays } from 'date-fns';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import LoadingIcon from '@/components/layout/LoadingIcon';
+
 import TimePickerBookings from '@/slices/hatch/booking-page/components/TimePickerBookings';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
@@ -174,7 +176,7 @@ export default function TimePicker({
    * @todo add proper loading indicator (render table but make everything greyed out?) AND ADD SAME LOADING INDICATOR TO SignInGatePage.tsx
    */
   if (Object.keys(roomsAvailableByTime).length === 0) {
-    return <div>Loading...</div>;
+    return <LoadingIcon />;
   }
 
   return (
