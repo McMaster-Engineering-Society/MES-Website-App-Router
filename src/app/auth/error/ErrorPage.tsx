@@ -39,8 +39,8 @@ export function ErrorPage() {
               </div>
               <div className='flex flex-col w-5/6 pt-6 pb-4 m-8 rounded-lg items-center justify-center text-center shadow-md bg-amber-200'>
                 <b>
-                  Sign in again, then copy and paste the sign-in link into your
-                  browser
+                  To resolve this problem, sign in again and past the sign-in
+                  link from the email into the browser.
                 </b>
                 <ButtonLink
                   variant='outline'
