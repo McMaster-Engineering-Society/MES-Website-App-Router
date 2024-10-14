@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
 
@@ -30,13 +30,8 @@ const ExecMember = ({
   handleSort = () => {},
 }: ExecMemberProps) => {
   const itemDivRef = useRef<HTMLDivElement>(null);
-  const [updatedMember, setUpdatedMember] = useState(member);
   const updateMember = (field: string, value: string) => {
-    setUpdatedMember({
-      ...updatedMember,
-      [field]: value,
-    });
-    updateMemberList(updatedMember);
+    updateMemberList({ ...member, [field]: value });
   };
   return (
     <div
@@ -62,14 +57,14 @@ const ExecMember = ({
         <div>
           <TextField
             title='First Name'
-            value={updatedMember.firstName}
+            value={member.firstName}
             onChange={(value) => {
               updateMember('firstName', value);
             }}
           />
           <TextField
             title='Last Name'
-            value={updatedMember.lastName}
+            value={member.lastName}
             onChange={(value) => {
               updateMember('lastName', value);
             }}
@@ -78,14 +73,14 @@ const ExecMember = ({
         <div>
           <TextField
             title='Program'
-            value={updatedMember.program}
+            value={member.program}
             onChange={(value) => {
               updateMember('program', value);
             }}
           />
           <TextField
             title='Year'
-            value={updatedMember.year}
+            value={member.year}
             onChange={(value) => {
               updateMember('year', value);
             }}
@@ -94,7 +89,7 @@ const ExecMember = ({
         <div>
           <SelectField
             title='Contact For'
-            value={updatedMember.contactFor}
+            value={member.contactFor}
             options={contactForOptions}
             onChange={(value) => {
               updateMember('contactFor', value);
@@ -102,7 +97,7 @@ const ExecMember = ({
           />
           <TextField
             title='Email'
-            value={updatedMember.email}
+            value={member.email}
             required
             onChange={(value) => {
               updateMember('email', value);
@@ -111,7 +106,7 @@ const ExecMember = ({
         </div>
         <TextField
           title='Role'
-          value={updatedMember.role}
+          value={member.role}
           constant={president}
           onChange={(value) => {
             updateMember('role', value);
