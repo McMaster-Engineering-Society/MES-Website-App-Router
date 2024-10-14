@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import {
+  contactForOptions,
+  TExecMember,
+} from '@slices/clubs/club-profile/types/clubProfile';
 import React, { useRef } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdDragIndicator } from 'react-icons/md';
 
 import { cn } from '@/lib/utils';
 
-import SelectField from '@/components/clubs-portal/administration/exec-team/SelectField';
-
+import SelectField from './SelectField';
 import TextField from './TextField';
-
-import { contactForOptions, TExecMember } from '@/types/clubProfile';
 
 type ExecMemberProps = {
   member: TExecMember;

@@ -1,10 +1,9 @@
+import { TExecMember } from '@slices/clubs/club-profile/types/clubProfile';
 import React, { useRef, useState } from 'react';
 
 import Button from '@/components/buttons/Button';
 
 import ExecMember from './ExecMember';
-
-import { TExecMember } from '@/types/clubProfile';
 
 let nextId = 0;
 
