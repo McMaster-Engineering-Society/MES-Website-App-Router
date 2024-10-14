@@ -62,11 +62,15 @@ export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
     },
   );
 
-  if (!response.ok) {
+  if (!response.ok && response.status !== 409) {
     throw new Error(`Error: ${response.statusText}`);
   }
 
   const result = await response.json();
+
+  if (response.status === 409) {
+    throw new Error(`${result.message}`);
+  }
 
   return result.data;
 }
