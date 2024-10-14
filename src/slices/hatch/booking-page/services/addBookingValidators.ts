@@ -2,7 +2,10 @@ import { TBookingDb } from '@/app/api/types';
 import { getDisabledRoomsService } from '@/slices/hatch/admin/services/roomServices';
 import { getBookingsInDateRangeForOneRoomDb } from '@/slices/hatch/booking-page/db/bookingDb';
 import { getBookingsInDateRangeAndEmailService } from '@/slices/hatch/booking-page/services/bookingServices';
-import { getNumberOf30MinuteSlots } from '@/slices/hatch/booking-page/utils';
+import {
+  getESTDayBoundaries,
+  getNumberOf30MinuteSlots,
+} from '@/slices/hatch/booking-page/utils';
 
 const disabledRoomCheckService = async (
   newBooking: TBookingDb,
@@ -25,11 +28,17 @@ const disabledRoomCheckService = async (
 const threeHourRoomsCheckService = async (
   newBooking: TBookingDb,
 ): Promise<{ valid: boolean; message: string | null }> => {
-  const userBookingsOnDay = await getBookingsInDateRangeAndEmailService(
+  const { startOfDay, endOfDay } = getESTDayBoundaries(
     newBooking.startTime,
     newBooking.endTime,
+  );
+
+  const userBookingsOnDay = await getBookingsInDateRangeAndEmailService(
+    startOfDay,
+    endOfDay,
     newBooking.email,
   );
+
   if (userBookingsOnDay === null) {
     throw new Error("Error in fetching user's rooms");
   }
