@@ -6,16 +6,20 @@ import ExecMember from './ExecMember';
 
 import { TExecMember } from '@/types/clubProfile';
 
+let nextId = 0;
+
+export type TExecMemberWithId = TExecMember & { id: number };
+
 type TExecTeam = {
   president: TExecMember;
-  execMembers: TExecMember[];
+  execMembers: TExecMemberWithId[];
 };
 
 const ExecTeamPanel = () => {
   const clubId = '1';
   const execTeam = getExecTeam(clubId);
   const [president, setPresident] = useState<TExecMember>(execTeam.president);
-  const [execMembers, setExecMembers] = useState<TExecMember[]>(
+  const [execMembers, setExecMembers] = useState<TExecMemberWithId[]>(
     execTeam.execMembers,
   );
   const dragPerson = useRef<number>(0);
@@ -38,7 +42,7 @@ const ExecTeamPanel = () => {
   };
 
   const createMember = () => {
-    const newMember: TExecMember = {
+    const newMember: TExecMemberWithId = {
       firstName: '',
       lastName: '',
       role: '',
@@ -46,6 +50,7 @@ const ExecTeamPanel = () => {
       program: '',
       year: '',
       contactFor: '',
+      id: nextId++,
     };
     setExecMembers((prevMembers) => {
       const updatedMembers = [...prevMembers, newMember];
@@ -53,7 +58,7 @@ const ExecTeamPanel = () => {
     });
   };
 
-  const updateMember = (updatedMember: TExecMember, i: number) => {
+  const updateMember = (updatedMember: TExecMemberWithId, i: number) => {
     setExecMembers((prevMembers) => {
       const updatedMembers = prevMembers.map((member, index) => {
         if (index === i) {
@@ -100,16 +105,16 @@ const ExecTeamPanel = () => {
       <div className='flex flex-col gap-2 basis-full w-full overflow-scroll pt-2 pr-2'>
         <ExecMember
           president
-          member={president}
+          member={president as TExecMemberWithId}
           updateMemberList={(member: TExecMember) => setPresident(member)}
         />
         {execMembers.map((member, index) => {
           return (
             <ExecMember
-              key={member.email}
+              key={member.id}
               member={member}
               updateMemberList={(member: TExecMember) => {
-                updateMember(member, index);
+                updateMember(member as TExecMemberWithId, index);
               }}
               deleteMember={() => deleteMember(index)}
               onDragStart={() => handleDragStart(index)}
@@ -127,7 +132,10 @@ export default ExecTeamPanel;
 
 function getExecTeam(_clubId: string) {
   const president = samplePresident();
-  const execMembers = sampleMembers();
+  const execMembers = sampleMembers().map((member) => {
+    return { ...member, id: nextId++ } as TExecMemberWithId;
+  });
+
   return { president, execMembers } as TExecTeam;
 }
 

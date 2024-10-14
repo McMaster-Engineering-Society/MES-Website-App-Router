@@ -112,6 +112,7 @@ const ExecMember = ({
         <TextField
           title='Role'
           value={updatedMember.role}
+          constant={president}
           onChange={(value) => {
             updateMember('role', value);
           }}
