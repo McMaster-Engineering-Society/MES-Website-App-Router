@@ -79,26 +79,13 @@ const ExecTeamPanel = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const submitter = (e.nativeEvent as SubmitEvent).submitter;
-    if (!(submitter instanceof HTMLButtonElement)) return;
-
-    if (submitter.name === 'add-member') {
-      createMember();
-      return;
-    }
-    if (submitter.name === 'save-member') {
-      // save changes
-    }
   };
 
   return (
     <form className='w-full h-full flex flex-col relative' onSubmit={onSubmit}>
       <div className='w-full flex flex-row justify-end pr-2 gap-3 mt-2 sticky top-0 z-10'>
-        <Button name='save' disabled type='button'>
-          Save
-        </Button>
-        <Button name='add-member' type='submit'>
+        <Button type='submit'>Save</Button>
+        <Button type='button' onClick={createMember}>
           Add Member
         </Button>
       </div>
