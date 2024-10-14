@@ -82,7 +82,10 @@ const ExecTeamPanel = () => {
 
   return (
     <form className='w-full h-full flex flex-col relative' onSubmit={onSubmit}>
-      <div className='w-full flex flex-row justify-end pr-2 gap-3 mt-2 sticky top-0 z-10'>
+      <div className='w-full flex flex-row justify-end items-center pr-2 gap-3 mt-2 sticky top-0 z-10'>
+        <p className='font-medium text-lg mr-auto ml-1'>
+          Total Exec Members: {execMembers.length + 1}
+        </p>
         <Button type='submit'>Save</Button>
         <Button type='button' onClick={createMember}>
           Add Member
