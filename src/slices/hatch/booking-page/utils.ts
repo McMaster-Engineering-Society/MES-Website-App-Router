@@ -1,4 +1,8 @@
-import { addMinutes, startOfDay } from 'date-fns';
+import { addMinutes, endOfWeek, startOfDay, startOfWeek } from 'date-fns';
+import { enGB } from 'date-fns/locale/en-GB';
+import { formatInTimeZone } from 'date-fns-tz';
+
+const timeZone = 'America/New_York'; // EST timezone
 
 export function add30Minutes(date: Date): Date {
   return addMinutes(date, 30);
@@ -8,8 +12,6 @@ export const formatDateForKey = (date: Date) =>
   startOfDay(date).toISOString().split('T')[0];
 
 export function getESTDayBoundaries(startTimeUTC: Date, endTimeUTC: Date) {
-  const timeZone = 'America/New_York'; // EST time zone
-
   // Convert UTC times to EST
   const startTimeEST = new Date(startTimeUTC).toLocaleString('en-US', {
     timeZone,
@@ -60,3 +62,21 @@ export const getNumberOf30MinuteSlots = (
   // Return the result plus one because times are indexed by the start time.
   return numberOfSlots + 1;
 };
+
+/**
+ * Returns the start and end of the week given an input date. It internally converts the dates to EST
+ * @param date Date to get the week of which it belongs in.
+ * @returns Date objects in format `{start, end}` for the week that the input date is within.
+ */
+export function getWeekRangeInEST(date: Date) {
+  // Convert UTC date to EST.
+  const estDate = formatInTimeZone(date, timeZone, 'yyyy-MM-dd HH:mm:ssXXX', {
+    locale: enGB,
+  });
+
+  // Get the start and end of the week in UTC (Sunday to Saturday).
+  const startOfWeekUTC = startOfWeek(estDate, { weekStartsOn: 0 });
+  const endOfWeekUTC = endOfWeek(estDate, { weekStartsOn: 0 });
+
+  return { startOfWeekUTC, endOfWeekUTC };
+}

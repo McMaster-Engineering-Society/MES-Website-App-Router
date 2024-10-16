@@ -5,11 +5,23 @@ import { getBookingsInDateRangeAndEmailService } from '@/slices/hatch/booking-pa
 import {
   getESTDayBoundaries,
   getNumberOf30MinuteSlots,
+  getWeekRangeInEST,
 } from '@/slices/hatch/booking-page/utils';
+
+// Create type to help other files like bookingServices.ts infer the type of message when valid is false vs true.
+type TBookingValidatorPromise =
+  | {
+      valid: false;
+      message: string; // `message` cannot be null when `valid` is false.
+    }
+  | {
+      valid: true;
+      message: null; // `message` must be null when `valid` is true.
+    };
 
 const disabledRoomCheckService = async (
   newBooking: TBookingDb,
-): Promise<{ valid: boolean; message: string | null }> => {
+): Promise<TBookingValidatorPromise> => {
   const disabledRooms = await getDisabledRoomsService();
   if (disabledRooms === null) {
     throw new Error('Error in fetching disabled rooms');
@@ -22,12 +34,12 @@ const disabledRoomCheckService = async (
     message: roomEnabled
       ? null
       : 'Invalid booking: Bookings for the room requested has been disabled',
-  };
+  } as TBookingValidatorPromise;
 };
 
 const threeHourRoomsCheckService = async (
   newBooking: TBookingDb,
-): Promise<{ valid: boolean; message: string | null }> => {
+): Promise<TBookingValidatorPromise> => {
   const { startOfDay, endOfDay } = getESTDayBoundaries(
     newBooking.startTime,
     newBooking.endTime,
@@ -40,7 +52,9 @@ const threeHourRoomsCheckService = async (
   );
 
   if (userBookingsOnDay === null) {
-    throw new Error("Error in fetching user's rooms");
+    throw new Error(
+      "Error in fetching user's rooms while checking if they are within 3 hours of bookings this day.",
+    );
   }
 
   const userNumberOfSlotsOnDay =
@@ -52,18 +66,19 @@ const threeHourRoomsCheckService = async (
       0,
     );
 
+  const userBookingsWithin3Hours = userNumberOfSlotsOnDay <= 6;
+
   return {
-    valid: userNumberOfSlotsOnDay <= 6,
-    message:
-      userNumberOfSlotsOnDay <= 6
-        ? null
-        : 'Invalid booking: Bookings can only be made to a maximum of 3 hours',
-  };
+    valid: userBookingsWithin3Hours,
+    message: userBookingsWithin3Hours
+      ? null
+      : 'Invalid booking: Bookings can only be made to a maximum of 3 hours per day.',
+  } as TBookingValidatorPromise;
 };
 
 const availableRoomsCheckService = async (
   newBooking: TBookingDb,
-): Promise<{ valid: boolean; message: string | null }> => {
+): Promise<TBookingValidatorPromise> => {
   const roomBookings = await getBookingsInDateRangeForOneRoomDb(
     newBooking.startTime,
     newBooking.endTime,
@@ -79,11 +94,51 @@ const availableRoomsCheckService = async (
       roomBookings.length === 0
         ? null
         : 'Invalid booking: Someone already booked this room before you! :P',
-  };
+  } as TBookingValidatorPromise;
+};
+
+const tenHourWeeklyRoomsCheckService = async (
+  newBooking: TBookingDb,
+): Promise<TBookingValidatorPromise> => {
+  // Get times for the start and end of the week.
+  const { startOfWeekUTC, endOfWeekUTC } = getWeekRangeInEST(
+    newBooking.startTime,
+  );
+
+  // Find all the user's bookings in this week.
+  const userBookingsinWeek = await getBookingsInDateRangeAndEmailService(
+    startOfWeekUTC,
+    endOfWeekUTC,
+    newBooking.email,
+  );
+  if (userBookingsinWeek === null) {
+    throw new Error(
+      "Error in fetching user's rooms while checking if they are within 10 hours of bookings this week.",
+    );
+  }
+
+  const userNumberOfSlotsInWeek =
+    getNumberOf30MinuteSlots(newBooking.startTime, newBooking.endTime) +
+    userBookingsinWeek.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        getNumberOf30MinuteSlots(currentValue.startTime, currentValue.endTime),
+      0,
+    );
+
+  const userWithinBookingLimit10Hours = userNumberOfSlotsInWeek <= 2 * 10; // Can have 10 hours, which is 20 slots (slots are 30 minutes).
+
+  return {
+    valid: userWithinBookingLimit10Hours,
+    message: userWithinBookingLimit10Hours
+      ? null
+      : 'Invalid booking: Bookings can only be made to a maximum of 10 hours per week (Sunday to Saturday).',
+  } as TBookingValidatorPromise;
 };
 
 export const bookingValidationMethods = [
   disabledRoomCheckService,
   availableRoomsCheckService,
   threeHourRoomsCheckService,
+  tenHourWeeklyRoomsCheckService,
 ];
