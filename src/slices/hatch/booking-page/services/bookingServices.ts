@@ -64,8 +64,7 @@ export const createBookingService = async (
     if (invalidCheck) {
       return {
         booking: null,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        message: invalidCheck.message!,
+        message: invalidCheck.message,
       };
     }
 
