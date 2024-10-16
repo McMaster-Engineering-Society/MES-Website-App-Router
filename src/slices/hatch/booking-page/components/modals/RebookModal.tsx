@@ -96,7 +96,11 @@ const RebookModal: React.FC<RebookModalProps> = ({
     const avail = availabilities2[room];
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
-    return !isBeforeTd && Array.isArray(avail) && avail.length === numTimes;
+    return (
+      !isBeforeTd &&
+      Array.isArray(avail) &&
+      Number(avail.length) === Number(numTimes + 1)
+    );
   }
 
   const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
