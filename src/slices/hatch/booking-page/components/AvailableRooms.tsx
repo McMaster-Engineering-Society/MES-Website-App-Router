@@ -39,7 +39,7 @@ export default function AvailableRooms({ className }: { className?: string }) {
                 numAvailRooms === 0 && !checkBookingNotInPast()
                 ? 'No Rooms Available'
                 : null
-              : 'Click/drag to select a time'}
+              : 'Click/drag a timeslot to see available rooms'}
           </div>
         ) : (
           <div className='h-full'>
