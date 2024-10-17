@@ -179,8 +179,8 @@ export default function EditProfileModal({
                 </div>
 
                 <div>
-                  <label htmlFor='hatchnumber' className='block'>
-                    Hatch Number
+                  <label htmlFor='hatchnumber' className='block text-gray-500'>
+                    Hatch Card Number
                   </label>
                   <input
                     type='text'
@@ -188,7 +188,8 @@ export default function EditProfileModal({
                     name='hatchNumber'
                     value={formData.hatchNumber}
                     onChange={(e) => handleChange(e)}
-                    className='rounded-xl'
+                    className='rounded-xl bg-gray-200 text-gray-500 border border-gray-300 cursor-not-allowed'
+                    disabled
                   />
                 </div>
               </div>
