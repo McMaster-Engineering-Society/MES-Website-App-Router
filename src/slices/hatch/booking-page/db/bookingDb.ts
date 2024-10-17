@@ -15,14 +15,10 @@ const getBookingsCollection = async () => {
 
 export const createBookingDb = async (
   newBooking: TBookingDb,
-  disabledRooms: string[],
 ): Promise<TBookingDb> => {
   try {
     const bookingsCollection = await getBookingsCollection();
 
-    if (disabledRooms?.includes(newBooking.room)) {
-      throw new Error('Room is disabled.');
-    }
     newBooking.createdDate = new Date();
     const result: InsertOneResult =
       await bookingsCollection.insertOne(newBooking);
