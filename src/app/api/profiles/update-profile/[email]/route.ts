@@ -1,20 +1,20 @@
-import { updateProfileByIdService } from '@slices/auth/services/profileServices';
+import { updateProfileByEmailService } from '@slices/auth/services/profileServices';
 import { TProfile } from '@slices/auth/types';
 import { NextResponse } from 'next/server';
 
 import { TApiResponse } from '@/app/api/types';
 import { TMessageResponse } from '@/app/api/types';
 
-export async function PUT(
+export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { email: string } },
 ) {
-  const profileId: string = params.id;
+  const profileEmail: string = params.email;
   const profile: TProfile = await req.json();
 
-  if (!profileId) {
+  if (!profileEmail) {
     return NextResponse.json<TMessageResponse>(
-      { message: 'Profile id is required' },
+      { message: 'Profile email is required' },
       { status: 400 },
     );
   }
@@ -27,7 +27,7 @@ export async function PUT(
   }
 
   try {
-    const newProfile = await updateProfileByIdService(profileId, profile);
+    const newProfile = await updateProfileByEmailService(profileEmail, profile);
     if (!newProfile) {
       return NextResponse.json<TMessageResponse>(
         { message: 'Profile not found' },
