@@ -55,17 +55,23 @@ export const createBookingService = async (
   try {
     const adaptedBooking = adaptTBookingToTBookingDb(newBooking);
 
-    const checkResults = await Promise.all(
-      bookingValidationMethods.map(async (check) => await check(newBooking)),
-    );
+    const isAdmin = await getProfileByEmailAndCreateIfNullService(
+      adaptedBooking.email,
+    ).then((profile) => profile?.roles.includes('hatch-admin'));
 
-    const invalidCheck = checkResults.find((result) => !result.valid);
+    if (!isAdmin) {
+      const checkResults = await Promise.all(
+        bookingValidationMethods.map(async (check) => await check(newBooking)),
+      );
 
-    if (invalidCheck) {
-      return {
-        booking: null,
-        message: invalidCheck.message,
-      };
+      const invalidCheck = checkResults.find((result) => !result.valid);
+
+      if (invalidCheck) {
+        return {
+          booking: null,
+          message: invalidCheck.message,
+        };
+      }
     }
 
     const booking = await createBookingDb(adaptedBooking);
