@@ -29,8 +29,9 @@ export default function AuthSuccessPage() {
                 <div>
                   <b>Didn't receive an email?</b>
                   <div>
-                    Check your quarentine and spam messages within your email if
-                    you cannot find it. Add the email to trusted users.{' '}
+                    Check your email quarantine and spam messages if you're
+                    unable to locate a sign-in email. Add the email to trusted
+                    users for the future!{' '}
                   </div>
                   <p className='mb-2 mt-2'>
                     To go back to the sign in page and try again, follow the

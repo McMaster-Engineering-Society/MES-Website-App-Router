@@ -202,8 +202,12 @@ export const TimePickerProvider = ({ children }: Props) => {
           onSuccess: () => {
             resolve('Room has been successfully booked.');
           },
-          onError: () => {
-            resolve('Room booking was unsuccessful.');
+          onError: (error: Error) => {
+            if (error.message.includes('Invalid booking')) {
+              resolve(error.message);
+            } else {
+              resolve('Room booking was unsuccessful.');
+            }
           },
         });
       });

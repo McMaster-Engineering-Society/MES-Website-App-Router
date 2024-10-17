@@ -62,11 +62,17 @@ export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
     },
   );
 
-  if (!response.ok) {
+  // Want to handle all errors but 409 here because 409 means there was a state issue where a booking couldn't be added (eg. already booked at that timeslot) which needs a different error message.
+  if (!response.ok && response.status !== 409) {
     throw new Error(`Error: ${response.statusText}`);
   }
 
   const result = await response.json();
+
+  // Handle 409 errors here so they display the message we want to send back to the frontend properly.
+  if (response.status === 409) {
+    throw new Error(`${result.message}`);
+  }
 
   return result.data;
 }
