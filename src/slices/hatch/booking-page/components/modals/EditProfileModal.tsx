@@ -180,7 +180,7 @@ export default function EditProfileModal({
 
                 <div>
                   <label htmlFor='hatchnumber' className='block'>
-                    Hatch Number
+                    Hatch Card Number
                   </label>
                   <input
                     type='text'
@@ -189,6 +189,7 @@ export default function EditProfileModal({
                     value={formData.hatchNumber}
                     onChange={(e) => handleChange(e)}
                     className='rounded-xl'
+                    disabled
                   />
                 </div>
               </div>
