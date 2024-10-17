@@ -286,7 +286,7 @@ export const sendBookingConfirmationEmailService = async (
 
   const emailSubject = 'Hatch Booking Confirmation';
   const emailTo = createdBooking.email;
-  const emailName = userProfile?.firstName || 'Unnamed Hatch User';
+  const emailName = userProfile?.firstName || '';
 
   const emailHtml = generateSuccessfulBookingEmailHtml(
     emailName,
