@@ -1,4 +1,4 @@
-import { updateProfileByIdService } from '@slices/auth/services/profileServices';
+import { updateProfileByEmailService } from '@slices/auth/services/profileServices';
 import { TProfile } from '@slices/auth/types';
 import { NextResponse } from 'next/server';
 
@@ -27,7 +27,7 @@ export async function PATCH(
   }
 
   try {
-    const newProfile = await updateProfileByIdService(profileEmail, profile);
+    const newProfile = await updateProfileByEmailService(profileEmail, profile);
     if (!newProfile) {
       return NextResponse.json<TMessageResponse>(
         { message: 'Profile not found' },

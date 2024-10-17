@@ -114,18 +114,17 @@ export const createProfileDb = async (
   }
 };
 
-export const  updateProfileByIdDb = async (
-  profileId: string,
+export const updateProfileByEmailDb = async (
+  profileEmail: string,
   profileInfo: TProfile,
 ): Promise<TProfile | null> => {
   try {
     const profileCollection = await getProfileCollection();
-    const profileObjectId = new ObjectId(profileId);
     const result = await profileCollection.findOneAndUpdate(
       {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore: ObjectId type mismatch
-        _id: profileObjectId,
+        email: profileEmail,
       },
       { $set: profileInfo },
       { returnDocument: 'after' },
@@ -137,7 +136,7 @@ export const  updateProfileByIdDb = async (
     return result;
   } catch (error) {
     /* eslint-disable no-console */
-    console.error('Error updating profile by id', error);
+    console.error('Error updating profile by email', error);
     throw new Error('Database error');
   }
 };
