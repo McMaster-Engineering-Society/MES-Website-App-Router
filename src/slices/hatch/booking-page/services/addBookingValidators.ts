@@ -45,17 +45,19 @@ const threeHourRoomsCheckService = async (
     newBooking.endTime,
   );
 
-  const userBookingsOnDay = await getBookingsInDateRangeAndEmailService(
+  const userBookingsResult = await getBookingsInDateRangeAndEmailService(
     startOfDay,
     endOfDay,
     newBooking.email,
   );
 
-  if (userBookingsOnDay === null) {
+  if (userBookingsResult === null) {
     throw new Error(
       "Error in fetching user's rooms while checking if they are within 3 hours of bookings this day.",
     );
   }
+
+  const { bookings: userBookingsOnDay } = userBookingsResult;
 
   const userNumberOfSlotsOnDay =
     getNumberOf30MinuteSlots(newBooking.startTime, newBooking.endTime) +
@@ -106,16 +108,17 @@ const tenHourWeeklyRoomsCheckService = async (
   );
 
   // Find all the user's bookings in this week.
-  const userBookingsinWeek = await getBookingsInDateRangeAndEmailService(
+  const userBookingsResult = await getBookingsInDateRangeAndEmailService(
     startOfWeekUTC,
     endOfWeekUTC,
     newBooking.email,
   );
-  if (userBookingsinWeek === null) {
+  if (userBookingsResult === null) {
     throw new Error(
       "Error in fetching user's rooms while checking if they are within 10 hours of bookings this week.",
     );
   }
+  const { bookings: userBookingsinWeek } = userBookingsResult;
 
   const userNumberOfSlotsInWeek =
     getNumberOf30MinuteSlots(newBooking.startTime, newBooking.endTime) +

@@ -4,6 +4,8 @@ import React from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
+
 type BookingTimeslotProps = {
   startTime: Date;
   endTime: Date;
@@ -50,7 +52,8 @@ export const BookingTimeslot = ({
       >
         <Clock className={cn('w-4 h-4 mx-2', textColour)} />
         <span className='w-full text-center text-nowrap pr-3'>
-          {format(startTime, 'h:mm a')} – {format(endTime, 'h:mm a')}
+          {format(startTime, 'h:mm a')} –{' '}
+          {format(add30Minutes(endTime), 'h:mm a')}
         </span>
       </div>
       <div

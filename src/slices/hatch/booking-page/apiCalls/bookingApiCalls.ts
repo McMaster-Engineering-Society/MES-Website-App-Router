@@ -157,3 +157,95 @@ export async function fetchAllBookings(
 
   return result.data;
 }
+
+export const fetchPastBookingsByEmail = async (
+  email: string,
+  page = 1,
+  limit = 10,
+) => {
+  // To get the past bookings, use the range where start date is a year before today's date and end date is today
+  const startDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 1),
+  );
+  const endDate = new Date();
+
+  const startDateISO = startDate.toISOString().slice(0, -1);
+  const endDateISO = endDate.toISOString().slice(0, -1);
+
+  // Calculate offset
+  const offset = (page - 1) * limit;
+
+  // Modify API call to include offset and limit
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL +
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}&offset=${offset}&limit=${limit}`,
+    {
+      method: 'GET',
+    },
+  );
+
+  const jsonResponse = await response.json();
+
+  const newPastBookings: TBooking[] = jsonResponse.data.bookings.map(
+    (booking: TBooking) => ({
+      _id: booking._id,
+      userId: booking.userId,
+      room: booking.room,
+      email: booking.email,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
+      hasConfirmed: booking.hasConfirmed,
+      createdDate: booking.createdDate,
+    }),
+  );
+
+  const totalCount = Math.ceil(jsonResponse.data.totalCount / limit);
+
+  return { newPastBookings, totalCount };
+};
+
+export const fetchNextBookingsByEmail = async (
+  email: string,
+  page = 1,
+  limit = 10,
+) => {
+  // To get the upcoming bookings, use the range where start date is today and end date is a year from now
+  const startDate = new Date();
+  const endDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() + 1),
+  );
+
+  const startDateISO = startDate.toISOString().slice(0, -1);
+  const endDateISO = endDate.toISOString().slice(0, -1);
+
+  // Calculate offset
+  const offset = limit > 1 ? (page - 1) * limit + 1 : 0;
+
+  // Modify API call to include offset and limit
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL +
+      `/api/bookings/get-bookings-in-date-range-and-email?startdate=${startDateISO}&enddate=${endDateISO}&email=${email}&offset=${offset}&limit=${limit}`,
+    {
+      method: 'GET',
+    },
+  );
+
+  const jsonResponse = await response.json();
+
+  const newBookings: TBooking[] = jsonResponse.data.bookings.map(
+    (booking: TBooking) => ({
+      _id: booking._id,
+      userId: booking.userId,
+      room: booking.room,
+      email: booking.email,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
+      hasConfirmed: booking.hasConfirmed,
+      createdDate: booking.createdDate,
+    }),
+  );
+
+  const totalCount = Math.ceil(jsonResponse.data.totalCount / limit);
+
+  return { newBookings, totalCount };
+};
