@@ -25,7 +25,7 @@ import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
 import EditButton from '@/slices/hatch/booking-page/components/buttons/EditButton';
 import EditProfileModal from '@/slices/hatch/booking-page/components/modals/EditProfileModal';
-import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
+import ExpandModal from '@/slices/hatch/booking-page/components/modals/ExpandModal';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 const queryClient = new QueryClient();
@@ -345,7 +345,7 @@ const UserDashboard = () => {
           </ButtonLink>
         </div>
 
-        <RebookModal
+        <ExpandModal
           open={open}
           onClose={() => setOpen(false)}
           startTime={displayStartTime}
@@ -353,7 +353,8 @@ const UserDashboard = () => {
           userRoom={displayRoom}
           userId={displayUserId}
           email={displayEmail}
-        ></RebookModal>
+          id={displayId}
+        ></ExpandModal>
 
         {profile && (
           <EditProfileModal
