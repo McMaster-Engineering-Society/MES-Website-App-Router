@@ -13,7 +13,7 @@ import {
   MessageCircleWarningIcon,
   UserRoundCogIcon,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -23,6 +23,7 @@ import PageSection from '@/components/PageSection';
 
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
+import { fetchNextBookingsByEmail } from '@/slices/hatch/booking-page/apiCalls/bookingApiCalls';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
 import { BookingTimeslotPagination } from '@/slices/hatch/booking-page/components/BookingTimeslotPagination';
 import EditButton from '@/slices/hatch/booking-page/components/buttons/EditButton';
@@ -32,6 +33,7 @@ import {
   useNextBookings,
   usePastBookings,
 } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 const queryClient = new QueryClient();
 
@@ -48,7 +50,7 @@ const UserDashboard = () => {
     profile?.email,
     pastBookingsPage,
   );
-  const [nextBooking] = useState<TBooking | null>(null);
+  const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
   const [open, setOpen] = useState<boolean>(false);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -60,6 +62,39 @@ const UserDashboard = () => {
   const [displayId, setDisplayId] = useState<string>('');
 
   // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
+
+  useEffect(() => {
+    const fetchNextBooking = async () => {
+      const email = profile?.email;
+      if (!email) return;
+
+      try {
+        const nextBookings = await fetchNextBookingsByEmail(email, 1, 1); // Fetch only 1 booking
+        if (nextBookings && nextBookings.newBookings.length > 0) {
+          setNextBooking(nextBookings.newBookings[0]); // Set the next booking
+        } else {
+          setNextBooking(null); // Handle no bookings case
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch the next booking:', error);
+      }
+    };
+
+    fetchNextBooking();
+  }, [profile]);
+
+  // You can add logic to handle what happens when the nextBooking is set, e.g.:
+  useEffect(() => {
+    if (nextBooking) {
+      setDisplayStartTime(new Date(nextBooking.startTime));
+      setDisplayEndTime(new Date(nextBooking.endTime));
+      setDisplayRoom(nextBooking.room);
+      setDisplayUserId(nextBooking.userId);
+      setDisplayEmail(nextBooking.email);
+      setDisplayId(nextBooking._id?.toString() || '');
+    }
+  }, [nextBooking]);
 
   function handleExpand(
     startTime: Date,
@@ -192,7 +227,7 @@ const UserDashboard = () => {
                       />
                       <span className='font-light text-gray-700 text-nowrap ml-2'>
                         {format(nextBooking.startTime, 'h:mm a')} –{' '}
-                        {format(nextBooking.endTime, 'h:mm a')}
+                        {format(add30Minutes(nextBooking.endTime), 'h:mm a')}
                       </span>
                     </div>
 

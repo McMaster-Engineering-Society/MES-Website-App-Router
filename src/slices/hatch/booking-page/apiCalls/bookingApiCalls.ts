@@ -219,7 +219,7 @@ export const fetchNextBookingsByEmail = async (
   const endDateISO = endDate.toISOString().slice(0, -1);
 
   // Calculate offset
-  const offset = (page - 1) * limit;
+  const offset = limit > 1 ? (page - 1) * limit + 1 : 0;
 
   // Modify API call to include offset and limit
   const response = await fetch(
