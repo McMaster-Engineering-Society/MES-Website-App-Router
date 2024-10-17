@@ -9,7 +9,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 5,
     email: 'chemical@macengsociety.ca',
     image: '/images/council-24-25/frank-serafino.jpg',
-    description: '',
+    description:
+      'Hello all! I will be the Chem Eng rep for the upcoming year! Please don’t hesitate to contact me if you have any questions or concerns about the faculty or the MES. I will always advocate for Chem Eng and spread the word on all things chem to help grow our faculty!',
   },
   {
     firstName: 'Saim',
@@ -19,7 +20,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'civil@macengsociety.ca',
     image: '/images/default-picture.jpeg',
-    description: '',
+    description:
+      "Hi, I’m Saim, your Civil Engineering rep for this year. Civil is super interesting and I love taking part in technical teams and getting to connect with fellow students. As the rep for the world's second oldest profession, I want to help students feel more comfortable and reduce any unnecessary stress. Feel free to reach out by email or talk to me with any concerns you may have so I can try to help.",
   },
   {
     firstName: 'Majed',
@@ -29,7 +31,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'ece@macengsociety.ca',
     image: '/images/council-24-25/majed-kalaoun.jpg',
-    description: '',
+    description:
+      "Hello, I'm Majed, your current ECE rep. My role is to communicate between the ECE department and the MES. Feel free to reach out to me in-person or via email to chat about any concerns or ideas you want raised, as well as any questions you may have.",
   },
   {
     firstName: 'Bianka',
@@ -39,7 +42,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'engphys@macengsociety.ca',
     image: '/images/council-24-25/bianka-cestar.jpg',
-    description: '',
+    description:
+      "Hello everyone, my name is Bianka and I'm this year's engineering physics rep. Alongside being the EngPhys rep at MES, I am also a president at engineering physics society, so if you ever have any questions about the program please feel free to reach out to me! As an EngPhys rep, I'm really excited to be here and assist the Engineering Physics community however I can to provide everyone with the best possible experience in the program.",
   },
   {
     firstName: 'Anna',
@@ -49,7 +53,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'materials@macengsociety.ca',
     image: '/images/default-picture.jpeg',
-    description: '',
+    description:
+      "Hi! My name is Anna and I am the Materials Department Rep this year. The purpose of my role is to communicate between the MES and the MSE. I also communicate your ideas to the respective societies, so if you have any ideas, questions, or concerns, please don't hesitate to reach out to me at any time! I'm excited to help make this school year amazing!!",
   },
   {
     firstName: 'Tyler',
@@ -69,7 +74,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 4,
     email: 'mechatronics@macengsociety.ca',
     image: '/images/default-picture.jpeg',
-    description: '',
+    description:
+      "Hey, I'm Marko. I'm in my 4th and final year of the best engineering program at this school. As Tron Rep, I look forward to communicating our viewpoints to the McMaster Engineering Society and the Engineering Faculty. Feel free to contact me with any questions or concerns, and let's make this year the best one so far!",
   },
   {
     firstName: 'Michael',
@@ -79,7 +85,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'software@macengsociety.ca',
     image: '/images/council-24-25/michael-roberts.jpg',
-    description: '',
+    description:
+      "Hey everyone! I'm dedicated to advocating on your behalf to ensure you have the best year possible! I also contribute to the Software Engineering Society's events and website development. Outside of student government, I am an avid GTHA sports fan and a strategy board games enthusiast. Please don't hesitate to reach out to me, especially regarding a concern or suggestion about the MES or SES!",
   },
   {
     firstName: 'Faith',
@@ -119,7 +126,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'management@macengsociety.ca',
     image: '/images/council-24-25/nesa-gonsalves.jpg',
-    description: '',
+    description:
+      'Hey everyone!! I’m Nesa, your Management Representative for 2024/2025. My role is to be a branch of communication between the MEMs, MES and student body. Feel free to reach out at any point with questions/concerns, ideas or even just to say hello :) Looking forward to an amazing year ahead!',
   },
   {
     firstName: 'Bilal',
@@ -129,7 +137,8 @@ const deptAndProgramReps: CouncilDetails[] = [
     level: 3,
     email: 'society@macengsociety.ca',
     image: '/images/council-24-25/bilal-karjikar.jpg',
-    description: '',
+    description:
+      "Hi! I'm Bilal, your Eng and Society rep for this year!! I am going into my third year of civil engineering and society program this fall, so hit that email button for any society questions you have. I want more people in Eng&Society, our classroom chairs are in need of awesome people like you!! ",
   },
   {
     firstName: 'Ifeyinwa',
