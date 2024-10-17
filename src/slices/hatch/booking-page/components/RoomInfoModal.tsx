@@ -12,9 +12,9 @@ import { Check, Plug, User } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import ResourcesIcon from '@/slices/hatch/booking-page/components/ResourcesIcon';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
 type Props = {
@@ -74,7 +74,7 @@ function RoomInfoModal({
                   {format(date, 'yyyy')}
                 </div>
 
-                <div className='flex justify-between w-fit p-3 bg-gray-200 rounded-xl'>
+                <div className='flex justify-between p-3 bg-gray-200 rounded-xl'>
                   <div className='flex flex-col gap-3'>
                     <div className='inline-flex items-center'>
                       <User className='mr-1 w-[20px]' />

@@ -2,8 +2,8 @@ import { InsertManyResult } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 import { TApiResponse, TMessageResponse } from '@/app/api/types';
-import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import { initializeRoomsService } from '@/slices/hatch/admin/services/roomServices';
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
 
 /**
  * This route resets the rooms to their initial state.

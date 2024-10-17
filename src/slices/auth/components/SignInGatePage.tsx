@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import React from 'react';
 
+import LoadingIcon from '@/components/layout/LoadingIcon';
+
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 
 type SignInGatePageProps = {
@@ -43,8 +45,7 @@ const SignInGatePage = ({
 
   // If the profile is still loading, show a loading message.
   if (!profileIsLoaded) {
-    // TODO: make prettier
-    return <div>Loading user profile...</div>;
+    return <LoadingIcon />;
   }
 
   // Once profile is loaded and no redirection is needed, show the content

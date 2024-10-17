@@ -22,6 +22,7 @@ import {
   getBookingsInDateRangeForOneRoomDb,
   updateBookingByIdDb,
 } from '@/slices/hatch/booking-page/db/bookingDb';
+import { bookingValidationMethods } from '@/slices/hatch/booking-page/services/addBookingValidators';
 
 const availableRooms = ['H201', 'H203', 'H204A', 'H204B', 'H205'];
 
@@ -50,26 +51,36 @@ function adaptTBookingDbToTBooking(booking: TBookingDb): TBooking {
 
 export const createBookingService = async (
   newBooking: TBooking,
-): Promise<TBooking | null> => {
+): Promise<{ booking: TBooking | null; message: string | null }> => {
   try {
-    // Adapt booking type.
     const adaptedBooking = adaptTBookingToTBookingDb(newBooking);
 
-    const disabledRooms = await getDisabledRoomsService();
-    if (disabledRooms === null) {
-      throw new Error('Error in fetching disabled rooms');
-    } else {
-      const booking = await createBookingDb(
-        adaptedBooking,
-        disabledRooms.disabledRooms,
+    const isAdmin = await getProfileByEmailAndCreateIfNullService(
+      adaptedBooking.email,
+    ).then((profile) => profile?.roles.includes('hatch-admin'));
+
+    if (!isAdmin) {
+      const checkResults = await Promise.all(
+        bookingValidationMethods.map(async (check) => await check(newBooking)),
       );
-      sendBookingConfirmationEmailService(booking);
-      return adaptTBookingDbToTBooking(booking);
+
+      const invalidCheck = checkResults.find((result) => !result.valid);
+
+      if (invalidCheck) {
+        return {
+          booking: null,
+          message: invalidCheck.message,
+        };
+      }
     }
+
+    const booking = await createBookingDb(adaptedBooking);
+    sendBookingConfirmationEmailService(booking);
+    return { booking: adaptTBookingDbToTBooking(booking), message: null };
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Error in booking services:', error);
-    return null;
+    return { booking: null, message: null };
   }
 };
 
@@ -157,14 +168,18 @@ export const getBookingsInDateRangeAndEmailService = async (
   startDate: Date,
   endDate: Date,
   email: string,
+  limit = 10,
+  offset = 0,
 ) => {
   try {
-    const allBookingsList = await getBookingsInDateRangeAndEmailDb(
+    const { bookings, totalCount } = await getBookingsInDateRangeAndEmailDb(
       startDate,
       endDate,
       email,
+      limit,
+      offset,
     );
-    return allBookingsList;
+    return { bookings, totalCount };
   } catch (e) {
     return null;
   }
@@ -275,7 +290,7 @@ export const sendBookingConfirmationEmailService = async (
 
   const emailSubject = 'Hatch Booking Confirmation';
   const emailTo = createdBooking.email;
-  const emailName = userProfile?.firstName || 'Unnamed Hatch User';
+  const emailName = userProfile?.firstName || '';
 
   const emailHtml = generateSuccessfulBookingEmailHtml(
     emailName,
@@ -299,8 +314,15 @@ export const sendBookingConfirmationEmailService = async (
 export const getAllBookingsInDateRangeService = async (
   startDate: Date,
   endDate: Date,
+  limit = 10,
+  offset = 0,
 ): Promise<TBooking[]> => {
   // Go through all rooms and add their bookings to a list of all bookings.
-  const bookings = await getBookingsInDateRangeDb(startDate, endDate);
+  const bookings = await getBookingsInDateRangeDb(
+    startDate,
+    endDate,
+    limit,
+    offset,
+  );
   return bookings.map(adaptTBookingDbToTBooking);
 };

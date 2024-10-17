@@ -150,7 +150,7 @@ const WeekModal: React.FC<WeekModalProps> = ({
           X
         </button>
         {/* {children} */}
-        <h1 className='text-center mx mb-5'>Same Time Tomorrow</h1>
+        <h1 className='text-center mx mb-5'>Same Time Next Week</h1>
 
         <div className='flex'>
           <button className='border-solid border-2 border-green-600 rounded-lg px-5 py-5 m-3 bg-green-100 text-green-600'>
