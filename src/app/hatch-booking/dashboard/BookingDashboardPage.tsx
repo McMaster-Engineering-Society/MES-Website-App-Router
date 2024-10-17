@@ -42,11 +42,11 @@ const UserDashboard = () => {
 
   const [nextBookingsPage, setNextBookingsPage] = useState<number>(1);
   const [pastBookingsPage, setPastBookingsPage] = useState<number>(1);
-  const { data: nextBookingsData } = useNextBookings(
+  const { data: nextBookingsData, isLoading: isNextLoading } = useNextBookings(
     profile?.email,
     nextBookingsPage,
   );
-  const { data: pastBookingsData } = usePastBookings(
+  const { data: pastBookingsData, isLoading: isPastLoading } = usePastBookings(
     profile?.email,
     pastBookingsPage,
   );
@@ -60,8 +60,6 @@ const UserDashboard = () => {
   const [displayUserId, setDisplayUserId] = useState<string>('');
   const [displayEmail, setDisplayEmail] = useState<string>('');
   const [displayId, setDisplayId] = useState<string>('');
-
-  // todo: display a set number of past bookings and upcoming bookings? e.g: only show 5 of the past bookings, or have some sort of filtering / pagination in the future?
 
   useEffect(() => {
     const fetchNextBooking = async () => {
@@ -169,7 +167,9 @@ const UserDashboard = () => {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain
                 totalPages={pastBookingsData?.totalCount!}
               />
-              {pastBookingsData &&
+              {isPastLoading && <LoadingIcon />}
+              {!isPastLoading &&
+              pastBookingsData &&
               pastBookingsData.newPastBookings.length > 0 ? (
                 <div className='flex flex-col gap-8 min-h-[75px]'>
                   {pastBookingsData.newPastBookings.map((booking, index) => {
@@ -195,7 +195,9 @@ const UserDashboard = () => {
                   })}
                 </div>
               ) : (
-                <LoadingIcon />
+                <div className='flex flex-row items-center justify-center min-h-[75px]'>
+                  <p>You do not have any upcoming bookings.</p>
+                </div>
               )}
             </PageSection>
           </div>
@@ -244,7 +246,7 @@ const UserDashboard = () => {
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>
-                  <p>You do not have any upcoming bookings.</p>
+                  <p>You do not have any past bookings.</p>
                 </div>
               )}
             </PageSection>
@@ -265,30 +267,34 @@ const UserDashboard = () => {
               />
               {nextBookingsData && nextBookingsData.newBookings.length > 0 ? (
                 <div className='flex flex-col gap-8'>
-                  {nextBookingsData.newBookings.map((booking, index) => {
-                    return (
-                      <BookingTimeslot
-                        key={index}
-                        startTime={booking.startTime}
-                        endTime={booking.endTime}
-                        room={booking.room}
-                        variant='next'
-                        handleExpand={() =>
-                          handleExpand(
-                            booking.startTime,
-                            booking.endTime,
-                            booking.room,
-                            booking.userId,
-                            booking.email,
-                            booking._id?.toString() ?? '',
-                          )
-                        }
-                      ></BookingTimeslot>
-                    );
-                  })}
+                  {isNextLoading && <LoadingIcon />}
+                  {!isNextLoading &&
+                    nextBookingsData.newBookings.map((booking, index) => {
+                      return (
+                        <BookingTimeslot
+                          key={index}
+                          startTime={booking.startTime}
+                          endTime={booking.endTime}
+                          room={booking.room}
+                          variant='next'
+                          handleExpand={() =>
+                            handleExpand(
+                              booking.startTime,
+                              booking.endTime,
+                              booking.room,
+                              booking.userId,
+                              booking.email,
+                              booking._id?.toString() ?? '',
+                            )
+                          }
+                        ></BookingTimeslot>
+                      );
+                    })}
                 </div>
               ) : (
-                <LoadingIcon />
+                <div className='flex flex-row items-center justify-center min-h-[75px]'>
+                  <p>You do not have any upcoming bookings.</p>
+                </div>
               )}
             </PageSection>
           </div>
