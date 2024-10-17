@@ -89,7 +89,7 @@ const TimePickerBookings = ({
     }, 20);
 
     return () => clearTimeout(findBookingsInDOM);
-  }, [isAdmin, userBookings, allBookings, isFetched]);
+  }, [isAdmin, userBookings, allBookings, isFetched, pickerStartDate]);
 
   const TimePickerCell = ({ time }: { time: string }) => {
     // finds all the bookings at a certain time
