@@ -1,5 +1,6 @@
 'use client';
 
+import { useDisclosure } from '@nextui-org/react';
 import { TBooking } from '@slices/hatch/booking-page/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -22,7 +23,8 @@ import PageSection from '@/components/PageSection';
 import ProfilePicture from '@/constant/user-dashboard/ProfilePictureSvg';
 import { useSessionContext } from '@/slices/auth/context/SessionContext';
 import { BookingTimeslot } from '@/slices/hatch/booking-page/components/BookingTimeslot';
-import EditButtonLink from '@/slices/hatch/booking-page/components/buttons/EditButtonLink';
+import EditButton from '@/slices/hatch/booking-page/components/buttons/EditButton';
+import EditProfileModal from '@/slices/hatch/booking-page/components/modals/EditProfileModal';
 import RebookModal from '@/slices/hatch/booking-page/components/modals/RebookModal';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
 
@@ -36,6 +38,7 @@ const UserDashboard = () => {
   const [nextBooking, setNextBooking] = useState<TBooking | null>(null);
   const [open, setOpen] = useState<boolean>(false);
 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [displayStartTime, setDisplayStartTime] = useState<Date>(new Date());
   const [displayEndTime, setDisplayEndTime] = useState<Date>(new Date());
   const [displayRoom, setDisplayRoom] = useState<string>('');
@@ -139,7 +142,7 @@ const UserDashboard = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <section className='flex flex-col  gap-10 '>
+      <section className='flex flex-col gap-10 '>
         <div className='grid grid-cols-2 gap-20'>
           <div>
             <PageSection
@@ -153,24 +156,28 @@ const UserDashboard = () => {
               {profile && (
                 <div className='flex flex-row items-center justify-center gap-6 min-h-[75px]'>
                   <ProfilePicture />
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col items-start'>
                     <div className='flex flex-row place-items-center space-x-2'>
                       <p className='text-2xl font-bold'>
                         {profile.firstName} {profile.lastName}
                       </p>
-                      <p className='text-gray-500 font-light'>
-                        {profile.hatchNumber && 'hatch ' + profile.hatchNumber}
+                      <p className='text-gray-500 font-light underline'>
+                        {profile.email}
                       </p>
                     </div>
-                    <p className='text-gray-500 font-light underline'>
-                      {profile.email}
-                    </p>
+                    <div className='flex flex-row place-items-center space-x-2 text-gray-500 font-light'>
+                      {profile.program && (
+                        <p>
+                          {profile.program} {profile.year}
+                        </p>
+                      )}
+                      {profile.hatchNumber && (
+                        <p>hatch#{profile.hatchNumber}</p>
+                      )}
+                      {profile.phoneNumber && <p>{profile.phoneNumber}</p>}
+                    </div>
                   </div>
-                  <EditButtonLink
-                    href='notareallink'
-                    variant='lavendar'
-                    size='sm'
-                  />
+                  <EditButton onClick={onOpen} variant='lavendar' size='sm' />
                 </div>
               )}
             </PageSection>
@@ -254,11 +261,7 @@ const UserDashboard = () => {
                       </span>
                     </div>
                   </div>
-                  <EditButtonLink
-                    href='notareallink'
-                    variant='light-green'
-                    size='sm'
-                  />
+                  <EditButton variant='light-green' size='sm' />
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>
@@ -345,6 +348,14 @@ const UserDashboard = () => {
           userId={displayUserId}
           email={displayEmail}
         ></RebookModal>
+
+        {profile && (
+          <EditProfileModal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            profile={profile}
+          ></EditProfileModal>
+        )}
       </section>
     </QueryClientProvider>
   );
