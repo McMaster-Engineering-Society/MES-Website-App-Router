@@ -21,6 +21,8 @@ export async function GET(req: NextRequest) {
   const startDateParam = searchParams.get('startdate');
   const endDateParam = searchParams.get('enddate');
   const email = searchParams.get('email');
+  const limit = Number(searchParams.get('limit'));
+  const offset = Number(searchParams.get('offset'));
 
   let startDate;
   let endDate;
@@ -34,17 +36,29 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  const allBookingsList = await getBookingsInDateRangeAndEmailService(
+  const result = await getBookingsInDateRangeAndEmailService(
     startDate,
     endDate,
     email,
+    limit,
+    offset,
   );
 
-  if (!allBookingsList)
+  if (!result || !result.bookings) {
     return NextResponse.json<TMessageResponse>({
       message: 'List of all bookings not found',
     });
-  return NextResponse.json<TApiResponse<WithId<TBooking>[]>>({
-    data: allBookingsList,
+  }
+
+  const { bookings, totalCount } = result;
+
+  if (!bookings)
+    return NextResponse.json<TMessageResponse>({
+      message: 'List of all bookings not found',
+    });
+  return NextResponse.json<
+    TApiResponse<{ bookings: WithId<TBooking>[]; totalCount: number }>
+  >({
+    data: { bookings, totalCount },
   });
 }

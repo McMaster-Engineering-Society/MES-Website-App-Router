@@ -168,14 +168,18 @@ export const getBookingsInDateRangeAndEmailService = async (
   startDate: Date,
   endDate: Date,
   email: string,
+  limit = 10,
+  offset = 0,
 ) => {
   try {
-    const allBookingsList = await getBookingsInDateRangeAndEmailDb(
+    const { bookings, totalCount } = await getBookingsInDateRangeAndEmailDb(
       startDate,
       endDate,
       email,
+      limit,
+      offset,
     );
-    return allBookingsList;
+    return { bookings, totalCount };
   } catch (e) {
     return null;
   }
@@ -310,8 +314,15 @@ export const sendBookingConfirmationEmailService = async (
 export const getAllBookingsInDateRangeService = async (
   startDate: Date,
   endDate: Date,
+  limit = 10,
+  offset = 0,
 ): Promise<TBooking[]> => {
   // Go through all rooms and add their bookings to a list of all bookings.
-  const bookings = await getBookingsInDateRangeDb(startDate, endDate);
+  const bookings = await getBookingsInDateRangeDb(
+    startDate,
+    endDate,
+    limit,
+    offset,
+  );
   return bookings.map(adaptTBookingDbToTBooking);
 };
