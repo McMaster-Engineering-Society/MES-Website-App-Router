@@ -10,3 +10,18 @@ export type TBooking = {
   hasConfirmed: boolean;
   createdDate?: Date;
 };
+
+export enum RoomResource {
+  TV = 'TV',
+  Whiteboard = 'Whiteboard',
+  Projector = 'Projector',
+}
+
+export type THatchRoom = {
+  roomName: string;
+  capacity: number;
+  outlets: number;
+  resources: { [key in RoomResource]: boolean };
+  img: string;
+  enabled: boolean;
+};

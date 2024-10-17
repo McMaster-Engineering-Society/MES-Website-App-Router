@@ -174,7 +174,8 @@ export const TimePickerProvider = ({ children }: Props) => {
   const checkBookingNotInPast = useCallback(() => {
     pickerEndDate.setDate(pickerStartDate.getDate() + 6);
     if (
-      (startIndex && timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
+      (startIndex != -1 &&
+        timeSlotIndexToTimeISODate(startIndex) < new Date()) ||
       (pickerEndDate && pickerEndDate < new Date())
     ) {
       return false;
@@ -201,8 +202,12 @@ export const TimePickerProvider = ({ children }: Props) => {
           onSuccess: () => {
             resolve('Room has been successfully booked.');
           },
-          onError: () => {
-            resolve('Room booking was unsuccessful.');
+          onError: (error: Error) => {
+            if (error.message.includes('Invalid booking')) {
+              resolve(error.message);
+            } else {
+              resolve('Room booking was unsuccessful.');
+            }
           },
         });
       });

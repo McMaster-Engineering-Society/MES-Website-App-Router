@@ -15,14 +15,10 @@ const getBookingsCollection = async () => {
 
 export const createBookingDb = async (
   newBooking: TBookingDb,
-  disabledRooms: string[],
 ): Promise<TBookingDb> => {
   try {
     const bookingsCollection = await getBookingsCollection();
 
-    if (disabledRooms?.includes(newBooking.room)) {
-      throw new Error('Room is disabled.');
-    }
     newBooking.createdDate = new Date();
     const result: InsertOneResult =
       await bookingsCollection.insertOne(newBooking);
@@ -172,11 +168,14 @@ export const getBookingsInDateRangeAndEmailDb = async (
   startDate: Date,
   endDate: Date,
   email: string,
+  limit = 10,
+  offset = 0,
 ) => {
   const bookingsCollection = await getBookingsCollection();
   const targetStart = startDate;
   const targetEnd = endDate;
-  const cursor = await bookingsCollection.find({
+
+  const totalCount = await bookingsCollection.countDocuments({
     email: email,
     $or: [
       {
@@ -207,13 +206,55 @@ export const getBookingsInDateRangeAndEmailDb = async (
       },
     ],
   });
-  const bookings = cursor.toArray();
-  return bookings;
+
+  const cursor = await bookingsCollection
+    .find({
+      email: email,
+      $or: [
+        {
+          startTime: {
+            $lt: targetEnd,
+          },
+          endTime: {
+            $gte: targetEnd,
+          },
+        },
+        {
+          startTime: {
+            $lte: targetStart,
+          },
+          endTime: {
+            $gt: targetStart,
+          },
+        },
+        {
+          endTime: {
+            $gt: targetStart,
+            $lte: targetEnd,
+          },
+          startTime: {
+            $gte: targetStart,
+            $lt: targetEnd,
+          },
+        },
+      ],
+    })
+    .sort({ startTime: 1 })
+    .skip(offset)
+    .limit(limit);
+  const bookings = await cursor.toArray();
+
+  return {
+    bookings,
+    totalCount,
+  };
 };
 
 export const getBookingsInDateRangeDb = async (
   startDate: Date,
   endDate: Date,
+  limit = 10,
+  offset = 0,
 ) => {
   const bookingsCollection = await getBookingsCollection();
   const targetStart = startDate;
@@ -249,7 +290,9 @@ export const getBookingsInDateRangeDb = async (
         },
       ],
     })
-    .sort({ startTime: 1 });
+    .sort({ startTime: 1 })
+    .skip(offset)
+    .limit(limit);
   const bookings = cursor.toArray();
   return bookings;
 };
