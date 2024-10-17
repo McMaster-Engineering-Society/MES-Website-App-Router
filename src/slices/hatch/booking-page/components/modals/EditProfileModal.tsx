@@ -88,7 +88,7 @@ export default function EditProfileModal({
 
   return (
     <Modal
-      size='md'
+      size='lg'
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       isDismissable={false}
@@ -103,7 +103,7 @@ export default function EditProfileModal({
               <div className='text-green-700 mb-4'>{successMessage}</div>
             )}
             <form onSubmit={handleSubmit} id='editProfileForm'>
-              <div className='flex flex-col items-start space-y-4'>
+              <div className='flex flex-col items-start space-y-4 m-4'>
                 <div className='flex flex-row space-x-5'>
                   <div>
                     <label htmlFor='firstname' className='block'>
