@@ -6,6 +6,7 @@ type DocumentSection = {
 };
 
 export const documents: DocumentSection[] = [
+  /*
   {
     heading: 'MES Policy Manual',
     description:
@@ -13,6 +14,7 @@ export const documents: DocumentSection[] = [
     buttonLabel: 'Policy Manual',
     buttonLink: '/pdfs/governing-documents/policy-manual2023.pdf',
   },
+  */
   {
     heading: 'MES Constitution',
     description:
@@ -20,6 +22,7 @@ export const documents: DocumentSection[] = [
     buttonLabel: 'Constitution',
     buttonLink: '/pdfs/governing-documents/constitution.pdf',
   },
+  /*
   {
     heading: '2020-2021 Action Plan',
     description:
@@ -27,18 +30,21 @@ export const documents: DocumentSection[] = [
     buttonLabel: 'Action Plan',
     buttonLink: '/pdfs/governing-documents/action-plan.pdf',
   },
+  */
   {
     heading: 'MES Bylaws',
     description:
       'The Bylaws were developed in 2020 in an effort to solidify the activities and policies of the MES, separate from the Policy Manual. The policies documented here are intended to accompany the Constitution and Policy Manual of the McMaster Engineering Society and are binding terms of reference.',
     buttonLabel: 'Bylaws',
-    buttonLink: '/pdfs/governing-documents/bylaws2024.pdf',
+    buttonLink:
+      'https://mcmaster-engineering-society.github.io/Governing-Docs/bylaws.pdf',
   },
+  /*
   {
     heading: 'MES Long Term Plan',
     description:
       'This document is updated yearly by the MES President, in cooperation with the Executive. It defines the long-term vision of the MES through pillars of growth and service that we, as an organisation, aim to emulate.',
     buttonLabel: 'Long Term Plan',
     buttonLink: '/pdfs/governing-documents/long-term-plan.pdf',
-  },
+  },*/
 ];
