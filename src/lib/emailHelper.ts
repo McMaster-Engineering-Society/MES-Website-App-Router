@@ -86,6 +86,8 @@ export function generateSuccessfulBookingEmailHtml(
     ? format(createdDate, "MMMM d, yyyy 'at' h:mm a")
     : 'Unknown';
 
+  const helloMessage = name ? `Hi ${name}` : 'Hi';
+
   return `
   <body style="background-color:#fff;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&quot;Helvetica Neue&quot;,sans-serif">
     <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:37.5em">
@@ -112,7 +114,7 @@ export function generateSuccessfulBookingEmailHtml(
                       <tbody style="width:100%">
                         <tr style="width:100%">
                           <td data-id="__react-email-column">
-                            <h1 style="font-size:32px;font-weight:bold;text-align:center">Hi <!-- -->${name}<!-- -->,</h1>
+                            <h1 style="font-size:32px;font-weight:bold;text-align:center">${helloMessage},</h1>
                             <h2 style="font-size:26px;font-weight:bold;text-align:center">Thank you for booking a room with the Hatch Booking System. Below are your booking details.</h2>
                             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="padding:20px">
                               <tbody>
@@ -165,8 +167,10 @@ export function generateSuccessfulBookingEmailText(
     ? format(createdDate, "MMMM d, yyyy 'at' h:mm a")
     : 'Unknown';
 
+  const helloMessage = name ? `Hi ${name}` : 'Hi';
+
   return `
-  HI ${name},
+  ${helloMessage},
 
 
 THANK YOU FOR BOOKING A ROOM WITH THE HATCH BOOKING SYSTEM. BELOW ARE YOUR
