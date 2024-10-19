@@ -35,9 +35,10 @@ export default function NewBookingSystemLayout({
             Welcome to the new booking system, proudly developed by the MES's
             Infrastructure Technology Team!{' '}
             <span className='underline'>
-              Please click
-              <a href='https://forms.gle/fMPTNg1EdLBfthXW7'> here</a> to leave
-              your feedback.
+              <a href='https://forms.gle/fMPTNg1EdLBfthXW7'>
+                Please leave feedback here so we can improve the system
+                together.
+              </a>
             </span>
           </Alert>
           <TanStackQueryProvider>
