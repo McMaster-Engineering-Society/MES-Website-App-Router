@@ -50,7 +50,6 @@ const ExpandModal: React.FC<ExpandModalProps> = ({
     <div
       className={`fixed inset-0 flex justify-center items-center transition-colors
           ${open ? 'visible bg-black/20' : 'invisible'}`}
-      style={{ position: 'absolute' }}
       onClick={onClose}
     >
       <div

@@ -1,4 +1,10 @@
-import { addMinutes, endOfWeek, startOfDay, startOfWeek } from 'date-fns';
+import {
+  addMinutes,
+  differenceInMinutes,
+  endOfWeek,
+  startOfDay,
+  startOfWeek,
+} from 'date-fns';
 import { enGB } from 'date-fns/locale/en-GB';
 import { formatInTimeZone } from 'date-fns-tz';
 
@@ -79,4 +85,15 @@ export function getWeekRangeInEST(date: Date) {
   const endOfWeekUTC = endOfWeek(estDate, { weekStartsOn: 0 });
 
   return { startOfWeekUTC, endOfWeekUTC };
+}
+
+export function getDuration(startTime: Date, endTime: Date) {
+  const timeMin = differenceInMinutes(add30Minutes(endTime), startTime);
+  const hours = Math.floor(timeMin / 60);
+  const min = timeMin % 60;
+  if (min != 0) {
+    return hours + 0.5;
+  } else {
+    return hours;
+  }
 }
