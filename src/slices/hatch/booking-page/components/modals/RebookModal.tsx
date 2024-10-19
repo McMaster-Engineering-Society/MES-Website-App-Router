@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import TomorrowModal from '@/slices/hatch/booking-page/components/modals/TomorrowModal';
 import WeekModal from '@/slices/hatch/booking-page/components/modals/WeekModal';
 import { useFetchAvailabilitiesHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
-import { add30Minutes } from '@/slices/hatch/booking-page/utils';
+import { getDuration } from '@/slices/hatch/booking-page/utils';
 
 type RebookModalProps = {
   open: boolean;
@@ -42,17 +42,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
 }) => {
   const [tomorrowOpen, setTomOpen] = useState<boolean>(false);
   const [nextWeekOpen, setNextOpen] = useState<boolean>(false);
-
-  function getDuration(startTime: Date, endTime: Date) {
-    const timeMin = differenceInMinutes(add30Minutes(endTime), startTime);
-    const hours = Math.floor(timeMin / 60);
-    const min = timeMin % 60;
-    if (min != 0) {
-      return hours + 0.5;
-    } else {
-      return hours;
-    }
-  }
 
   const handleButtonClick = (option: string, avail: boolean) => {
     if (avail) {

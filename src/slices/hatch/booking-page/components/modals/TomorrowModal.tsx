@@ -7,6 +7,7 @@ import {
   useAddRoomBookingHook,
   useFetchAvailabilitiesHook,
 } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { getDuration } from '@/slices/hatch/booking-page/utils';
 
 type TomorrowModalProps = {
   open: boolean;
@@ -105,17 +106,6 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
       },
     });
     onClose();
-  }
-
-  function getDuration(startTime: Date, endTime: Date) {
-    const timeMin = differenceInMinutes(endTime, startTime);
-    const hours = Math.floor(timeMin / 60);
-    const min = timeMin % 60;
-    if (min != 0) {
-      return hours + 0.5;
-    } else {
-      return hours;
-    }
   }
 
   function isAvail(
