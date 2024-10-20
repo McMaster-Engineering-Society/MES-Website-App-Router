@@ -57,6 +57,8 @@ const UserDashboard = () => {
   const [displayUserId, setDisplayUserId] = useState<string>('');
   const [displayEmail, setDisplayEmail] = useState<string>('');
   const [displayId, setDisplayId] = useState<string>('');
+  const [displayShowCancelOption, setDisplayShowCancelOption] =
+    useState<boolean>(true);
 
   useEffect(() => {
     const fetchNextBooking = async () => {
@@ -98,6 +100,7 @@ const UserDashboard = () => {
     userId: string,
     email: string,
     id: string,
+    showCancelOption = true,
   ) {
     setOpen(true);
     setDisplayStartTime(startTime);
@@ -106,6 +109,7 @@ const UserDashboard = () => {
     setDisplayUserId(userId);
     setDisplayEmail(email);
     setDisplayId(id);
+    setDisplayShowCancelOption(showCancelOption);
   }
 
   return (
@@ -182,6 +186,7 @@ const UserDashboard = () => {
                           booking.userId,
                           booking.email,
                           booking._id?.toString() ?? '',
+                          false,
                         )
                       }
                     ></BookingTimeslot>
@@ -342,6 +347,7 @@ const UserDashboard = () => {
         userId={displayUserId}
         email={displayEmail}
         id={displayId}
+        includeCancel={displayShowCancelOption}
       ></ExpandModal>
 
       {profile && (
