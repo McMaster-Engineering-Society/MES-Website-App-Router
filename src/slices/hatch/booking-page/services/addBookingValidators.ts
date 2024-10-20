@@ -8,20 +8,9 @@ import {
   getWeekRangeInEST,
 } from '@/slices/hatch/booking-page/utils';
 
-// Create type to help other files like bookingServices.ts infer the type of message when valid is false vs true.
-type TBookingValidatorPromise =
-  | {
-      valid: false;
-      message: string; // `message` cannot be null when `valid` is false.
-    }
-  | {
-      valid: true;
-      message: null; // `message` must be null when `valid` is true.
-    };
-
 const disabledRoomCheckService = async (
   newBooking: TBookingDb,
-): Promise<TBookingValidatorPromise> => {
+): Promise<{ valid: boolean; message: string | null }> => {
   const disabledRooms = await getDisabledRoomsService();
   if (disabledRooms === null) {
     throw new Error('Error in fetching disabled rooms');
@@ -34,12 +23,12 @@ const disabledRoomCheckService = async (
     message: roomEnabled
       ? null
       : 'Invalid booking: Bookings for the room requested has been disabled',
-  } as TBookingValidatorPromise;
+  };
 };
 
 const threeHourRoomsCheckService = async (
   newBooking: TBookingDb,
-): Promise<TBookingValidatorPromise> => {
+): Promise<{ valid: boolean; message: string | null }> => {
   const { startOfDay, endOfDay } = getESTDayBoundaries(
     newBooking.startTime,
     newBooking.endTime,
@@ -75,12 +64,12 @@ const threeHourRoomsCheckService = async (
     message: userBookingsWithin3Hours
       ? null
       : 'Invalid booking: Bookings can only be made to a maximum of 3 hours per day.',
-  } as TBookingValidatorPromise;
+  };
 };
 
 const availableRoomsCheckService = async (
   newBooking: TBookingDb,
-): Promise<TBookingValidatorPromise> => {
+): Promise<{ valid: boolean; message: string | null }> => {
   const roomBookings = await getBookingsInDateRangeForOneRoomDb(
     newBooking.startTime,
     newBooking.endTime,
@@ -96,12 +85,12 @@ const availableRoomsCheckService = async (
       roomBookings.length === 0
         ? null
         : 'Invalid booking: Someone already booked this room before you! :P',
-  } as TBookingValidatorPromise;
+  };
 };
 
 const tenHourWeeklyRoomsCheckService = async (
   newBooking: TBookingDb,
-): Promise<TBookingValidatorPromise> => {
+): Promise<{ valid: boolean; message: string | null }> => {
   // Get times for the start and end of the week.
   const { startOfWeekUTC, endOfWeekUTC } = getWeekRangeInEST(
     newBooking.startTime,
@@ -136,7 +125,7 @@ const tenHourWeeklyRoomsCheckService = async (
     message: userWithinBookingLimit10Hours
       ? null
       : 'Invalid booking: Bookings can only be made to a maximum of 10 hours per week (Sunday to Saturday).',
-  } as TBookingValidatorPromise;
+  };
 };
 
 export const bookingValidationMethods = [
