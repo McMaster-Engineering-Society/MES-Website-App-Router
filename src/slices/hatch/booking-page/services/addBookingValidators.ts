@@ -8,16 +8,7 @@ import {
   getWeekRangeInEST,
 } from '@/slices/hatch/booking-page/utils';
 
-// Create type to help other files like bookingServices.ts infer the type of message when valid is false vs true.
-type TBookingValidatorPromise =
-  | {
-      valid: false;
-      message: string; // `message` cannot be null when `valid` is false.
-    }
-  | {
-      valid: true;
-      message: null; // `message` must be null when `valid` is true.
-    };
+type TBookingValidatorPromise = { valid: boolean; message?: string };
 
 const disabledRoomCheckService = async (
   newBooking: TBookingDb,
@@ -30,11 +21,11 @@ const disabledRoomCheckService = async (
   const roomEnabled = !disabledRooms.disabledRooms.includes(newBooking.room);
 
   return {
-    valid: roomEnabled,
-    message: roomEnabled
-      ? null
-      : 'Invalid booking: Bookings for the room requested has been disabled',
-  } as TBookingValidatorPromise;
+    valid: true,
+    message: !roomEnabled
+      ? 'Invalid booking: Bookings for the room requested has been disabled'
+      : undefined,
+  };
 };
 
 const threeHourRoomsCheckService = async (
@@ -72,10 +63,10 @@ const threeHourRoomsCheckService = async (
 
   return {
     valid: userBookingsWithin3Hours,
-    message: userBookingsWithin3Hours
-      ? null
-      : 'Invalid booking: Bookings can only be made to a maximum of 3 hours per day.',
-  } as TBookingValidatorPromise;
+    message: !userBookingsWithin3Hours
+      ? 'Invalid booking: Bookings can only be made to a maximum of 3 hours per day.'
+      : undefined,
+  };
 };
 
 const availableRoomsCheckService = async (
@@ -92,11 +83,10 @@ const availableRoomsCheckService = async (
 
   return {
     valid: roomBookings.length === 0,
-    message:
-      roomBookings.length === 0
-        ? null
-        : 'Invalid booking: Someone already booked this room before you! :P',
-  } as TBookingValidatorPromise;
+    message: !(roomBookings.length === 0)
+      ? 'Invalid booking: Someone already booked this room before you! :P'
+      : undefined,
+  };
 };
 
 const tenHourWeeklyRoomsCheckService = async (
@@ -133,10 +123,10 @@ const tenHourWeeklyRoomsCheckService = async (
 
   return {
     valid: userWithinBookingLimit10Hours,
-    message: userWithinBookingLimit10Hours
-      ? null
-      : 'Invalid booking: Bookings can only be made to a maximum of 10 hours per week (Sunday to Saturday).',
-  } as TBookingValidatorPromise;
+    message: !userWithinBookingLimit10Hours
+      ? 'Invalid booking: Bookings can only be made to a maximum of 10 hours per week (Sunday to Saturday).'
+      : undefined,
+  };
 };
 
 export const bookingValidationMethods = [

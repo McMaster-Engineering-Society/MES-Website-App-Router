@@ -1,11 +1,13 @@
 import { addDays, differenceInMinutes, format, startOfDay } from 'date-fns';
 import { Bookmark } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import {
   useAddRoomBookingHook,
   useFetchAvailabilitiesHook,
 } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { getDuration } from '@/slices/hatch/booking-page/utils';
 
 type WeekModalProps = {
   open: boolean;
@@ -90,26 +92,19 @@ const WeekModal: React.FC<WeekModalProps> = ({
       createdDate: created,
     };
 
-    try {
-      await addRoomBooking.mutateAsync(newBooking);
-      // eslint-disable-next-line no-console
-      console.log('Room booked successfully!');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to book room:', error);
-    }
+    addRoomBooking.mutate(newBooking, {
+      onSuccess: () => {
+        toast('Room has been successfully booked.');
+      },
+      onError: (error: Error) => {
+        if (error.message.includes('Invalid booking')) {
+          toast(error.message);
+        } else {
+          toast('Room booking was unsuccessful.');
+        }
+      },
+    });
     onClose();
-  }
-
-  function getDuration(startTime: Date, endTime: Date) {
-    const timeMin = differenceInMinutes(endTime, startTime);
-    const hours = Math.floor(timeMin / 60);
-    const min = timeMin % 60;
-    if (min != 0) {
-      return hours + 0.5;
-    } else {
-      return hours;
-    }
   }
 
   function isAvail(
@@ -255,7 +250,7 @@ const WeekModal: React.FC<WeekModalProps> = ({
             <h4 className='mt-3'>Confirm Booking:</h4>
             <p className='text-small mb-1.5'>
               <b> {selectedRoom ?? 'No Room Selected'}</b>,{' '}
-              {format(startWeek, 'MMMM do')}, {format(endWeek, 'p')} (
+              {format(startWeek, 'MMMM do')}, {format(startWeek, 'p')} (
               {getDuration(startWeek, endWeek)}H).
             </p>
             <button
