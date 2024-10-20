@@ -5,7 +5,6 @@ import {
   startOfDay,
   startOfWeek,
 } from 'date-fns';
-
 import { enGB } from 'date-fns/locale/en-GB';
 import { formatInTimeZone } from 'date-fns-tz';
 
