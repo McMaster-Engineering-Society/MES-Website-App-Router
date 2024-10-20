@@ -21,7 +21,7 @@ const disabledRoomCheckService = async (
   const roomEnabled = !disabledRooms.disabledRooms.includes(newBooking.room);
 
   return {
-    valid: false,
+    valid: true,
     message: !roomEnabled
       ? 'Invalid booking: Bookings for the room requested has been disabled'
       : undefined,
