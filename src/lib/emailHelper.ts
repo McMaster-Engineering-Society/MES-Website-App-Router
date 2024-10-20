@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 import { TBookingDb } from '@/app/api/types';
 import { add30Minutes } from '@/slices/hatch/booking-page/utils';
@@ -70,6 +71,8 @@ export function generateLoginEmailText({ url }: { url: string }) {
   return `Thanks for logging in to the Hatch Booking System! We're excited to have you on board.\n\nFollow this link to log in: ${url}\n\nIf you did not request this email you can safely ignore it.\n\nMcMaster Engineering Society`;
 }
 
+const timeZone = 'America/New_York';
+
 // Used backend type for TBookingDb because this will be called from the backend.
 export function generateSuccessfulBookingEmailHtml(
   name: string,
@@ -77,13 +80,18 @@ export function generateSuccessfulBookingEmailHtml(
 ) {
   const { startTime, endTime, createdDate, room } = successfulBooking;
 
-  const formattedStartTime = format(startTime, "MMMM d, yyyy 'at' h:mm a");
-  const formattedEndTime = format(
+  const formattedStartTime = formatInTimeZone(
+    startTime,
+    timeZone,
+    "MMMM d, yyyy 'at' h:mm a",
+  );
+  const formattedEndTime = formatInTimeZone(
     add30Minutes(endTime),
+    timeZone,
     "MMMM d, yyyy 'at' h:mm a",
   );
   const formattedCreatedDate = createdDate
-    ? format(createdDate, "MMMM d, yyyy 'at' h:mm a")
+    ? formatInTimeZone(createdDate, timeZone, "MMMM d, yyyy 'at' h:mm a")
     : 'Unknown';
 
   const helloMessage = name ? `Hi ${name}` : 'Hi';
