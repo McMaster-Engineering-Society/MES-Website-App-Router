@@ -196,7 +196,7 @@ const UserDashboard = () => {
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>
-                  <p>You do not have any past bookings.</p>
+                  <p>You do not have any upcoming bookings.</p>
                 </div>
               )}
             </PageSection>
