@@ -250,7 +250,7 @@ const WeekModal: React.FC<WeekModalProps> = ({
             <h4 className='mt-3'>Confirm Booking:</h4>
             <p className='text-small mb-1.5'>
               <b> {selectedRoom ?? 'No Room Selected'}</b>,{' '}
-              {format(startWeek, 'MMMM do')}, {format(endWeek, 'p')} (
+              {format(startWeek, 'MMMM do')}, {format(startWeek, 'p')} (
               {getDuration(startWeek, endWeek)}H).
             </p>
             <button

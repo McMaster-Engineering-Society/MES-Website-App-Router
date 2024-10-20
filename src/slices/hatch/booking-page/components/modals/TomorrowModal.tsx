@@ -250,7 +250,7 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
             <h4 className='mt-3'>Confirm Booking:</h4>
             <p className='text-small mb-1.5'>
               <b> {selectedRoom ?? 'No Room Selected'}</b>,{' '}
-              {format(startTmrw, 'MMMM do')}, {format(endTmrw, 'p')} (
+              {format(startTmrw, 'MMMM do')}, {format(startTmrw, 'p')} (
               {getDuration(startTmrw, endTmrw)}H).
             </p>
             <button
