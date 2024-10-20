@@ -242,11 +242,24 @@ const UserDashboard = () => {
                       </span>
                     </div>
                   </div>
-                  <EditButton variant='light-green' size='sm' />
+                  <EditButton
+                    onClick={() =>
+                      handleExpand(
+                        nextBooking.startTime,
+                        nextBooking.endTime,
+                        nextBooking.room,
+                        nextBooking.userId,
+                        nextBooking.email,
+                        nextBooking._id?.toString() ?? '',
+                      )
+                    }
+                    variant='light-green'
+                    size='sm'
+                  />
                 </div>
               ) : (
                 <div className='flex flex-row items-center justify-center min-h-[75px]'>
-                  <p>You do not have any past bookings.</p>
+                  <p>You do not have any next booking.</p>
                 </div>
               )}
             </PageSection>
