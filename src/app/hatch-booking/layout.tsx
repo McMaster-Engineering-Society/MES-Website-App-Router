@@ -32,8 +32,8 @@ export default function NewBookingSystemLayout({
             severity='info'
             icon={<InfoIcon className='text-primary-200' />}
           >
-            Welcome to the new booking system, proudly developed by the MES's
-            Infrastructure Technology Team!{' '}
+            Welcome to the new booking system (still in beta testing), proudly
+            developed by the MES's Infrastructure Technology Team!{' '}
             <span className='underline'>
               <a href='https://forms.gle/fMPTNg1EdLBfthXW7'>
                 Please leave feedback here so we can improve the system

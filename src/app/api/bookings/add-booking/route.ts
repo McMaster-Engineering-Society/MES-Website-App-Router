@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     if (!newBooking && message) {
       return NextResponse.json<TMessageResponse>(
         { message: message },
-        { status: 409 },
+        { status: 200 },
       );
     }
     return NextResponse.json<TApiResponse<TBooking>>(
