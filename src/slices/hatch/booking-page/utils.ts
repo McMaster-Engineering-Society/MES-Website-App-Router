@@ -1,6 +1,7 @@
 import {
   addMinutes,
   differenceInMinutes,
+  endOfDay,
   endOfWeek,
   startOfDay,
   startOfWeek,
@@ -19,32 +20,25 @@ export const formatDateForKey = (date: Date) =>
 
 export function getESTDayBoundaries(startTimeUTC: Date, endTimeUTC: Date) {
   // Convert UTC times to EST
-  const startTimeEST = new Date(startTimeUTC).toLocaleString('en-US', {
+  const startTimeEST = formatInTimeZone(
+    startTimeUTC,
     timeZone,
-  });
-  const endTimeEST = new Date(endTimeUTC).toLocaleString('en-US', { timeZone });
-
+    'yyyy-MM-dd HH:mm:ssXXX',
+    {
+      locale: enGB,
+    },
+  );
+  const endTimeEST = formatInTimeZone(
+    endTimeUTC,
+    timeZone,
+    'yyyy-MM-dd HH:mm:ssXXX',
+    {
+      locale: enGB,
+    },
+  );
   // Create Date objects from the EST strings
-  const startDateEST = new Date(startTimeEST);
-  const endDateEST = new Date(endTimeEST);
-
-  // Get start of day for start time
-  const startOfDayEST = new Date(
-    startDateEST.getFullYear(),
-    startDateEST.getMonth(),
-    startDateEST.getDate(),
-  );
-
-  // Get end of day for end time
-  const endOfDayEST = new Date(
-    endDateEST.getFullYear(),
-    endDateEST.getMonth(),
-    endDateEST.getDate(),
-    23,
-    59,
-    59,
-    999,
-  );
+  const startOfDayEST = startOfDay(startTimeEST);
+  const endOfDayEST = endOfDay(endTimeEST);
 
   return {
     startOfDay: startOfDayEST,
