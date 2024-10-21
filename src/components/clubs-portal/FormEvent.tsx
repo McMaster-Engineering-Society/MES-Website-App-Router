@@ -1,3 +1,4 @@
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -45,8 +46,28 @@ const FormEvent = ({ form }: FormEventProps) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleCommentOpen = () => setCommentOpen(true);
+  const handleCommentOpen = (section: string) => {
+    setActiveSection(section);
+    setFilterName(comments[section] || '');
+    setCommentOpen(true);
+  };
+
+  const handleSaveComment = () => {
+    if (activeSection) {
+      setComments({
+        ...comments,
+        [activeSection]: filterName,
+      });
+    }
+    setFilterName('');
+    handleCommentClose();
+  };
+
   const handleCommentClose = () => setCommentOpen(false);
+
+  const [comments, setComments] = useState<{ [key: string]: string }>({});
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
   const [filterName, setFilterName] = useState('');
 
   const formatTime = (time24: string) => {
@@ -62,6 +83,14 @@ const FormEvent = ({ form }: FormEventProps) => {
   const formattedStartTime = formatTime(form.startTime);
   const formattedEndTime = formatTime(form.endTime);
   const bookingTime = `${formattedDate} ${formattedStartTime}-${formattedEndTime}`;
+
+  const hasComment = (section: string) => !!comments[section];
+  const commentExists = () => {
+    if (activeSection) {
+      return Boolean(comments[activeSection]);
+    }
+    return false;
+  };
 
   return (
     <div
@@ -116,10 +145,17 @@ const FormEvent = ({ form }: FormEventProps) => {
               <Typography className='text-gray-500 text-medium font-light'>
                 {form?.reportee}
               </Typography>
-              <TextsmsIcon
-                className='text-gray-500 font-light text-lg'
-                onClick={handleCommentOpen}
-              />
+              {hasComment('General') ? (
+                <AnnouncementIcon
+                  className='text-red-900 font-light text-lg'
+                  onClick={() => handleCommentOpen('General')}
+                />
+              ) : (
+                <TextsmsIcon
+                  className='text-gray-500 font-light text-lg'
+                  onClick={() => handleCommentOpen('General')}
+                />
+              )}
             </div>
           </div>
           <div className='flex flex-row mt-1'>
@@ -159,10 +195,17 @@ const FormEvent = ({ form }: FormEventProps) => {
               {' '}
               Subheader for Checks{' '}
             </Typography>
-            <TextsmsIcon
-              className='text-gray-500 font-light text-lg'
-              onClick={handleCommentOpen}
-            />
+            {hasComment('Subheader 1') ? (
+              <AnnouncementIcon
+                className='text-red-900 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 1')}
+              />
+            ) : (
+              <TextsmsIcon
+                className='text-gray-500 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 1')}
+              />
+            )}
           </div>
           <div className='flex flex-row mt-1'>
             <Typography className='text-gray-600 text-medium mr-2'>
@@ -200,10 +243,17 @@ const FormEvent = ({ form }: FormEventProps) => {
               {' '}
               Subheader for Checks{' '}
             </Typography>
-            <TextsmsIcon
-              className='text-gray-500 font-light text-lg'
-              onClick={handleCommentOpen}
-            />
+            {hasComment('Subheader 2') ? (
+              <AnnouncementIcon
+                className='text-red-900 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 2')}
+              />
+            ) : (
+              <TextsmsIcon
+                className='text-gray-500 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 2')}
+              />
+            )}
           </div>
           <div className='flex flex-row mt-1'>
             <Typography className='text-gray-600 text-medium mr-2'>
@@ -241,10 +291,17 @@ const FormEvent = ({ form }: FormEventProps) => {
               {' '}
               Subheader for Checks{' '}
             </Typography>
-            <TextsmsIcon
-              className='text-gray-500 font-light text-lg'
-              onClick={handleCommentOpen}
-            />
+            {hasComment('Subheader 3') ? (
+              <AnnouncementIcon
+                className='text-red-900 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 3')}
+              />
+            ) : (
+              <TextsmsIcon
+                className='text-gray-500 font-light text-lg'
+                onClick={() => handleCommentOpen('Subheader 3')}
+              />
+            )}
           </div>
           <div className='flex flex-row mt-1'>
             <Typography className='text-gray-600 text-medium mr-2'>
@@ -291,12 +348,12 @@ const FormEvent = ({ form }: FormEventProps) => {
           </Box>
           <div className='flex flex-row sticky h-12'>
             <button
-              disabled
-              className='w-[calc(80%-8rem)] mr-4 bg-gray-400 text-white font-normal px-4 py-2 rounded-md cursor-not-allowed opacity-70'
+              disabled={!commentExists()} // Disable button if no comment exists
+              className={`w-[calc(80%-8rem)] mr-4 ${commentExists() ? 'bg-gray-400 text-white' : 'bg-gray-200 text-gray-500'} text-md font-normal px-4 py-2 rounded-md hover:bg-gray-500 transition-colors duration-300`}
             >
               REJECT
             </button>
-            <button className='w-[calc(80%-8rem)] bg-red-700 text-white font-normal px-4 py-2 rounded-md hover:bg-red-800 transition-colors duration-300'>
+            <button className='w-[calc(80%-8rem)] bg-red-700 text-white text-md font-normal px-4 py-2 rounded-md hover:bg-red-800 transition-colors duration-300'>
               APPROVE
             </button>
           </div>
@@ -308,11 +365,17 @@ const FormEvent = ({ form }: FormEventProps) => {
             variant='h6'
             className='font-medium text-lg text-gray-600 mt-3'
           >
-            Add a Comment – Subheader for Check
+            {activeSection && comments[activeSection]
+              ? 'Edit Comment'
+              : 'Add a Comment'}{' '}
+            – {activeSection?.charAt(0).toUpperCase() + activeSection?.slice(1)}
           </Typography>
+
           <textarea
             className='resize-none w-full h-40 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400'
             placeholder='Type your comment here...'
+            value={filterName}
+            onChange={(e) => setFilterName(e.target.value)}
           />
           <div className='flex justify-end mt-4'>
             <button
@@ -321,8 +384,13 @@ const FormEvent = ({ form }: FormEventProps) => {
             >
               Cancel
             </button>
-            <button className='bg-[#A6192E] text-white px-4 py-2 rounded-md font-light text-sm'>
-              Add Comment
+            <button
+              onClick={handleSaveComment}
+              className='bg-[#A6192E] text-white px-4 py-2 rounded-md font-light text-sm'
+            >
+              {activeSection && comments[activeSection]
+                ? 'Save Changes'
+                : 'Add Comment'}
             </button>
           </div>
         </Box>
