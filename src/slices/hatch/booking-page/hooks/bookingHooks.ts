@@ -1,4 +1,4 @@
-import { TBooking } from '@slices/hatch/booking-page/types';
+import { TBooking, TBookingResponse } from '@slices/hatch/booking-page/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -15,7 +15,7 @@ import { formatDateForKey } from '@/slices/hatch/booking-page/utils';
 export const useAddRoomBookingHook = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<TBooking, Error, TBooking>({
+  return useMutation<TBookingResponse, Error, TBooking>({
     mutationFn: fetchAddBooking,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });

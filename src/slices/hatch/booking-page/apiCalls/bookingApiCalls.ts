@@ -1,7 +1,7 @@
 'use server';
 
 import { getUserEmail } from '@slices/auth/utils';
-import { TBooking } from '@slices/hatch/booking-page/types';
+import { TBooking, TBookingResponse } from '@slices/hatch/booking-page/types';
 
 import { RoomAvailabilities } from '@/slices/hatch/booking-page/components/TimePicker';
 
@@ -37,7 +37,9 @@ export async function fetchAvailabilities(
   return result.data;
 }
 
-export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
+export async function fetchAddBooking(
+  newBooking: TBooking,
+): Promise<TBookingResponse> {
   if (process.env.NEXT_PUBLIC_URL === undefined) {
     throw new Error('NEXT_PUBLIC_URL is not defined');
   }
@@ -62,19 +64,13 @@ export async function fetchAddBooking(newBooking: TBooking): Promise<TBooking> {
     },
   );
 
-  // Want to handle all errors but 409 here because 409 means there was a state issue where a booking couldn't be added (eg. already booked at that timeslot) which needs a different error message.
-  if (!response.ok && response.status !== 409) {
+  if (!response.ok) {
     throw new Error(`Error: ${response.statusText}`);
   }
 
   const result = await response.json();
 
-  // Handle 409 errors here so they display the message we want to send back to the frontend properly.
-  if (response.status === 409) {
-    throw new Error(`${result.message}`);
-  }
-
-  return result.data;
+  return result;
 }
 
 export async function fetchUserBookings(

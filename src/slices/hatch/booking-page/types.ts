@@ -25,3 +25,7 @@ export type THatchRoom = {
   img: string;
   enabled: boolean;
 };
+
+export type TBookingResponse =
+  | { message: string }
+  | { booking: TBooking; message: string };
