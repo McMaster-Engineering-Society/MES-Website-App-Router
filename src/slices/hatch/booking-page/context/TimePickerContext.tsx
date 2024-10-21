@@ -1,6 +1,6 @@
 'use client';
 
-import { TBooking } from '@slices/hatch/booking-page/types';
+import { TBooking, TBookingResponse } from '@slices/hatch/booking-page/types';
 import { addWeeks } from 'date-fns';
 import {
   createContext,
@@ -199,15 +199,14 @@ export const TimePickerProvider = ({ children }: Props) => {
         };
 
         addRoomBooking.mutate(newBooking, {
-          onSuccess: () => {
+          onSuccess: (result: TBookingResponse) => {
+            if (result.message.includes('Invalid booking')) {
+              resolve(result.message);
+            }
             resolve('Room has been successfully booked.');
           },
-          onError: (error: Error) => {
-            if (error.message.includes('Invalid booking')) {
-              resolve(error.message);
-            } else {
-              resolve('Room booking was unsuccessful.');
-            }
+          onError: () => {
+            resolve('Room booking was unsuccessful.');
           },
         });
       });

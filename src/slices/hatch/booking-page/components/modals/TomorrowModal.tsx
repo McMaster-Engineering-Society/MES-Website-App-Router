@@ -7,6 +7,7 @@ import {
   useAddRoomBookingHook,
   useFetchAvailabilitiesHook,
 } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { TBookingResponse } from '@/slices/hatch/booking-page/types';
 import { getDuration } from '@/slices/hatch/booking-page/utils';
 
 type TomorrowModalProps = {
@@ -94,15 +95,14 @@ const TomorrowModal: React.FC<TomorrowModalProps> = ({
     };
 
     addRoomBooking.mutate(newBooking, {
-      onSuccess: () => {
+      onSuccess: (result: TBookingResponse) => {
+        if (result.message.includes('Invalid booking')) {
+          toast(result.message);
+        }
         toast('Room has been successfully booked.');
       },
-      onError: (error: Error) => {
-        if (error.message.includes('Invalid booking')) {
-          toast(error.message);
-        } else {
-          toast('Room booking was unsuccessful.');
-        }
+      onError: () => {
+        toast('Room booking was unsuccessful.');
       },
     });
     onClose();
