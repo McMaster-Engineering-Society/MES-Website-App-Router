@@ -22,8 +22,8 @@ export default function BookingInstructions() {
       >
         If your club or team would like to reserve a meeting room to hold
         recurring meetings, please contact{' '}
-        <a href='mailto:ghc@mcmaster.ca' className='underline'>
-          ghc@mcmaster.ca
+        <a href='mailto:engclubs@mcmaster.ca' className='underline'>
+          engclubs@mcmaster.ca
         </a>
         .
       </AccordionItem>

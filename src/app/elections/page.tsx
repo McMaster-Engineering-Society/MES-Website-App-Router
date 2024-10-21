@@ -471,7 +471,7 @@ export default function ElectionsPage() {
                 <div className='flex w-full flex-col justify-around gap-y-4 sm:flex-row'>
                   <ButtonLink
                     target='_blank'
-                    href='/pdfs/governing-documents/bylaws2024.pdf'
+                    href='https://mcmaster-engineering-society.github.io/Governing-Docs/bylaws.pdf'
                   >
                     Bylaws
                   </ButtonLink>

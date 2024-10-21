@@ -1,3 +1,5 @@
+import InfoIcon from '@mui/icons-material/Info';
+import Alert from '@mui/material/Alert';
 import { Metadata } from 'next';
 import * as React from 'react';
 
@@ -25,6 +27,20 @@ export default function NewBookingSystemLayout({
     <>
       <main>
         <PageLayout noFooter noBackground>
+          <Alert
+            className='bg-primary-700 text-white h-[70px] sm:h-[50px]'
+            severity='info'
+            icon={<InfoIcon className='text-primary-200' />}
+          >
+            Welcome to the new booking system (still in beta testing), proudly
+            developed by the MES's Infrastructure Technology Team!{' '}
+            <span className='underline'>
+              <a href='https://forms.gle/fMPTNg1EdLBfthXW7'>
+                Please leave feedback here so we can improve the system
+                together.
+              </a>
+            </span>
+          </Alert>
           <TanStackQueryProvider>
             <SessionProvider>
               <TimePickerProvider>

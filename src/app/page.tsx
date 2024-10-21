@@ -146,7 +146,7 @@ export default function HomePage() {
             animate='visible'
           >
             {/* Next MES President */}
-            <HeroSectionColumn
+            {/* <HeroSectionColumn
               img='/images/homepage/alexis-moutafis-tymcio-faded.png'
               classname='transition-all ease-in-out hover:flex-grow-[3] flex-grow-[1] duration-500 bg-gradient-to-br from-slate-50 to-slate-200'
             >
@@ -157,7 +157,7 @@ export default function HomePage() {
                   <p className='font-bold'>Alexis Moutafis-Tymcio</p>
                 </div>
               </div>
-            </HeroSectionColumn>
+            </HeroSectionColumn> */}
 
             {/* SAGM */}
             {/* <HeroSectionColumn
@@ -226,6 +226,38 @@ export default function HomePage() {
               </div>
             </HeroSectionColumn> */}
 
+            {/* Direct-Entry Admissions Change Survey */}
+            <HeroSectionColumn classname='transition-all ease-in-out hover:flex-grow-[3] flex-grow-[1] duration-500 bg-gradient-to-br from-slate-50 to-slate-200'>
+              <div className='flex h-full w-full flex-col justify-between'>
+                <div className='flex flex-col uppercase'>
+                  <p className='text-xs font-semibold md:text-sm'>
+                    Direct-Entry Admission
+                  </p>
+                  <h1 className='text-2xl md:text-5xl'>Change</h1>
+                  <h1 className='text-2xl md:text-5xl'>Survey</h1>
+                </div>
+                <div className='flex flex-col'>
+                  <p>
+                    To add a partial direct entry model, where some students
+                    will be admitted to Eng/iBiomed 1, and others can apply
+                    directly to their stream. Feel free to email{' '}
+                    <a
+                      href='mailto:vp.academic@macengsociety.ca'
+                      className='underline'
+                    >
+                      VP Academic
+                    </a>{' '}
+                    for questions.
+                  </p>
+                </div>
+                <div>
+                  <ArrowLink href='https://forms.gle/8pemcpSzjJMy6YMb9'>
+                    <p>Fill out now</p>
+                  </ArrowLink>
+                </div>
+              </div>
+            </HeroSectionColumn>
+
             {/* Hatch Room Booking */}
             <HeroSectionColumn
               img='/images/homepage/gerald-hatch-centre-faded.png'
@@ -257,7 +289,7 @@ export default function HomePage() {
             >
               <div className='flex h-full w-full flex-col justify-between'>
                 <div className='flex flex-col uppercase'>
-                  <p className='text-xs font-medium md:text-sm'>
+                  <p className='text-xs font-semibold md:text-sm'>
                     {electionStatus}
                   </p>
                   <h1 className='text-2xl md:text-5xl'>MES</h1>
@@ -311,7 +343,7 @@ export default function HomePage() {
           <h1>The Volcano</h1>
           <h4 style={{ paddingBottom: '35px' }}>Weekly News</h4>
           <iframe
-            src='https://drive.google.com/file/d/19MUi7QQdiM5SCA4BeAD-YsRBg8Ohweex/preview'
+            src='https://drive.google.com/file/d/1guBDt6KAgRBYliNJzMit9Bk1AYvb-P65/preview'
             className='w-auto h-auto lg:w-[853px] lg:h-[480px] max-w-full'
             allow='autoplay'
             allowFullScreen

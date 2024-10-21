@@ -8,10 +8,10 @@ import {
 } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 
-import SameRoomModal from '@/slices/hatch/booking-page/components/modals/SameRoomModal';
 import TomorrowModal from '@/slices/hatch/booking-page/components/modals/TomorrowModal';
 import WeekModal from '@/slices/hatch/booking-page/components/modals/WeekModal';
 import { useFetchAvailabilitiesHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
+import { getDuration } from '@/slices/hatch/booking-page/utils';
 
 type RebookModalProps = {
   open: boolean;
@@ -35,7 +35,6 @@ export type RoomAvailabilities = {
 const RebookModal: React.FC<RebookModalProps> = ({
   startTime,
   endTime,
-  userRoom,
   userId,
   email,
   open,
@@ -43,27 +42,13 @@ const RebookModal: React.FC<RebookModalProps> = ({
 }) => {
   const [tomorrowOpen, setTomOpen] = useState<boolean>(false);
   const [nextWeekOpen, setNextOpen] = useState<boolean>(false);
-  const [sameRoomOpen, setSameOpen] = useState<boolean>(false);
-
-  function getDuration(startTime: Date, endTime: Date) {
-    const timeMin = differenceInMinutes(endTime, startTime);
-    const hours = Math.floor(timeMin / 60);
-    const min = timeMin % 60;
-    if (min != 0) {
-      return hours + 0.5;
-    } else {
-      return hours;
-    }
-  }
 
   const handleButtonClick = (option: string, avail: boolean) => {
     if (avail) {
       if (option == '1') {
         setTomOpen(true);
-      } else if (option == '2') {
-        setNextOpen(true);
       } else {
-        setSameOpen(true);
+        setNextOpen(true);
       }
       onClose();
     } else {
@@ -79,6 +64,8 @@ const RebookModal: React.FC<RebookModalProps> = ({
   ): boolean {
     const today = startOfDay(new Date());
     const isBeforeTd = isBefore(subDays(startTime, 1), today);
+    // console.log("ideal", numTimes)
+    // console.log(availabilities.H201, Object.values(availabilities).length)
     if (!isBeforeTd) {
       return Object.values(availabilities).some(
         (availability) => Number(availability.length) === Number(numTimes + 1),
@@ -86,17 +73,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
     } else {
       return false;
     }
-  }
-
-  function sameWeekAvail(
-    room: keyof RoomAvailabilities,
-    startTime: Date,
-    numTimes: number,
-  ): boolean {
-    const avail = availabilities2[room];
-    const today = startOfDay(new Date());
-    const isBeforeTd = isBefore(subDays(startTime, 1), today);
-    return !isBeforeTd && Array.isArray(avail) && avail.length === numTimes;
   }
 
   const [availabilities1, setAvailabilities1] = useState<RoomAvailabilities>({
@@ -215,35 +191,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
             <i>{format(addDays(startTime, 7), 'MMMM do')}</i>
           </div>
         </button>
-
-        <button
-          className={`border-solid border-2 rounded-lg px-5 py-5 m-3
-            ${sameWeekAvail(userRoom as keyof RoomAvailabilities, startWeek, halfHoursBtwn) ? 'bg-white border-gray-600 hover:bg-green-100 hover:text-green-600 hover:border-green-600' : 'bg-gray-50 border-gray-300 text-gray-300'}
-            `}
-          onClick={() =>
-            handleButtonClick(
-              '3',
-              sameWeekAvail(
-                userRoom as keyof RoomAvailabilities,
-                startWeek,
-                halfHoursBtwn,
-              ),
-            )
-          }
-        >
-          <div>
-            <b className='text-lg'>
-              Same room, <br />
-              time, day:
-              <br />
-            </b>
-            <i>
-              {format(startTime.toString(), 'p')} (
-              {getDuration(startTime, endTime)}H) <br />
-            </i>
-            <i>{format(addDays(startTime, 7), 'MMMM do')}</i>
-          </div>
-        </button>
       </div>
       <TomorrowModal
         open={tomorrowOpen}
@@ -261,15 +208,6 @@ const RebookModal: React.FC<RebookModalProps> = ({
         userId={userId}
         email={email}
       ></WeekModal>
-      <SameRoomModal
-        open={sameRoomOpen}
-        onClose={() => setSameOpen(false)}
-        startTime={startTime}
-        endTime={endTime}
-        userId={userId}
-        userRoom={userRoom}
-        email={email}
-      ></SameRoomModal>
     </div>
   );
 };

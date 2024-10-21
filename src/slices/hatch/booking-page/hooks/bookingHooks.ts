@@ -1,10 +1,12 @@
-import { TBooking } from '@slices/hatch/booking-page/types';
+import { TBooking, TBookingResponse } from '@slices/hatch/booking-page/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   fetchAddBooking,
   fetchAvailabilities,
   fetchDeleteBooking,
+  fetchNextBookingsByEmail,
+  fetchPastBookingsByEmail,
   fetchUserBookings,
 } from '@/slices/hatch/booking-page/apiCalls/bookingApiCalls';
 import { RoomAvailabilities } from '@/slices/hatch/booking-page/components/TimePicker';
@@ -13,7 +15,7 @@ import { formatDateForKey } from '@/slices/hatch/booking-page/utils';
 export const useAddRoomBookingHook = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<TBooking, Error, TBooking>({
+  return useMutation<TBookingResponse, Error, TBooking>({
     mutationFn: fetchAddBooking,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });
@@ -56,5 +58,27 @@ export const useDeleteBookingHook = () => {
       queryClient.invalidateQueries({ queryKey: ['userBookings'] });
       queryClient.invalidateQueries({ queryKey: ['roomAvailabilities'] });
     },
+  });
+};
+
+export const usePastBookings = (email: string | undefined, page: number) => {
+  const limit = 7;
+
+  return useQuery<{ newPastBookings: TBooking[]; totalCount: number }, Error>({
+    queryKey: ['userPastBookings', page],
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    queryFn: () => fetchPastBookingsByEmail(email!, page, limit),
+    enabled: !!email,
+  });
+};
+
+export const useNextBookings = (email: string | undefined, page: number) => {
+  const limit = 7;
+
+  return useQuery<{ newBookings: TBooking[]; totalCount: number }, Error>({
+    queryKey: ['userNextBookings', page],
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    queryFn: () => fetchNextBookingsByEmail(email!, page, limit),
+    enabled: !!email,
   });
 };

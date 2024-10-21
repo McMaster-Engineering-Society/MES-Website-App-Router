@@ -16,7 +16,7 @@ export async function fetchBatchAddBooking(
     const email = newBooking.email ?? (await getUserEmail());
     if (email == null) {
       throw new Error(
-        'No emailO was passed in for a new booking, nor is the user signed in to retrieve one from the current session.',
+        'No email was passed in for a new booking, nor is the user signed in to retrieve one from the current session.',
       );
     }
     newBooking.email = email;

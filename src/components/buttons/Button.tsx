@@ -5,10 +5,16 @@ import { ImSpinner2 } from 'react-icons/im';
 
 import { cn } from '@/lib/utils';
 
-const ButtonVariant = ['primary', 'outline', 'ghost', 'light', 'dark'] as const;
+export const ButtonVariant = [
+  'primary',
+  'outline',
+  'ghost',
+  'light',
+  'dark',
+] as const;
 const ButtonSize = ['sm', 'base'] as const;
 
-type ButtonProps = {
+export type ButtonProps = {
   isLoading?: boolean;
   isDarkBg?: boolean;
   variant?: (typeof ButtonVariant)[number];

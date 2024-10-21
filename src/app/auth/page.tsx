@@ -6,6 +6,7 @@ import Button from '@/components/buttons/Button';
 import PageLayout from '@/components/layout/PageLayout';
 import ButtonLink from '@/components/links/ButtonLink';
 import PageHeading from '@/components/PageHeading';
+import PageSection from '@/components/PageSection';
 
 // Example function to send an email
 async function sendEmail() {
@@ -32,6 +33,11 @@ export default function AuthPage() {
             title='Authentication!'
             variant='green'
           />
+          <PageSection>
+            This is a test page meant for helping test authentiation. If you are
+            a normal hatch user and somehow found this page, please disregard
+            it.
+          </PageSection>
           <Button onClick={sendEmail}>Send mail</Button>
           <SignOut />
           <ButtonLink href='/auth/sign-in'>Sign in</ButtonLink>

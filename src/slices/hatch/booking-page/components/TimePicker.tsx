@@ -4,6 +4,8 @@ import { TBooking } from '@slices/hatch/booking-page/types';
 import { differenceInCalendarDays } from 'date-fns';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import LoadingIcon from '@/components/layout/LoadingIcon';
+
 import TimePickerBookings from '@/slices/hatch/booking-page/components/TimePickerBookings';
 import { useTimePickerContext } from '@/slices/hatch/booking-page/context/TimePickerContext';
 import { useFetchAvailabilitiesHook } from '@/slices/hatch/booking-page/hooks/bookingHooks';
@@ -171,10 +173,10 @@ export default function TimePicker({
   ]);
 
   /**
-   * @todo add proper loading indicator (render table but make everything greyed out?) AND ADD SAME LOADING INDICATOR TO SignInGatePage.tsx
+   * @todo add proper loading indicator (render table but make everything greyed out?)
    */
   if (Object.keys(roomsAvailableByTime).length === 0) {
-    return <div>Loading...</div>;
+    return <LoadingIcon />;
   }
 
   return (
@@ -366,7 +368,7 @@ function TimePickerTable({
       const newEndIndex = Math.max(endIndex, slotIndex);
       setStartIndex(newStartIndex);
       setEndIndex(newEndIndex);
-    } else if (atLeastOneRoomAvailable(slotIndex)) {
+    } else {
       // starting to select a new block
       dragOperationRef.current = 'Selecting';
       setStartIndex(slotIndex);
@@ -429,7 +431,6 @@ function TimePickerTable({
       // new slots to add to selection
       if (
         slotIndex < startIndex &&
-        allSlotsBetweenIndexesAreAvailable(startIndex, slotIndex) &&
         // ~~ is a double bitwise NOT operator, which operates as a faster Math.floor() for positive numbers
         ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
@@ -437,7 +438,6 @@ function TimePickerTable({
         setStartIndex(newStartIndex);
       } else if (
         slotIndex > endIndex &&
-        allSlotsBetweenIndexesAreAvailable(endIndex, slotIndex) &&
         ~~(startIndex / timeslotsPerDay) == ~~(slotIndex / timeslotsPerDay)
       ) {
         const newEndIndex = slotIndex;
@@ -487,7 +487,7 @@ function TimePickerTable({
   const TimeIndicators = memo(() => {
     /* time indicators along the side */
     return (
-      <div className='mr-1 mt-14 flex flex-col justify-stretch'>
+      <div className='mr-1 mt-14 flex flex-col justify-stretch relative'>
         {timeslots.map((slot: string, i) => {
           if (i % 2 === 1) return null;
           return (
@@ -500,6 +500,13 @@ function TimePickerTable({
             </span>
           );
         })}
+        {/* Manually add 11pm since we don't want it to be in timeslots. */}
+        <span
+          id='time-text-11 PM'
+          className='absolute bottom-0 translate-y-[8px] whitespace-nowrap text-right text-xs italic text-[#373A36]/80'
+        >
+          11 PM
+        </span>
       </div>
     );
   });
@@ -544,14 +551,15 @@ function TimePickerTable({
         {timeslots.map((slot, i) =>
           daysToShow.map((day, j) => {
             const timeSlotIndex = j * timeslots.length + i;
+
             return (
               <div
                 key={`${day} ${slot}`}
                 id={timeSlotIndex.toString()} // don't change (id is used to convert touch event to timeSlotIndex)
                 className={`relative flex-1 touch-none border-1 border-b-0 border-black/20
-                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'} 
-                      ${!atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'} 
-                      ${i % 2 === 1 && 'border-t-0'} 
+                      ${slotIsSelected(timeSlotIndex) && 'bg-[#CAFFB1]/50'}
+                      ${adminView ? '' : !atLeastOneRoomAvailable(timeSlotIndex) && 'bg-[#CACED1]/40'}
+                      ${i % 2 === 1 && 'border-t-0'}
                       border-l-0
                       ${j === numDaysToShow - 1 && 'border-r-0'}`}
                 onPointerDown={() => handleMouseDown(timeSlotIndex)}

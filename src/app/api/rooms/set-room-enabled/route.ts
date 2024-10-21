@@ -6,8 +6,8 @@ import {
   TMessageResponse,
   TRoomEnableRequest,
 } from '@/app/api/types';
-import { THatchRoom } from '@/constant/hatch-bookings/rooms-data';
 import { updateRoomService } from '@/slices/hatch/admin/services/roomServices';
+import { THatchRoom } from '@/slices/hatch/booking-page/types';
 
 export async function POST(req: Request) {
   const request: TRoomEnableRequest = await req.json();
