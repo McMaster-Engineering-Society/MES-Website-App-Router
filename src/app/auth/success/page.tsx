@@ -10,19 +10,15 @@ export default function AuthSuccessPage() {
         <section>
           <div className='flex flex-col items-center min-h-screen'>
             {' '}
-            {/*  bg-[hsl(0,0%,97.5%)]*/}
             <div className='flex flex-col w-3/4 h-full rounded-t-lg shadow-md bg-white text-center items-center justify-center '>
               <div className='flex flex-col items-center text-[hsl(124,100%,22%)] bg-[#A1D884] rounded-t-lg w-full pb-14'>
                 <h1 className='flex items-center justify-center mt-10'>
                   <RxCheckCircled className='mr-3 text-5xl' />
-                  Success!
+                  Almost there!
                 </h1>
                 <b className='mt-5'>
                   Please check your email inbox for the sign in link.
                 </b>
-                <ButtonLink href='/auth/sign-in' className='mt-8 w-1/2'>
-                  Continue
-                </ButtonLink>
               </div>
 
               <div className='w-5/6 p-8 rounded-lg items-center justify-center shadow-md bg-amber-200 text-center m-10'>

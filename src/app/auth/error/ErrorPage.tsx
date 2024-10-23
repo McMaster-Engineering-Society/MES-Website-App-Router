@@ -39,7 +39,7 @@ export function ErrorPage() {
               </div>
               <div className='flex flex-col w-5/6 pt-6 pb-4 m-8 rounded-lg items-center justify-center text-center shadow-md bg-amber-200'>
                 <b>
-                  To resolve this problem, sign in again and past the sign-in
+                  To resolve this problem, sign in again and paste the sign-in
                   link from the email into the browser.
                 </b>
                 <ButtonLink
@@ -52,7 +52,7 @@ export function ErrorPage() {
               </div>
               <div className='w-5/6 justify-center text-center mb-8'>
                 If the error persists, contact the administrator at
-                ghc@mcmaster.ca
+                infratech@macengsociety.ca
               </div>
             </div>
           </div>
