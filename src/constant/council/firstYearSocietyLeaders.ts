@@ -41,6 +41,36 @@ const firstYearSocietyLeaders: CouncilDetails[] = [
     image: '/images/council-24-25/ifeyinwa-mbielu.jpeg',
     description: '',
   },
+  {
+    firstName: 'Faith',
+    lastName: 'Law',
+    position: 'First Year Bachelor of Technology (B.Tech) Rep',
+    program: 'Biotechnology',
+    level: 1,
+    email: 'btech@macengsociety.ca',
+    image: '/images/council-24-25/faith-law.jpeg',
+    description: '',
+  },
+  {
+    firstName: 'Grady',
+    lastName: 'Rueffer',
+    position: 'First Year Computer Science Rep',
+    program: 'Computer Science',
+    level: 1,
+    email: 'compsci@macengsociety.ca',
+    image: '/images/council-24-25/grady-rueffer.png',
+    description: '',
+  },
+  {
+    firstName: 'Agnes',
+    lastName: 'Kung',
+    position: 'First Year iBiomedical Engineering Rep',
+    program: 'iBiomedical Engineering',
+    level: 1,
+    email: 'ibiomed@macengsociety.ca',
+    image: '/images/council-24-25/agnes-kung.jpg',
+    description: '',
+  },
 ];
 
 export default firstYearSocietyLeaders;
