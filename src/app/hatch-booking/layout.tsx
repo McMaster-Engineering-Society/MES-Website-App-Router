@@ -28,7 +28,7 @@ export default function NewBookingSystemLayout({
       <main>
         <PageLayout noFooter noBackground>
           <Alert
-            className='bg-primary-700 text-white h-[70px] sm:h-[50px]'
+            className='bg-primary-700 text-white h-auto'
             severity='info'
             icon={<InfoIcon className='text-primary-200' />}
           >

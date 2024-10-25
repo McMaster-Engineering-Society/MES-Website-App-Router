@@ -32,7 +32,7 @@ export const handleEmailSignIn = async (email: string) => {
     // Perform the sign-in using nodemailer to send a magic link.
     await signIn('nodemailer', {
       email,
-      callbackUrl: '/hatch-booking/new-booking',
+      callbackUrl: process.env.NEXT_PUBLIC_URL + '/hatch-booking/new-booking',
     });
     errorThrown = false;
   } catch (error) {
